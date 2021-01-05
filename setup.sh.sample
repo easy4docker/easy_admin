@@ -1,10 +1,3 @@
-
-# ---- check permission -----
-# if [ $USER != "root" ]; then
-#   echo "Error : Need root user to run the command!"
-#   exit 0
-# fi
-
 # ---- prepare S -----
 OSENV=""
 case "$(uname -s)" in
@@ -60,17 +53,19 @@ SCR_DIR=$(cd `dirname $0` && pwd)
 
 rm -fr ${SCR_DIR}/admin
 rm -fr ${SCR_DIR}/sites
-rm -fr ${SCR_DIR}/_cron
+rm -fr ${SCR_DIR}/adminData
+rm -fr ${SCR_DIR}/_commCron
 rm -fr ${SCR_DIR}/_tmp
 
 mkdir ${SCR_DIR}/admin
 mkdir ${SCR_DIR}/sites
-mkdir ${SCR_DIR}/_cron
+mkdir ${SCR_DIR}/adminData
+mkdir ${SCR_DIR}/_commCron
 mkdir ${SCR_DIR}/_tmp
 
 git clone https://github.com/easy4docker/easy_admin.git ${SCR_DIR}/admin
 cp ${SCR_DIR}/admin/_start.sh.sample  ${SCR_DIR}/_start.sh
-cp ${SCR_DIR}/admin/_cron.sh.sample  ${SCR_DIR}/_cron.sh
+cp ${SCR_DIR}/admin/_commCron.sh.sample  ${SCR_DIR}/_commCron.sh
 
 if [ $OSENV = "Mac" ]; then
   sh ${SCR_DIR}/_start.sh
