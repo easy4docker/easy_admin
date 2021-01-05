@@ -27,14 +27,18 @@ docker rm $(docker ps -a -q)
 #--- start admin docker ---
 
 echo "Start admin .." >> easyDockerLog.data
-cd ${SCR_DIR}/admin
+cd ${SCR_DIR}/admin/sockerSetting
+docker build -f dockerFile -t admin-image .
+docker run -d -p 10000:80 -v "${SCR_DIR}/admin":/var/_localApp  -v "${SCR_DIR}/adminData":/var/_localAppData  -v "${SCR_DIR}/_easydocker_KEY":/var/_localAppKey \
+--network network_easydocker   --name admin-container admin-image
+
 
 #--- Main common cron loop ---
 stsCron=1
 until [ $stsCron = 0 ]
 do 
     if [ $stsCron != 0 ] ; then
-        sh _commCron.sh &
+        sh ${SCR_DIR}/_commCron.sh &
     fi
     sleep 1
 done
