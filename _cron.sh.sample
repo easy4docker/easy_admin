@@ -5,9 +5,9 @@ CRON_PATH=${SCR_DIR}/_cron
 TMP_PATH=${SCR_DIR}/_tmp
 LOG_PATH=${SCR_DIR}/_log
 
-mkdir -p $CRON_PATH
-mkdir -p $TMP_PATH
-mkdir -p $LOG_PATH
+mkdir -p ${CRON_PATH}
+mkdir -p ${TMP_PATH}
+mkdir -p ${LOG_PATH}
 
 markfile=${SCR_DIR}/mark.data
 
@@ -30,10 +30,8 @@ for f in "$CRON_PATH"/*; do
 
     execfn=${TMP_PATH}/SH_$(basename $f)
     echo ${execfn} > $markfile
-    # cmdd="cp $f /Users/johnxu/_tmp && mv $f $execfn && sh $execfn $DOCKERCMD && rm -fr $execfn && rm -fr $markfile"
     echo "-- Ran $f -- at $(date +"%m/%d/%Y %H:%M:%S")"
-    mkdir -p /Users/johnxu/_tmp
-    cp $f /Users/johnxu/_tmp/ || true
+    cp $f ${LOG_PATH} || true
     mv -f $f $execfn || true
     sh $execfn $DOCKERCMD || true
     rm -fr $execfn || true
