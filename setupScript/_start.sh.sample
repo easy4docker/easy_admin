@@ -2,6 +2,7 @@
 
 ADMIN_PORT=10000
 DOCKERCMD=$(command -v docker)
+SCR_DIR=$(cd `dirname $0` && pwd)
 MAIN_NET="10.10.10"
 MAIN_IP="10.10.10.254"
 
@@ -22,6 +23,11 @@ fi
 
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
+
+#--- start admin docker ---
+
+echo "Start admin .." >> easyDockerLog.data
+cd ${SCR_DIR}/admin
 
 #--- Main common cron loop ---
 stsCron=1
