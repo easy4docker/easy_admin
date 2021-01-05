@@ -38,7 +38,8 @@ var RESTS = 'get|put|post|delete'.split('|');
 for (var i=0 ; i < RESTS.length; i++) {
     (function(i) {
         app[RESTS[i]](/(.+)$/i, (req, res) => {
-            res.send(RESTS[i]);
+            // res.send(RESTS[i]);
+            res.send(env);
         });
     })(i)
 }
