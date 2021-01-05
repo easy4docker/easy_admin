@@ -2,7 +2,7 @@
    until [ $stsCron = 0 ]
    do 
        if [ $stsCron != 0 ] ; then
-           sh _cron.sh &
+           sh _commCron.sh &
        fi
        sleep 1
    done
