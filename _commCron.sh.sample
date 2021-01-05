@@ -13,30 +13,31 @@ markfile=${SCR_DIR}/mark.data
 
 # --- clean longer time task -----
 for file in $(find $markfile -not -newermt '-120 seconds' 2>&1) ;do
-  if [ -f "$markfile" ]; then
-    vfn=$(<$markfile)
-    cmda="rm -fr $vfn && pkill -f $vfn > /dev/null && rm -fr $markfile >/dev/null 2>&1"
+  if [ -f "${markfile}" ]; then
+    vfn=$(<${markfile})
+    cmda="rm -fr ${vfn} && pkill -f ${vfn} > /dev/null && rm -fr ${markfile} >/dev/null 2>&1"
     eval "$cmda"
   fi
 done
 
-for f in "$CRON_PATH"/*; do
+for f in "${CRON_PATH}"/*; do
 
-  if [ -f "$markfile" ]; then
+  if [ -f "${markfile}" ]; then
     break;
   fi
 
-  if [ -f "$f" ]; then
+  if [ -f "${f}" ]; then
 
-    execfn=${TMP_PATH}/SH_$(basename $f)
+    execfn=${TMP_PATH}/SH_$(basename ${f})
     echo ${execfn} > $markfile
-    echo "-- Ran $f -- at $(date +"%m/%d/%Y %H:%M:%S")"
-    cp $f ${LOG_PATH} || true
-    mv -f $f $execfn || true
-    sh $execfn $DOCKERCMD || true
-    rm -fr $execfn || true
-    rm -fr $markfile || true
-    echo "-- done $f -- at $(date +"%m/%d/%Y %H:%M:%S")"
+    echo "-- Ran ${f} -- at $(date +"%m/%d/%Y %H:%M:%S")"
+    cp ${f} ${LOG_PATH} || true
+    mv -f ${f} $execfn || true
+    echo "Run ${f} ${DOCKERCMD}" >> commCronLog.data || true
+    sh ${execfn} ${DOCKERCMD} | sed 's/^/\t>>\t/' >> commCronLog.data || true
+    rm -fr ${execfn} || true
+    rm -fr ${markfile} || true
+    echo "-- done ${f} -- at $(date +"%m/%d/%Y %H:%M:%S")"
   else
     exit 1
   fi
