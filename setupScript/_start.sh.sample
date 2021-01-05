@@ -6,7 +6,7 @@ MAIN_NET="10.10.10"
 MAIN_IP="10.10.10.254"
 
 if  [ "$DOCKERCMD" = "" ]; then
-    echo "\nDocker should be installed!"
+    echo "\nDocker should be installed!" >> easyDockerLog.data
     exit 1
 fi
 
