@@ -20,7 +20,6 @@ if [ -z $(docker network ls --filter name=^${NETWORK_NAME}$ --format="{{ .Name }
        network_easydocker &> /dev/null
 fi
 
-docker ps -a
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
 
