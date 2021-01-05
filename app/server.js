@@ -43,4 +43,11 @@ for (var i=0 ; i < RESTS.length; i++) {
     })(i)
 }
 
-app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
+app.listen(port,  () => {
+    const fs = require('fs');
+    fs.writeFile(env.dataFolder + '/_log/admin.log', ' admin listening at http://localhost:' + port,  {'flag':'a'},  function(err) {
+    if (err) {
+        return console.error(err);
+    }
+    console.log(`Example app listening at http://localhost:${port}`);
+});
