@@ -38,8 +38,13 @@ var RESTS = 'get|put|post|delete'.split('|');
 for (var i=0 ; i < RESTS.length; i++) {
     (function(i) {
         app[RESTS[i]](/(.+)$/i, (req, res) => {
-            // res.send(RESTS[i]);
-            res.send(env);
+            var APP = pkg.require(__dirname + '/modules/appRouter.js');
+            var app = new APP(env, pkg, req, res);
+            try {
+                app.route(RESTS[i]);
+            } catch (err) {
+                res.send(err.toString());
+            }
         });
     })(i)
 }
