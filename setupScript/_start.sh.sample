@@ -29,7 +29,7 @@ docker rm $(docker ps -a -q)
 echo "Start admin .." >> easyDockerLog.data
 cd ${SCR_DIR}/admin/sockerSetting
 docker build -f dockerFile -t admin-image .
-docker run -d -p 10000:80 -v "${SCR_DIR}/admin":/var/_localApp  -v "${SCR_DIR}/adminData":/var/_localAppData  -v "${SCR_DIR}/_easydocker_KEY":/var/_localAppKey \
+docker run -d -p 10000:80 -v "${SCR_DIR}/admin":/var/_localApp  -v "${SCR_DIR}/_adminData":/var/_localAppData  -v "${SCR_DIR}/_easydocker_KEY":/var/_localAppKey \
 --network network_easydocker   --name admin-container admin-image
 
 
