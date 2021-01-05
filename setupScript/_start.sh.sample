@@ -22,21 +22,20 @@ if [ -z $(docker network ls --filter name=^${NETWORK_NAME}$ --format="{{ .Name }
         --gateway=${MAIN_IP} \
        network_easydocker &> /dev/null
 fi
-echo "BBB0"
+
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
-docker image rm admin-image 
+
 #--- start admin docker ---
 echo "BBB1"
 echo "Start admin .." >> ${LOG_PATH}/easyDockerLog.data
 cd ${SCR_DIR}/admin/dockerSetting
 
-echo "BBB2"
-echo  ${SCR_DIR}/admin/dockerSetting
 docker build -f dockerFile -t admin-image .
 
 exit 0
-docker run --restart=always -d -p ${ADMIN_PORT}:80 \
+#  --restart=always
+docker run -d -p ${ADMIN_PORT}:80 \
     -v "${SCR_DIR}/admin/app":/var/_localApp  -v "${SCR_DIR}/_adminData":/var/_localAppData  \
     -v "${SCR_DIR}/_easydocker_KEY":/var/_localAppKey \
     --network network_easydocker   --name admin-container admin-image
