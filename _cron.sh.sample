@@ -3,13 +3,13 @@ DOCKERCMD=$(command -v docker)
 SCR_DIR=$(cd `dirname $0` && pwd)
 CRON_PATH=${SCR_DIR}/_cron
 TMP_PATH=${SCR_DIR}/_tmp
-
+LOG_PATH=${SCR_DIR}/_log
 
 mkdir -p $CRON_PATH
 mkdir -p $TMP_PATH
+mkdir -p $LOG_PATH
 
-
-markfile=$DATA_DIR/mark.data
+markfile=${SCR_DIR}/mark.data
 
 # --- clean longer time task -----
 for file in $(find $markfile -not -newermt '-120 seconds' 2>&1) ;do
@@ -28,8 +28,8 @@ for f in "$CRON_PATH"/*; do
 
   if [ -f "$f" ]; then
 
-    execfn=$TMP_PATH/SH_$(basename $f)
-    echo $execfn > $markfile
+    execfn=${TMP_PATH}/SH_$(basename $f)
+    echo ${execfn} > $markfile
     # cmdd="cp $f /Users/johnxu/_tmp && mv $f $execfn && sh $execfn $DOCKERCMD && rm -fr $execfn && rm -fr $markfile"
     echo "-- Ran $f -- at $(date +"%m/%d/%Y %H:%M:%S")"
     mkdir -p /Users/johnxu/_tmp
