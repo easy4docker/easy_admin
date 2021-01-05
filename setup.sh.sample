@@ -1,0 +1,80 @@
+
+# ---- check permission -----
+# if [ $USER != "root" ]; then
+#   echo "Error : Need root user to run the command!"
+#   exit 0
+# fi
+
+# ---- prepare S -----
+OSENV=""
+case "$(uname -s)" in
+   Darwin)
+     OSENV='Mac'
+     ;;
+   Linux)
+     OSENV='Linux'
+     ;;
+
+   CYGWIN*|MINGW32*|MSYS*|MINGW*)
+     OSENV='MS Windows'
+     ;;
+   *)
+     OSENV='' 
+     ;;
+esac
+
+if [ $OSENV = "Mac" ]; then
+    
+    DOCKERCMD=$(command -v docker)
+    GIT=$(command -v git)
+    if  [ "$DOCKERCMD" = "" ]; then
+      echo "\nDocker should be installed!"
+      exit 0
+    fi
+    if  [ "GIT" = "" ]; then
+      echo "\nGit should be installed!"
+      exit 0
+    fi
+    echo "this is $OSENV environment."
+fi
+
+
+if [ $OSENV = "Linux" ]; then
+  echo "Running on Linux ..."
+   
+  apt update \
+  && apt install sudo \
+  && apt install -y apt-transport-https ca-certificates curl software-properties-common \
+  && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - \
+  && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" \
+  && apt-cache policy docker-ce \
+  && apt install -y docker-ce \
+  && apt-get -y install git
+
+  sed '/\echo _EASY_DOCKER/d' /etc/crontab  > /tmp/crontab_easydocker
+   cp -f /tmp/crontab_easydocker  /etc/crontab
+  echo "@reboot root (echo _EASY_DOCKER && sh ${SCR_DIR}/start.sh)" >> /etc/crontab
+fi
+
+SCR_DIR=$(cd `dirname $0` && pwd)
+
+rm -fr ${SCR_DIR}/admin
+rm -fr ${SCR_DIR}/sites
+rm -fr ${SCR_DIR}/_cron
+rm -fr ${SCR_DIR}/_tmp
+
+mkdir ${SCR_DIR}/admin
+mkdir ${SCR_DIR}/sites
+mkdir ${SCR_DIR}/_cron
+mkdir ${SCR_DIR}/_tmp
+
+git clone https://github.com/easy4docker/easy_admin.git ${SCR_DIR}/admin
+cp ${SCR_DIR}/admin/_start.sh.sample  ${SCR_DIR}/_start.sh
+cp ${SCR_DIR}/admin/_cron.sh.sample  ${SCR_DIR}/_cron.sh
+
+if [ $OSENV = "Mac" ]; then
+  sh ${SCR_DIR}/_start.sh
+fi
+if [ $OSENV = "Linux" ]; then
+  reboot -f
+fi
