@@ -16,7 +16,7 @@ var pkg = {
         }
         return require(fileName);
     },
-    md5 : require('md5'),
+    // md5 : require('md5'),
     crowdProcess : require(__dirname + '/vendor/crowdProcess/crowdProcess.js'),
     ECT : require('ect')
 }
