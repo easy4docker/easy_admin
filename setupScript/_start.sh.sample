@@ -6,7 +6,7 @@ SCR_DIR=$(cd `dirname $0` && pwd)
 LOG_PATH=${SCR_DIR}/_adminData/_log
 MAIN_NET="10.10.10"
 MAIN_IP="10.10.10.254"
-
+ echo "AAA"
 
 if  [ "$DOCKERCMD" = "" ]; then
     echo "\nDocker should be installed!" >> ${LOG_PATH}/easyDockerLog.data
