@@ -16,7 +16,7 @@ var pkg = {
         }
         return require(fileName);
     },
-    crowdProcess : require(__dirname + '/vendor/crowdProcess/crowdProcess.js'),
+    // crowdProcess : require(__dirname + '/vendor/crowdProcess/crowdProcess.js'),
     ECT : require('ect')
 }
 app.engine('ect', pkg.ECT({ watch: true, cache: false, root: __dirname + '/views', ext : '.ect' }).render);
