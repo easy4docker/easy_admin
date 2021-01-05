@@ -1,3 +1,4 @@
+   #!/bin/bash
    stsCron=1
    until [ $stsCron = 0 ]
    do 
