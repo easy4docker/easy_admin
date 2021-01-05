@@ -50,5 +50,5 @@ app.listen(port,  () => {
             return console.error(err);
         }
     });
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`Easy admin listening at http://localhost:${port}`);
 });
