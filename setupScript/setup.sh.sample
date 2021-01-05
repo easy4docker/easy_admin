@@ -58,8 +58,6 @@ if [ $OSENV = "Linux" ]; then
   echo "@reboot root (echo _EASY_DOCKER && cd  ${SCR_DIR} && sh _start.sh)" >> /etc/crontab
 fi
 
-
-
 rm -fr ${SCR_DIR}/admin
 rm -fr ${SCR_DIR}/sites
 rm -fr ${SCR_DIR}/adminData
