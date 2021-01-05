@@ -33,7 +33,7 @@ cd ${SCR_DIR}/admin/dockerSetting
 docker build -f dockerFile -t admin-image .
 
 #  --restart=always
-docker run -d -p ${ADMIN_PORT}:80 \
+docker run -it -p ${ADMIN_PORT}:80 \
     -v "${SCR_DIR}/admin/app":/var/_localApp  -v "${SCR_DIR}/_adminData":/var/_localAppData  \
     -v "${SCR_DIR}/_easydocker_KEY":/var/_localAppKey \
     --network network_easydocker   --name admin-container admin-image
