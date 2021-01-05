@@ -31,7 +31,7 @@ for f in "${CRON_PATH}"/*; do
 
     execfn=${TMP_PATH}/SH_$(basename ${f})
     echo ${execfn} > $markfile
-    echo "-- Ran ${f} -- at $(date +"%m/%d %H:%M:%S")" >> ${LOG_PATH}/commCronLog.data || true
+    echo "-- Ran $(basename ${f}) -- at $(date +"%m/%d %H:%M:%S")" >> ${LOG_PATH}/commCronLog.data || true
     cp ${f} ${LOG_PATH}/$(date +"%m%d%H%M%S")_$(basename ${f}) || true
     mv -f ${f} $execfn || true
     echo "  -->  $(basename ${f})" || true
