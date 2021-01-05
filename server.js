@@ -38,13 +38,7 @@ var RESTS = 'get|put|post|delete'.split('|');
 for (var i=0 ; i < RESTS.length; i++) {
     (function(i) {
         app[RESTS[i]](/(.+)$/i, (req, res) => {
-            var ENGINE= pkg.require(__dirname + '/modules/appEngine.js');
-            var appEng  = new ENGINE(env, pkg, req, res);
-            try {
-                appEng.route(RESTS[i]);
-            } catch (err) {
-                res.send(err.toString());
-            }
+            res.send(RESTS[i]);
         });
     })(i)
 }
