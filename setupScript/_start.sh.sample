@@ -1,5 +1,25 @@
 #!/bin/bash
 
+ADMIN_PORT=10000
+DOCKERCMD=$(command -v docker)
+MAIN_NET="10.10.10"
+MAIN_IP="10.10.10.254"
+
+if  [ "$DOCKERCMD" = "" ]; then
+    echo "\nDocker should be installed!"
+    exit 1
+fi
+
+NETWORK_NAME=network_easydocker
+if [ -z $(docker network ls --filter name=^${NETWORK_NAME}$ --format="{{ .Name }}") ] ; then 
+    docker network create \
+        --driver=bridge \
+        --subnet=${MAIN_NET}.0/16 \
+        --ip-range=${MAIN_NET}.0/24 \
+        --gateway=${MAIN_IP} \
+       network_easydocker &> /dev/null
+fi
+
 docker ps -a
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
