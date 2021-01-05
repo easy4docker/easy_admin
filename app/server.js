@@ -48,6 +48,7 @@ app.listen(port,  () => {
     fs.writeFile(env.dataFolder + '/_log/admin.log', ' admin listening at http://localhost:' + port,  {'flag':'a'},  function(err) {
         if (err) {
             return console.error(err);
-        });
+        }
+    });
     console.log(`Example app listening at http://localhost:${port}`);
 });
