@@ -1,3 +1,10 @@
+
+# ---- check permission -----
+# if [ $USER != "root" ]; then
+#   echo "Error : Need root user to run the command!"
+#   exit 0
+# fi
+
 # ---- prepare S -----
 OSENV=""
 case "$(uname -s)" in
