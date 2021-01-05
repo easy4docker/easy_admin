@@ -5,6 +5,7 @@ RUN apt -y install sudo curl dirmngr apt-transport-https lsb-release ca-certific
 RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 RUN sudo apt -y install nodejs
 RUN apt-get -y install git
+RUN apt-get remove subversion
 RUN apt-get -y install subversion
 RUN apt-get install -y cron
 RUN apt-get install -y vim
