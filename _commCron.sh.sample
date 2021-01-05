@@ -1,7 +1,8 @@
 #!/bin/bash
 DOCKERCMD=$(command -v docker)
 SCR_DIR=$(cd `dirname $0` && pwd)
-CRON_PATH=${SCR_DIR}/_cron
+
+CRON_PATH=${SCR_DIR}/_commCron
 TMP_PATH=${SCR_DIR}/_tmp
 LOG_PATH=${SCR_DIR}/_log
 
