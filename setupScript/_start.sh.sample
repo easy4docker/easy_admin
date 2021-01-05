@@ -6,13 +6,12 @@ SCR_DIR=$(cd `dirname $0` && pwd)
 LOG_PATH=${SCR_DIR}/_adminData/_log
 MAIN_NET="10.10.10"
 MAIN_IP="10.10.10.254"
- echo "AAA"
 
 if  [ "$DOCKERCMD" = "" ]; then
     echo "\nDocker should be installed!" >> ${LOG_PATH}/easyDockerLog.data
     exit 1
 fi
-
+ echo "AA6A"
 mkdir -p ${LOG_PATH}
 NETWORK_NAME=network_easydocker
 if [ -z $(docker network ls --filter name=^${NETWORK_NAME}$ --format="{{ .Name }}") ] ; then 
@@ -23,10 +22,11 @@ if [ -z $(docker network ls --filter name=^${NETWORK_NAME}$ --format="{{ .Name }
         --gateway=${MAIN_IP} \
        network_easydocker &> /dev/null
 fi
+ echo "AA1A"
 
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
-
+ echo "AA2A"
 #--- start admin docker ---
 
 echo "Start admin .." >> ${LOG_PATH}/easyDockerLog.data
