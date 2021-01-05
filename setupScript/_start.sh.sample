@@ -24,6 +24,7 @@ docker ps -a
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
 
+#--- Main common cron loop ---
 stsCron=1
 until [ $stsCron = 0 ]
 do 
