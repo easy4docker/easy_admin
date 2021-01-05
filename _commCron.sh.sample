@@ -30,14 +30,13 @@ for f in "${CRON_PATH}"/*; do
 
     execfn=${TMP_PATH}/SH_$(basename ${f})
     echo ${execfn} > $markfile
-    echo "-- Ran ${f} -- at $(date +"%m/%d/%Y %H:%M:%S")"
+    echo "-- Ran ${f} -- at $(date +"%m/%d/%Y %H:%M:%S")" >> ${LOG_PATH}/commCronLog.data
     cp ${f} ${LOG_PATH} || true
     mv -f ${f} $execfn || true
-    echo "Run ${f} ${DOCKERCMD}" >> commCronLog.data || true
-    sh ${execfn} ${DOCKERCMD} | sed 's/^/\t>>\t/' >> commCronLog.data || true
+    sh ${execfn} ${DOCKERCMD} | sed 's/^/\t>>\t/' >> ${LOG_PATH}/commCronLog.data || true
     rm -fr ${execfn} || true
     rm -fr ${markfile} || true
-    echo "-- done ${f} -- at $(date +"%m/%d/%Y %H:%M:%S")"
+    echo "-- done ${f} -- at $(date +"%m/%d/%Y %H:%M:%S")" >> ${LOG_PATH}/commCronLog.data
   else
     exit 1
   fi
