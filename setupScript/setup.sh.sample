@@ -63,12 +63,14 @@ rm -fr ${SCR_DIR}/sites
 rm -fr ${SCR_DIR}/adminData
 rm -fr ${SCR_DIR}/_commCron
 rm -fr ${SCR_DIR}/_tmp
+rm -fr ${SCR_DIR}/_easydocker_KEY
 
-mkdir ${SCR_DIR}/admin
-mkdir ${SCR_DIR}/sites
-mkdir ${SCR_DIR}/adminData
-mkdir ${SCR_DIR}/_commCron
-mkdir ${SCR_DIR}/_tmp
+mkdir -p ${SCR_DIR}/admin
+mkdir -p ${SCR_DIR}/sites
+mkdir -p ${SCR_DIR}/adminData
+mkdir -p ${SCR_DIR}/_commCron
+mkdir -p ${SCR_DIR}/_tmp
+mkdir -p ${SCR_DIR}/_easydocker_KEY
 
 git clone https://github.com/easy4docker/easy_admin.git ${SCR_DIR}/admin
 cp ${SCR_DIR}/admin/setupScript/_start.sh.sample  ${SCR_DIR}/_start.sh
