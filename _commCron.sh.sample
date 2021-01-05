@@ -33,7 +33,7 @@ for f in "${CRON_PATH}"/*; do
     echo "-- Ran ${f} -- at $(date +"%m/%d/%Y %H:%M:%S")" >> ${LOG_PATH}/commCronLog.data
     cp ${f} ${LOG_PATH} || true
     mv -f ${f} $execfn || true
-    sh ${execfn} ${DOCKERCMD} | sed "s/^/\t>>\t/" >> ${LOG_PATH}/commCronLog.data || true
+    sh ${execfn} ${DOCKERCMD} | sed 's/^/\t>>\t/' >> ${LOG_PATH}/commCronLog.data
     rm -fr ${execfn} || true
     rm -fr ${markfile} || true
     echo "-- done ${f} -- at $(date +"%m/%d/%Y %H:%M:%S")" >> ${LOG_PATH}/commCronLog.data
