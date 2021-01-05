@@ -1,0 +1,102 @@
+<template>
+    <div class="card m-1">
+        <div class="card-body alert-secondary header-bg">
+            <div class="container-fluid m-0">
+                <div class="row">
+                    <div class="col-2 p-0 m-0 text-left">
+                    </div>
+                    <div class="col-8 p-2 m-0 text-center">
+                        <h1 class="header-title">EasyDocker Tool Kit.</h1>
+                    </div>
+                    <div class="col-2 p-0 m-0 text-right">
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid mt-1 text-left">
+                <div class="row" v-if="!root.isSignin()">
+                    <div class="col-12 p-0 m-0 text-left">
+                    &nbsp;
+                    </div>
+                </div>
+                <div class="row" v-if="root.isSignin()">
+                    <div class="col-6 p-0 m-0 text-left">
+                        <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
+                            :disabled = "isDisabled('form')"
+                            v-on:click="clickMenu('form')">
+                            Add a server
+                        </button>
+                        <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
+                            :disabled = "isDisabled('list')"
+                            v-on:click="clickMenu('list')">
+                            List Servers
+                        </button>
+                    </div>
+                    <div class="col-6 p-30 m-0 text-right">
+                        <a class="btn btn-sm btn-success m-1 pull-right border-warning shadow-sm" 
+                            href="JavaScript:void(0)" v-on:click="root.signOff()">
+                            Sign Off
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div> 
+</template>
+ 
+<script>
+module.exports = {
+    data: function() {
+        return {
+            root :  this.$parent.root,
+            list : [],
+            module : ''
+        }
+    },
+    mounted() {
+        let v = localStorage.getItem('easydockerFP');
+        this.root.token = v;
+    },
+    methods :{
+        isDisabled(v) {
+            return (this.$parent.module === v);
+        },
+        clickMenu(v) {
+            var me = this;
+            me.$parent.module = v;
+        },
+        restartProxy() {
+            var me = this;
+            me.$parent.dataEngine().restartProxy();
+        },
+        removeAllHosts() {
+            var me = this;
+            me.$parent.dataEngine().runPost('/api', 'removeAllHosts', {}, function(result) {
+                console.log(result);
+            } , function(result) {
+                console.log(result);
+            });
+        }
+    }
+}
+</script>
+ 
+<style>
+.header-bg { 
+    background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.5)),  url("/images/header-bg.png"); 
+    background-repeat: no-repeat, repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.header-title {
+   -webkit-text-stroke: 1px black;
+   color: white;
+   text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+}
+
+</style>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Cloud Query Tool</title>
+<link rel="stylesheet" href="/css/bootstrap.4.4.1.min.css">
+<script src="/js/jquery-3.5.0.min.js"></script>
+<style type="text/css" media="screen">
+</style>
+</head>
+<body>
+    <div class="container-fluid editor-frame">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label onClick="app.copyText(this)">Cloud Token Admin Tool obj</label>
+                        <button class="btn btn-fluid btn-success btn-sm m-2" onClick="app.addAToken();">Add a Token</button>
+                        <button class="btn btn-fluid btn-secondary btn-sm m-2" onClick="app.close();">Cancel</button>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-10" id="list">
+                
+            </div>
+            <div class="col-2">
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+var app = {};
+$(document).ready(function(){
+    app.close = function() {
+        parent.document._iFrameBridge.close();
+    }
+    app.addAToken = function() {
+        let url = '/api/';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: app.makeData('addAToken'),
+            success: function(data) {
+                app.getAllTokens();
+            },
+            dataType: 'json'
+        });
+    }
+    app.makeData = function(cmd, token) {
+        var v =  {
+                cmd : cmd,
+                serverType : '<%=@serverType%>',
+                serverName : '<%=@serverName%>'
+             };
+        if (token) v.token = token;
+        return v;
+    }
+    app.deleteToken = function(t) {
+        let url = '/api/';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: app.makeData('deleteToken', t),
+            success: function(data) {
+                app.getAllTokens();
+            },
+            dataType: 'json'
+        });
+        
+    }
+
+    app.copyText = function(k) {
+        var obj = $('#token_' + k)[0];
+        var r = document.createRange();
+        r.selectNode(obj);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(r);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+    }
+    app.showTokens = function(v) {
+        var str = '';
+        for (k in v) {
+            str += '<a href="JavaScript: void(0)" onClick="app.deleteToken(\'' + k + 
+                    '\')">Delete</a> <span id="token_' + k + '">' + k + '</span>'+
+                    ' <a href="JavaScript:void(0);" onClick="app.copyText(\'' + k + '\')">Copy</a><br/>'
+        }
+        $('#list').html(str);
+    }
+    app.getAllTokens = function() {
+        let url = '/api/';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: app.makeData('getAllTokens'),
+            success: function(data) {
+                app.showTokens(data.list);
+            },
+            dataType: 'json'
+        });
+        
+    }
+    app.getAllTokens();
+});
+</script>

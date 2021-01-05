@@ -1,0 +1,106 @@
+<%
+    if @mode is 'json' 
+        modeName="JSON"
+        modeCode="ace/mode/json"
+        errorMessage="Incorrect JSON format!"
+    else if @mode is 'javascript' 
+        modeName="JavaScript"
+        modeCode="ace/mode/javascript"
+        errorMessage="Incorrect javascript format!"
+    else if @mode is 'xml' 
+        modeName="XML"
+        modeCode="ace/mode/xml"
+        errorMessage="Incorrect XML format!"
+    else if @mode is 'html' 
+        modeName="HTML"
+        modeCode="ace/mode/html"
+        errorMessage="Incorrect HTML format!"
+    else if @mode is 'css' 
+        modeName="CSS"
+        modeCode="ace/mode/css"
+        errorMessage="Incorrect css format!"
+    else if @mode is 'python' 
+        modeName="python"
+        modeCode="ace/mode/python.js"
+        errorMessage="Incorrect python format!"
+    else
+        modeName="Text"
+        modeCode="ace/mode/xquery"
+        errorMessage="spelling checks happens"
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>ACE Editor</title>
+<link rel="stylesheet" href="/css/bootstrap.4.4.1.min.css">
+<style type="text/css" media="screen">
+    .editor-frame {
+        width : 100%;
+        overflow-x: hidden;
+    }
+    #editor { 
+        width : 100%;
+        min-height:  30rem;
+        padding: 30px;
+        /*
+        position: absolute;
+        top: 3.2em;
+        right: 0;
+        bottom: 4em;
+        left: 0;*/
+    }
+</style>
+</head>
+<body>
+    <div class="container-fluid editor-frame">
+        <div class="row">
+            <div class="col-4 p-2"><b>ACE <%=modeName%> Editor</b></div>
+            <div class="col-4 text-left" id="message-section"></div>
+            <div class="col-4 text-right">
+                <span id = "menu-section"></span>
+                <button class="btn btn-secondary btn-sm m-1 mr-0 text-right" onClick="closeMe();">Cancel</button>
+            </div>
+        </div>
+        <div class="row">
+            <div id="editor" class="col-12"></div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="/js/ace/src-min/ace.js" crossorigin="anonymous"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.getSession().setMode("<%=modeCode%>");
+    editor.setTheme("ace/theme/twilight");
+
+    function closeMe() {
+        parent.document._iFrameBridge.close();
+    }
+
+    function save(editor) {
+        let valid = (Object.keys(editor.getSession().getAnnotations()).length === 0) ? true : false;
+        if (valid) {
+            parent.document._iFrameBridge.save(editor.getValue())
+        }
+    }
+    function validationMessage(editor) {
+        if (Object.keys(editor.getSession().getAnnotations()).length === 0) {
+           document.getElementById('menu-section').innerHTML = '<button class="btn btn-warning btn-sm m-1" onClick="save(editor);">Save</button>';
+           document.getElementById('message-section').innerHTML = '';
+        } else {
+            document.getElementById('menu-section').innerHTML = '<button class="btn btn-primary btn-sm m-1" disabled>Save</button>';
+            document.getElementById('message-section').innerHTML = '<span class="text-danger m-1"><%=errorMessage%></span>';
+        }
+    }
+
+    editor.session.on('change', function(delta) {
+    });
+
+    editor.session.on("changeAnnotation", function() {
+        validationMessage(editor);
+    })
+
+    parent.document._iFrameBridge.loadContents(function(data) {
+        editor.session.setValue(data);
+    });
+</script>
