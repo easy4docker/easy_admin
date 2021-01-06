@@ -59,14 +59,14 @@ if [ $OSENV = "Linux" ]; then
 fi
 
 rm -fr ${SCR_DIR}/admin
-rm -fr ${SCR_DIR}/_adminData
-rm -fr ${SCR_DIR}/_easydocker_KEY
+rm -fr ${SCR_DIR}/data
+rm -fr ${SCR_DIR}/easydocker_KEY
 
 mkdir -p ${SCR_DIR}/admin
-mkdir -p ${SCR_DIR}/_adminData/_commCron
-mkdir -p ${SCR_DIR}/_adminData/_tmp
-mkdir -p ${SCR_DIR}/_adminData/sites
-mkdir -p ${SCR_DIR}/_easydocker_KEY
+mkdir -p ${SCR_DIR}/data/commCron
+mkdir -p ${SCR_DIR}/data/tmp
+mkdir -p ${SCR_DIR}/data/sites
+mkdir -p ${SCR_DIR}/easydocker_KEY
 
 git clone https://github.com/easy4docker/easy_admin.git ${SCR_DIR}/admin
 cp ${SCR_DIR}/admin/setupScript/_start.sh.sample  ${SCR_DIR}/_start.sh
