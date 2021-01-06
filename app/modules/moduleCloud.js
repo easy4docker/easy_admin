@@ -7,37 +7,43 @@
 		me.call = () => {
 			let p = req.url;
 			let mp = p.match(/\/([^\/]+)\/([^\/]+)\/(ui|api)\/(.+|$)/);
-			me.env = {"root":env.root,"dataFolder":env.dataFolder,"appFolder":env.appFolder};
-            res.send(me.env);
+			me.env = {
+				"root":env.root,
+				"dataFolder":env.dataFolder + '/backendCloud/bbb/data',
+				"appFolder":env.appFolder+ '/backendCloud/bbb/code'
+			};
+            me.askBackendStatus();
             return true;
 		}
 		
 		me.askBackendStatus = (data) => {
+			const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
 			const _f = {};
 			_f['localScripts'] = (cbk) => {
-				const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
-				const tree = dirTree(env.appFolder + '/mainServer');
+				const tree = dirTree(me.env.appFolder);
 				cbk((!tree) ? null : tree.children);
 			}
+			
 			_f['scheduledTasks'] = (cbk) => {
-				const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
-				const tree = dirTree(env.dataFolder + '/scheduledTasks');
+
+				const tree = dirTree(me.env.dataFolder + '/scheduledTasks');
 				cbk(me.getCronSetting());
 				// cbk((!tree) ? (env.dataFolder + '/scheduledTasks') : tree.children);
 			}
 			_f['logs'] = (cbk) => {
-				const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
+
 				const tree = dirTree(env.dataFolder + '/_log');
 				cbk((!tree) ? (env.dataFolder + '/_log') : tree.children);
 			}
 			_f['outputs'] = (cbk) => {
-				const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
+
 				const tree = dirTree(env.dataFolder + '/_output');
 				cbk((!tree) ? (env.dataFolder + '/_output') : tree.children);
 			}
+			
 			CP.serial(_f, (data) => {
 				res.send({
-					localScripts : CP.data.localScripts, 
+					localScripts : CP.data.localScripts,
 					scheduledTasks : CP.data.scheduledTasks, 
 					logs : CP.data.logs, 
 					outputs : CP.data.outputs
