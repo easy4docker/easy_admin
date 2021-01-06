@@ -61,14 +61,12 @@ fi
 rm -fr ${SCR_DIR}/admin
 rm -fr ${SCR_DIR}/sites
 rm -fr ${SCR_DIR}/_adminData
-rm -fr ${SCR_DIR}/_commCron
 rm -fr ${SCR_DIR}/_tmp
 rm -fr ${SCR_DIR}/_easydocker_KEY
 
 mkdir -p ${SCR_DIR}/admin
 mkdir -p ${SCR_DIR}/sites
-mkdir -p ${SCR_DIR}/_adminData
-mkdir -p ${SCR_DIR}/_commCron
+mkdir -p ${SCR_DIR}/_adminData/_commCron
 mkdir -p ${SCR_DIR}/_tmp
 mkdir -p ${SCR_DIR}/_easydocker_KEY
 

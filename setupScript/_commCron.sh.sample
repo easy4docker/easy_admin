@@ -2,7 +2,7 @@
 DOCKERCMD=$(command -v docker)
 SCR_DIR=$(cd `dirname $0` && pwd)
 
-CRON_PATH=${SCR_DIR}/_commCron
+CRON_PATH=${SCR_DIR}/_adminData/_commCron
 TMP_PATH=${SCR_DIR}/_tmp
 LOG_PATH=${SCR_DIR}/_adminData/_log
 
