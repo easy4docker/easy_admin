@@ -6,7 +6,7 @@ var path = require('path');
 const port = 80;
 var env = {
     root : __dirname,
-    dataFolder : '/var/_localData',
+    dataFolder : '/var/_localAppData',
     appFolder : '/var/_localApp'
 }
 var pkg = {

@@ -5,8 +5,8 @@
             exec = require('child_process').exec,
             CP = new pkg.crowdProcess();
 
-        var sitesCfgFn = '/var/_localData/_servers_cfg.json';
-        var data_dir = '/var/_localData';
+        var sitesCfgFn = '/var/_localAppData/_servers_cfg.json';
+        var data_dir = '/var/_localAppData';
 
         var _env = {};
         try {
@@ -247,7 +247,7 @@
         }
         // --- TODO---
         this.gitSwitchBranch = (serverName, branch, callback) => {
-            // var dirn = '/var/_localData/sites/' + serverName;
+            // var dirn = '/var/_localAppData/sites/' + serverName;
             var cmd = 'cd ' + me.siteCodePath(serverName) + ' && git checkout ' + branch;
             exec(cmd, {maxBuffer: 1024 * 2048},
                 function(error, stdout, stderr) {

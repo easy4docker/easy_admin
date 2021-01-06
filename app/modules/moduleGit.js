@@ -8,7 +8,7 @@
 
         
         this.gitSwitchBranch = (serverName, branch, callback) => {
-            var dirn = '/var/_localData/sites/' + serverName;
+            var dirn = '/var/_localAppData/sites/' + serverName;
             var cmd = 'cd ' + dirn + ' && git checkout ' + branch;
             exec(cmd, {maxBuffer: 1024 * 2048},
                 function(error, stdout, stderr) {
