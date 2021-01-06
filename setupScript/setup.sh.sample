@@ -65,7 +65,6 @@ rm -fr ${SCR_DIR}/easydocker_KEY
 mkdir -p ${SCR_DIR}/admin
 mkdir -p ${SCR_DIR}/data/commCron
 mkdir -p ${SCR_DIR}/data/tmp
-mkdir -p ${SCR_DIR}/data/sites
 mkdir -p ${SCR_DIR}/easydocker_KEY
 
 git clone https://github.com/easy4docker/easy_admin.git ${SCR_DIR}/admin
