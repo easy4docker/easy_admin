@@ -23,6 +23,13 @@
 				return true;
 			}
 
+			if (mp && mp[1] === '_cloud') {
+				var MCloud= pkg.require(env.root+ '/modules/moduleCloud.js');
+				let mc =  new MCloud(env, pkg, req, res);
+				mc.call();
+				return true;
+			}
+
 			if (mp && mp[1] === 'spa-package') {
 				let SPA = pkg.require(__dirname + '/appSpaPackage.js');
 				let spa= new SPA(env, pkg, req, res);
