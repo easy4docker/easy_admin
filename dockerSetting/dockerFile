@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:@latest
 
 RUN apt update && apt autoremove
 RUN apt -y install sudo curl dirmngr apt-transport-https lsb-release ca-certificates
