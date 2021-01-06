@@ -2,15 +2,15 @@
 DOCKERCMD=$(command -v docker)
 SCR_DIR=$(cd `dirname $0` && pwd)
 
-CRON_PATH=${SCR_DIR}/_adminData/_commCron
-TMP_PATH=${SCR_DIR}/_adminData/_tmp
-LOG_PATH=${SCR_DIR}/_adminData/_log
+CRON_PATH=${SCR_DIR}/data/commCron
+TMP_PATH=${SCR_DIR}/data/tmp
+LOG_PATH=${SCR_DIR}/data/log
 
 mkdir -p ${CRON_PATH}
 mkdir -p ${TMP_PATH}
 mkdir -p ${LOG_PATH}
 
-markfile=${SCR_DIR}/mark.data
+markfile=${SCR_DIR}/data/mark.data
 
 # --- clean longer time task -----
 for file in $(find $markfile -not -newermt '-300 seconds' 2>&1) ;do
