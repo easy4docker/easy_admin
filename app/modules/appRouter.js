@@ -13,8 +13,6 @@
 		}
 
 		this.get = () => {
-			res.send('AAA');
-			return true;
 			let p = req.params[0],
 				mp = p.match(/\/([^\/]+)(\/|$)/);
 
