@@ -487,7 +487,7 @@
             }
             let cloudPort = (!site_config || !site_config.docker || !site_config.docker.cloudPort) ? [] : site_config.docker.cloudPort;
             for (var i = 0;  i < cloudPort.length; i++) {
-                cmdCloudPort += ' -p ' + (10000 + parseInt(site_config.unidx * 1000) + parseInt(cloudPort[i])) + ':' + cloudPort[i] + ' ';
+                cmdCloudPort += ' -p ' + (30000 + parseInt(site_config.unidx * 1000) + parseInt(cloudPort[i])) + ':' + cloudPort[i] + ' ';
             }
             return {
                 serverName          : serverName,
