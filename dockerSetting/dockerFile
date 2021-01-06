@@ -1,4 +1,4 @@
-FROM ubuntu:@latest
+FROM ubuntu:20.10
 
 RUN apt update && apt autoremove
 RUN apt -y install sudo curl dirmngr apt-transport-https lsb-release ca-certificates
