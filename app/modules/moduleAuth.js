@@ -6,8 +6,8 @@
             fs = require('fs'),
             exec = require('child_process').exec,
             CP = new pkg.crowdProcess(),
-            fn = '/var/_localAppData/authData.json',
-            fnToken = '/var/_localAppData/authToken.json';
+            fn = '/var/_localData/authData.json',
+            fnToken = '/var/_localData/authToken.json';
         this.action = (data, callback) => {
             switch(data.code) {
                 case 'isAuthReady' :
