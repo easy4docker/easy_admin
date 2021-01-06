@@ -255,7 +255,7 @@ module.exports = {
             var port = me.arrayPorts(item)
             me.askToken(item, function(data) {
                 var tokenlist = (!data || !data.tokens || !data.tokens.list) ? {} : data.tokens.list;
-                window.open('//localhost:' + port + ((!Object.keys(tokenlist).length) ? '' : ('?token=' + Object.keys(tokenlist)[0])));
+                window.open('/' + ((!Object.keys(tokenlist).length) ? '' : ('?token=' + Object.keys(tokenlist)[0])));
             });
         },
         popupCloudTool(item) {
