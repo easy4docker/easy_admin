@@ -105,7 +105,7 @@
         };
 
         this.setCron = (code, str, callback) => {
-            fs.writeFile(data_dir + '/_cron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
+            fs.writeFile(data_dir + '/_commCron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
                 setTimeout(() => {
                     callback({status:'success', message: code});
                 }, 500)
