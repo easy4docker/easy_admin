@@ -1,87 +1,233 @@
-(function() {
-    var obj = function(env, pkg, req, res) {
-        const me = this,
-            fs = require('fs'),
-            CP = new pkg.crowdProcess(),
-            data_dir = '/var/_localAppData',
-            key_dir = '/var/_localAppKey',
-            sitesCfgFn = data_dir + '/_servers_cfg.json';
-
-        this.getSiteConfig = (serverName) => {
-            var v = {}, p;
-            try {
-                var p = pkg.require(sitesCfgFn);
-                if (typeof p == 'object') {
-                    v = p;
-                }
-            } catch (e) {}
-            var cfg = v[serverName];
-            return cfg;
-        }
-
-        this.call = () => {
-            let p = req.url;
-            let mp = p.match(/\/([^\/]+)\/([^\/]+)\/(ui|api)\/(.+|$)/);
-            res.send(p);
+(function () { //
+	var obj =  function (env, pkg, req, res) {
+		let fs = require('fs'),
+			exec = require('child_process').exec,
+			CP = new pkg.crowdProcess(),
+			me = this;
+		me.call = () => {
+			let p = req.url;
+			let mp = p.match(/\/([^\/]+)\/([^\/]+)\/(ui|api)\/(.+|$)/);
+			me.env = {"root":env.root,"dataFolder":env.dataFolder,"appFolder":env.appFolder};
+            res.send(me.env);
             return true;
-            if (!mp) {
-                callback({ error : {
-                    message: 'Unacceptable uri ' + p
-                }});
-            } else {
-                me.dockerEnv = {};
-                
-                try {
-                    me.dockerEnv = pkg.require(data_dir + '/_env.json');
-                } catch (e) {}
-                try {
-                    me.dockerEnv.rootKey = pkg.require(key_dir + '/' + mp[2] + '/key.json');
-                } catch (e) {}
-                me.pluginFn = data_dir + '/' + mp[1] + '/' + mp[2] + '/code/dockerSetting/adupter/' + mp[3] + '/' + mp[4];
-                me.dockerEnv.siteConfig = me.getSiteConfig(mp[2]);
-                me.request(mp[3], (!req.body || !Object.keys(req.body).length || mp[3] === 'ui') ? null : req.body);
-            }
-        },
-    
-        this.request = (type, requestData) => {
-            if (type === 'ui') {
-                fs.stat(me.pluginFn, function(err, stat) {
-                    if(err == null) {
-                        fs.readFile(me.pluginFn, (err, data)=> {
-                            me.sendHeader('js');
-                            res.send(data);
-                        });
-                    } else {
-                        let fn = me.pluginFn.split('/').pop().split('#')[0].split('?')[0];
-                        res.send(fn + ' does not exist!');
-                    }
-                });
-            } else {
-                try {
-                    var MgetApi= pkg.require(me.pluginFn);
-                    var mgetapi = new MgetApi();
-                    mgetapi.call({dockerEnv : me.dockerEnv, requestData: requestData}, (data) => {
-                        res.send(data);
-                    });               
-                } catch (e) {
-                    res.send(e.message);
-                }
-            }
-        },
-        this.sendHeader = (filetype) => {
-            var me = this;
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header("Access-Control-Allow-Headers", "X-Requested-With");
-            res.header('Access-Control-Allow-Headers', 'Content-Type'); 
-            if (filetype === 'js' || filetype === 'jsx' || filetype === 'vue') {
-                res.setHeader('Content-Type', "text/javascrip");
-            } else if (filetype == 'css') {
-                me.is_css = true;
-                res.setHeader('Content-Type', "text/css");
-            } else {
-                res.setHeader('Content-Type', "text/plain");
-            }			
-        }
-    }
-    module.exports = obj;
-})()
+		}
+		
+		me.askBackendStatus = (data) => {
+			const _f = {};
+			_f['localScripts'] = (cbk) => {
+				const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
+				const tree = dirTree(env.appFolder + '/mainServer');
+				cbk((!tree) ? null : tree.children);
+			}
+			_f['scheduledTasks'] = (cbk) => {
+				const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
+				const tree = dirTree(env.dataFolder + '/scheduledTasks');
+				cbk(me.getCronSetting());
+				// cbk((!tree) ? (env.dataFolder + '/scheduledTasks') : tree.children);
+			}
+			_f['logs'] = (cbk) => {
+				const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
+				const tree = dirTree(env.dataFolder + '/_log');
+				cbk((!tree) ? (env.dataFolder + '/_log') : tree.children);
+			}
+			_f['outputs'] = (cbk) => {
+				const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
+				const tree = dirTree(env.dataFolder + '/_output');
+				cbk((!tree) ? (env.dataFolder + '/_output') : tree.children);
+			}
+			CP.serial(_f, (data) => {
+				res.send({
+					localScripts : CP.data.localScripts, 
+					scheduledTasks : CP.data.scheduledTasks, 
+					logs : CP.data.logs, 
+					outputs : CP.data.outputs
+				});
+			}, 6000);
+			
+		}
+		me.removeCron = (data) => {
+			const _f = {};
+			_f['deleteFile'] = (cbk) => {
+				const fn = env.dataFolder + '/scheduledTasks/' + data.fileName;
+				exec('rm -fr ' + fn, {maxBuffer: 1024 * 2048},
+				function(error, stdout, stderr) {
+					cbk(true);
+				});
+			}
+			_f['removeCron'] = (cbk) => {
+				let cmd = 'sed /' + data.fileName.replace(/[-\/\\^$*+?.()|[\]{}_]/g, '\\$&') + '/d /etc/crontab > /etc/tmp_crontab';
+				cmd += ' && cp -f /etc/tmp_crontab /etc/crontab && rm /etc/tmp_crontab';
+
+				const fnc = env.dataFolder + '/_cron/xc_' + new Date().getTime() + '.sh';
+					
+				fs.writeFile(fnc, cmd, (errp) => {
+					cbk(true);
+				});
+			}
+			_f['removeConfig'] = (cbk) => {
+				me.removeCronSetting(data.fileName, (errp) => {
+					cbk(true);
+				});
+			}
+			CP.serial(_f, (data) => {
+				res.send({status : 'success', cmp : CP.data.removeCron});
+			}, 6000);
+		}
+		me.deleteFile = (data) => {
+			switch (data.type) {
+				case 'log':
+					const fn = env.dataFolder + '/_log/' + data.fileName;
+					exec('rm -fr ' + fn, {maxBuffer: 1024 * 2048},
+					function(error, stdout, stderr) {
+						res.send({status : 'success'});
+					});
+					break;
+				default:
+					res.send({status : 'failure', message : 'Missing or wrong type!'});
+			}
+		}
+
+		me.pullGitCode = (data) => {
+			exec('cd ' + env.appFolder + ' && git pull', {maxBuffer: 1024 * 2048},
+			function(error, stdout, stderr) {
+				res.send({status : 'success'});
+			});
+		}
+
+		me.sendHeader = (filetype) => {
+			res.header("Access-Control-Allow-Origin", "*");
+			res.header("Access-Control-Allow-Headers", "X-Requested-With");
+			res.header('Access-Control-Allow-Headers', 'Content-Type'); 
+			if (filetype == 'js' || filetype == 'jsx' || filetype == 'vue') {
+				res.setHeader('Content-Type', "text/javascrip");
+			} else if (filetype == 'css') {
+				res.setHeader('Content-Type', "text/css");
+			} else {
+				res.setHeader('Content-Type', "text/plain");
+			}			
+		}
+		me.loadFileContent = (data) => {
+			var folderName = (data.fileType == "log") ? '/_log/' : '/scheduledTasks/'; 
+			const fn = env.dataFolder + folderName + data.fileName;
+
+			fs.stat(fn, function(err, stat) {
+				if(err == null) {
+					me.sendHeader('');
+					res.sendFile(fn);
+				} else  {
+					res.sendFile(env.root  + '/www/page404.html');
+				}
+			});
+		}
+
+		me.askLogContent = (data) => {
+			const fn = env.dataFolder + '/_log/' + data.fileName;
+
+			fs.stat(fn, function(err, stat) {
+				if(err == null) {
+					me.sendHeader('');
+					res.sendFile(fn);
+				} else  {
+					res.sendFile(env.root  + '/www/page404.html');
+				}
+			});
+		}
+		me.askOutput = (data) => {
+			const fn = env.dataFolder + '/_output/' + data.fileName;
+
+			fs.stat(fn, function(err, stat) {
+				if(err == null) {
+					me.sendHeader('');
+					res.sendFile(fn);
+				} else  {
+					res.sendFile(env.root  + '/www/page404.html');
+				}
+			});
+		}
+		me.getCronSetting = () => {
+			let cronSetting = {}, cronSettingFn = env.dataFolder + '/cronSetting.json';
+			try {
+				cronSetting = pkg.require(cronSettingFn);
+			} catch (e) {}
+			return cronSetting;
+		}
+		me.saveCronSetting = (fn, data, callback) => {
+			let cronSettingFn = env.dataFolder + '/cronSetting.json';
+			let cronSetting = me.getCronSetting();
+			cronSetting[fn] = data;
+			fs.writeFile(cronSettingFn, JSON.stringify(cronSetting), (err) => {
+				callback();
+			});
+		}
+		me.removeCronSetting = (fn, callback) => {
+			let cronSettingFn = env.dataFolder + '/cronSetting.json';
+			let cronSetting = me.getCronSetting();
+			delete cronSetting[fn];
+			fs.writeFile(cronSettingFn, JSON.stringify(cronSetting), (err) => {
+				callback();
+			});
+		}
+		me.saveTask = (data) => {
+			const dirn = env.dataFolder + '/scheduledTasks';
+			const dirnCron = env.dataFolder + '/_cron';
+
+			const _f = {};
+			_f['createDir'] = (cbk) => {
+				exec('mkdir -p ' + dirn, {maxBuffer: 1024 * 2048},
+					function(error, stdout, stderr) {
+						cbk(true);
+					}
+				)
+			}
+			
+			_f['copyFile'] = (cbk) => {
+				if (data.type !== 'C') {
+					const fn = dirnCron + '/xc_' + new Date().getTime() + '.sh';
+					fs.writeFile(fn, data.command, (err) => {
+						if (err) {
+							cbk(err.message);
+						} else {
+							cbk(true);
+						}
+					});
+				} else {
+					const fnc = dirnCron + '/xe_' + new Date().getTime() + '.sh';
+					const fnp0 = 'xp_' + new Date().getTime() + '.sh';
+					const fnp = dirn +  '/' + fnp0;
+
+					let cron_shell = 'echo "=== CRON RUN $(date +"%m-%d %H:%M:%S") ===' + '" >> ' + env.dataFolder + '/_log/cron.log' + " ===\n";
+					cron_shell += 'cd /var/_localApp'+ "\n";
+					cron_shell += data.command + " | sed 's/^/\t>>\t/'"+ ' >> ' + env.dataFolder + '/_log/cron.log'+ "\n";
+					cron_shell += 'echo "\tCRON Done $(date +"%m-%d %H:%M:%S") '  + '" >> ' + env.dataFolder + '/_log/cron.log' + "\n\n";
+
+					let cmd = 'echo "Add cron job ' + fnp0 + '\n" && ';
+					cmd += 'echo "' + data.schedule + ' root (sh ' + fnp + ')" >> /etc/crontab ';
+					
+					const cronSetting = {
+						name 	: data.name,
+						command : data.command,
+						schedule : data.schedule
+					};
+					me.saveCronSetting(fnp0, cronSetting, (d)=> {
+						fs.writeFile(fnp, cron_shell, (errp) => {
+							fs.writeFile(fnc, cmd, (err) => {
+								if (err) {
+									cbk(err.message);
+								} else {
+									cbk(true);
+								}
+							});
+						});
+					});
+				}
+			}
+			CP.serial(_f, (data) => {
+				res.send(CP.data['copyFile']);
+			}, 12000);
+		}
+	};
+	if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+		module.exports = obj;
+	} 
+
+})();

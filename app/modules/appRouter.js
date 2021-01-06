@@ -89,6 +89,13 @@
 				return true;
 			}
 
+			if (mp && mp[1] === '_cloud') {
+				var MCloud= pkg.require(env.root+ '/modules/moduleCloud.js');
+				let mc =  new MCloud(env, pkg, req, res);
+				mc.call();
+				return true;
+			}
+			
 			if (!mp || mp[1] !== 'api') {
 				res.render(env.root  + '/views/html/page404.ect');
 				return true
