@@ -5,17 +5,14 @@
 			CP = new pkg.crowdProcess(),
 			me = this;
 		me.call = () => {
-			let p = req.url;
-			mp = p.match(/\/([^\/]+)\/([^\/]+)$/);
-			if (!mp || !mp[2]) {
+			if (!req.body.serverName) {
 				res.render('html/page404.ect');
 				return true;
 			}
-
 			me.env = {
 				"root":env.root,
-				"dataFolder":env.dataFolder + '/backendCloud/' + mp[2] + '/data',
-				"appFolder":env.dataFolder+ '/backendCloud/' + mp[2] + '/code'
+				"dataFolder":env.dataFolder + '/backendCloud/' +req.body.serverName + '/data',
+				"appFolder":env.dataFolder+ '/backendCloud/' +req.body.serverName + '/code'
 			};
 			me.askBackendStatus();
             return true;
@@ -24,7 +21,7 @@
 			const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
 			const _f = {};
 			_f['localScripts'] = (cbk) => {
-				const tree = dirTree(me.env.appFolder);
+				const tree = dirTree(me.env.appFolder + '/app');
 				cbk((!tree) ? null : tree.children);
 			}
 			

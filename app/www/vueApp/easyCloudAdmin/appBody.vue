@@ -253,7 +253,8 @@ module.exports = {
         askBackendStatus() {
             var me = this;
             const data = {};
-            data.cmd = "askBackendStatus"
+            data.cmd = "askBackendStatus";
+            data.serverName = 'gg';
             me.root.dataEngine(me).doPost(data, function(result) {
                 me.localScripts =  result.localScripts.filter(function(item) {
                    return  (/\.js$/.test(item.name)) ? true : false
