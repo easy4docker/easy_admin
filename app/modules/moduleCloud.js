@@ -6,16 +6,54 @@
 			me = this;
 		me.call = () => {
 			let p = req.url;
-			let mp = p.match(/\/([^\/]+)\/([^\/]+)\/(ui|api)\/(.+|$)/);
+			mp = p.match(/\/([^\/]+)\/([^\/]+)$/);
+			if (!mp || !mp[2]) {
+				res.render('html/page404.ect');
+				return true;
+			}
+
 			me.env = {
 				"root":env.root,
-				"dataFolder":env.dataFolder + '/backendCloud/bbb/data',
-				"appFolder":env.appFolder+ '/backendCloud/bbb/code'
+				"dataFolder":env.dataFolder + '/backendCloud/' + mp[2] + '/data',
+				"appFolder":env.dataFolder+ '/backendCloud/' + mp[2] + '/code'
 			};
-            me.askBackendStatus();
+			fs.stat(fn, function(err, stat) {
+				if(err == null) {
+					me.pageGet();
+				} else  {
+					res.render('html/page404.ect');
+				}
+			});
             return true;
 		}
-		
+		this.pageGet = ()=> {
+			var _tokens = me.getTokens();
+			var token=req.query.token;
+			if ((!token || !_tokens || !_tokens.list || !_tokens.list[token])  && !(/^\/(css|js|images)\//ig.test(p))) {
+				res.sendFile(env.root  + '/www/page401.html');
+			} else {
+				let fn = (/\/$/.test(req.url)) ? (env.root + '/views' + p + 'index.ect') : (env.root + '/www' + p);
+				if (!/\.ect$/.test(fn)) {
+					let m = fn.match(/\.(html|js|css|jsx|vue|txt|vue)$/ig);
+					fs.stat(fn, function(err, stat) {
+						if(err == null) {
+							if (!m || !m[0]) {
+								res.sendFile(fn);
+							} else {
+								fs.readFile(fn, 'utf-8', (err, data)=> {
+									me.sendHeader(m[0].replace(/\./,''));
+									res.send((err) ? err.message : data);
+								});
+							}
+						} else  {
+							res.sendFile(env.root  + '/www/page404.html');
+						}
+					});
+				} else {
+					res.render(fn, req.query);
+				}
+			}
+		}
 		me.askBackendStatus = (data) => {
 			const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
 			const _f = {};
@@ -54,7 +92,7 @@
 		me.removeCron = (data) => {
 			const _f = {};
 			_f['deleteFile'] = (cbk) => {
-				const fn = env.dataFolder + '/scheduledTasks/' + data.fileName;
+				const fn = me.env.dataFolder + '/scheduledTasks/' + data.fileName;
 				exec('rm -fr ' + fn, {maxBuffer: 1024 * 2048},
 				function(error, stdout, stderr) {
 					cbk(true);
@@ -82,7 +120,7 @@
 		me.deleteFile = (data) => {
 			switch (data.type) {
 				case 'log':
-					const fn = env.dataFolder + '/_log/' + data.fileName;
+					const fn = me.env.dataFolder + '/_log/' + data.fileName;
 					exec('rm -fr ' + fn, {maxBuffer: 1024 * 2048},
 					function(error, stdout, stderr) {
 						res.send({status : 'success'});
@@ -94,7 +132,7 @@
 		}
 
 		me.pullGitCode = (data) => {
-			exec('cd ' + env.appFolder + ' && git pull', {maxBuffer: 1024 * 2048},
+			exec('cd ' + me.env.appFolder + ' && git pull', {maxBuffer: 1024 * 2048},
 			function(error, stdout, stderr) {
 				res.send({status : 'success'});
 			});
@@ -114,7 +152,7 @@
 		}
 		me.loadFileContent = (data) => {
 			var folderName = (data.fileType == "log") ? '/_log/' : '/scheduledTasks/'; 
-			const fn = env.dataFolder + folderName + data.fileName;
+			const fn = me.env.dataFolder + folderName + data.fileName;
 
 			fs.stat(fn, function(err, stat) {
 				if(err == null) {
@@ -127,7 +165,7 @@
 		}
 
 		me.askLogContent = (data) => {
-			const fn = env.dataFolder + '/_log/' + data.fileName;
+			const fn = me.env.dataFolder + '/_log/' + data.fileName;
 
 			fs.stat(fn, function(err, stat) {
 				if(err == null) {
@@ -139,7 +177,7 @@
 			});
 		}
 		me.askOutput = (data) => {
-			const fn = env.dataFolder + '/_output/' + data.fileName;
+			const fn = me.env.dataFolder + '/_output/' + data.fileName;
 
 			fs.stat(fn, function(err, stat) {
 				if(err == null) {
@@ -151,14 +189,14 @@
 			});
 		}
 		me.getCronSetting = () => {
-			let cronSetting = {}, cronSettingFn = env.dataFolder + '/cronSetting.json';
+			let cronSetting = {}, cronSettingFn = me.env.dataFolder + '/cronSetting.json';
 			try {
 				cronSetting = pkg.require(cronSettingFn);
 			} catch (e) {}
 			return cronSetting;
 		}
 		me.saveCronSetting = (fn, data, callback) => {
-			let cronSettingFn = env.dataFolder + '/cronSetting.json';
+			let cronSettingFn = me.env.dataFolder + '/cronSetting.json';
 			let cronSetting = me.getCronSetting();
 			cronSetting[fn] = data;
 			fs.writeFile(cronSettingFn, JSON.stringify(cronSetting), (err) => {
@@ -166,7 +204,7 @@
 			});
 		}
 		me.removeCronSetting = (fn, callback) => {
-			let cronSettingFn = env.dataFolder + '/cronSetting.json';
+			let cronSettingFn = me.env.dataFolder + '/cronSetting.json';
 			let cronSetting = me.getCronSetting();
 			delete cronSetting[fn];
 			fs.writeFile(cronSettingFn, JSON.stringify(cronSetting), (err) => {
@@ -174,8 +212,8 @@
 			});
 		}
 		me.saveTask = (data) => {
-			const dirn = env.dataFolder + '/scheduledTasks';
-			const dirnCron = env.dataFolder + '/_cron';
+			const dirn = me.env.dataFolder + '/scheduledTasks';
+			const dirnCron = me.env.dataFolder + '/_cron';
 
 			const _f = {};
 			_f['createDir'] = (cbk) => {
@@ -201,10 +239,10 @@
 					const fnp0 = 'xp_' + new Date().getTime() + '.sh';
 					const fnp = dirn +  '/' + fnp0;
 
-					let cron_shell = 'echo "=== CRON RUN $(date +"%m-%d %H:%M:%S") ===' + '" >> ' + env.dataFolder + '/_log/cron.log' + " ===\n";
+					let cron_shell = 'echo "=== CRON RUN $(date +"%m-%d %H:%M:%S") ===' + '" >> ' + me.env.dataFolder + '/_log/cron.log' + " ===\n";
 					cron_shell += 'cd /var/_localApp'+ "\n";
-					cron_shell += data.command + " | sed 's/^/\t>>\t/'"+ ' >> ' + env.dataFolder + '/_log/cron.log'+ "\n";
-					cron_shell += 'echo "\tCRON Done $(date +"%m-%d %H:%M:%S") '  + '" >> ' + env.dataFolder + '/_log/cron.log' + "\n\n";
+					cron_shell += data.command + " | sed 's/^/\t>>\t/'"+ ' >> ' + me.env.dataFolder + '/_log/cron.log'+ "\n";
+					cron_shell += 'echo "\tCRON Done $(date +"%m-%d %H:%M:%S") '  + '" >> ' + me.env.dataFolder + '/_log/cron.log' + "\n\n";
 
 					let cmd = 'echo "Add cron job ' + fnp0 + '\n" && ';
 					cmd += 'echo "' + data.schedule + ' root (sh ' + fnp + ')" >> /etc/crontab ';
