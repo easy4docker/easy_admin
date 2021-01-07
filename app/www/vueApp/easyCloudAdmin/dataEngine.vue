@@ -16,13 +16,13 @@ module.exports = {
         ajaxPost(data, callback, isSpinner) {
             var me = this;
             data.serverName = 'gg';
-            // if (isSpinner) me.$parent.triggerSpinner = true;
+            if (isSpinner) me.$parent.triggerSpinner = true;
             $.ajax({
                 type: 'POST',
                 url:'/_cloud/?token=' + me.$parent.token,
                 data: data,
                 success: function(result) {
-                    // if (isSpinner) 
+                    if (isSpinner) 
                     me.$parent.triggerSpinner = false;
                     callback(result)
                 },
@@ -36,6 +36,7 @@ module.exports = {
         },
         ajaxPostText(data, callback, isSpinner) {
             var me = this;
+            data.serverName = 'gg';
             if (isSpinner) me.$parent.triggerSpinner = true;
             $.ajax({
                 type: 'POST',
