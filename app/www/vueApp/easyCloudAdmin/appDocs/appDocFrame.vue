@@ -22,8 +22,8 @@ module.exports = {
     },
     components:VUEApp.loadComponents({
         LOAD    : {
-            howToSetup     : '/js/vueApp/appDocs/howToSetup.vue',
-            contact        : '/js/vueApp/appDocs/contact.vue'
+            howToSetup     : '/vueApp/easyCloudAdmin/appDocs/howToSetup.vue',
+            contact        : '/vueApp/easyCloudAdmin/appDocs/contact.vue'
         }
     })
 }

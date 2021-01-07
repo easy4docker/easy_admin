@@ -33,10 +33,10 @@ module.exports = {
     },
     components: VUEApp.loadComponents({
         LOAD    : {
-            'appHeader'     : '/js/vueApp/appHeader.vue',
-            'appBody'       : '/js/vueApp/appBody.vue',
-            'dataEngine'    : '/js/vueApp/dataEngine.vue',
-            'spinner'       : '/js/vueApp/spinner.vue'
+            'appHeader'     : '/vueApp/easyCloudAdmin/appHeader.vue',
+            'appBody'       : '/vueApp/easyCloudAdmin/appBody.vue',
+            'dataEngine'    : '/vueApp/easyCloudAdmin/dataEngine.vue',
+            'spinner'       : '/vueApp/easyCloudAdmin/spinner.vue'
         }
     })
 }

@@ -17,42 +17,8 @@
 				"dataFolder":env.dataFolder + '/backendCloud/' + mp[2] + '/data',
 				"appFolder":env.dataFolder+ '/backendCloud/' + mp[2] + '/code'
 			};
-			fs.stat(fn, function(err, stat) {
-				if(err == null) {
-					me.pageGet();
-				} else  {
-					res.render('html/page404.ect');
-				}
-			});
+			me.askBackendStatus();
             return true;
-		}
-		this.pageGet = ()=> {
-			var _tokens = me.getTokens();
-			var token=req.query.token;
-			if ((!token || !_tokens || !_tokens.list || !_tokens.list[token])  && !(/^\/(css|js|images)\//ig.test(p))) {
-				res.sendFile(env.root  + '/www/page401.html');
-			} else {
-				let fn = (/\/$/.test(req.url)) ? (env.root + '/views' + p + 'index.ect') : (env.root + '/www' + p);
-				if (!/\.ect$/.test(fn)) {
-					let m = fn.match(/\.(html|js|css|jsx|vue|txt|vue)$/ig);
-					fs.stat(fn, function(err, stat) {
-						if(err == null) {
-							if (!m || !m[0]) {
-								res.sendFile(fn);
-							} else {
-								fs.readFile(fn, 'utf-8', (err, data)=> {
-									me.sendHeader(m[0].replace(/\./,''));
-									res.send((err) ? err.message : data);
-								});
-							}
-						} else  {
-							res.sendFile(env.root  + '/www/page404.html');
-						}
-					});
-				} else {
-					res.render(fn, req.query);
-				}
-			}
 		}
 		me.askBackendStatus = (data) => {
 			const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
@@ -65,18 +31,18 @@
 			_f['scheduledTasks'] = (cbk) => {
 
 				const tree = dirTree(me.env.dataFolder + '/scheduledTasks');
-				cbk(me.getCronSetting());
-				// cbk((!tree) ? (env.dataFolder + '/scheduledTasks') : tree.children);
+				// cbk(me.getCronSetting());
+				cbk((!tree) ? (me.env.dataFolder + '/scheduledTasks') : tree.children);
 			}
 			_f['logs'] = (cbk) => {
 
-				const tree = dirTree(env.dataFolder + '/_log');
-				cbk((!tree) ? (env.dataFolder + '/_log') : tree.children);
+				const tree = dirTree(me.env.dataFolder + '/_log');
+				cbk((!tree) ? (me.env.dataFolder + '/_log') : tree.children);
 			}
 			_f['outputs'] = (cbk) => {
 
-				const tree = dirTree(env.dataFolder + '/_output');
-				cbk((!tree) ? (env.dataFolder + '/_output') : tree.children);
+				const tree = dirTree(me.env.dataFolder + '/_output');
+				cbk((!tree) ? (me.env.dataFolder + '/_output') : tree.children);
 			}
 			
 			CP.serial(_f, (data) => {

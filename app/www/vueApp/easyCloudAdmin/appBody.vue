@@ -275,11 +275,11 @@ module.exports = {
     },
     components: VUEApp.loadComponents({
         LOAD    : {
-            'scheduleTaskForm' : '/js/vueApp/scheduleTaskForm.vue',
-            'appMenu' : '/js/vueApp/appMenu.vue',
-            'showFileContent' : '/js/vueApp/showFileContent.vue',
-            'showOutput' : '/js/vueApp/showOutput.vue',
-            'appDocFrame' : '/js/vueApp/appDocs/appDocFrame.vue'
+            'scheduleTaskForm' : '/vueApp/easyCloudAdmin/scheduleTaskForm.vue',
+            'appMenu' : '/vueApp/easyCloudAdmin/appMenu.vue',
+            'showFileContent' : '/vueApp/easyCloudAdmin/showFileContent.vue',
+            'showOutput' : '/vueApp/easyCloudAdmin/showOutput.vue',
+            'appDocFrame' : '/vueApp/easyCloudAdmin/appDocs/appDocFrame.vue'
         }
     })
 }

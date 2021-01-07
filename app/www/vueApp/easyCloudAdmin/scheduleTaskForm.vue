@@ -74,7 +74,7 @@ module.exports = {
     },
     components: VUEApp.loadComponents({
         LOAD    : {
-            'commCronSchedule'     : '/js/vueApp/commCronSchedule.vue'
+            'commCronSchedule'     : '/vueApp/easyCloudAdmin/commCronSchedule.vue'
         }
     })
 }

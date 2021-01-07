@@ -9,7 +9,7 @@ $(document).ready(function(){
         },
         components: VUEApp.loadComponents({
             LOAD    : {
-                'appRoot' : '/js/vueApp/appRoot.vue'
+                'appRoot' : '/vueApp/easyCloudAdmin/appRoot.vue'
             }
         })
     });
