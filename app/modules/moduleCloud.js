@@ -5,14 +5,14 @@
 			CP = new pkg.crowdProcess(),
 			me = this;
 		me.call = () => {
-			if (!req.body.serverName) {
+			if (!req.body.name) {
 				res.render('html/page404.ect');
 				return true;
 			}
 			me.env = {
 				"root":env.root,
-				"dataFolder":env.dataFolder + '/backendCloud/' +req.body.serverName + '/data',
-				"appFolder":env.dataFolder+ '/backendCloud/' +req.body.serverName + '/code'
+				"dataFolder":env.dataFolder + '/backendCloud/' +req.body.name + '/data',
+				"appFolder":env.dataFolder+ '/backendCloud/' +req.body.name + '/code'
 			};
 			me.askBackendStatus();
             return true;
