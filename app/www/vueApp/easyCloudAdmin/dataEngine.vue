@@ -40,7 +40,7 @@ module.exports = {
             if (isSpinner) me.$parent.triggerSpinner = true;
             $.ajax({
                 type: 'POST',
-                url:'/a_cloud/?token=' + me.$parent.token,
+                url:'/_cloud/?token=' + me.$parent.token,
                 data: data,
                 success: function(result) {
                     if (isSpinner) me.$parent.triggerSpinner = false;
