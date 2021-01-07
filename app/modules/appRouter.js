@@ -26,7 +26,7 @@
 			if (mp && mp[1] === '_cloud') {
 				var MCloud= pkg.require(env.root+ '/modules/moduleCloud.js');
 				let mc =  new MCloud(env, pkg, req, res);
-				mc.call();
+				me.call();
 				return true;
 			}
 

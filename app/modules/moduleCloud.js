@@ -1,3 +1,5 @@
+const { exit } = require('process');
+
 (function () { //
 	var obj =  function (env, pkg, req, res) {
 		let fs = require('fs'),
@@ -5,16 +7,20 @@
 			CP = new pkg.crowdProcess(),
 			me = this;
 		me.call = () => {
-			if (!req.body.name) {
+			if (!req.body.serverName) {
 				res.render('html/page404.ect');
 				return true;
 			}
 			me.env = {
 				"root":env.root,
-				"dataFolder":env.dataFolder + '/backendCloud/' +req.body.name + '/data',
-				"appFolder":env.dataFolder+ '/backendCloud/' +req.body.name + '/code'
+				"dataFolder":env.dataFolder + '/backendCloud/' +req.body.serverName + '/data',
+				"appFolder":env.dataFolder+ '/backendCloud/' +req.body.serverName + '/code'
 			};
-			me.askBackendStatus();
+			if ((req.body.cmd) && (me[req.body.cmd])) {
+				me[req.body.cmd](req.body);
+			} else {
+				res.send({status : 'failure', message : 'Missing cmd!'});
+			}
             return true;
 		}
 		me.askBackendStatus = (data) => {

@@ -15,17 +15,20 @@ module.exports = {
     methods :{
         ajaxPost(data, callback, isSpinner) {
             var me = this;
-            if (isSpinner) me.$parent.triggerSpinner = true;
+            data.serverName = 'gg';
+            // if (isSpinner) me.$parent.triggerSpinner = true;
             $.ajax({
                 type: 'POST',
                 url:'/_cloud/?token=' + me.$parent.token,
                 data: data,
                 success: function(result) {
-                    if (isSpinner) me.$parent.triggerSpinner = false;
+                    // if (isSpinner) 
+                    me.$parent.triggerSpinner = false;
                     callback(result)
                 },
                 error: function (jqXHR, textStatus, errorThrown) { 
-                    if (isSpinner) me.$parent.triggerSpinner = false;
+                    // if (isSpinner) 
+                    me.$parent.triggerSpinner = false;
                     callback('error result');
                 },
                 dataType: 'JSON'
