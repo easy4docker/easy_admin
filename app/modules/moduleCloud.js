@@ -34,8 +34,7 @@ const { exit } = require('process');
 			_f['scheduledTasks'] = (cbk) => {
 
 				const tree = dirTree(me.env.dataFolder + '/scheduledTasks');
-				// cbk(me.getCronSetting());
-				cbk((!tree) ? (me.env.dataFolder + '/scheduledTasks') : tree.children);
+				cbk(me.getCronSetting());
 			}
 			_f['logs'] = (cbk) => {
 

@@ -226,6 +226,7 @@ module.exports = {
             );
         },
         removeCron(fn) {
+            alert(fn);
             var me = this;
             const data = {cmd: 'removeCron', fileName: fn };
             me.root.dataEngine(me).doPost(data, function(result) {
