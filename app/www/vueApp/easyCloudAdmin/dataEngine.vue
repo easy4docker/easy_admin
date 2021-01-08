@@ -2,6 +2,7 @@
 </template>
 
 <script>
+
 module.exports = {
     props: [],
     data: function() {
@@ -16,6 +17,7 @@ module.exports = {
         ajaxPost(data, callback, isSpinner) {
             var me = this;
             if (isSpinner) me.$parent.triggerSpinner = true;
+            data.host = (!data.host) ? me.$route.query.host : data.host;
             $.ajax({
                 type: 'POST',
                 url:'/_cloud/?token=' + me.$parent.token,
@@ -34,6 +36,7 @@ module.exports = {
         ajaxPostText(data, callback, isSpinner) {
             var me = this;
             if (isSpinner) me.$parent.triggerSpinner = true;
+            data.host = (!data.host) ? me.$route.query.host : data.host;
             $.ajax({
                 type: 'POST',
                 url:'/_cloud/?token=' + me.$parent.token,

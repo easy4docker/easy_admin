@@ -1,0 +1,16 @@
+{
+    "TPL" : [
+
+    ],
+    "JS" : [
+        "/js/coffee-script.js",
+        "/js/jquery-3.5.0.min.js",
+        "/js/popper.1.12.9.min.js",
+        "/js/bootstrap.4.4.1.min.js",
+
+        "/vueApp/jsLib/vueIntegration.js",
+        "/vueApp/jsLib/vue-router.min.js",
+        "/vueApp/jsLib/vueApp.js",
+        "/vueApp/easyCloudAdmin/_main.js"
+    ]
+}
