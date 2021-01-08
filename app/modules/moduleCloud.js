@@ -86,7 +86,7 @@ const { exit } = require('process');
 		me.deleteFile = (data) => {
 			switch (data.type) {
 				case 'log':
-					const fn = _env.data_folder + '/log/' + data.fileName;
+					const fn = me.env.dataFolder + '/log/' + data.fileName;
 					exec('rm -fr ' + fn, {maxBuffer: 1024 * 2048},
 					function(error, stdout, stderr) {
 						res.send({status : 'success'});
