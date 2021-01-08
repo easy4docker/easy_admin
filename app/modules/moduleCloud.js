@@ -68,7 +68,7 @@ const { exit } = require('process');
 				let cmd = 'sed /' + data.fileName.replace(/[-\/\\^$*+?.()|[\]{}_]/g, '\\$&') + '/d /etc/crontab > /etc/tmp_crontab';
 				cmd += ' && cp -f /etc/tmp_crontab /etc/crontab && rm /etc/tmp_crontab';
 
-				const fnc = env.dataFolder + '/cron/xc_' + new Date().getTime() + '.sh';
+				const fnc = _env.data_folder + '/cron/xc_' + new Date().getTime() + '.sh';
 					
 				fs.writeFile(fnc, cmd, (errp) => {
 					cbk(true);
