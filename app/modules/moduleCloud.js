@@ -154,7 +154,7 @@ const { exit } = require('process');
 			});
 		}
 		me.getCronSetting = () => {
-			let cronSetting = {}, cronSettingFn = _env.data_folder + '/cronSetting.json';
+			let cronSetting = {}, cronSettingFn = me.env.dataFolder  + '/cronSetting.json';
 			try {
 				cronSetting = pkg.require(cronSettingFn);
 			} catch (e) {}
