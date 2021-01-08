@@ -205,7 +205,7 @@ const { exit } = require('process');
 					const fnp = dirn +  '/' + fnp0;
 
 					let cron_shell = 'echo "=== CRON RUN $(date +"%m-%d %H:%M:%S") ===' + '" >> ' + env.dataFolder + '/log/cron.log' + " ===\n";
-					cron_shell += 'cd '+ env.dataFolder  + '/app'+ "\n";
+					cron_shell += 'cd '+ env.appFolder  + '/app'+ "\n";
 					cron_shell += data.command + " | sed 's/^/\t>>\t/'"+ ' >> ' + env.dataFolder + '/log/cron.log'+ "\n";
 					cron_shell += 'echo "\tCRON Done $(date +"%m-%d %H:%M:%S") '  + '" >> ' + env.dataFolder + '/log/cron.log' + "\n\n";
 
