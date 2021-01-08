@@ -9,7 +9,7 @@ const { exit } = require('process');
 			me = this;
 
 		me.call = () => {
-			if (!req.body.serverName) {
+			if (!req.body.hostName) {
 				res.render('html/page404.ect');
 				return true;
 			}

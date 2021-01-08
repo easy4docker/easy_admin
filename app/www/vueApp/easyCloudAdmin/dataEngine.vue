@@ -22,13 +22,11 @@ module.exports = {
                 url:'/_cloud/?token=' + me.$parent.token,
                 data: data,
                 success: function(result) {
-                    if (isSpinner) 
-                    me.$parent.triggerSpinner = false;
+                    if (isSpinner) me.$parent.triggerSpinner = false;
                     callback(result)
                 },
                 error: function (jqXHR, textStatus, errorThrown) { 
-                    // if (isSpinner) 
-                    me.$parent.triggerSpinner = false;
+                    if (isSpinner) me.$parent.triggerSpinner = false;
                     callback('error result');
                 },
                 dataType: 'JSON'
