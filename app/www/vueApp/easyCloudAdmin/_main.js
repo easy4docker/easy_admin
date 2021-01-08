@@ -12,8 +12,11 @@ $(document).ready(function(){
         methods :{
         },
         components: VUEApp.loadComponents({
-            LOAD    : {
+            TPL :{
                 'appRoot' : '/vueApp/easyCloudAdmin/appRoot.vue'
+            },
+            LOAD    : {
+               
             }
         })
     });

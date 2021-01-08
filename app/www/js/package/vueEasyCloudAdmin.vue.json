@@ -1,6 +1,11 @@
 {
     "TPL" : [
-
+        "/vueApp/easyCloudAdmin/appRoot.vue",
+        "/vueApp/easyCloudAdmin/scheduleTaskForm.vue",
+        "/vueApp/easyCloudAdmin/appMenu.vue",
+        "/vueApp/easyCloudAdmin/showFileContent.vue",
+        "/vueApp/easyCloudAdmin/showOutput.vue",
+        "/vueApp/easyCloudAdmin/appDocs/appDocFrame.vue"
     ],
     "JS" : [
         "/js/coffee-script.js",

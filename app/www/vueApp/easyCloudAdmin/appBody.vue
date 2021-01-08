@@ -275,13 +275,14 @@ module.exports = {
         }
     },
     components: VUEApp.loadComponents({
-        LOAD    : {
+        TPL :{
             'scheduleTaskForm' : '/vueApp/easyCloudAdmin/scheduleTaskForm.vue',
             'appMenu' : '/vueApp/easyCloudAdmin/appMenu.vue',
             'showFileContent' : '/vueApp/easyCloudAdmin/showFileContent.vue',
             'showOutput' : '/vueApp/easyCloudAdmin/showOutput.vue',
             'appDocFrame' : '/vueApp/easyCloudAdmin/appDocs/appDocFrame.vue'
-        }
+        },
+        LOAD    : {}
     })
 }
 </script>
