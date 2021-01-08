@@ -58,7 +58,7 @@ const { exit } = require('process');
 		me.removeCron = (data) => {
 			const _f = {};
 			_f['deleteFile'] = (cbk) => {
-				const fn = _env.data_folder + '/scheduledTasks/' + data.fileName;
+				const fn = me.env.dataFolder  + '/scheduledTasks/' + data.fileName;
 				exec('rm -fr ' + fn, {maxBuffer: 1024 * 2048},
 				function(error, stdout, stderr) {
 					cbk(true);
@@ -68,7 +68,7 @@ const { exit } = require('process');
 				let cmd = 'sed /' + data.fileName.replace(/[-\/\\^$*+?.()|[\]{}_]/g, '\\$&') + '/d /etc/crontab > /etc/tmp_crontab';
 				cmd += ' && cp -f /etc/tmp_crontab /etc/crontab && rm /etc/tmp_crontab';
 
-				const fnc = _env.data_folder + '/cron/xc_' + new Date().getTime() + '.sh';
+				const fnc = me.env.dataFolder + '/cron/xc_' + new Date().getTime() + '.sh';
 					
 				fs.writeFile(fnc, cmd, (errp) => {
 					cbk(true);
