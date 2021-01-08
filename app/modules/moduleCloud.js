@@ -5,13 +5,17 @@ const { exit } = require('process');
 		let fs = require('fs'),
 			exec = require('child_process').exec,
 			CP = new pkg.crowdProcess(),
-			_env = pkg.require(env.dataFolder + '/_env.json'),
+			_env = pkg.require(env.dataFolder + '/backendCloud/' + req.body.serverName + '/data/_env.json'),
 			me = this;
 
 		me.call = () => {
 			if (!req.body.serverName) {
 				res.render('html/page404.ect');
 				return true;
+			}
+			me.env = {
+				codeFolder : env.dataFolder + '/backendCloud/' + req.body.serverName + '/code/app',
+				dataFolder : env.dataFolder + '/backendCloud/' + req.body.serverName + '/data'
 			}
 			if ((req.body.cmd) && (me[req.body.cmd])) {
 				me[req.body.cmd](req.body);
@@ -24,24 +28,21 @@ const { exit } = require('process');
 			const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
 			const _f = {};
 			_f['localScripts'] = (cbk) => {
-				const tree = dirTree(_env.code_folder);
+				const tree = dirTree(me.env.codeFolder);
 				cbk((!tree) ? null : tree.children);
 			}
 			
 			_f['scheduledTasks'] = (cbk) => {
-
-				const tree = dirTree(_env.data_folder + '/scheduledTasks');
+				const tree = dirTree(me.env.dataFolder + '/scheduledTasks');
 				cbk(me.getCronSetting());
 			}
 			_f['logs'] = (cbk) => {
-
-				const tree = dirTree(_env.data_folder + '/log');
-				cbk((!tree) ? (_env.data_folder + '/log') : tree.children);
+				const tree = dirTree(me.env.dataFolder + '/log');
+				cbk((!tree) ? (me.env.dataFolder + '/log') : tree.children);
 			}
 			_f['outputs'] = (cbk) => {
-
-				const tree = dirTree(_env.data_folder + '/output');
-				cbk((!tree) ? (_env.data_folder + '/output') : tree.children);
+				const tree = dirTree(me.env.dataFolder + '/output');
+				cbk((!tree) ? (me.env.dataFolder + '/output') : tree.children);
 			}
 			
 			CP.serial(_f, (data) => {
