@@ -69,7 +69,7 @@ const { exit } = require('process');
 				cmd += ' && cp -f /etc/tmp_crontab /etc/crontab && rm /etc/tmp_crontab';
 
 				const fnc = me.env.dataFolder + '/cron/xc_' + new Date().getTime() + '.sh';
-					
+
 				fs.writeFile(fnc, cmd, (errp) => {
 					cbk(true);
 				});
@@ -154,14 +154,14 @@ const { exit } = require('process');
 			});
 		}
 		me.getCronSetting = () => {
-			let cronSetting = {}, cronSettingFn = me.env.dataFolder  + '/cronSetting.json';
+			let cronSetting = {}, cronSettingFn = me.env.dataFolder  + '/_cronSetting.json';
 			try {
 				cronSetting = pkg.require(cronSettingFn);
 			} catch (e) {}
 			return cronSetting;
 		}
 		me.saveCronSetting = (fn, data, callback) => {
-			let cronSettingFn = me.env.dataFolder + '/cronSetting.json';
+			let cronSettingFn = me.env.dataFolder + '/_cronSetting.json';
 			let cronSetting = me.getCronSetting();
 			cronSetting[fn] = data;
 			fs.writeFile(cronSettingFn, JSON.stringify(cronSetting), (err) => {
@@ -169,7 +169,7 @@ const { exit } = require('process');
 			});
 		}
 		me.removeCronSetting = (fn, callback) => {
-			let cronSettingFn =me.env.dataFolder + '/cronSetting.json';
+			let cronSettingFn =me.env.dataFolder + '/_cronSetting.json';
 			let cronSetting = me.getCronSetting();
 			delete cronSetting[fn];
 			fs.writeFile(cronSettingFn, JSON.stringify(cronSetting), (err) => {
