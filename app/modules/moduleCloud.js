@@ -118,7 +118,7 @@ const { exit } = require('process');
 		}
 		me.loadFileContent = (data) => {
 			var folderName = (data.fileType == "log") ? '/log/' : '/scheduledTasks/'; 
-			const fn = _env.data_folder + folderName + data.fileName;
+			const fn = me.env.dataFolder + folderName + data.fileName;
 			fs.stat(fn, function(err, stat) {
 				if(err == null) {
 					me.sendHeader('');
