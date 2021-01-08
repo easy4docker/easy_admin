@@ -137,8 +137,9 @@
 
                 </div>
                 <div class="col-9 p-1">
+                    <app-menu></app-menu>
                     <div v-if="!appDoc" class="card main_list_file_section p-1 alert-secondary" >
-                        <app-menu></app-menu>
+                        
                         <span v-if="module=='addTask'">
                             <schedule-task-form ref="scheduleTaskForm"></schedule-task-form>
                         </span>

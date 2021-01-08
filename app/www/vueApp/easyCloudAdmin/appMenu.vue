@@ -1,5 +1,5 @@
 <template>
-    <div class="card p-1 text-left p-2 alert-dark">
+    <div class="card p-1 text-left p-2 mb-2 alert-dark">
         <span>
             <button class="btn btn-success btn-sm m-1" :disabled="menuDisabled('addTask')" v-on:click="addTask();">Add</button>
             <button class="btn btn-success btn-sm m-1" :disabled="menuDisabled('allTasks')" v-on:click="switchmodule('allTasks');">All Tasks</button>
