@@ -68,7 +68,7 @@ const { exit } = require('process');
 				let cmd = 'sed /' + data.fileName.replace(/[-\/\\^$*+?.()|[\]{}_]/g, '\\$&') + '/d /etc/crontab > /etc/tmp_crontab';
 				cmd += ' && cp -f /etc/tmp_crontab /etc/crontab && rm /etc/tmp_crontab';
 
-				const fnc = env.dataFolder + '/_cron/xc_' + new Date().getTime() + '.sh';
+				const fnc = env.dataFolder + '/cron/xc_' + new Date().getTime() + '.sh';
 					
 				fs.writeFile(fnc, cmd, (errp) => {
 					cbk(true);
@@ -86,7 +86,7 @@ const { exit } = require('process');
 		me.deleteFile = (data) => {
 			switch (data.type) {
 				case 'log':
-					const fn = _env.data_folder + '/_log/' + data.fileName;
+					const fn = _env.data_folder + '/log/' + data.fileName;
 					exec('rm -fr ' + fn, {maxBuffer: 1024 * 2048},
 					function(error, stdout, stderr) {
 						res.send({status : 'success'});
@@ -117,7 +117,7 @@ const { exit } = require('process');
 			}			
 		}
 		me.loadFileContent = (data) => {
-			var folderName = (data.fileType == "log") ? '/_log/' : '/scheduledTasks/'; 
+			var folderName = (data.fileType == "log") ? '/log/' : '/scheduledTasks/'; 
 			const fn = _env.data_folder + folderName + data.fileName;
 			fs.stat(fn, function(err, stat) {
 				if(err == null) {
@@ -130,7 +130,7 @@ const { exit } = require('process');
 		}
 
 		me.askLogContent = (data) => {
-			const fn = _env.data_folder + '/_log/' + data.fileName;
+			const fn = _env.data_folder + '/log/' + data.fileName;
 
 			fs.stat(fn, function(err, stat) {
 				if(err == null) {
@@ -178,7 +178,7 @@ const { exit } = require('process');
 		}
 		me.saveTask = (data) => {
 			const dirn = _env.data_folder + '/scheduledTasks';
-			const dirnCron = _env.data_folder + '/_cron';
+			const dirnCron = _env.data_folder + '/cron';
 
 			const _f = {};
 			_f['createDir'] = (cbk) => {
@@ -204,10 +204,10 @@ const { exit } = require('process');
 					const fnp0 = 'xp_' + new Date().getTime() + '.sh';
 					const fnp = dirn +  '/' + fnp0;
 
-					let cron_shell = 'echo "=== CRON RUN $(date +"%m-%d %H:%M:%S") ===' + '" >> ' + env.dataFolder + '/_log/cron.log' + " ===\n";
+					let cron_shell = 'echo "=== CRON RUN $(date +"%m-%d %H:%M:%S") ===' + '" >> ' + env.dataFolder + '/log/cron.log' + " ===\n";
 					cron_shell += 'cd '+ env.dataFolder  + '/app'+ "\n";
-					cron_shell += data.command + " | sed 's/^/\t>>\t/'"+ ' >> ' + env.dataFolder + '/_log/cron.log'+ "\n";
-					cron_shell += 'echo "\tCRON Done $(date +"%m-%d %H:%M:%S") '  + '" >> ' + env.dataFolder + '/_log/cron.log' + "\n\n";
+					cron_shell += data.command + " | sed 's/^/\t>>\t/'"+ ' >> ' + env.dataFolder + '/log/cron.log'+ "\n";
+					cron_shell += 'echo "\tCRON Done $(date +"%m-%d %H:%M:%S") '  + '" >> ' + env.dataFolder + '/log/cron.log' + "\n\n";
 
 					let cmd = 'echo "Add cron job ' + fnp0 + '\n" && ';
 					cmd += 'echo "' + data.schedule + ' root (sh ' + fnp + ')" >> /etc/crontab ';
