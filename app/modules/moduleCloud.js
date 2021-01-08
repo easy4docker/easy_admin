@@ -161,7 +161,7 @@ const { exit } = require('process');
 			return cronSetting;
 		}
 		me.saveCronSetting = (fn, data, callback) => {
-			let cronSettingFn = _env.data_folder + '/cronSetting.json';
+			let cronSettingFn = me.env.dataFolder + '/cronSetting.json';
 			let cronSetting = me.getCronSetting();
 			cronSetting[fn] = data;
 			fs.writeFile(cronSettingFn, JSON.stringify(cronSetting), (err) => {
@@ -169,7 +169,7 @@ const { exit } = require('process');
 			});
 		}
 		me.removeCronSetting = (fn, callback) => {
-			let cronSettingFn = _env.data_folder + '/cronSetting.json';
+			let cronSettingFn =me.env.dataFolder + '/cronSetting.json';
 			let cronSetting = me.getCronSetting();
 			delete cronSetting[fn];
 			fs.writeFile(cronSettingFn, JSON.stringify(cronSetting), (err) => {
