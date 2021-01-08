@@ -202,7 +202,7 @@ const { exit } = require('process');
 				} else {
 					const fnc = dirnCron + '/xe_' + new Date().getTime() + '.sh';
 					const fnp0 = 'xp_' + new Date().getTime() + '.sh';
-					const fnp = env.dataFolder +  '/scheduledTasks/' + fnp0;
+					const fnp = _env.data_Folder +  '/scheduledTasks/' + fnp0;
 
 					let cron_shell = 'echo "=== CRON RUN $(date +"%m-%d %H:%M:%S") ===' + '" >> ' + env.dataFolder + '/log/cron.log' + " ===\n";
 					cron_shell += 'cd '+ env.appFolder  + '/app'+ "\n";
@@ -210,7 +210,7 @@ const { exit } = require('process');
 					cron_shell += 'echo "\tCRON Done $(date +"%m-%d %H:%M:%S") '  + '" >> ' + env.dataFolder + '/log/cron.log' + "\n\n";
 
 					let cmd = 'echo "Add cron job ' + fnp0 + '\n" && ';
-					cmd += 'echo "' + data.schedule + ' root (sh ' + fnp + ')" >> /etc/crontab ';
+					cmd += 'echo "' + data.schedule + ' root (sh ' + env.dataFolder + fnp0 + ')" >> /etc/crontab ';
 					
 					const cronSetting = {
 						name 	: data.name,
