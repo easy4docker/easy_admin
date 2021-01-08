@@ -24,7 +24,7 @@ const { exit } = require('process');
 			const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
 			const _f = {};
 			_f['localScripts'] = (cbk) => {
-				const tree = dirTree(_env.app_folder);
+				const tree = dirTree(_env.code_folder);
 				cbk((!tree) ? null : tree.children);
 			}
 			
@@ -97,7 +97,7 @@ const { exit } = require('process');
 		}
 
 		me.pullGitCode = (data) => {
-			exec('cd ' + _env.app_folder + ' && git pull', {maxBuffer: 1024 * 2048},
+			exec('cd ' + _env.code_folder + ' && git pull', {maxBuffer: 1024 * 2048},
 			function(error, stdout, stderr) {
 				res.send({status : 'success'});
 			});
