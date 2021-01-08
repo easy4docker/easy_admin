@@ -142,7 +142,7 @@ const { exit } = require('process');
 			});
 		}
 		me.askOutput = (data) => {
-			const fn = _env.data_folder + '/_output/' + data.fileName;
+			const fn = _env.data_folder + '/output/' + data.fileName;
 
 			fs.stat(fn, function(err, stat) {
 				if(err == null) {
