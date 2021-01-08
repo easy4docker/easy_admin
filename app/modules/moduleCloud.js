@@ -202,7 +202,7 @@ const { exit } = require('process');
 				} else {
 					const fnc = dirnCron + '/xe_' + new Date().getTime() + '.sh';
 					const fnp0 = 'xp_' + new Date().getTime() + '.sh';
-					const fnp = dirn +  '/' + fnp0;
+					const fnp = env.dataFolder +  '/scheduledTasks/' + fnp0;
 
 					let cron_shell = 'echo "=== CRON RUN $(date +"%m-%d %H:%M:%S") ===' + '" >> ' + env.dataFolder + '/log/cron.log' + " ===\n";
 					cron_shell += 'cd '+ env.appFolder  + '/app'+ "\n";
