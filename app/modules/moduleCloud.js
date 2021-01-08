@@ -5,17 +5,14 @@ const { exit } = require('process');
 		let fs = require('fs'),
 			exec = require('child_process').exec,
 			CP = new pkg.crowdProcess(),
+			_env = pkg.require(env.dataFolder + '/_env.json'),
 			me = this;
+
 		me.call = () => {
 			if (!req.body.serverName) {
 				res.render('html/page404.ect');
 				return true;
 			}
-			me.env = {
-				"root":env.root,
-				"dataFolder":env.dataFolder + '/backendCloud/' +req.body.serverName + '/data',
-				"appFolder":env.dataFolder+ '/backendCloud/' +req.body.serverName + '/code'
-			};
 			if ((req.body.cmd) && (me[req.body.cmd])) {
 				me[req.body.cmd](req.body);
 			} else {
@@ -27,24 +24,24 @@ const { exit } = require('process');
 			const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
 			const _f = {};
 			_f['localScripts'] = (cbk) => {
-				const tree = dirTree(me.env.appFolder + '/app');
+				const tree = dirTree(_env.appFolder + '/app');
 				cbk((!tree) ? null : tree.children);
 			}
 			
 			_f['scheduledTasks'] = (cbk) => {
 
-				const tree = dirTree(me.env.dataFolder + '/scheduledTasks');
+				const tree = dirTree(_env.dataFolder + '/scheduledTasks');
 				cbk(me.getCronSetting());
 			}
 			_f['logs'] = (cbk) => {
 
-				const tree = dirTree(me.env.dataFolder + '/_log');
-				cbk((!tree) ? (me.env.dataFolder + '/_log') : tree.children);
+				const tree = dirTree(_env.dataFolder + '/_log');
+				cbk((!tree) ? (_env.dataFolder + '/_log') : tree.children);
 			}
 			_f['outputs'] = (cbk) => {
 
-				const tree = dirTree(me.env.dataFolder + '/_output');
-				cbk((!tree) ? (me.env.dataFolder + '/_output') : tree.children);
+				const tree = dirTree(_env.dataFolder + '/_output');
+				cbk((!tree) ? (_env.dataFolder + '/_output') : tree.children);
 			}
 			
 			CP.serial(_f, (data) => {
@@ -60,7 +57,7 @@ const { exit } = require('process');
 		me.removeCron = (data) => {
 			const _f = {};
 			_f['deleteFile'] = (cbk) => {
-				const fn = me.env.dataFolder + '/scheduledTasks/' + data.fileName;
+				const fn = _env.dataFolder + '/scheduledTasks/' + data.fileName;
 				exec('rm -fr ' + fn, {maxBuffer: 1024 * 2048},
 				function(error, stdout, stderr) {
 					cbk(true);
@@ -88,7 +85,7 @@ const { exit } = require('process');
 		me.deleteFile = (data) => {
 			switch (data.type) {
 				case 'log':
-					const fn = me.env.dataFolder + '/_log/' + data.fileName;
+					const fn = _env.dataFolder + '/_log/' + data.fileName;
 					exec('rm -fr ' + fn, {maxBuffer: 1024 * 2048},
 					function(error, stdout, stderr) {
 						res.send({status : 'success'});
@@ -100,7 +97,7 @@ const { exit } = require('process');
 		}
 
 		me.pullGitCode = (data) => {
-			exec('cd ' + me.env.appFolder + ' && git pull', {maxBuffer: 1024 * 2048},
+			exec('cd ' + _env.appFolder + ' && git pull', {maxBuffer: 1024 * 2048},
 			function(error, stdout, stderr) {
 				res.send({status : 'success'});
 			});
@@ -120,7 +117,7 @@ const { exit } = require('process');
 		}
 		me.loadFileContent = (data) => {
 			var folderName = (data.fileType == "log") ? '/_log/' : '/scheduledTasks/'; 
-			const fn = me.env.dataFolder + folderName + data.fileName;
+			const fn = _env.dataFolder + folderName + data.fileName;
 			fs.stat(fn, function(err, stat) {
 				if(err == null) {
 					me.sendHeader('');
@@ -132,7 +129,7 @@ const { exit } = require('process');
 		}
 
 		me.askLogContent = (data) => {
-			const fn = me.env.dataFolder + '/_log/' + data.fileName;
+			const fn = _env.dataFolder + '/_log/' + data.fileName;
 
 			fs.stat(fn, function(err, stat) {
 				if(err == null) {
@@ -144,7 +141,7 @@ const { exit } = require('process');
 			});
 		}
 		me.askOutput = (data) => {
-			const fn = me.env.dataFolder + '/_output/' + data.fileName;
+			const fn = _env.dataFolder + '/_output/' + data.fileName;
 
 			fs.stat(fn, function(err, stat) {
 				if(err == null) {
@@ -156,14 +153,14 @@ const { exit } = require('process');
 			});
 		}
 		me.getCronSetting = () => {
-			let cronSetting = {}, cronSettingFn = me.env.dataFolder + '/cronSetting.json';
+			let cronSetting = {}, cronSettingFn = _env.dataFolder + '/cronSetting.json';
 			try {
 				cronSetting = pkg.require(cronSettingFn);
 			} catch (e) {}
 			return cronSetting;
 		}
 		me.saveCronSetting = (fn, data, callback) => {
-			let cronSettingFn = me.env.dataFolder + '/cronSetting.json';
+			let cronSettingFn = _env.dataFolder + '/cronSetting.json';
 			let cronSetting = me.getCronSetting();
 			cronSetting[fn] = data;
 			fs.writeFile(cronSettingFn, JSON.stringify(cronSetting), (err) => {
@@ -171,7 +168,7 @@ const { exit } = require('process');
 			});
 		}
 		me.removeCronSetting = (fn, callback) => {
-			let cronSettingFn = me.env.dataFolder + '/cronSetting.json';
+			let cronSettingFn = _env.dataFolder + '/cronSetting.json';
 			let cronSetting = me.getCronSetting();
 			delete cronSetting[fn];
 			fs.writeFile(cronSettingFn, JSON.stringify(cronSetting), (err) => {
@@ -179,8 +176,8 @@ const { exit } = require('process');
 			});
 		}
 		me.saveTask = (data) => {
-			const dirn = me.env.dataFolder + '/scheduledTasks';
-			const dirnCron = me.env.dataFolder + '/_cron';
+			const dirn = _env.dataFolder + '/scheduledTasks';
+			const dirnCron = _env.dataFolder + '/_cron';
 
 			const _f = {};
 			_f['createDir'] = (cbk) => {
