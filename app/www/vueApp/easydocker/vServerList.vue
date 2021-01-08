@@ -264,7 +264,7 @@ module.exports = {
             me.root.popUp(me).show({
                 insideModule: 'iframeObj',
                 data : {
-                    url : '/cloudTokenAdmin.ect?port=' + port + '&serverName=' + item.name + '&serverType=' + item.serverType
+                    url : '/html/tools/cloudTokenAdmin.ect?port=' + port + '&serverName=' + item.name + '&serverType=' + item.serverType
                 },
                 noDefaultCancel : true
             }); 
@@ -280,7 +280,7 @@ module.exports = {
             me.root.popUp(me).show({
                 insideModule: 'iframeObj',
                 data : {
-                    url : '/aceEditor.ect?mode=json',
+                    url : '/html/tools/aceEditor.ect?mode=json',
                     item : record
                 },
                 noDefaultCancel : true

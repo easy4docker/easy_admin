@@ -58,6 +58,7 @@
 		};
 
 		me.sendEctWithToken = (p) => {
+			// const data_dir = '/var/_localAppData/data/';
 			res.render(env.root  + '/views' + p, req.query);
 		}
 	
