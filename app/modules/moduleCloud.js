@@ -5,7 +5,7 @@ const { exit } = require('process');
 		let fs = require('fs'),
 			exec = require('child_process').exec,
 			CP = new pkg.crowdProcess(),
-			_env = pkg.require(env.dataFolder + '/backendCloud/' + req.body.serverName + '/data/_env.json'),
+			_env = pkg.require(env.dataFolder + '/backendCloud/' + req.body.hostName+ '/data/_env.json'),
 			me = this;
 
 		me.call = () => {
@@ -14,8 +14,8 @@ const { exit } = require('process');
 				return true;
 			}
 			me.env = {
-				codeFolder : env.dataFolder + '/backendCloud/' + req.body.serverName + '/code/app',
-				dataFolder : env.dataFolder + '/backendCloud/' + req.body.serverName + '/data'
+				codeFolder : env.dataFolder + '/backendCloud/' + req.body.hostName+ '/code/app',
+				dataFolder : env.dataFolder + '/backendCloud/' + req.body.hostName+ '/data'
 			}
 			if ((req.body.cmd) && (me[req.body.cmd])) {
 				me[req.body.cmd](req.body);
