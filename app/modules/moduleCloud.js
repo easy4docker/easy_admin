@@ -177,8 +177,8 @@ const { exit } = require('process');
 			});
 		}
 		me.saveTask = (data) => {
-			const dirn = _env.data_folder + '/scheduledTasks';
-			const dirnCron = _env.data_folder + '/cron';
+			const dirn = me.env.dataFolder + '/scheduledTasks';
+			const dirnCron = me.env.dataFolder + '/cron';
 
 			const _f = {};
 			_f['createDir'] = (cbk) => {
