@@ -9,13 +9,14 @@ const { exit } = require('process');
 			me = this;
 
 		me.call = () => {
-			if (!req.body.hostName) {
+			var hostName = (!req.body.hostName) ? (!req.query.host) ? '' : req.query.host : req.body.hostName;
+			if (!hostName) {
 				res.render('html/page404.ect');
 				return true;
 			}
 			me.env = {
-				codeFolder : env.dataFolder + '/backendCloud/' + req.body.hostName+ '/code/app',
-				dataFolder : env.dataFolder + '/backendCloud/' + req.body.hostName+ '/data'
+				codeFolder : env.dataFolder + '/backendCloud/' + hostName + '/code/app',
+				dataFolder : env.dataFolder + '/backendCloud/' + hostName + '/data'
 			}
 			if ((req.body.cmd) && (me[req.body.cmd])) {
 				me[req.body.cmd](req.body);

@@ -15,7 +15,6 @@ module.exports = {
     methods :{
         ajaxPost(data, callback, isSpinner) {
             var me = this;
-            data.hostName= 'gg';
             if (isSpinner) me.$parent.triggerSpinner = true;
             $.ajax({
                 type: 'POST',
@@ -34,7 +33,6 @@ module.exports = {
         },
         ajaxPostText(data, callback, isSpinner) {
             var me = this;
-            data.hostName= 'gg';
             if (isSpinner) me.$parent.triggerSpinner = true;
             $.ajax({
                 type: 'POST',
