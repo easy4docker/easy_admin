@@ -26,7 +26,7 @@
 			if (mp && mp[1] === '_cloud') {
 				var MCloud= pkg.require(env.root+ '/modules/moduleCloud.js');
 				let mc =  new MCloud(env, pkg, req, res);
-				me.call();
+				mc.call();
 				return true;
 			}
 
@@ -52,18 +52,16 @@
 						}
 					});
 				} else {
-					res.render(env.root  + '/views/html/tools/' + p.replace(/^\//, ''), req.query);
+					me.sendEctWithToken(p); 
 				}
-
 			}
 		};
 
-		this.sendEct = (p) => {
-			let mp = p.match(/\/([^\/]+)\.ect$/);
-
+		me.sendEctWithToken = (p) => {
+			res.render(env.root  + '/views' + p, req.query);
 		}
 	
-		this.refreshTokenSend = (data) => {
+		me.refreshTokenSend = (data) => {
 			var MAuth= pkg.require(env.root+ '/modules/moduleAuth.js');
 			var auth = new MAuth(env, pkg);
 			auth.refreshAuthToken(

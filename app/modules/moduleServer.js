@@ -54,8 +54,6 @@
             return this.dockerPath(serverName) + '/env';
         }
 
-        // ===========
-        
         this.pullCode = (serverName, callback) => {
             var cmd = 'cd ' + this.siteCodePath(serverName) + ' && git pull';
             exec(cmd, {maxBuffer: 1024 * 2048},

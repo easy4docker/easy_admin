@@ -5,7 +5,7 @@ const { exit } = require('process');
 		let fs = require('fs'),
 			exec = require('child_process').exec,
 			CP = new pkg.crowdProcess(),
-			_env = pkg.require(env.dataFolder + '/backendCloud/' + req.body.host+ '/data/_env.json'),
+			_env = (!req.body.host) ? {} : pkg.require(env.dataFolder + '/backendCloud/' + req.body.host+ '/data/_env.json'),
 			me = this;
 
 		me.call = () => {
@@ -22,8 +22,9 @@ const { exit } = require('process');
 			} else {
 				res.send({status : 'failure', message : 'Missing cmd!'});
 			}
-            return true;
+			return true;
 		}
+
 		me.askBackendStatus = (data) => {
 			const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
 			const _f = {};
