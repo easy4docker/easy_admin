@@ -6,7 +6,7 @@
                     <div class="col-2 p-0 m-0 text-left">
                     </div>
                     <div class="col-8 p-2 m-0 text-center">
-                        <h1 class="header-title">NodeJS Backend Cloud Tool</h1>
+                        <h1 class="header-title">[{{$route.query.host}}] Backend Cloud Tool</h1>
                     </div>
                     <div class="col-2 p-0 m-0 text-right">
                     </div>
