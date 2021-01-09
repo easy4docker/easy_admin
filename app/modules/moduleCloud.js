@@ -25,7 +25,12 @@ const { exit } = require('process');
 			return true;
 		}
 		me.checkTokenStatus = (data) => {
-			res.send({data : data, status : true});
+			let fn_token = env.dataFolder + '/backendCloud/' + data.host + '/env/token.json'
+			let tokens = {};
+			try {
+				tokens = pkg.require(fn_token);
+			} catch(e) {}
+			res.send({data : data, status : true, fn : fn_token, list:(!tokens.list) ? {} : tokens.list });
 		}
 		me.askBackendStatus = (data) => {
 			const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
