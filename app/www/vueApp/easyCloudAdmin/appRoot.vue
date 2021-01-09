@@ -25,9 +25,9 @@ module.exports = {
     },
     mounted () {
         const me = this;
-        setTimeout(function () {
+        setTimeout(function() {
             me.checkTokenAvaliability();
-        }, 500);
+        },10);
     },
     methods :{
         dataEngine(caller) {
@@ -47,7 +47,7 @@ module.exports = {
         }
     },
     components: VUEApp.loadComponents({
-        TPL : {
+        TPL: {
             'appHeader'     : '/vueApp/easyCloudAdmin/appHeader.vue',
             'appBody'       : '/vueApp/easyCloudAdmin/appBody.vue',
             'dataEngine'    : '/vueApp/easyCloudAdmin/dataEngine.vue',
