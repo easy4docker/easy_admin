@@ -16,10 +16,10 @@
 			let p = req.params[0],
 				mp = p.match(/\/([^\/]+)(\/|$)/);
 
-			if (mp && mp[1] === '_dockerAdupter') {
-				var MAdupter= pkg.require(env.root+ '/modules/moduleAdupter.js');
-				let maupter =  new MAdupter(env, pkg, req, res);
-				maupter.call();
+			if (mp && mp[1] === '_grid') {
+				var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
+				let mGrid =  new MAGrid(env, pkg, req, res);
+				mGrid.call();
 				return true;
 			}
 
