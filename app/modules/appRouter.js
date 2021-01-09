@@ -59,8 +59,8 @@
 
 		me.sendEctWithToken = (p) => {
 			// const data_dir = '/var/_localAppData/data/';
-			res.render(env.root  + '/views' + p, req.query);
-		}
+			res.render(env.root  + '/views' + p, {query: req.query.name});
+		};
 	
 		me.refreshTokenSend = (data) => {
 			var MAuth= pkg.require(env.root+ '/modules/moduleAuth.js');

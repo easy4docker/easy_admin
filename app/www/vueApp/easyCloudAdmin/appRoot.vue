@@ -19,13 +19,34 @@ module.exports = {
     data: function() {
         return {
             root : this,
-            triggerSpinner : false
+            triggerSpinner : false,
+            isTokenAvaliable : false
         }
     },
     mounted () {
-  
+        const me = this;
+        setTimeout(
+            function() {
+                me.checkTokenAvaliability();
+            }, 500)
     },
     methods :{
+        checkTokenAvaliability() {
+            var me = this;
+            var data = {token : me.$route.query.token};
+            me.dataEngine().doPost(data, function(result) {
+                console.log('----result--->');
+                console.log(data);
+                /*
+                me.localScripts =  result.localScripts.filter(function(item) {
+                    return  (/\.js$/.test(item.name)) ? true : false
+                });
+                me.scheduledTasks =  result.scheduledTasks;
+                me.cronTasks =  result.scheduledTasks;
+                me.logs =  result.logs;
+                me.outputs =  result.outputs;*/
+            });
+        },
         dataEngine(caller) {
             if (caller) this.$refs.dataEngine.caller = caller;
             return this.$refs.dataEngine
