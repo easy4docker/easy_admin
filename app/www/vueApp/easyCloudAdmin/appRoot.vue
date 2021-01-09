@@ -27,16 +27,22 @@ module.exports = {
         const me = this;
         setTimeout(
             function() {
-                me.checkTokenAvaliability();
+            //    me.checkTokenAvaliability();
             }, 500)
     },
     methods :{
         checkTokenAvaliability() {
             const me = this;
             const data = me.$route.query;
+            data.cmd = 'checkTokenStatus';
             me.dataEngine().doPost(data, function(result) {
-                console.log('----result-->->');
                 console.log(data);
+                console.log('--result-->');
+                console.log(result);
+                me.isTokenAvaliable = true;
+                if (!me.isTokenAvaliable) {
+                    window.location.href='/html/page404.etc';
+                }
                 /*
                 me.localScripts =  result.localScripts.filter(function(item) {
                     return  (/\.js$/.test(item.name)) ? true : false
