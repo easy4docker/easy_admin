@@ -70,6 +70,7 @@ mkdir -p ${SCR_DIR}/easydocker_KEY
 git clone https://github.com/easy4docker/easy_admin.git ${SCR_DIR}/admin
 cp ${SCR_DIR}/admin/setupScript/_start.sh.sample  ${SCR_DIR}/_start.sh
 cp ${SCR_DIR}/admin/setupScript/_commCron.sh.sample  ${SCR_DIR}/_commCron.sh
+curl https://ipinfo.io/ip > ${SCR_DIR}/data/ip
 
 if [ $OSENV = "Mac" ]; then
   sh ${SCR_DIR}/_start.sh
