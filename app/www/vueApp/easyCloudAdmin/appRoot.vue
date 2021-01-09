@@ -36,21 +36,10 @@ module.exports = {
             const data = me.$route.query;
             data.cmd = 'checkTokenStatus';
             me.dataEngine().doPost(data, function(result) {
-                console.log(data);
-                console.log('--result-->');
-                console.log(result);
                 me.isTokenAvaliable = result.status;
                 if (!me.isTokenAvaliable) {
                     window.location.href='/html/page404.etc';
                 }
-                /*
-                me.localScripts =  result.localScripts.filter(function(item) {
-                    return  (/\.js$/.test(item.name)) ? true : false
-                });
-                me.scheduledTasks =  result.scheduledTasks;
-                me.cronTasks =  result.scheduledTasks;
-                me.logs =  result.logs;
-                me.outputs =  result.outputs;*/
             });
         },
         dataEngine(caller) {

@@ -30,7 +30,8 @@ const { exit } = require('process');
 			try {
 				tokens = pkg.require(fn_token);
 			} catch(e) {}
-			res.send({data : data, status : true, fn : fn_token, list:(!tokens.list) ? {} : tokens.list });
+			const list = (!tokens.list) ? {} : tokens.list;
+			res.send({data : data, status : (list[data.token]) ? true : false});
 		}
 		me.askBackendStatus = (data) => {
 			const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');
