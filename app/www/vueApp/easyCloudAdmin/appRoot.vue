@@ -25,12 +25,15 @@ module.exports = {
     },
     mounted () {
         const me = this;
-        setTimeout(
-            function() {
-                me.checkTokenAvaliability();
-            }, 500)
+        setTimeout(function () {
+            me.checkTokenAvaliability();
+        }, 500);
     },
     methods :{
+        dataEngine(caller) {
+            if (caller) this.$refs.dataEngine.caller = caller;
+            return this.$refs.dataEngine
+        } ,
         checkTokenAvaliability() {
             const me = this;
             const data = me.$route.query;
@@ -41,14 +44,10 @@ module.exports = {
                     window.location.href='/html/page404.etc';
                 }
             });
-        },
-        dataEngine(caller) {
-            if (caller) this.$refs.dataEngine.caller = caller;
-            return this.$refs.dataEngine
-        }   
+        }
     },
     components: VUEApp.loadComponents({
-        LOAD    : {
+        TPL : {
             'appHeader'     : '/vueApp/easyCloudAdmin/appHeader.vue',
             'appBody'       : '/vueApp/easyCloudAdmin/appBody.vue',
             'dataEngine'    : '/vueApp/easyCloudAdmin/dataEngine.vue',

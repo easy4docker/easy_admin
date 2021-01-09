@@ -5,7 +5,11 @@
         "/vueApp/easyCloudAdmin/appMenu.vue",
         "/vueApp/easyCloudAdmin/showFileContent.vue",
         "/vueApp/easyCloudAdmin/showOutput.vue",
-        "/vueApp/easyCloudAdmin/appDocs/appDocFrame.vue"
+        "/vueApp/easyCloudAdmin/appDocs/appDocFrame.vue",
+        "/vueApp/easyCloudAdmin/appHeader.vue",
+        "/vueApp/easyCloudAdmin/appBody.vue",
+        "/vueApp/easyCloudAdmin/dataEngine.vue",
+        "/vueApp/easyCloudAdmin/spinner.vue"
     ],
     "JS" : [
         "/js/coffee-script.js",
