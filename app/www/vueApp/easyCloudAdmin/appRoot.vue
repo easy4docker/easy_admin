@@ -32,10 +32,10 @@ module.exports = {
     },
     methods :{
         checkTokenAvaliability() {
-            var me = this;
-            var data = {token : me.$route.query.token};
+            const me = this;
+            const data = me.$route.query;
             me.dataEngine().doPost(data, function(result) {
-                console.log('----result--->');
+                console.log('----result-->->');
                 console.log(data);
                 /*
                 me.localScripts =  result.localScripts.filter(function(item) {
