@@ -8,7 +8,7 @@ const { exit } = require('process');
 			_env = (!req.body.host) ? {} : pkg.require(env.dataFolder + '/backendCloud/' + req.body.host+ '/data/_env.json'),
 			me = this;
 
-		me.call = (cbk) => {
+		me.call = () => {
 			if (!req.body.host) {
 				res.render('html/page404.ect');
 				return true;
@@ -18,19 +18,14 @@ const { exit } = require('process');
 				dataFolder : env.dataFolder + '/backendCloud/' + req.body.host + '/data'
 			}
 			if ((req.body.cmd) && (me[req.body.cmd])) {
-				if (cbk) {
-					me[req.body.cmd](req.body, cbk);
-				} else {
-					me[req.body.cmd](req.body);
-				}
+				me[req.body.cmd](req.body);
 			} else {
 				res.send({status : 'failure', message : 'Missing cmd!'});
 			}
 			return true;
 		}
-	
-		me.checkTokenStatus = (data, cbk) => {
-			cbk(data);
+		me.checkTokenStatus = (data) => {
+			res.send({data : data, status : true});
 		}
 		me.askBackendStatus = (data) => {
 			const dirTree = pkg.require(env.root + '/vendor/directory-tree/node_modules/directory-tree');

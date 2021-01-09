@@ -27,7 +27,7 @@ module.exports = {
         const me = this;
         setTimeout(
             function() {
-            //    me.checkTokenAvaliability();
+                me.checkTokenAvaliability();
             }, 500)
     },
     methods :{
@@ -39,7 +39,7 @@ module.exports = {
                 console.log(data);
                 console.log('--result-->');
                 console.log(result);
-                me.isTokenAvaliable = true;
+                me.isTokenAvaliable = result.status;
                 if (!me.isTokenAvaliable) {
                     window.location.href='/html/page404.etc';
                 }
