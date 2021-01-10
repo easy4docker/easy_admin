@@ -21,9 +21,9 @@
                 <div class="row" v-if="root.isSignin()">
                     <div class="col-6 p-0 m-0 text-left">
                         <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
-                            :disabled = "isDisabled('form')"
-                            v-on:click="clickMenu('form')">
-                            Add a server
+                            :disabled = "isDisabled('gridSetup')"
+                            v-on:click="clickMenu('gridSetup')">
+                            Grid Setup
                         </button>
                         <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
                             :disabled = "isDisabled('form')"
