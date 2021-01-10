@@ -62,8 +62,6 @@ if [ $OSENV = "Linux" ]; then
   && apt install -y docker-ce \
   && apt-get -y install git
 
-  curl https://ipinfo.io/ip > ${SCR_DIR}/data/_ip
-
   sed '/\echo _EASY_DOCKER/d' /etc/crontab  > /tmp/crontab_easydocker
   cp -f /tmp/crontab_easydocker  /etc/crontab
   echo "@reboot root (echo _EASY_DOCKER && cd  ${SCR_DIR} && sh _start.sh)" >> /etc/crontab 
