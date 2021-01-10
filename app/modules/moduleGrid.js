@@ -46,7 +46,7 @@
 
         me.saveGrid = (ip, callback) => {
             let grid = me.getGrid();
-            grid[id] = new Date().getTime();
+            grid[ip] = new Date().getTime();
             fs.writeFile(keyfn, JSON.stringify(grid), (err) => {
 				callback();
 			});
