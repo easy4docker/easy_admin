@@ -6,7 +6,7 @@
             data_dir = '/var/_localAppData',
             key_dir = '/var/_localAppKey',
             sitesCfgFn = data_dir + '/_servers_cfg.json',
-            keyfn = key_dir + '_grid.json';
+            keyfn = key_dir + '/_grid.json';
             
 
         me.call = () => {
