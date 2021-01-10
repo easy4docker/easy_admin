@@ -10,6 +10,7 @@
         me.call = () => {
             fs.readFile(data_dir + '/ip', 'utf-8', (err, data)=> {
                 res.send(data);
+                
             });    
             
         }
