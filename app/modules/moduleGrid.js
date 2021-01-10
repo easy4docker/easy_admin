@@ -21,9 +21,7 @@
                         });
                         break;
                     case 'getIp':
-                        fs.readFile(data_dir + '/_ip', 'utf-8', (err, data)=> {
-                            res.send(data);
-                        }); 
+                        res.send(me.getGrid() ); 
                         break;
 
                     default:
