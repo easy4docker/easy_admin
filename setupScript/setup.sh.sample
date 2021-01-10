@@ -62,10 +62,17 @@ if [ $OSENV = "Linux" ]; then
   && apt install -y docker-ce \
   && apt-get -y install git
 
+  IP=$(cat ${SCR_DIR}/data/_ip)
+
+  if [ ${IP}  -ne "" ]; then
+    curl https://ipinfo.io/ip > ${SCR_DIR}/data/_ip
+    IP=$(cat ${SCR_DIR}/data/_ip)
+  fi
+
   sed '/\echo _EASY_DOCKER/d' /etc/crontab  > /tmp/crontab_easydocker
   cp -f /tmp/crontab_easydocker  /etc/crontab
   echo "@reboot root (echo _EASY_DOCKER && cd  ${SCR_DIR} && sh _start.sh)" >> /etc/crontab 
-  echo "*/15 * * * *  root (echo _EASY_DOCKER && curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=$(cat ${SCR_DIR}/data/_ip)" >> /etc/crontab 
+  echo "*/15 * * * *  root (echo _EASY_DOCKER && curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=${IP}" >> /etc/crontab 
 fi
 
 git clone https://github.com/easy4docker/easy_admin.git ${SCR_DIR}/admin
