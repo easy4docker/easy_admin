@@ -17,7 +17,7 @@
                 switch (mp[2])  {
                     case 'updateStatus':
                         me.saveGrid(req.query.ip, () => {
-                            es.send(true);
+                            res.send(true);
                         });
                         break;
                     case 'getIp':
