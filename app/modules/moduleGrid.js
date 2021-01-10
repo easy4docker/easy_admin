@@ -7,7 +7,7 @@
             key_dir = '/var/_localAppKey',
             sitesCfgFn = data_dir + '/_servers_cfg.json';
 
-        me.call = (p) => {
+        me.call = () => {
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             res.send(mp);
