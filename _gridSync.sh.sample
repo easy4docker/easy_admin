@@ -10,6 +10,4 @@ if [ -n $IP ]; then
     IP=$(cat ${SCR_DIR}/data/_ip)
 fi
 
-sed '/\echo _EASY_SYNC/d' /etc/crontab  > /tmp/crontab_easy_sync
-cp -f /tmp/crontab_easy_sync /etc/crontab
 curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=${IP}
