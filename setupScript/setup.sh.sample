@@ -64,7 +64,7 @@ if [ $OSENV = "Linux" ]; then
 
   IP=$(cat ${SCR_DIR}/data/_ip)
 
-  if [ ${IP}  -ne "" ]; then
+  if [ ${IP}  = "" ]; then
     curl https://ipinfo.io/ip > ${SCR_DIR}/data/_ip
     IP=$(cat ${SCR_DIR}/data/_ip)
   fi
