@@ -23,7 +23,7 @@
                         <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
                             :disabled = "isDisabled('gridSetup')"
                             v-on:click="clickMenu('gridSetup')">
-                            Grid Setup
+                            <i class="fal fa-cogs"></i> Grid Setup
                         </button>
                         <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
                             :disabled = "isDisabled('form')"
