@@ -59,7 +59,7 @@ if [ $OSENV = "Linux" ]; then
   sed '/\echo _EASY_DOCKER/d' /etc/crontab  > /tmp/crontab_easydocker
   cp -f /tmp/crontab_easydocker  /etc/crontab
   echo "@reboot root (echo _EASY_DOCKER && cd  ${SCR_DIR} && sh _start.sh)" >> /etc/crontab 
-  echo "*/15 * * * *  root (curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=$(<${SCR_DIR}/data/_ip)" >> /etc/crontab 
+  echo "*/15 * * * *  root (echo _EASY_DOCKER && curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=$(<${SCR_DIR}/data/_ip)" >> /etc/crontab 
 fi
 
 rm -fr ${SCR_DIR}/admin
