@@ -7,8 +7,11 @@
             key_dir = '/var/_localAppKey',
             sitesCfgFn = data_dir + '/_servers_cfg.json';
 
-        me.call = (serverName) => {
-            res.send('Grid')
+        me.call = () => {
+            fs.readFile(data_dir + '/ip', 'utf-8', (err, data)=> {
+                res.send(data);
+            });    
+            
         }
     }
     module.exports = obj;
