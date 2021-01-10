@@ -26,6 +26,11 @@
                             Add a server
                         </button>
                         <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
+                            :disabled = "isDisabled('form')"
+                            v-on:click="clickMenu('form')">
+                            Add a server
+                        </button>
+                        <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
                             :disabled = "isDisabled('list')"
                             v-on:click="clickMenu('list')">
                             List Servers
