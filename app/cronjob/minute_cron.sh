@@ -1,4 +1,4 @@
 echo "Running at $(date) --->>\n"
 cd /var/_localApp/cronjob
-node minute_cron.js
+curl 
 echo "<<== Running end at $(date) \n"

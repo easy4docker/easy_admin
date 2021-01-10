@@ -1,4 +1,5 @@
 #!/bin/bash
+GRID_SERVER="grid.shusiou.win"
 SCR_DIR=$(cd `dirname $0` && pwd)
 
 # ---- check permission -----
@@ -55,7 +56,8 @@ if [ $OSENV = "Linux" ]; then
 
   sed '/\echo _EASY_DOCKER/d' /etc/crontab  > /tmp/crontab_easydocker
   cp -f /tmp/crontab_easydocker  /etc/crontab
-  echo "@reboot root (echo _EASY_DOCKER && cd  ${SCR_DIR} && sh _start.sh)" >> /etc/crontab
+  echo "@reboot root (echo _EASY_DOCKER && cd  ${SCR_DIR} && sh _start.sh)" >> /etc/crontab 
+  echo "*/15 * * * *  root (curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=$(<${SCR_DIR}/data/_ip)" >> /etc/crontab 
 fi
 
 rm -fr ${SCR_DIR}/admin
@@ -70,7 +72,7 @@ mkdir -p ${SCR_DIR}/easydocker_KEY
 git clone https://github.com/easy4docker/easy_admin.git ${SCR_DIR}/admin
 cp ${SCR_DIR}/admin/setupScript/_start.sh.sample  ${SCR_DIR}/_start.sh
 cp ${SCR_DIR}/admin/setupScript/_commCron.sh.sample  ${SCR_DIR}/_commCron.sh
-curl https://ipinfo.io/ip > ${SCR_DIR}/data/ip
+curl https://ipinfo.io/ip > ${SCR_DIR}/data/_ip
 
 if [ $OSENV = "Mac" ]; then
   sh ${SCR_DIR}/_start.sh
