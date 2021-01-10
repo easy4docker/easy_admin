@@ -41,6 +41,14 @@ if [ $OSENV = "Mac" ]; then
     echo "this is $OSENV environment."
 fi
 
+rm -fr ${SCR_DIR}/admin
+rm -fr ${SCR_DIR}/data
+rm -fr ${SCR_DIR}/easydocker_KEY
+
+mkdir -p ${SCR_DIR}/admin
+mkdir -p ${SCR_DIR}/data/commCron
+mkdir -p ${SCR_DIR}/data/tmp
+mkdir -p ${SCR_DIR}/easydocker_KEY
 
 if [ $OSENV = "Linux" ]; then
   echo "Running on Linux ..."
@@ -61,15 +69,6 @@ if [ $OSENV = "Linux" ]; then
   echo "@reboot root (echo _EASY_DOCKER && cd  ${SCR_DIR} && sh _start.sh)" >> /etc/crontab 
   echo "*/15 * * * *  root (echo _EASY_DOCKER && curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=$(<${SCR_DIR}/data/_ip)" >> /etc/crontab 
 fi
-
-rm -fr ${SCR_DIR}/admin
-rm -fr ${SCR_DIR}/data
-rm -fr ${SCR_DIR}/easydocker_KEY
-
-mkdir -p ${SCR_DIR}/admin
-mkdir -p ${SCR_DIR}/data/commCron
-mkdir -p ${SCR_DIR}/data/tmp
-mkdir -p ${SCR_DIR}/easydocker_KEY
 
 git clone https://github.com/easy4docker/easy_admin.git ${SCR_DIR}/admin
 cp ${SCR_DIR}/admin/setupScript/_start.sh.sample  ${SCR_DIR}/_start.sh
