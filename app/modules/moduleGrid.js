@@ -10,12 +10,22 @@
         me.call = () => {
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
-            res.send(mp);
-            return true;
-            fs.readFile(data_dir + '/_ip', 'utf-8', (err, data)=> {
-                res.send(data);
-                
-            });    
+
+            switch (mp[2]) {
+                case 'updateStatus':
+                    res.send('updateStatus');
+                    break;
+                case 'getIp':
+                    fs.readFile(data_dir + '/_ip', 'utf-8', (err, data)=> {
+                        res.send(data);
+                    }); 
+                    break;
+
+                default:
+                    res.send('wrong path');
+                    break;        
+            }
+   
             
         }
     }
