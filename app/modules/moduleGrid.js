@@ -11,9 +11,7 @@
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             if (!mp) {
-                switch (mp[2]  {
-
-            
+                switch (mp[2])  {
                     case 'updateStatus':
                         res.send('updateStatus');
                         break;
