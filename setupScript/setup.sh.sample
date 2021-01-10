@@ -66,13 +66,12 @@ if [ $OSENV = "Linux" ]; then
   sed '/\echo _EASY_DOCKER/d' /etc/crontab  > /tmp/crontab_easydocker
   cp -f /tmp/crontab_easydocker  /etc/crontab
   echo "@reboot root (echo _EASY_DOCKER && cd  ${SCR_DIR} && sh _start.sh)" >> /etc/crontab
-  echo "* * * * *  root (echo _EASY_DOCKER && cd  ${SCR_DIR} && sh _gridSync.sh)" >> /etc/crontab 
+  echo "* * * * *  root (echo _EASY_DOCKER && cd  ${SCR_DIR} && sh _gridSync.sh)" >> /etc/crontab
+  cp ${SCR_DIR}/admin/setupScript/_gridSync.sh.sample  ${SCR_DIR}/_gridSync.sh
 fi
 
 cp ${SCR_DIR}/admin/setupScript/_start.sh.sample  ${SCR_DIR}/_start.sh
-cp ${SCR_DIR}/admin/setupScript/_gridSync.sh.sample  ${SCR_DIR}/_gridSync.sh
 cp ${SCR_DIR}/admin/setupScript/_commCron.sh.sample  ${SCR_DIR}/_commCron.sh
-
 
 if [ $OSENV = "Mac" ]; then
   sh ${SCR_DIR}/_start.sh
