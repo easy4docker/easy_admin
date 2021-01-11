@@ -77,23 +77,22 @@ module.exports = {
     },
     methods : {
         add() {
-            var me = this;
-            return true;
-            me.root.dataEngine().loadPublicDockersList(true, function(data) {
-                me.publicDockers = data;
+            var me = this,
+                data = me.from;
+                data.cmd = 'addGrid';
+            me.root.dataEngine().addGrid(data, function(result) {
+                console.log(result);
             });
         },
         cleanForm() {
-
-
+            this.from.tag = '';
+            this.from.gridServer = '';
         },
         getGrids() {
-            var me = this;
-            return true;
-            me.root.dataEngine().getGrids(true, function(data) {
-                me.grids = [];
-                console.log(data);
-                // data;
+            var me = this,
+                data = {cmd: 'getGrids'};
+            me.root.dataEngine().addGrid(data, function(result) {
+                console.log(result);
             });
         },
         onTagSelect(event) {
