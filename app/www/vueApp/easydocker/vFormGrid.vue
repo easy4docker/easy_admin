@@ -2,23 +2,46 @@
 <div class="card shadow m-2 mr-1 p-3 mt-0">
     <div class="card-body card-form-section text-left ">
         <form>
-            <div class="form-group">
-                <label>Grid Tag</label>
-                <select class="form-control" :required="true" @change="onTagSelect($event)" v-model="form.tag">
-                    <option 
-                    v-for="tag in tags" 
-                    v-bind:value="tag"
-                    :selected="tag ==  form.tag"
-                    >{{ tag }}</option>
-                </select>
+            <div class="form-group  border rounded p-2">
+                <div class="container-fluid p-2">
+                    <div class="row">
+                        <div class="col-12">
+                           <h3>Join a grid</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1 p-2">
+                           <label>Grid Tag</label>
+                        </div>
+                        <div class="col-9 p-2">
+                            <select class="form-control" :required="true" @change="onTagSelect($event)" v-model="form.tag">
+                                <option 
+                                v-for="tag in tags" 
+                                v-bind:value="tag"
+                                :selected="tag ==  form.tag"
+                                >{{ tag }}</option>
+                            </select>
+                        </div>
+                        <div class="col-2 p-2">
+                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1 p-2">
+                            <label>Grid Server</label>
+                        </div>
+                        <div class="col-9 p-2">
+                            <input type="text" class="form-control" v-model="form.gridServer"  placeholder="Grid server">
+                        </div>
+                        <div class="col-2 p-2">
+                            <button type="button" class="btn btn-info m-0" v-on:click="add()" :disabled = "isSaveDisabled()">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+                            </button>
+                        </div>
+                     </div>
+                 </div>
             </div>
-            <div class="form-group">
-                <label>Add Grid Server</label>
-                <input type="text" class="form-control" v-model="form.gridServer"  placeholder="Grid server">
-                <button type="button" class="btn btn-info" v-on:click="add()" :disabled = "isSaveDisabled()">Add</button>
-            </div>
-            <hr/>
-            <div class="p-3">
+            <div class="p-3 alert-secondary">
                 <b>Joined Grids:</b>
                 <ul>
                 <li v-for="gridItem in grids">{{gridItem}}</li>
@@ -55,7 +78,7 @@ module.exports = {
         var me = this;
         setTimeout(
             function() {
-                me.loadGrids()
+                me.getGrids()
             }, 1000
         );
     },
@@ -71,10 +94,10 @@ module.exports = {
 
 
         },
-        loadGrids() {
+        getGrids() {
             var me = this;
             return true;
-            me.root.dataEngine().loadGrids(true, function(data) {
+            me.root.dataEngine().getGrids(true, function(data) {
                 me.grids = [];
                 console.log(data);
                 // data;
