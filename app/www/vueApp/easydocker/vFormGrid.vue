@@ -16,10 +16,10 @@
                 <label>Add Grid Server</label>
                 <input type="text" class="form-control" v-model="form.gridServer"  placeholder="Grid server">
             </div>
-            <button type="button" class="btn btn-info" v-on:click="add()">Add</button>
+            <button type="button" class="btn btn-info" v-on:click="add()" :disabled = "isSaveDisabled()">Add</button>
             <hr/>
-            <div class="text-danger p-3">
-                <b>Please correct the following error(s):</b>
+            <div class="p-3">
+                <b>Joined Grids:</b>
                 <ul>
                 <li v-for="gridItem in grids">{{gridItem}}</li>
                 </ul>
@@ -62,15 +62,18 @@ module.exports = {
     methods : {
         add() {
             var me = this;
-            alert(me.form)
+            return true;
+            me.root.dataEngine().loadPublicDockersList(true, function(data) {
+                me.publicDockers = data;
+            });
         },
         cleanForm() {
 
 
         },
         loadGrids() {
-            return true;
             var me = this;
+            return true;
             me.root.dataEngine().loadPublicDockersList(true, function(data) {
                 me.publicDockers = data;
             });
@@ -83,20 +86,9 @@ module.exports = {
             var me = this;
             return (!Object.keys(me.errors).length) ? true : false;
         },
-        gitValidation() {
+        isSaveDisabled() {
             var me = this;
-            /*
-            me.errors.gitHub = null;
-            var regex = /^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*?)(\.git)(\/?|\#[-\d\w._]+?)$/;
-            
-            if (!me.form.gitHub) {
-                me.errors.gitHub = 'Github URI required.';
-            } else if (!regex.test(me.form.gitHub)) {
-                me.errors.gitHub = 'Incorrect github URI.';
-            } else {
-                delete me.errors.gitHub;
-            }*/
-            return (!me.errors.gitHub) ? true : false;
+            return (!me.form.tag || me.form.gridServer.split('.').length !== 3) ? true : false;
         },
         formValidation() {
             var me = this;
