@@ -91,7 +91,7 @@
                 if (_env.env === 'local') {
                     shell_str += _env.app_root + '/log/ctab';
                 } else {
-                    shell_str += _env.app_root + '/tmp/crontab';
+                    shell_str += '/etc/crontab';
                 }
                 fs.writeFile(data_dir + '/commCron/gridSync_' + new Date().getTime() + '.sh', shell_str, (err) => {
                     cbk(true);
