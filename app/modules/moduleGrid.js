@@ -68,13 +68,20 @@
         }
 
         me.addGrid = (data) => {
-            let gridServer = me.getGrids();
-            if (data.gridServer) {
-                gridServer[data.gridServer] = data.tag;
-            }
-            fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
-				res.send(me.getGrids());
-			});
+            const _f = {};
+            _f['saveGrids'] = (cbk) => {
+                let gridServer = me.getGrids();
+                if (data.gridServer) {
+                    gridServer[data.gridServer] = data.tag;
+                }
+                fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
+                    cbk(true);
+                });
+            };
+            CP.serial(_f, (data) => {
+                res.send(me.getGrids());
+            }, 3000)
+
         }
         me.removeGrid = (data) => {
             let gridServer = me.getGrids();
@@ -92,6 +99,27 @@
                 grid = pkg.require(keyfn);
             } catch (e) {}
             return grid;
+        }
+
+        this.setCron = (code, str, callback) => {
+            fs.writeFile(data_dir + '/commCron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
+                setTimeout(() => {
+                    callback({status:'success', message: code});
+                }, 500)
+            });
+
+            /*
+            _f['removeCron'] = (cbk) => {
+				let cmd = 'sed /' + data.fileName.replace(/[-\/\\^$*+?.()|[\]{}_]/g, '\\$&') + '/d /etc/crontab > /etc/tmp_crontab';
+				cmd += ' && cp -f /etc/tmp_crontab /etc/crontab && rm /etc/tmp_crontab';
+
+				const fnc = me.env.dataFolder + '/cron/xc_' + new Date().getTime() + '.sh';
+
+				fs.writeFile(fnc, cmd, (errp) => {
+					cbk(true);
+				});
+            }
+        */
         }
 
         me.updateStatus = (ip, callback) => {
