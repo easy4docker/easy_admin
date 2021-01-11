@@ -86,10 +86,10 @@
             };
             _f['addToCron'] = (cbk) => {
                 let shell_str = 'echo "* * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
-                    encodeURIComponent(JSON.stringify(gridServer)) + '") >> ';
+                    encodeURIComponent(JSON.stringify(gridServer)) + ')" >> ';
 
                 if (_env.env === 'local') {
-                    shell_str += _env.app_root + '/log/ctab';
+                    shell_str += _env.data_folder + '/log/ctab';
                 } else {
                     shell_str += '/etc/crontab';
                 }
