@@ -19,14 +19,14 @@
 			if (mp && mp[1] === '_grid') {
 				var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
 				let mGrid =  new MAGrid(env, pkg, req, res);
-				mGrid.call();
+				mGrid.get();
 				return true;
 			}
 
 			if (mp && mp[1] === '_cloud') {
 				var MCloud= pkg.require(env.root+ '/modules/moduleCloud.js');
 				let mc =  new MCloud(env, pkg, req, res);
-				mc.get();
+				mc.call();
 				return true;
 			}
 
@@ -87,12 +87,6 @@
 				return true;
 			}
 
-			if (mp && mp[1] === '_cloud') {
-				var MCloud= pkg.require(env.root+ '/modules/moduleCloud.js');
-				let mc =  new MCloud(env, pkg, req, res);
-				mc.post();
-				return true;
-			}
 			
 			if (!mp || mp[1] !== 'api') {
 				res.render(env.root  + '/views/html/page404.ect');
@@ -260,7 +254,7 @@
 				case 'getGrids' :
 					var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
 					let mGrid =  new MAGrid(env, pkg, req, res);
-					mGrid.call();
+					mGrid.post();
 					break;
 
               default :
