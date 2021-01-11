@@ -23,12 +23,12 @@
                         <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
                             :disabled = "isDisabled('gridSetup')"
                             v-on:click="clickMenu('gridSetup')">
-                            <<i class="fa fa-cogs" aria-hidden="true"></i> Grid Setup
+                            <i class="fa fa-cogs" aria-hidden="true"></i> Grid Setup
                         </button>
                         <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
                             :disabled = "isDisabled('form')"
                             v-on:click="clickMenu('form')">
-                            <i class="fa fa-puls-square-o" aria-hidden="true"></i> Add a server
+                            <i class="fa fa-plus-square" aria-hidden="true"></i> Add a server
                         </button>
                         <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
                             :disabled = "isDisabled('list')"
@@ -39,7 +39,7 @@
                     <div class="col-6 p-30 m-0 text-right">
                         <a class="btn btn-sm btn-success m-1 pull-right border-warning shadow-sm" 
                             href="JavaScript:void(0)" v-on:click="root.signOff()">
-                            Sign Off
+                            <i class="fa fa-sign-out" aria-hidden="true"></i> Sign Off
                         </a>
                     </div>
                 </div>
