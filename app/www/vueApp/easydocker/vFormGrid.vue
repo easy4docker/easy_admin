@@ -4,8 +4,7 @@
         <form>
             <div class="form-group">
                 <label>Grid Tag</label>
-                @change="onBranchSelect($event)"
-                <select class="form-control" :required="true" v-model="form.tag">
+                <select class="form-control" :required="true" @change="onTagSelect($event)" v-model="form.tag">
                     <option 
                     v-for="tag in tags" 
                     v-bind:value="tag"
@@ -14,66 +13,10 @@
                 </select>
             </div>
             <div class="form-group" v-if="branches===null">
-                <div class="container-fluid border border-2 p-2 alert-secondary rounded">
-                    <div class="row">
-                        <div class="col-6">
-                            <label>Repository username</label>
-                            <input type="text" class="form-control" v-model="form.userName"  placeholder="Rep. username">                        
-                        </div>
-                        <div class="col-6">
-                            <label>Repository password</label>
-                            <input type="password" class="form-control" v-model="form.password" placeholder="Rep. password">
-                        </div>
-                    </div>    
-                </div>
+                <label>Add Grid Server</label>
+                <input type="text" class="form-control" v-model="form.gridServer"  placeholder="Add grid server">
             </div>
-            <button type="button" v-if="branches===null" class="btn btn-info" v-on:click="gitRemoteBranchs(form)">Get branchs</button>
-            <div v-if="branches!==null" >
-                <input type="hidden" v-model="form.userName">
-                <input type="hidden"  v-model="form.password" >
-            </div>
-
-            <div class="form-group" v-if="branches!==null" >
-                <label>Server Name * </label>
-                <input type="text" class="form-control" maxlength="64" v-model="form.serverName" placeholder="Server Name">
-            </div>
-
-            <div class="form-group" v-if="branches!==null" >
-                <label>Branche</label>
-                <select class="form-control" :required="true" @change="onBranchSelect($event)" v-model="form.branch">
-                    <option 
-                    v-for="option in branches" 
-                    v-bind:value="option.branch"
-                    :selected="option.branch ==  form.branch"
-                    >{{ option.branch }}</option>
-                </select>
-            </div>
-            <div v-if="form.docker.type">
-            {{form.docker}}
-                 <hr/>
-                ports: {{ form.docker.ports }} Type: {{form.docker.type}}
-                 <hr/>
-            </div>
-            <div class="form-group" v-if=" branches !== null && !form.siteDocker">
-                <label>Docker Setting</label>
-                    <div class="dropdown">
-                        <input type="text" data-toggle="dropdown"  class="form-control dockerSetting" v-model="form.publicDocker" 
-                        aria-haspopup="true" aria-expanded="false"
-                        placeholder="Select your docker Setting" readonly />
-                        
-                        <div class="dropdown-menu dropdown-pick-docker shadow border-secondary rounded-0 border-width-1" >
-                            <div v-for="(v, k) in publicDockers" class="dropdown-item" v-bind:class="{ 'bg-even': !(k%2), 'bg-odd': (k%2) }">
-                                <a href="JavaScript:void(0)" v-on:click="selectPublicDocker(v)"><b>{{v.title}}</a></a>
-                                <p class="text-wrap p-0 m-1" v-html="v.description"></p>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <hr/>
-            <button type="button" v-if="branches!==null" class="btn btn-info" v-on:click="saveVServer()">Save the virtual host</button>
-            <!--button type="button" class="btn btn-warning" v-on:click="reset()">Reset fields</button-->
-            <!--button type="button" class="btn btn-secondary" v-on:click="cancel()">Cancel</button-->
-            
+            <button type="button" class="btn btn-info" v-on:click="add(form)">Add</button>
             <hr/>
             <div class="text-danger p-3"  v-if="!isformValid()">
                 <b>Please correct the following error(s):</b>
@@ -96,10 +39,10 @@ module.exports = {
             errors: {},
             publicDockers     : [],
             branches : null,
-            tags : null,
+            tags : ['dev', 'qa', 'prod'],
             form : {
-                serverName  : '',
-                gitHub      : '',
+                tag         : '',
+                gridServer  : '',
                 branch      : '',
                 siteDocker  : false,
                 publicDocker: '',
@@ -120,6 +63,9 @@ module.exports = {
         );
     },
     methods : {
+        add(form) {
+            alert(8)
+        },
         cleanForm() {
             var me = this;
             me.branches = null;
@@ -171,10 +117,9 @@ module.exports = {
             }
             me.form.branch = (me.branches.length) ? me.branches[0].branch : '';
         },
-        onBranchSelect(event) {
+        onTagSelect(event) {
             var me = this;
-            me.form.branch = event.target.value;
-            me.getSiteDocker();
+            me.form.tag = event.target.value;
         },
 
         getSiteDocker() {
