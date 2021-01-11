@@ -21,7 +21,7 @@
                     break;
 
                 default:
-                    res.send('wrong path');
+                    res.send('wrong cmd ' + req.body.cmd);
                     break;        
             }
         };
