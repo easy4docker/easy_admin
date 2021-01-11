@@ -15,8 +15,8 @@
             <div class="form-group">
                 <label>Add Grid Server</label>
                 <input type="text" class="form-control" v-model="form.gridServer"  placeholder="Grid server">
+                <button type="button" class="btn btn-info" v-on:click="add()" :disabled = "isSaveDisabled()">Add</button>
             </div>
-            <button type="button" class="btn btn-info" v-on:click="add()" :disabled = "isSaveDisabled()">Add</button>
             <hr/>
             <div class="p-3">
                 <b>Joined Grids:</b>
