@@ -11,7 +11,7 @@
                     </div>
                     <div class="row">
                         <div class="col-2 p-2">
-                           <label class="ml-3">Grid Tag</label>
+                           <label class="ml-3">Grid Server</label>
                         </div>
                         <div class="col-9 p-2">
                             <input type="text" class="form-control" v-model="form.gridServer"  placeholder="xxx.xxx.xxx">
@@ -22,7 +22,7 @@
                     </div>
                     <div class="row">
                         <div class="col-2 p-2">
-                            <label class="ml-3">Grid Server</label>
+                            <label class="ml-3">Grid Tag</label>
                         </div>
                         <div class="col-7 p-2">
                             <select class="form-control" :required="true" @change="onTagSelect($event)" v-model="form.tag">
