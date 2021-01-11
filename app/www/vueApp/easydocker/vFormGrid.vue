@@ -3,7 +3,7 @@
     <div class="card-body card-form-section text-left ">
         <form>
             <div class="form-group">
-                <label>Repository git URI *</label>
+                <label>Grid Tag</label>
                 <input type="text" class="form-control" v-model="form.gitHub" @input="changedGit" placeholder="Repository git URI">
             </div>
             <div class="form-group" v-if="branches===null">
