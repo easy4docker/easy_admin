@@ -25,7 +25,8 @@ module.exports = {
         }, 
         TPL :{
             'vServerList' : '/vueApp/easydocker/vServerList.vue',
-            'vFormServer' : '/vueApp/easydocker/vFormServer.vue'
+            'vFormServer' : '/vueApp/easydocker/vFormServer.vue',
+            'vFormGrid' : '/vueApp/easydocker/vFormGrid.vue'
         }
     })
 }

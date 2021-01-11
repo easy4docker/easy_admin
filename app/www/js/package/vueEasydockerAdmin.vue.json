@@ -9,7 +9,8 @@
         "/vueApp/easydocker/appHeader.vue",
         "/vueApp/easydocker/appBody.vue",
         "/vueApp/easydocker/vServerList.vue",
-        "/vueApp/easydocker/vFormServer.vue"
+        "/vueApp/easydocker/vFormServer.vue",
+        "/vueApp/easydocker/vFormGrid.vue"
     ],
     "JS" : [
         "/js/coffee-script.js",
