@@ -5,8 +5,8 @@
             <div class="form-group  border rounded p-2">
                 <div class="container-fluid p-2">
                     <div class="row">
-                        <div class="col-12">
-                           <h3>Join a grid</h3>
+                        <div class="col-12 p-2">
+                           <label><h3>Join a grid</h3></label>
                         </div>
                     </div>
                     <div class="row">
@@ -41,16 +41,9 @@
                      </div>
                  </div>
             </div>
-            <div class="p-3 alert-secondary">
-                <b>Joined Grids:</b>
+            <div class="p-2 alert-secondary">
                 <ul>
-                <li v-for="gridItem in grids">{{gridItem}}</li>
-                </ul>
-            </div>
-            <div class="text-danger p-3"  v-if="!isformValid()">
-                <b>Please correct the following error(s):</b>
-                <ul>
-                <li v-for="(v, k) in errors">{{v}}</li>
+                    <li v-for="gridItem in grids">{{gridItem}}</li>
                 </ul>
             </div>
         </form>
