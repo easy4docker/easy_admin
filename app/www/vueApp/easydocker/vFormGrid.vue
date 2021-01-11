@@ -41,7 +41,7 @@
                      </div>
                  </div>
             </div>
-            <div class="p-2 alert-secondary">
+            <div class="p-2 alert-secondary grid-list border rounded">
                 <ul>
                     <li v-for="gridItem in grids">{{gridItem}}</li>
                 </ul>
@@ -141,5 +141,7 @@ input.dockerSetting[readonly] {
 .text-capitalize {
   text-transform: capitalize;
 }
-
+.grid-list {
+    min-height: 20rem
+}
 </style>
