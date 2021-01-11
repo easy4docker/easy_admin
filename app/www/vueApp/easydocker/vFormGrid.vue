@@ -42,9 +42,7 @@
                  </div>
             </div>
             <div class="p-2 alert-secondary grid-list border rounded">
-                <ul>
-                    <li v-for="gridItem in grids">{{gridItem}}</li>
-                </ul>
+                 <div v-for="(k, v) in grids">{{v}}</div>
             </div>
         </form>
     </div>
@@ -59,7 +57,7 @@ module.exports = {
         return {
             root :  this.$parent.root,
             errors: {},
-            grids : [],
+            grids : {},
             tags : ['dev', 'qa', 'prod'],
             form : {
                 tag         : '',
@@ -94,7 +92,7 @@ module.exports = {
             var me = this,
                 data = {cmd: 'getGrids'};
             me.root.dataEngine().ajaxPost(data, function(result) {
-                console.log(result);
+                me.grids = result;
             });
         },
         onTagSelect(event) {
