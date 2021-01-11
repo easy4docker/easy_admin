@@ -74,7 +74,7 @@ cp ${SCR_DIR}/admin/setupScript/_start.sh.sample  ${SCR_DIR}/_start.sh
 cp ${SCR_DIR}/admin/setupScript/_commCron.sh.sample  ${SCR_DIR}/_commCron.sh
 
 if [ $OSENV = "Mac" ]; then
-  sh ${SCR_DIR}/_start.sh
+  sh ${SCR_DIR}/_start.sh local
 fi
 if [ $OSENV = "Linux" ]; then
   reboot -f

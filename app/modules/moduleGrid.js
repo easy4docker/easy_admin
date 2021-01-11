@@ -85,12 +85,17 @@
                 });
             };
             _f['addToCron'] = (cbk) => {
-                const str = 'echo "* * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
-                    encodeURIComponent(JSON.stringify(gridServer)) + '") >> /Users/johnxu/ctab ';
-                fs.writeFile(data_dir + '/commCron/gridSync_' + new Date().getTime() + '.sh', str, (err) => {
+                let shell_str = 'echo "* * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
+                    encodeURIComponent(JSON.stringify(gridServer)) + '") >> ';
+
+                if (_env.env === 'local') {
+                    shell_str += _env.app_root + '/log/ctab';
+                } else {
+                    shell_str += _env.app_root + '/tmp/crontab';
+                }
+                fs.writeFile(data_dir + '/commCron/gridSync_' + new Date().getTime() + '.sh', shell_str, (err) => {
                     cbk(true);
                 });
-                cbk(true);
             }
             CP.serial(_f, (data) => {
                 res.send(me.getGrids());
