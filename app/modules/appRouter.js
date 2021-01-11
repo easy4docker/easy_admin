@@ -26,7 +26,7 @@
 			if (mp && mp[1] === '_cloud') {
 				var MCloud= pkg.require(env.root+ '/modules/moduleCloud.js');
 				let mc =  new MCloud(env, pkg, req, res);
-				mc.call();
+				mc.get();
 				return true;
 			}
 
@@ -90,7 +90,7 @@
 			if (mp && mp[1] === '_cloud') {
 				var MCloud= pkg.require(env.root+ '/modules/moduleCloud.js');
 				let mc =  new MCloud(env, pkg, req, res);
-				mc.call();
+				mc.post();
 				return true;
 			}
 			
@@ -262,7 +262,7 @@
 					let mGrid =  new MAGrid(env, pkg, req, res);
 					mGrid.call();
 					break;
-					
+
               default :
                 res.send({status:'failure', message : '404 wrong cmd!'});
             }

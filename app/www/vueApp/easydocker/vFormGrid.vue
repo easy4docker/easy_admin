@@ -72,7 +72,7 @@ module.exports = {
         setTimeout(
             function() {
                 me.getGrids()
-            }, 1000
+            }, 50
         );
     },
     methods : {

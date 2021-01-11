@@ -9,7 +9,32 @@
             keyfn = key_dir + '/_grid.json';
             
 
-        me.call = () => {
+        me.get = () => {
+            let p = req.params[0],
+                mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
+            
+            if (mp) {
+                switch (mp[2])  {
+                    case 'updateStatus':
+                        me.updateStatus(req.query.ip, () => {
+                            res.send(true);
+                        });
+                        break;
+                    case 'getIp':
+                        res.send(me.getGrid() ); 
+                        break;
+
+                    default:
+                        res.send('wrong path');
+                        break;        
+                }
+            } else {
+                res.send('wrong path');
+            }
+            
+        };
+
+        me.post = () => {
             switch (req.body.cmd)  {
                 case 'updateStatus':
                     me.saveGrid(req.query.ip, () => {
@@ -34,7 +59,15 @@
             return grid;
         }
 
-        me.saveGrid = (ip, callback) => {
+        me.getGrids = () => {
+            let grid = {};
+            try {
+                grid = pkg.require(keyfn);
+            } catch (e) {}
+            return grid;
+        }
+
+        me.updateStatus = (ip, callback) => {
             let grid = me.getGrid();
             grid[ip] = new Date().getTime();
             fs.writeFile(keyfn, JSON.stringify(grid), (err) => {
