@@ -46,8 +46,8 @@
                     res.send(me.getGrids()); 
                     break;
 
-                case 'addGrids':
-                    me.addGrids(req.body); 
+                case 'addGrid':
+                    me.addGrid(req.body); 
                     break;
 
                 default:
@@ -63,7 +63,7 @@
             return grids;
         }
 
-        me.addGrids = (data) => {
+        me.addGrid = (data) => {
             let gridServer = me.getGrids();
             if (data.gridServer) {
                 gridServer[data.gridServer] = data.tag;

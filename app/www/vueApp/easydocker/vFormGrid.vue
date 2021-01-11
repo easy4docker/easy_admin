@@ -77,9 +77,11 @@ module.exports = {
     },
     methods : {
         add() {
+            
             var me = this,
-                data = me.from;
+                data = me.form;
                 data.cmd = 'addGrid';
+            console.log(data);
             me.root.dataEngine().ajaxPost(data, function(result) {
                 console.log(result);
             });

@@ -252,6 +252,7 @@
 					break;
 
 				case 'getGrids' :
+				case 'addGrid' :
 					var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
 					let mGrid =  new MAGrid(env, pkg, req, res);
 					mGrid.post();
