@@ -10,4 +10,4 @@ if [ -n $IP ]; then
     IP=$(cat ${SCR_DIR}/data/_ip)
 fi
 
-curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=${IP}
+curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=${IP}&contents=$1
