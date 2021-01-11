@@ -80,7 +80,7 @@ module.exports = {
             var me = this,
                 data = me.from;
                 data.cmd = 'addGrid';
-            me.root.dataEngine().addGrid(data, function(result) {
+            me.root.dataEngine().ajaxPost(data, function(result) {
                 console.log(result);
             });
         },
@@ -91,7 +91,9 @@ module.exports = {
         getGrids() {
             var me = this,
                 data = {cmd: 'getGrids'};
-            me.root.dataEngine().addGrid(data, function(result) {
+            me.root.dataEngine().ajaxPost(data, function(result) {
+                console.log(result);
+            }, function(result) {
                 console.log(result);
             });
         },

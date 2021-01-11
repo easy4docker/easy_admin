@@ -10,31 +10,23 @@
             
 
         me.call = () => {
-            let p = req.params[0],
-                mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
-            
-            if (mp) {
-                switch (mp[2])  {
-                    case 'updateStatus':
-                        me.saveGrid(req.query.ip, () => {
-                            res.send(true);
-                        });
-                        break;
-                    case 'getIp':
-                        res.send(me.getGrid() ); 
-                        break;
+            switch (req.body.cmd)  {
+                case 'updateStatus':
+                    me.saveGrid(req.query.ip, () => {
+                        res.send(true);
+                    });
+                    break;
+                case 'getGrids':
+                    res.send(me.getGrids()); 
+                    break;
 
-                    default:
-                        res.send('wrong path');
-                        break;        
-                }
-            } else {
-                res.send('wrong path');
+                default:
+                    res.send('wrong path');
+                    break;        
             }
-            
         };
 
-        me.getGrid = () => {
+        me.getGrids = () => {
             let grid = {};
             try {
                 grid = pkg.require(keyfn);

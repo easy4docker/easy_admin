@@ -257,6 +257,12 @@
 						});
 					break;
 
+				case 'getGrids' :
+					var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
+					let mGrid =  new MAGrid(env, pkg, req, res);
+					mGrid.call();
+					break;
+					
               default :
                 res.send({status:'failure', message : '404 wrong cmd!'});
             }
