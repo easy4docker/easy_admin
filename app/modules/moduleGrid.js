@@ -21,7 +21,7 @@
                         });
                         break;
                     case 'getIp':
-                        res.send(me.getGrid() ); 
+                        res.send(me.getIp() ); 
                         break;
 
                     default:
