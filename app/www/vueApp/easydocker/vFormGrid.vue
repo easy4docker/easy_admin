@@ -93,8 +93,6 @@ module.exports = {
                 data = {cmd: 'getGrids'};
             me.root.dataEngine().ajaxPost(data, function(result) {
                 console.log(result);
-            }, function(result) {
-                console.log(result);
             });
         },
         onTagSelect(event) {
