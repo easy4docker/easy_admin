@@ -12,11 +12,11 @@
                     >{{ tag }}</option>
                 </select>
             </div>
-            <div class="form-group" v-if="branches===null">
+            <div class="form-group">
                 <label>Add Grid Server</label>
-                <input type="text" class="form-control" v-model="form.gridServer"  placeholder="Add grid server">
+                <input type="text" class="form-control" v-model="form.gridServer"  placeholder="Grid server">
             </div>
-            <button type="button" class="btn btn-info" v-on:click="add(form)">Add</button>
+            <button type="button" class="btn btn-info" v-on:click="add()">Add</button>
             <hr/>
             <div class="text-danger p-3"  v-if="!isformValid()">
                 <b>Please correct the following error(s):</b>
@@ -37,20 +37,11 @@ module.exports = {
         return {
             root :  this.$parent.root,
             errors: {},
-            publicDockers     : [],
-            branches : null,
+            grids : [],
             tags : ['dev', 'qa', 'prod'],
             form : {
                 tag         : '',
-                gridServer  : '',
-                branch      : '',
-                siteDocker  : false,
-                publicDocker: '',
-                serverType  : '',
-                docker: {
-                    type : '',
-                    ports : []
-                },
+                gridServer  : ''
             }
         }
     },
@@ -58,138 +49,37 @@ module.exports = {
         var me = this;
         setTimeout(
             function() {
-                me.loadPublicDockersList()
+                me.loadGrids()
             }, 1000
         );
     },
     methods : {
-        add(form) {
-            alert(8)
+        add() {
+            var me = this;
+            alert(me.form)
         },
         cleanForm() {
-            var me = this;
-            me.branches = null;
-            me.form.serverName = '';
-            me.form.branch = '';
-            me.form.siteDocker  = false;
-            me.form.publicDocker = '';
-            me.form.docker = {
-                    type : '',
-                    ports : []
-                };
+
 
         },
-        changedGit(e) {
-            var me = this;
-            me.form.gitHub = e.target.value.replace(/^\s+|\s+$/g, '');
-            me.cleanForm();
-        },
-        loadPublicDockersList() {
+        loadGrids() {
+            return true;
             var me = this;
             me.root.dataEngine().loadPublicDockersList(true, function(data) {
                 me.publicDockers = data;
             });
         },
-        gitRemoteBranchs(gitRecord) {
-            var me = this;
-            me.gitValidation();
-            me.$forceUpdate();
-            if (me.isformValid()) {
-                me.root.dataEngine().gitRemoteBranchs(gitRecord, function(result) {
-                    if (result.status === 'success') {
-                        me.branches = result.list;
-                    } else {
-                        me.branches = [];
-                        me.errors.gitHub = result.message;
-                    }
-                    me.getInitBranch();
-                    me.getSiteDocker();
-                    me.$forceUpdate();
-                });
-            }
-        },
-        getInitBranch() {
-            var me = this;
-            for (var i = 0; i < me.branches.length; i++) {
-                if (me.form.branch === me.branches[i].branch) {
-                    return true;
-                }
-            }
-            me.form.branch = (me.branches.length) ? me.branches[0].branch : '';
-        },
         onTagSelect(event) {
             var me = this;
             me.form.tag = event.target.value;
         },
-
-        getSiteDocker() {
-            var me = this;
-            if (me.branches) {
-                for (var i = 0; i < me.branches.length; i++) {
-                    if (me.form.branch === me.branches[i].branch && me.branches[i].dockerSetting.type) {
-                        me.form.siteDocker = true;
-                        me.form.docker = me.branches[i].dockerSetting;
-                        me.form.serverType = me.form.docker.type;
-                        me.$forceUpdate();
-                    }
-                }
-            }
-        },
-
-        selectPublicDocker(v) {
-            var me = this;
-            me.form.publicDocker = v.code;
-            me.form.siteDocker = false;
-            me.form.docker = v.setting;
-            me.$forceUpdate();
-        },
-        saveVServer() {
-            var me = this;
-            me.formValidation();
-            if (!me.isformValid()) {
-                return false;
-            }
-            console.log(me.form);
-            
-            me.root.dataEngine().saveVServerForm(
-                me.form, function(result) {
-                    if (result.status === 'success') {
-                        // me.$parent.cancel();
-                        // me.$parent.getVServerList();
-                        me.root.module = 'list';
-                    }
-                }
-            );
-        },
-
-        reset() {
-            var me = this;
-            me.form = {};
-            me.errors={};
-            me.branches = [];
-        },
-        /*
-        cancel() {
-            var me = this;
-            me.reset();
-            me.$parent.module = '';
-        },*/
         isformValid() {
             var me = this;
             return (!Object.keys(me.errors).length) ? true : false;
         },
-        isServerNameExist(name) {
-            var me = this, list = me.root.commonData.list
-            for (e in list) {
-                console.log(e);
-                if (list[e].serverName == name) {
-                    return true;
-                }
-            }
-            return false;
-        }, 
         gitValidation() {
             var me = this;
+            /*
             me.errors.gitHub = null;
             var regex = /^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*?)(\.git)(\/?|\#[-\d\w._]+?)$/;
             
@@ -199,11 +89,12 @@ module.exports = {
                 me.errors.gitHub = 'Incorrect github URI.';
             } else {
                 delete me.errors.gitHub;
-            }
+            }*/
             return (!me.errors.gitHub) ? true : false;
         },
         formValidation() {
             var me = this;
+            /*
             me.errors = {};
             me.gitValidation();
 
@@ -217,8 +108,7 @@ module.exports = {
 
             if (!me.form.docker.type) {
                 me.errors.dockerSetting = 'Docker Setting Required.';
-            }
-            
+            }*/
         }
     }
 }
