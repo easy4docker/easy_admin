@@ -7,7 +7,7 @@
             key_dir = '/var/_localAppKey',
             sitesCfgFn = data_dir + '/_servers_cfg.json',
             keyfn = key_dir + '/_grid.json',
-            gridServerFn = key_dir + '/_gridServer.json';
+            gridServerFn = data_dir + '/_gridServers.json';
             
 
         me.get = () => {
@@ -68,7 +68,7 @@
             if (data.gridServer) {
                 gridServer[data.gridServer] = data.tag;
             }
-            fs.writeFile(keyfn, JSON.stringify(gridServer), (err) => {
+            fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
 				res.send(me.getGrids());
 			});
         }
