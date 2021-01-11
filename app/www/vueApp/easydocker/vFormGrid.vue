@@ -13,16 +13,10 @@
                         <div class="col-2 p-2">
                            <label class="ml-3">Grid Tag</label>
                         </div>
-                        <div class="col-8 p-2">
-                            <select class="form-control" :required="true" @change="onTagSelect($event)" v-model="form.tag">
-                                <option 
-                                v-for="tag in tags" 
-                                v-bind:value="tag"
-                                :selected="tag ==  form.tag"
-                                >{{ tag }}</option>
-                            </select>
+                        <div class="col-9 p-2">
+                            <input type="text" class="form-control" v-model="form.gridServer"  placeholder="xxx.xxx.xxx">
                         </div>
-                        <div class="col-2 p-2">
+                        <div class="col-1 p-2">
                             
                         </div>
                     </div>
@@ -30,8 +24,14 @@
                         <div class="col-2 p-2">
                             <label class="ml-3">Grid Server</label>
                         </div>
-                        <div class="col-8 p-2">
-                            <input type="text" class="form-control" v-model="form.gridServer"  placeholder="Grid server">
+                        <div class="col-7 p-2">
+                            <select class="form-control" :required="true" @change="onTagSelect($event)" v-model="form.tag">
+                                <option 
+                                v-for="tag in tags" 
+                                v-bind:value="tag"
+                                :selected="tag ==  form.tag"
+                                >{{ tag }}</option>
+                            </select>  
                         </div>
                         <div class="col-2 p-2 pl-3">
                             <button type="button" class="btn btn-info m-0" v-on:click="add()" :disabled = "isSaveDisabled()">
