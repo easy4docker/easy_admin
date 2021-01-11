@@ -4,13 +4,14 @@
         <form>
             <div class="form-group">
                 <label>Grid Tag</label>
-                <!--select class="form-control" :required="true" @change="onBranchSelect($event)" v-model="form.branch">
+                @change="onBranchSelect($event)"
+                <select class="form-control" :required="true" v-model="form.tag">
                     <option 
-                    v-for="option in branches" 
-                    v-bind:value="option.branch"
-                    :selected="option.branch ==  form.branch"
-                    >{{ option.branch }}</option>
-                </select-->
+                    v-for="tag in tags" 
+                    v-bind:value="tag"
+                    :selected="tag ==  form.tag"
+                    >{{ tag }}</option>
+                </select>
             </div>
             <div class="form-group" v-if="branches===null">
                 <div class="container-fluid border border-2 p-2 alert-secondary rounded">
@@ -95,6 +96,7 @@ module.exports = {
             errors: {},
             publicDockers     : [],
             branches : null,
+            tags : null,
             form : {
                 serverName  : '',
                 gitHub      : '',
@@ -118,22 +120,6 @@ module.exports = {
         );
     },
     methods : {
-        initForm() {
-            var me = this;
-            me.branches = null;
-            me.form = {
-                serverName  : '',
-                gitHub      : '',
-                branch      : '',
-                siteDocker  : false,
-                publicDocker: '',
-                docker: {
-                        type : '',
-                        ports : []
-                }
-            };
-
-        },
         cleanForm() {
             var me = this;
             me.branches = null;
