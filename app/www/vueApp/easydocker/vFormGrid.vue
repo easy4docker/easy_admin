@@ -34,7 +34,7 @@
                             </select>  
                         </div>
                         <div class="col-2 p-2 pl-3">
-                            <button type="button" class="btn btn-info m-0" v-on:click="add()" :disabled = "isSaveDisabled()">
+                            <button type="button" class="btn btn-info m-0" v-on:click="addGrid()" :disabled = "isSaveDisabled()">
                                 <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
                             </button>
                         </div>
@@ -42,7 +42,20 @@
                  </div>
             </div>
             <div class="p-2 alert-secondary grid-list border rounded">
-                 <div v-for="(k, v) in grids">{{v}}</div>
+                <div class="container p-2">
+                    <div class="row" v-for="(v, k) in grids">
+                        <div class="col-1 p-2">
+                           <a href="JavaScript: void(0)" v-on:click="removeGrid(k);"><i class="fa fa-trash-o"></i></a>
+                        </div>
+                        <div class="col-1 p-2">
+                           {{v}}
+                        </div>
+                        <div class="col-10 p-2">
+                            {{k}}
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -74,14 +87,20 @@ module.exports = {
         );
     },
     methods : {
-        add() {
-            
+        addGrid() {
             var me = this,
                 data = me.form;
                 data.cmd = 'addGrid';
             console.log(data);
             me.root.dataEngine().ajaxPost(data, function(result) {
-                console.log(result);
+                me.getGrids();
+            });
+        },
+        removeGrid(v) {
+            var me = this,
+                data = {cmd : 'removeGrid', gridServer : v};
+            me.root.dataEngine().ajaxPost(data, function(result) {
+                me.getGrids();
             });
         },
         cleanForm() {

@@ -50,6 +50,10 @@
                     me.addGrid(req.body); 
                     break;
 
+                case 'removeGrid':
+                    me.removeGrid(req.body); 
+                    break;
+                    
                 default:
                     res.send('wrong cmd ' + req.body.cmd);
                     break;        
@@ -67,6 +71,15 @@
             let gridServer = me.getGrids();
             if (data.gridServer) {
                 gridServer[data.gridServer] = data.tag;
+            }
+            fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
+				res.send(me.getGrids());
+			});
+        }
+        me.removeGrid = (data) => {
+            let gridServer = me.getGrids();
+            if (data.gridServer) {
+                delete gridServer[data.gridServer];
             }
             fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
 				res.send(me.getGrids());

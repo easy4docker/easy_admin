@@ -251,15 +251,16 @@
 						});
 					break;
 
-				case 'getGrids' :
-				case 'addGrid' :
+				case 'getGrids' 	:
+				case 'addGrid' 		:
+				case 'removeGrid' 	:
 					var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
 					let mGrid =  new MAGrid(env, pkg, req, res);
 					mGrid.post();
 					break;
 
-              default :
-                res.send({status:'failure', message : '404 wrong cmd!'});
+				default :
+					res.send({status:'failure', message : '404 wrong cmd!'});
             }
 		};
 
