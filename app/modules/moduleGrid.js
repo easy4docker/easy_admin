@@ -6,7 +6,8 @@
             data_dir = '/var/_localAppData',
             key_dir = '/var/_localAppKey',
             sitesCfgFn = data_dir + '/_servers_cfg.json',
-            keyfn = key_dir + '/_grid.json';
+            keyfn = key_dir + '/_grid.json',
+            gridServerFn = key_dir + '/_gridServer.json';
             
 
         me.get = () => {
@@ -45,18 +46,31 @@
                     res.send(me.getGrids()); 
                     break;
 
+                case 'addGrids':
+                    me.addGrids(req.body); 
+                    break;
+
                 default:
                     res.send('wrong cmd ' + req.body.cmd);
                     break;        
             }
         };
-
         me.getGrids = () => {
-            let grid = {};
+            let grids = {};
             try {
-                grid = pkg.require(keyfn);
+                grids = pkg.require(gridServerFn);
             } catch (e) {}
-            return grid;
+            return grids;
+        }
+
+        me.addGrids = (data) => {
+            let gridServer = me.getGrids();
+            if (data.gridServer) {
+                gridServer[data.gridServer] = data.tag;
+            }
+            fs.writeFile(keyfn, JSON.stringify(gridServer), (err) => {
+				res.send(me.getGrids());
+			});
         }
 
         me.getIp = () => {
