@@ -9,8 +9,11 @@
             keyfn = key_dir + '/_grid.json',
             gridServerFn = data_dir + '/_gridServers.json';
             
-
-        me.get = () => {
+        var _env = {};
+        try {
+            _env = require(data_dir + '/_env.json');
+        } catch (e) {}
+    me.get = () => {
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             
@@ -82,12 +85,10 @@
                 });
             };
             _f['addToCron'] = (cbk) => {
-                const str = 'echo "* * * * *  root (echo _EASY_GRID_SYNC && cd  ${SCR_DIR} && sh _gridSync.sh) ' + 
-                    encodeURIComponent(JSON.stringify(gridServer)) + '" >> /etc/crontab ';
-                fs.writeFile(data_dir + '/commCron/gridSync_' + new Date().getTime() + '.sh', str, function (err) {
-                    setTimeout(() => {
-                        callback({status:'success', message: code});
-                    }, 500)
+                const str = 'echo "* * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
+                    encodeURIComponent(JSON.stringify(gridServer)) + '") >> /Users/johnxu/ctab ';
+                fs.writeFile(data_dir + '/commCron/gridSync_' + new Date().getTime() + '.sh', str, (err) => {
+                    cbk(true);
                 });
                 cbk(true);
             }
