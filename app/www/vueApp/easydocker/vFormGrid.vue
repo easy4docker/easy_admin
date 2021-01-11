@@ -89,24 +89,6 @@ module.exports = {
         isSaveDisabled() {
             var me = this;
             return (!me.form.tag || me.form.gridServer.split('.').length !== 3) ? true : false;
-        },
-        formValidation() {
-            var me = this;
-            /*
-            me.errors = {};
-            me.gitValidation();
-
-            if (!me.form.serverName) {
-                me.errors.serverName = 'ServerName required.';
-            }
-
-            if (me.isServerNameExist(me.form.serverName)) {
-                me.errors.serverName = 'ServerName required.';
-            }
-
-            if (!me.form.docker.type) {
-                me.errors.dockerSetting = 'Docker Setting Required.';
-            }*/
         }
     }
 }
