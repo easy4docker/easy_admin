@@ -74,8 +74,10 @@ module.exports = {
         loadGrids() {
             var me = this;
             return true;
-            me.root.dataEngine().loadPublicDockersList(true, function(data) {
-                me.publicDockers = data;
+            me.root.dataEngine().loadGrids(true, function(data) {
+                me.grids = [];
+                console.log(data);
+                // data;
             });
         },
         onTagSelect(event) {
