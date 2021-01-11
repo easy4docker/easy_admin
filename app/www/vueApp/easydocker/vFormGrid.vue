@@ -4,7 +4,13 @@
         <form>
             <div class="form-group">
                 <label>Grid Tag</label>
-                <input type="text" class="form-control" v-model="form.gitHub" @input="changedGit" placeholder="Repository git URI">
+                <!--select class="form-control" :required="true" @change="onBranchSelect($event)" v-model="form.branch">
+                    <option 
+                    v-for="option in branches" 
+                    v-bind:value="option.branch"
+                    :selected="option.branch ==  form.branch"
+                    >{{ option.branch }}</option>
+                </select-->
             </div>
             <div class="form-group" v-if="branches===null">
                 <div class="container-fluid border border-2 p-2 alert-secondary rounded">
