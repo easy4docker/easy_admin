@@ -59,7 +59,7 @@
             return grid;
         }
 
-        me.getGrids = () => {
+        me.getIp = () => {
             let grid = {};
             try {
                 grid = pkg.require(keyfn);
