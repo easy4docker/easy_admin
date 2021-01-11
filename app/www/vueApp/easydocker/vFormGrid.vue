@@ -18,6 +18,12 @@
             </div>
             <button type="button" class="btn btn-info" v-on:click="add()">Add</button>
             <hr/>
+            <div class="text-danger p-3">
+                <b>Please correct the following error(s):</b>
+                <ul>
+                <li v-for="gridItem in grids">{{gridItem}}</li>
+                </ul>
+            </div>
             <div class="text-danger p-3"  v-if="!isformValid()">
                 <b>Please correct the following error(s):</b>
                 <ul>
