@@ -84,7 +84,7 @@
                 });
             };
             _f['addToCron'] = (cbk) => {
-                let shell_str = 'echo "* * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
+                let shell_str = 'echo "*/10 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
                     encodeURIComponent(JSON.stringify(gridServer)) + ')" >> ';
 
                 if (_env.env === 'local') {
