@@ -6,7 +6,7 @@
             data_dir = '/var/_localAppData',
             key_dir = '/var/_localAppKey',
             sitesCfgFn = data_dir + '/_servers_cfg.json',
-            keyfn = key_dir + '/_grid.json',
+            gridStatusFn = key_dir + '/_grid.json',
             gridServerFn = data_dir + '/_gridServers.json';
             
         var _env = {};
@@ -41,8 +41,8 @@
         me.post = () => {
             switch (req.body.cmd)  {
                 case 'updateStatus':
-                    me.saveGrid(req.query.ip, () => {
-                        res.send(true);
+                    me.saveGridStatus(req.query, (result) => {
+                        res.send(result);
                     });
                     break;
                 case 'getGrids':
@@ -62,6 +62,25 @@
                     break;        
             }
         };
+        me.getGridStatus = () => {
+            let grids = {};
+            try {
+                grids = pkg.require(gridStatusFn);
+            } catch (e) {}
+            return grids;
+        }
+        saveGridStatus = (data) => {
+            var grids = me.getGridStatus();
+            if (data.ip) {
+                grids[data.ip] = {tm: new Date().getTime(), reporter: data.reporter};
+                fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
+                    cbk(true);
+                });
+            } else {
+                cbk(false);
+            }
+        }
+
         me.getGrids = () => {
             let grids = {};
             try {
@@ -92,7 +111,7 @@
                 } else {
                     shell_str += '/etc/crontab';
                 }
-                fs.writeFile(data_dir + '/commCron/gridSync_' + new Date().getTime() + '.sh', shell_str, (err) => {
+                me.setCron = ('gridSync', shell_str, (err) => {
                     cbk(true);
                 });
             }
@@ -115,7 +134,7 @@
             _f['removeCron'] = (cbk) => {
                 let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
                 let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
-                fs.writeFile(data_dir + '/commCron/gridRm_' + new Date().getTime() + '.sh', shell_str, (err) => {
+                me.setCron = ('rm_gridSync', shell_str, (err) => {
                     cbk(true);
                 });
             }
@@ -124,43 +143,12 @@
             }, 3000)
         }
 
-        me.getIp = () => {
-            let grid = {};
-            try {
-                grid = pkg.require(keyfn);
-            } catch (e) {}
-            return grid;
-        }
-
         this.setCron = (code, str, callback) => {
             fs.writeFile(data_dir + '/commCron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
                 setTimeout(() => {
                     callback({status:'success', message: code});
                 }, 500)
             });
-
-            /*
-              echo "* * * * *  root (echo _EASY_DOCKER && cd  ${SCR_DIR} && sh _gridSync.sh)" >> /etc/crontab
-
-            _f['removeCron'] = (cbk) => {
-				let cmd = 'sed /' + data.fileName.replace(/[-\/\\^$*+?.()|[\]{}_]/g, '\\$&') + '/d /etc/crontab > /etc/tmp_crontab';
-				cmd += ' && cp -f /etc/tmp_crontab /etc/crontab && rm /etc/tmp_crontab';
-
-				const fnc = me.env.dataFolder + '/cron/xc_' + new Date().getTime() + '.sh';
-
-				fs.writeFile(fnc, cmd, (errp) => {
-					cbk(true);
-				});
-            }
-        */
-        }
-
-        me.updateStatus = (ip, callback) => {
-            let grid = me.getGrid();
-            grid[ip] = new Date().getTime();
-            fs.writeFile(keyfn, JSON.stringify(grid), (err) => {
-				callback();
-			});
         }
     }
     module.exports = obj;
