@@ -79,7 +79,6 @@
             }
 
             _f['saveGrids'] = (cbk) => {
-
                 fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
                     cbk(true);
                 });
@@ -103,9 +102,22 @@
 
         }
         me.removeGrid = (data) => {
+            const _f = {};
             let gridServer = me.getGrids();
-            if (data.gridServer) {
-                delete gridServer[data.gridServer];
+            _f['demoveGrid'] = (cbk) => {
+                if (data.gridServer) {
+                    delete gridServer[data.gridServer];
+                }
+                fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
+                    cbk(true);
+                });
+            };
+            _f['removeCron'] = (cbk) => {
+                let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
+                let shell_str = 'echo "sed /\echo _EASY_GRID_SYNC/d" ' + shell_fn + ' > /tmp/crontab_easydocker &&  cp -f /tmp/crontab_easydocker  ' + shell_fn + '"';
+                fs.writeFile(data_dir + '/commCron/gridRm_' + new Date().getTime() + '.sh', shell_str, (err) => {
+                    cbk(true);
+                });
             }
             fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
 				res.send(me.getGrids());
