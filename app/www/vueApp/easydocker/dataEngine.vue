@@ -33,7 +33,7 @@ module.exports = {
                 },
                 error: function (jqXHR, textStatus, errorThrown) { 
                     if (isSpinner) me.$parent.triggerSpinner = false;
-                    callback(result);
+                    callback('error result');
                 },
                 dataType: 'JSON'
             });
