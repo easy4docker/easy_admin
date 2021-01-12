@@ -45,6 +45,9 @@ module.exports = {
         signOff() {
             this.getAuth().signOff();
         },
+        syncCode() {
+            alert('syncCode');
+        },
         dataEngine(caller) {
             if (caller) this.$refs.dataEngine.caller = caller;
             return this.$refs.dataEngine
