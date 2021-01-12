@@ -119,9 +119,9 @@
                     cbk(true);
                 });
             }
-            fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
-				res.send(me.getGrids());
-			});
+            CP.serial(_f, (data) => {
+                res.send(me.getGrids());
+            }, 3000)
         }
 
         me.getIp = () => {
