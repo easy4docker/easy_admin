@@ -153,12 +153,13 @@
                     cbk(true);
                 });
             }
+            /*
             _f['removeGridRec'] = (cbk) => {
                 me.deleteStatus(data,
                     () => {
                         cbk(true);
                     });
-            }
+            }*/
             CP.serial(_f, (data) => {
                 res.send(me.getGrids());
             }, 3000)
