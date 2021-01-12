@@ -1,6 +1,7 @@
 #!/bin/bash
 
 GRID_SERVER="$1"
+CONTENTS="$2"
 SCR_DIR=$(cd `dirname $0` && pwd)
 
 IP=$(cat ${SCR_DIR}/data/_ip)
@@ -10,4 +11,4 @@ if [ -n $IP ]; then
     IP=$(cat ${SCR_DIR}/data/_ip)
 fi
 
-curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=${IP}&contents=$2
+curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=${IP}&contents=${CONTENTS}
