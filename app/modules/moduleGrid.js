@@ -76,6 +76,18 @@
             }
         }
 
+        me.deleteStatus = (data, cbk) => {
+            var grids = me.getGridStatus();
+            for ((k, v) in grids) {
+                if (v.server === data.server && v.tag == data.tag) {
+                    delete grids[k];
+                }
+            }
+            fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
+                cbk(true);
+            });
+        }
+
         me.getGrids = () => {
             let grids = {};
             try {
@@ -140,6 +152,12 @@
                 me.setCron('rm_gridSync', shell_str, (err) => {
                     cbk(true);
                 });
+            }
+            _f['removeGridRec'] = (cbk) => {
+                me.deleteStatus(data,
+                    () => {
+                        cbk(true);
+                    });
             }
             CP.serial(_f, (data) => {
                 res.send(me.getGrids());
