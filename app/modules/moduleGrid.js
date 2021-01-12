@@ -19,8 +19,8 @@
             if (mp) {
                 switch (mp[2])  {
                     case 'updateStatus':
-                        me.updateStatus(req.query.ip, () => {
-                            res.send(true);
+                        me.updateStatus(req.query, (result) => {
+                            res.send(result);
                         });
                         break;
                     case 'getIp':
