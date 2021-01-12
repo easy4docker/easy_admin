@@ -71,7 +71,7 @@
         saveGridStatus = (data) => {
             var grids = me.getGridStatus();
             if (data.ip) {
-                grids[data.ip] = {tm: new Date().getTime(), reporter: data.reporter};
+                grids[data.ip] = {tm: new Date().getTime(), contents: data.contents};
                 fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
                     cbk(true);
                 });
@@ -103,7 +103,7 @@
             };
             _f['addToCron'] = (cbk) => {
                 let shell_str = 'echo "*/10 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
-                    encodeURIComponent(JSON.stringify(gridServer)) + ')" >> ';
+                    data.gridServer + ' ' + encodeURIComponent(JSON.stringify(gridServer)) + ')" >> ';
 
                 if (_env.env === 'local') {
                     shell_str += _env.data_folder + '/log/ctab';
