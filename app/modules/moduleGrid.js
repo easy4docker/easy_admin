@@ -83,7 +83,15 @@
             } catch (e) {}
             return grids;
         }
-
+        me.makeid = (length) => {
+            var result           = '';
+            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+               result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+         }
         me.addGrid = (data) => {
             const _f = {};
 
@@ -99,7 +107,7 @@
             };
             _f['addToCron'] = (cbk) => {
                 let shell_str = 'echo "* * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
-                    data.gridServer + ' ' + encodeURIComponent(JSON.stringify(gridServer)) + ')" >> ';
+                    data.gridServer + ' ' + me.makeid(32) + ')" >> ';
 
                 if (_env.env === 'local') {
                     shell_str += _env.data_folder + '/log/ctab';
