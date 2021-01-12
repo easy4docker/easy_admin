@@ -37,11 +37,11 @@
                         </button>
                     </div>
                     <div class="col-6 p-30 m-0 text-right">
-                        <a class="btn btn-sm btn-success m-1 pull-right border-warning shadow-sm" 
+                        <a class="btn btn-sm btn-warning m-1 border-warning shadow-sm" 
                             href="JavaScript:void(0)" v-on:click="root.syncCode()">
                             <i class="fa fa-github" aria-hidden="true"></i> Sync code
                         </a>
-                        <a class="btn btn-sm btn-success m-1 pull-right border-warning shadow-sm" 
+                        <a class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
                             href="JavaScript:void(0)" v-on:click="root.signOff()">
                             <i class="fa fa-sign-out" aria-hidden="true"></i> Sign Off
                         </a>
