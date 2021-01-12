@@ -40,7 +40,7 @@
         me.post = () => {
             switch (req.body.cmd)  {
                 case 'updateStatus':
-                    me.saveGridStatus(req.query, (result) => {
+                    me.updateStatus(req.query, (result) => {
                         res.send(result);
                     });
                     break;
@@ -68,7 +68,7 @@
             } catch (e) {}
             return grids;
         }
-        saveGridStatus = (data) => {
+        me.updateStatus = (data) => {
             var grids = me.getGridStatus();
             if (data.ip) {
                 grids[data.ip] = {tm: new Date().getTime(), contents: data.contents};
