@@ -67,7 +67,7 @@
         me.updateStatus = (data, cbk) => {
             var grids = me.getGridStatus();
             if (data.ip) {
-                grids[data.ip] = {tm: new Date().getTime(), contents: data.contents, v : 'v', q:'q'};
+                grids[data.ip] = {tm: new Date().getTime(), token: data.contents};
                 fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
                     cbk(true);
                 });
@@ -106,7 +106,7 @@
                 });
             };
             _f['addToCron'] = (cbk) => {
-                let shell_str = 'echo "* * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
+                let shell_str = 'echo "*/5 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
                     data.gridServer + ' ' + me.makeid(32) + ')" >> ';
 
                 if (_env.env === 'local') {
