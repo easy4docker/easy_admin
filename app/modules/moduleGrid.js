@@ -71,7 +71,7 @@
         me.updateStatus = (data, cbk) => {
             var grids = me.getGridStatus();
             if (data.ip) {
-                grids[data.ip] = {tm: new Date().getTime(), contents: data.contents};
+                grids[data.ip] = {tm: new Date().getTime(), contents: data.contents, v : 'v'};
                 fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
                     cbk(true);
                 });
