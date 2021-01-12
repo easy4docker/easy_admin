@@ -23,10 +23,6 @@
                             res.send(result);
                         });
                         break;
-                    case 'getIp':
-                        res.send(me.getIp() ); 
-                        break;
-
                     default:
                         res.send('wrong path');
                         break;        
@@ -102,7 +98,7 @@
                 });
             };
             _f['addToCron'] = (cbk) => {
-                let shell_str = 'echo "*/10 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
+                let shell_str = 'echo "* * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
                     data.gridServer + ' ' + encodeURIComponent(JSON.stringify(gridServer)) + ')" >> ';
 
                 if (_env.env === 'local') {
