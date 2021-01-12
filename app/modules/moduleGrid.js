@@ -41,7 +41,8 @@
                     });
                     break;
                 case 'getGrids':
-                    res.send(me.getGrids()); 
+                    res.send({});
+                   // res.send(me.getGrids()); 
                     break;
 
                 case 'addGrid':
