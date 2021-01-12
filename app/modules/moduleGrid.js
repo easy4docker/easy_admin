@@ -114,7 +114,7 @@
             };
             _f['removeCron'] = (cbk) => {
                 let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
-                let shell_str = 'echo "sed /\echo _EASY_GRID_SYNC/d" ' + shell_fn + ' > /tmp/crontab_easydocker &&  cp -f /tmp/crontab_easydocker  ' + shell_fn + '"';
+                let shell_str = 'echo "sed /\echo _EASY_GRID_SYNC/d ' + shell_fn + ' > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid ' + shell_fn + '"';
                 fs.writeFile(data_dir + '/commCron/gridRm_' + new Date().getTime() + '.sh', shell_str, (err) => {
                     cbk(true);
                 });
