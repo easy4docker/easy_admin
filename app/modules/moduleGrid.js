@@ -5,7 +5,6 @@
             CP = new pkg.crowdProcess(),
             data_dir = '/var/_localAppData',
             key_dir = '/var/_localAppKey',
-            sitesCfgFn = data_dir + '/_servers_cfg.json',
             gridStatusFn = key_dir + '/_grid.json',
             gridServerFn = data_dir + '/_gridServers.json';
             
@@ -145,9 +144,7 @@
 
         this.setCron = (code, str, callback) => {
             fs.writeFile(data_dir + '/commCron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
-                setTimeout(() => {
-                    callback({status:'success', message: code});
-                }, 500)
+                callback({status:'success'});
             });
         }
     }
