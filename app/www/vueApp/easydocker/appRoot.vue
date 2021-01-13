@@ -39,6 +39,13 @@ module.exports = {
         document._iFrameBridge = (!document._iFrameBridge) ? {} : document._iFrameBridge;
     },
     methods :{
+        getGridMatrix (caller) {
+            var me = this;
+            me.dataEngine().runPost('/_grid/', 'getGridMatrix', {},
+                function(data) {
+                    caller.gridMatrix = data.result;
+                }, function(result) {});
+        },
         isSignin() {
             return (!this.root.auth || !this.root.auth.isSignIn || !this.root.auth.isAuthExist) ? false : true
         },
