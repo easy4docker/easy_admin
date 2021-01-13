@@ -136,7 +136,7 @@
         }
         //------
         me.syncAppCode = () => {
-            const cmd = 'cd ' + app_dir + '/admin && git pull';
+            const cmd = 'cd ' + app_dir + ' && git pull';
             exec(cmd, {maxBuffer: 1024 * 2048},
                 function(error, stdout, stderr) {
                     res.send({status : 'success'})
