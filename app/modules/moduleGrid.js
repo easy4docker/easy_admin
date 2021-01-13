@@ -4,6 +4,7 @@
             fs = require('fs'),
             exec = require('child_process').exec,
             CP = new pkg.crowdProcess(),
+            git_root = '/var/_localRoot',
             app_dir = '/var/_localApp',
             data_dir = '/var/_localAppData',
             key_dir = '/var/_localAppKey',
@@ -136,9 +137,10 @@
         }
         //------
         me.syncAppCode = () => {
-            const shell_str = 'cd ' + _env.app_root + '/admin && git pull';
-            me.setCron('grid_git_pull', shell_str, (err) => {
-                res.send({status : 'success'})
+            const shell_str = 'cd ' + git_root + ' && git pull';
+            exec(shell_str, {maxBuffer: 1024 * 2048},
+                function(error, stdout, stderr) {
+                    res.send({status : 'success'})
             });
         }
         me.removeGrid = (data) => {
