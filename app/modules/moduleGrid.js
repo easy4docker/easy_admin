@@ -44,15 +44,17 @@
                         res.send(result);
                     });
                     break;
+                /*
                 case 'getGrids':
                     res.send(req.body);
                  //   res.send(me.getGrids()); 
                     break;
-
+                */
+                /*
                 case 'addGrid':
                     me.addGrid(req.body); 
                     break;
-
+                */
                 case 'removeGrid':
                     me.removeGrid(req.body); 
                     break;
@@ -83,12 +85,15 @@
         }
 
         me.getGrids = () => {
+            res.send(me.dataGrids());
+        }
+        me.dataGrids = () => {
             let grids = {};
             try {
                 grids = pkg.require(gridServerFn);
             } catch (e) {}
-            res.send(grids);
-           // return grids;
+            return grids;
+        }
         }
         me.makeid = (length) => {
             var result           = '';
@@ -99,10 +104,12 @@
             }
             return result;
          }
+
+          //------
         me.addGrid = (data) => {
             const _f = {};
 
-            let gridServer = me.getGrids();
+            let gridServer = me.dataGrids();
             if (data.gridServer) {
                 gridServer[data.gridServer] = data.tag;
             }
@@ -126,11 +133,11 @@
                 });
             }
             CP.serial(_f, (data) => {
-                res.send(me.getGrids());
+                res.send(me.dataGrids());
             }, 3000)
 
         }
-        //------
+        
         me.syncAppCode = () => {
             const shell_str = 'cd ' + git_root + ' && git pull';
             exec(shell_str, {maxBuffer: 1024 * 2048},
@@ -138,6 +145,7 @@
                     res.send({status : 'success'})
             });
         }
+        //------
         me.removeGrid = (data) => {
             const _f = {};
             let gridServer = me.getGrids();

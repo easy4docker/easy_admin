@@ -89,11 +89,18 @@ module.exports = {
         addGrid() {
             var me = this,
                 data = me.form;
-                data.cmd = 'addGrid';
+              //  data.cmd = 'addGrid';
             console.log(data);
+
+            me.root.dataEngine().runPost('/_grid/', 'addGrid', me.form,
+                function(result) {
+                    me.getGrids();
+                }, function(result) {});
+
+            /*
             me.root.dataEngine().ajaxPost(data, function(result) {
                 me.getGrids();
-            });
+            });*/
         },
         removeGrid(v) {
             var me = this,
@@ -111,7 +118,6 @@ module.exports = {
                 data = {cmd: 'getGrids'};
             me.root.dataEngine().runPost('/_grid/', 'getGrids', {},
                 function(result) {
-                    console.log(result);
                     me.grids = result.result;
                 }, function(result) {});
         },
