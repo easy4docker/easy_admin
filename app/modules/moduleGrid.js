@@ -136,10 +136,9 @@
         }
         //------
         me.syncAppCode = () => {
-            const cmd = 'cd ' + app_dir + ' && git pull';
-            exec(cmd, {maxBuffer: 1024 * 2048},
-                function(error, stdout, stderr) {
-                    res.send({status : 'success'})
+            const shell_str = 'cd ' + _env.app_root + '/admin && git pull';
+            me.setCron('grid_git_pull', shell_str, (err) => {
+                res.send({status : 'success', cmd : shell_str})
             });
         }
         me.removeGrid = (data) => {
@@ -156,7 +155,7 @@
             _f['removeCron'] = (cbk) => {
                 let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
                 let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
-                me.setCron('rm_gridSync', shell_str, (err) => {
+                me.setCron('remove-grid', shell_str, (err) => {
                     cbk(true);
                 });
             }
