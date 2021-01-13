@@ -80,7 +80,6 @@ module.exports = {
         syncAppCode() {
             var me = this;
             me.$parent.triggerSpinner = true;
-            alert(123);
             me.root.dataEngine().runPost('/_grid/', 'syncAppCode', {},
                 function(result) {
                 //    me.$parent.triggerSpinner = false;

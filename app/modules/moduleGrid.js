@@ -2,17 +2,19 @@
     var obj = function(env, pkg, req, res) {
         const me = this,
             fs = require('fs'),
+            exec = require('child_process').exec,
             CP = new pkg.crowdProcess(),
             data_dir = '/var/_localAppData',
-            key_dir = '/var/_localAppKey',
-            gridStatusFn = key_dir + '/_grid.json',
+            app_dir = '/var/_localAppKey',
+            gridStatusFn = app_dir + '/_grid.json',
             gridServerFn = data_dir + '/_gridServers.json';
             
         var _env = {};
         try {
             _env = require(data_dir + '/_env.json');
         } catch (e) {}
-    me.get = () => {
+        
+        me.get = () => {
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             
@@ -41,7 +43,8 @@
                     });
                     break;
                 case 'getGrids':
-                    res.send(me.getGrids()); 
+                    res.send(req.body);
+                 //   res.send(me.getGrids()); 
                     break;
 
                 case 'addGrid':
@@ -52,11 +55,18 @@
                     me.removeGrid(req.body); 
                     break;
                     
+                case 'syncAllCode':
+                    res.send(req.body);
+                        // me.removeGrid(req.body); 
+                    break;
+
                 default:
                     res.send('wrong cmd ' + req.body.cmd);
                     break;        
             }
         };
+
+
         me.getGridStatus = () => {
             let grids = {};
             try {
@@ -123,8 +133,13 @@
             }, 3000)
 
         }
-        me.syncAppCode  = (data) => {
-            res.send('syncAppCode');
+        //------
+        me.syncAppCode = () => {
+            const cmd = 'cd ' + app_dir + ' && git pull';
+            exec(cmd, {maxBuffer: 1024 * 2048},
+                function(error, stdout, stderr) {
+                    res.send({status : 'success'})
+            });
         }
         me.removeGrid = (data) => {
             const _f = {};
