@@ -89,9 +89,7 @@
 			let p = req.params[0],
 				mp = p.match(/\/([^\/]+)(\/|$)/);
 			if (!mp) {
-				res.render(env.root  + '/views/html/page404.ect');
-				return true			
-			} else {
+
 				switch(mp[1]) {
 					case '_dockerAdupter':
 						var MAdupter= pkg.require(env.root+ '/modules/moduleAdupter.js');
@@ -105,8 +103,11 @@
 						me.postApi();
 						break; 
 					default:
-						res.send({status:'failure', message : '404 wrong cmd!'});
-				}
+						res.send({status:'failure', message : '404 wrong path ' + p + '!'});
+				}		
+			} else {
+				res.render(env.root  + '/views/html/page404.ect');
+				return true	
 			}
 
 		};
