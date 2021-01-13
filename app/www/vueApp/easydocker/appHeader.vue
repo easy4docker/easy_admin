@@ -81,9 +81,6 @@ module.exports = {
             var me = this;
             me.root.dataEngine().runPost('/_grid/', 'syncAppCode', {},
                 function(result) {
-                   setTimeout(function() {
-                        window.location.reload();
-                   },3000);
                 }, function(result) {});
         }
     }
