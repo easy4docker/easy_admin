@@ -16,7 +16,8 @@
         </div>
        
         <div class="card-body card-list-section border-0 pt-0">
-            =={{gridMatrix}}==
+            <span v-for="(v, k) in gridMatrix">{{k}}</span>
+
             <div class="list-group" v-if="!filteredResult().length"> 
                 <div class="list-group-item list-group-item-action flex-column align-items-start m-1">
                     <div class="container-fluid m-0">
