@@ -74,18 +74,27 @@ module.exports = {
             form : {
                 tag         : '',
                 gridServer  : ''
-            }
+            },
+            gridStatus : {}
         }
     },
     mounted() {
         var me = this;
         setTimeout(
             function() {
-                me.getGrids()
+                me.getGrids();
+                me.getGridStatus (); 
             }, 50
         );
     },
     methods : {
+        getGridStatus () {
+            var me = this;
+            me.root.dataEngine().runPost('/_grid/', 'getGridStatus', {},
+                function(result) {
+                    console.log(result);
+                }, function(result) {});
+        },
         addGrid() {
             var me = this;
             me.root.dataEngine().runPost('/_grid/', 'addGrid', me.form,

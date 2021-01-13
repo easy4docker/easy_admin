@@ -50,8 +50,11 @@
             }
         };
 
-
         me.getGridStatus = () => {
+            res.send(me.dataGridStatus());
+        }
+
+        me.dataGridStatus = () => {
             let grids = {};
             try {
                 grids = pkg.require(gridStatusFn);
@@ -59,7 +62,7 @@
             return grids;
         }
         me.updateStatus = (data, cbk) => {
-            var grids = me.getGridStatus();
+            var grids = me.dataGridStatus();
             if (data.ip) {
                 grids[data.ip] = {tm: new Date().getTime(), token: data.token, server: data.server, tag: data.tag};
                 fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
