@@ -18,7 +18,7 @@
         <div class="card-body card-list-section border-0 pt-0">
             <div class="container-fluid p-1 pb-0" >
                 <div class="row">
-                    <div class="col-2 p-3 m-0 text-left alert-secondary grids-svr-section">
+                    <div class="col-2 p-3 m-0 text-left alert-secondary border rounded">
                         <span v-for="(v, k) in gridMatrix">
                             <div class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)" v-on:click="checkFilter(k)"><span class="pl-2">{{ k }}</span></div>
                         </span>
