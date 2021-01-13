@@ -1,6 +1,6 @@
 <template>
     <div class="card m-1 text-left">
-        <div class="p-1 pb-0" >
+        <div class="container-fluid p-1 pb-0" >
             <div class="row">
                 <div class="col-5 p-3 m-0 text-left">
                     <h3 class="ml-4 text-capitalize">
@@ -21,7 +21,7 @@
                     <span class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)" v-on:click="checkFilter(k)"><span class="pl-2">{{ k }}</span></span>
                 </span>
             </div>
-            
+
             <div class="list-group" v-if="!filteredResult().length"> 
                 <div class="list-group-item list-group-item-action flex-column align-items-start m-1">
                     <div class="container-fluid m-0">
