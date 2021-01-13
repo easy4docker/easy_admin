@@ -24,72 +24,70 @@
                         </span>
                     </div>
                     <div class="col-10 p-3 m-0 text-right">
-                        ----
-                    </div>
-                </div>
-            </div>
-
-            <div class="list-group" v-if="!filteredResult().length"> 
-                <div class="list-group-item list-group-item-action flex-column align-items-start m-1">
-                    <div class="container-fluid m-0">
-                        No result
-                    </div>
-                </div>
-            </div>
-            <div class="list-group" v-for="item in filteredResult()">
-            
-                <div class="list-group-item list-group-item-action flex-column align-items-start m-1 list-group-border">
-                    <div class="container-fluid m-0">
-                        <div class="row">
-                            <div class="col-2 p-0 m-0 text-center">
-                                <div class="p-3 m-1 mr-3 border rounded text-center alert-info text-info">
-                                    {{item.serverType}}<br/>
-                                    <h3>{{item.name}}</h3>
+                        <div class="list-group" v-if="!filteredResult().length"> 
+                            <div class="list-group-item list-group-item-action flex-column align-items-start m-1">
+                                <div class="container-fluid m-0">
+                                    No result
                                 </div>
                             </div>
-                            <div class="col-7 p-0 m-0 text-left">
-                                <span class="ml-1">
-                                    Type: <span class="text-info">{{item.docker.type}}</span>
-                                    Port : <span class="text-info"> {{outerPorts(item)}}</span>
-                                    <a href="JavaScript:void(0)" v-on:click="linkCloudTo(item)">
-                                        <i class="fa fa-globe fa ml-3" aria-hidden="true"></i> Web Link
-                                    </a>
-                                </span><br/>
-                                <span class="ml-1">
-                                    gitHub : <span class="text-info"> {{item.gitHub}}</span>
-                                </span>
-                                <span class="ml-1">
-                                    <select-branch v-bind:record="item" v-bind:branch="item.branch"></select-branch>
-                                </span><br/>
-                                <docker-adupter v-bind:item="item"></docker-adupter>
-                            </div>
-                            <div class="col-2 p-0 m-0 text-left">
-                                <a class="m-1" href="JavaScript:void(0)" v-on:click="pullCode(item)">
-                                    <i class="fa fa-github" aria-hidden="true"></i> Pull code
-                                </a><br/>
-                                <a class="m-1" href="JavaScript:void(0)" v-on:click="switchBranch(item)">
-                                    <i class="fa fa-github" aria-hidden="true"></i> Switch branch
-                                </a><br/>
-                                <!--a class="m-1" href="JavaScript:void(0)" v-on:click="viewLogs(item)">
-                                    <i class="fa fa-file" aria-hidden="true"></i> Read Logs
-                                </a><br/-->
-                                <a class="m-1" href="JavaScript:void(0)" v-on:click="popupEditor(item)">
-                                    <i class="fa fa-file-code-o mr-2" aria-hidden="true"></i>Edit Site Variabls
-                                </a><br/>
-                                <a class="m-1" v-if="isCloudTool(item)" href="JavaScript:void(0)" v-on:click="popupCloudTool(item)">
-                                    <i class="fa fa-cloud mr-2" aria-hidden="true"></i>Cloud Token Admin
-                                </a>
-                            </div>
-                            <div class="col-1 p-0 m-0 text-left">
-                                <a href="JavaScript:void(0)" v-on:click="deleteVirtualServer(item)">
-                                    <i class="fa fa-trash m-1 " aria-hidden="true"></i> Remove
-                                </a><br/>
-                                <a href="JavaScript:void(0)" v-on:click="startVServer(item)"  title="Reboot Server">
-                                    <i class="fa fa-refresh m-1" aria-hidden="true"></i> Reboot
-                                </a><br/>
-                                <a href="JavaScript:void(0)" v-on:click="stopVServer(item)">
-                                    <i class="fa fa-stop-circle m-1" aria-hidden="true"></i> Stop
-                                </a>
+                        </div>
+                        <div class="list-group" v-for="item in filteredResult()">
+                        
+                            <div class="list-group-item list-group-item-action flex-column align-items-start m-1 list-group-border">
+                                <div class="container-fluid m-0">
+                                    <div class="row">
+                                        <div class="col-2 p-0 m-0 text-center">
+                                            <div class="p-3 m-1 mr-3 border rounded text-center alert-info text-info">
+                                                {{item.serverType}}<br/>
+                                                <h3>{{item.name}}</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 p-0 m-0 text-left">
+                                            <span class="ml-1">
+                                                Type: <span class="text-info">{{item.docker.type}}</span>
+                                                Port : <span class="text-info"> {{outerPorts(item)}}</span>
+                                                <a href="JavaScript:void(0)" v-on:click="linkCloudTo(item)">
+                                                    <i class="fa fa-globe fa ml-3" aria-hidden="true"></i> Web Link
+                                                </a>
+                                            </span><br/>
+                                            <span class="ml-1">
+                                                gitHub : <span class="text-info"> {{item.gitHub}}</span>
+                                            </span>
+                                            <span class="ml-1">
+                                                <select-branch v-bind:record="item" v-bind:branch="item.branch"></select-branch>
+                                            </span><br/>
+                                            <docker-adupter v-bind:item="item"></docker-adupter>
+                                        </div>
+                                        <div class="col-2 p-0 m-0 text-left">
+                                            <a class="m-1" href="JavaScript:void(0)" v-on:click="pullCode(item)">
+                                                <i class="fa fa-github" aria-hidden="true"></i> Pull code
+                                            </a><br/>
+                                            <a class="m-1" href="JavaScript:void(0)" v-on:click="switchBranch(item)">
+                                                <i class="fa fa-github" aria-hidden="true"></i> Switch branch
+                                            </a><br/>
+                                            <!--a class="m-1" href="JavaScript:void(0)" v-on:click="viewLogs(item)">
+                                                <i class="fa fa-file" aria-hidden="true"></i> Read Logs
+                                            </a><br/-->
+                                            <a class="m-1" href="JavaScript:void(0)" v-on:click="popupEditor(item)">
+                                                <i class="fa fa-file-code-o mr-2" aria-hidden="true"></i>Edit Site Variabls
+                                            </a><br/>
+                                            <a class="m-1" v-if="isCloudTool(item)" href="JavaScript:void(0)" v-on:click="popupCloudTool(item)">
+                                                <i class="fa fa-cloud mr-2" aria-hidden="true"></i>Cloud Token Admin
+                                            </a>
+                                        </div>
+                                        <div class="col-1 p-0 m-0 text-left">
+                                            <a href="JavaScript:void(0)" v-on:click="deleteVirtualServer(item)">
+                                                <i class="fa fa-trash m-1 " aria-hidden="true"></i> Remove
+                                            </a><br/>
+                                            <a href="JavaScript:void(0)" v-on:click="startVServer(item)"  title="Reboot Server">
+                                                <i class="fa fa-refresh m-1" aria-hidden="true"></i> Reboot
+                                            </a><br/>
+                                            <a href="JavaScript:void(0)" v-on:click="stopVServer(item)">
+                                                <i class="fa fa-stop-circle m-1" aria-hidden="true"></i> Stop
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
