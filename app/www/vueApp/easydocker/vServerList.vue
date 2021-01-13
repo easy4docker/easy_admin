@@ -19,7 +19,7 @@
             <div class="container-fluid p-1 pb-0" >
                 <div class="row">
                     <div class="col-2 p-3 m-0 text-left alert-secondary border rounded grids-list-section">
-                        <span v-for="(v, k) in gridMatrix">
+                        <span v-for="(v, k) in root.gridMatrix">
                             <div class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)" v-on:click="checkFilter(k)"><span class="pl-2">{{ k }}</span></div>
                         </span>
                     </div>
@@ -125,7 +125,6 @@ module.exports = {
         setTimeout(
             function() {
                 me.getVServerList();
-                me.root.getGridMatrix(me);
             }, 50
         );
     },
@@ -135,16 +134,6 @@ module.exports = {
         }
     },
     methods : {
-        
-        getGridMatrix () {
-            var me = this;
-            me.$root.getGridMatrix(me);
-            return true;
-            me.root.dataEngine().runPost('/_grid/', 'getGridMatrix', {},
-                function(data) {
-                    me.gridMatrix = data.result;
-                }, function(result) {});
-        },
         isFilterChecked(k) {
             var me = this;
             return (me.serverTypeFilter.indexOf(k) !== -1);

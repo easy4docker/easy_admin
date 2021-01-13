@@ -30,6 +30,7 @@ module.exports = {
                 },
                 formStarted : false
             },
+            gridMatrix: {},
             triggerSpinner : false,
             module : 'list',
             menu   : ''
@@ -37,13 +38,14 @@ module.exports = {
     },
     mounted () {
         document._iFrameBridge = (!document._iFrameBridge) ? {} : document._iFrameBridge;
+        this.getGridMatrix();
     },
     methods :{
-        getGridMatrix(caller) {
+        getGridMatrix() {
             var me = this;
             me.dataEngine().runPost('/_grid/', 'getGridMatrix', {},
                 function(data) {
-                    caller.gridMatrix = data.result;
+                    me.gridMatrix = data.result;
                 }, function(result) {});
         },
         isSignin() {
