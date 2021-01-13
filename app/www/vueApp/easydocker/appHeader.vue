@@ -81,14 +81,8 @@ module.exports = {
             var me = this;
             me.root.dataEngine().runPost('/_grid/', 'syncAppCode', {},
                 function(result) {
-                    me.root.$forceUpdate();
-                    me.$router.go(0);
-                    console.log(11)
-                }, function(result) {
-                    me.root.$forceUpdate();
-                    console.log(2)
-                }
-            );
+                   window.location.reload();
+                }, function(result) {});
         }
     }
 }
