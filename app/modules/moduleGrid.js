@@ -56,12 +56,6 @@
                 case 'removeGrid':
                     me.removeGrid(req.body); 
                     break;
-                    
-                case 'syncAllCode':
-                    res.send(req.body);
-                        // me.removeGrid(req.body); 
-                    break;
-
                 default:
                     res.send('wrong cmd ' + req.body.cmd);
                     break;        
@@ -93,7 +87,8 @@
             try {
                 grids = pkg.require(gridServerFn);
             } catch (e) {}
-            return grids;
+            res.send(grids);
+           // return grids;
         }
         me.makeid = (length) => {
             var result           = '';

@@ -42,18 +42,17 @@
                  </div>
             </div>
             <div class="p-2 alert-secondary grid-list border rounded">
-                <div class="container p-2">
+                <div class="container p-2">{{grids}}
                     <div class="row" v-for="(v, k) in grids">
-                        <div class="col-1 p-2">
+                        <div class="col-1 p-2">--
                            <a href="JavaScript: void(0)" v-on:click="removeGrid(k);"><i class="fa fa-trash-o"></i></a>
                         </div>
                         <div class="col-1 p-2">
                            {{v}}
                         </div>
                         <div class="col-10 p-2">
-                            {{k}}
+                            {{k}}--
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -110,9 +109,11 @@ module.exports = {
         getGrids() {
             var me = this,
                 data = {cmd: 'getGrids'};
-            me.root.dataEngine().ajaxPost(data, function(result) {
-                me.grids = result;
-            });
+            me.root.dataEngine().runPost('/_grid/', 'getGrids', {},
+                function(result) {
+                    console.log(result);
+                    me.grids = result.result;
+                }, function(result) {});
         },
         onTagSelect(event) {
             var me = this;
@@ -125,6 +126,14 @@ module.exports = {
         isSaveDisabled() {
             var me = this;
             return (!me.form.tag || me.form.gridServer.split('.').length !== 3) ? true : false;
+        },
+
+        syncAppCode() {
+            var me = this;
+            me.root.dataEngine().runPost('/_grid/', 'syncAppCode', {},
+                function(result) {
+                window.location.reload();
+                }, function(result) {});
         }
     }
 }
