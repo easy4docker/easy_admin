@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /var/_localApp/admin
+cd /var/_localApp
 node server.js
