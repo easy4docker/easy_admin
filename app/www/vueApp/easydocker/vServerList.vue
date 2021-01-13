@@ -125,7 +125,7 @@ module.exports = {
         setTimeout(
             function() {
                 me.getVServerList();
-                me.getGridMatrix(me);
+                me.root.getGridMatrix(me);
             }, 50
         );
     },
