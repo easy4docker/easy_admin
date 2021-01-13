@@ -103,7 +103,7 @@ module.exports = {
             serverTypeFilter : [],
             root :  this.$parent.root,
             currentServer : '',
-            gridMatrix();
+            gridMatrix; {}
         }
     },
     mounted() {
