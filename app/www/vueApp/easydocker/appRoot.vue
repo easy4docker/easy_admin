@@ -39,7 +39,7 @@ module.exports = {
         document._iFrameBridge = (!document._iFrameBridge) ? {} : document._iFrameBridge;
     },
     methods :{
-        getGridMatrix (caller) {
+        getGridMatrix(caller) {
             var me = this;
             me.dataEngine().runPost('/_grid/', 'getGridMatrix', {},
                 function(data) {
