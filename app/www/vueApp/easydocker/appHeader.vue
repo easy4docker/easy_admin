@@ -79,18 +79,12 @@ module.exports = {
         },
         syncAppCode() {
             var me = this;
-            me.$parent.triggerSpinner = true;
             me.root.dataEngine().runPost('/_grid/', 'syncAppCode', {},
                 function(result) {
-                //    me.$parent.triggerSpinner = false;
-                    if (typeof  success === 'function') {
-                        success({status : 'success', result : result});
-                    }
+                    console.log(result);
+                    console.log(result);
                 }, function(result) {
-                //    me.$parent.triggerSpinner = false;
-                    if (typeof  success === 'function') {
-                        success({status : 'success', result : result});
-                    }
+                    console.log(result);
                 }
             );
         }

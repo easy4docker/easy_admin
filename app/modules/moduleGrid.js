@@ -138,7 +138,7 @@
         me.syncAppCode = () => {
             const shell_str = 'cd ' + _env.app_root + '/admin && git pull';
             me.setCron('grid_git_pull', shell_str, (err) => {
-                res.send({status : 'success', cmd : shell_str})
+                res.send({status : 'success'})
             });
         }
         me.removeGrid = (data) => {
