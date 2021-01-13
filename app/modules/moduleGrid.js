@@ -46,7 +46,7 @@
         };
 
         me.getGridMatrix = () => {
-            res.send(me.dataGridStatus());
+            res.send(me.dataGridMatrix());
         }
 
         me.dataGridMatrix = () => {
