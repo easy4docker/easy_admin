@@ -17,7 +17,7 @@
        
         <div class="card-body card-list-section border-0 pt-0">
             <span v-for="(v, k) in gridMatrix">
-                <span class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)" v-on:click="checkFilter(k)"><span class="pl-2">{{ v }}</span></span>
+                <span class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)" v-on:click="checkFilter(k)"><span class="pl-2">{{ k }}</span></span>
             </span>
 
             <div class="list-group" v-if="!filteredResult().length"> 
