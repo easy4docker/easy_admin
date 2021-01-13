@@ -71,27 +71,48 @@
 				}
 			)
 		};
-
-		this.post = () => {
-			var me = this;
-			var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
-
+		me.postGrid = () => {
+			switch(req.body.cmd) {
+				case 'getGrids' 	:
+				case 'addGrid' 		:
+				case 'removeGrid' 	:
+					var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
+					let mGrid =  new MAGrid(env, pkg, req, res);
+					mGrid.post();
+					break;
+				default :
+					res.send({status:'failure', message : '404 wrong cmd ' + req.body.cmd + ' !'});
+			}
+			return true;
+		};
+		me.post = () => {
 			let p = req.params[0],
 				mp = p.match(/\/([^\/]+)(\/|$)/);
-
-
-			if (mp && mp[1] === '_dockerAdupter') {
-				var MAdupter= pkg.require(env.root+ '/modules/moduleAdupter.js');
-				let maupter =  new MAdupter(env, pkg, req, res);
-				maupter.call();
-				return true;
-			}
-
-			
-			if (!mp || mp[1] !== 'api') {
+			if (!mp) {
 				res.render(env.root  + '/views/html/page404.ect');
-				return true
+				return true			
+			} else {
+				switch(mp[1]) {
+					case '_dockerAdupter':
+						var MAdupter= pkg.require(env.root+ '/modules/moduleAdupter.js');
+						let maupter =  new MAdupter(env, pkg, req, res);
+						maupter.call();
+						break; 
+					case '_grid':
+						me.postGrid();
+						break; 
+					case 'api':
+						me.postApi();
+						break; 
+					default:
+						res.send({status:'failure', message : '404 wrong cmd!'});
+				}
 			}
+
+		};
+		me.postApi = () => {
+			var me = this;
+			var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
 
             switch(req.body.cmd) {
 				case 'auth' :
@@ -230,9 +251,10 @@
 					break;
 
 				case 'loadPublicDockersList' :
-					me.loadPublicDockersList(
-						(data) => {
-						me.refreshTokenSend(data);
+					var MDockerfile= pkg.require(env.root+ '/modules/moduleDockerfile.js');
+					var dockers = new MDockerfile(env, pkg);
+					dockers.loadPublicDockersList(function(list) {
+						me.refreshTokenSend({status:'success', list : list });
 					});
 					break;
 
@@ -250,20 +272,11 @@
 							me.refreshTokenSend(data);
 						});
 					break;
-
-				case 'getGrids' 	:
-				case 'addGrid' 		:
-				case 'removeGrid' 	:
-					var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
-					let mGrid =  new MAGrid(env, pkg, req, res);
-					mGrid.post();
-					break;
-
 				default :
 					res.send({status:'failure', message : '404 wrong cmd!'});
             }
 		};
-
+		
 		this.loadPublicDockersList = (callback) => {
 			var MDockerfile= pkg.require(env.root+ '/modules/moduleDockerfile.js');
 			var dockers = new MDockerfile(env, pkg);

@@ -123,6 +123,9 @@
             }, 3000)
 
         }
+        me.syncAppCode  = (data) => {
+            res.send('syncAppCode');
+        }
         me.removeGrid = (data) => {
             const _f = {};
             let gridServer = me.getGrids();

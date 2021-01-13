@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-6 p-30 m-0 text-right">
                         <a class="btn btn-sm btn-warning m-1 border-danger shadow-sm" 
-                            href="JavaScript:void(0)" v-on:click="root.syncCode()">
+                            href="JavaScript:void(0)" v-on:click="syncAppCode()">
                             <i class="fa fa-github" aria-hidden="true"></i> Sync code
                         </a>
                         <a class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
@@ -77,13 +77,23 @@ module.exports = {
             var me = this;
             me.$parent.dataEngine().restartProxy();
         },
-        removeAllHosts() {
+        syncAppCode() {
             var me = this;
-            me.$parent.dataEngine().runPost('/api', 'removeAllHosts', {}, function(result) {
-                console.log(result);
-            } , function(result) {
-                console.log(result);
-            });
+            me.$parent.triggerSpinner = true;
+            alert(123);
+            me.root.dataEngine().runPost('/_grid/', 'syncAppCode', {},
+                function(result) {
+                //    me.$parent.triggerSpinner = false;
+                    if (typeof  success === 'function') {
+                        success({status : 'success', result : result});
+                    }
+                }, function(result) {
+                //    me.$parent.triggerSpinner = false;
+                    if (typeof  success === 'function') {
+                        success({status : 'success', result : result});
+                    }
+                }
+            );
         }
     }
 }
