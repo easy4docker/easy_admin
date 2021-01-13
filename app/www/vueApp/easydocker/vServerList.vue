@@ -125,7 +125,7 @@ module.exports = {
         setTimeout(
             function() {
                 me.getVServerList();
-                me.$root.getGridMatrix(me);
+                me.getGridMatrix(me);
             }, 50
         );
     },
@@ -138,6 +138,8 @@ module.exports = {
         
         getGridMatrix () {
             var me = this;
+            me.$root.getGridMatrix(me);
+            return true;
             me.root.dataEngine().runPost('/_grid/', 'getGridMatrix', {},
                 function(data) {
                     me.gridMatrix = data.result;
