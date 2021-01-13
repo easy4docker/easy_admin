@@ -39,22 +39,17 @@
 
         me.post = () => {
             switch (req.body.cmd)  {
-                case 'updateStatus':
-                    me.updateStatus(req.query, (result) => {
-                        res.send(result);
-                    });
-                    break;
                 default:
                     res.send('wrong cmd ' + req.body.cmd);
                     break;        
             }
         };
 
-        me.getGridStatus = () => {
+        me.getGridMatrix = () => {
             res.send(me.dataGridStatus());
         }
 
-        me.dataGridStatus = () => {
+        me.dataGridMatrix = () => {
             let grids = {};
             try {
                 grids = pkg.require(gridStatusFn);
@@ -62,7 +57,7 @@
             return grids;
         }
         me.updateStatus = (data, cbk) => {
-            var grids = me.dataGridStatus();
+            var grids = me.dataGridMatrix();
             if (data.ip) {
                 grids[data.ip] = {tm: new Date().getTime(), token: data.token, server: data.server, tag: data.tag};
                 fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {

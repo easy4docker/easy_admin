@@ -55,6 +55,7 @@
                         </div>
                     </div>
                 </div>
+                {{gridMatrix}}
             </div>
         </form>
     </div>
@@ -75,7 +76,7 @@ module.exports = {
                 tag         : '',
                 gridServer  : ''
             },
-            gridStatus : {}
+            gridMatrix : {}
         }
     },
     mounted() {
@@ -88,11 +89,11 @@ module.exports = {
         );
     },
     methods : {
-        getGridStatus () {
+        getGridMatrix () {
             var me = this;
-            me.root.dataEngine().runPost('/_grid/', 'getGridStatus', {},
+            me.root.dataEngine().runPost('/_grid/', 'getGridMatrix', {},
                 function(result) {
-                    console.log(result);
+                    gridMatrix = result;
                 }, function(result) {});
         },
         addGrid() {
