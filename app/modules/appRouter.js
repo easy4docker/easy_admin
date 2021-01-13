@@ -88,8 +88,7 @@
 		me.post = () => {
 			let p = req.params[0],
 				mp = p.match(/\/([^\/]+)(\/|$)/);
-			if (!mp) {
-
+			if (mp) {
 				switch(mp[1]) {
 					case '_dockerAdupter':
 						var MAdupter= pkg.require(env.root+ '/modules/moduleAdupter.js');
