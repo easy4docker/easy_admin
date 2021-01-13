@@ -16,10 +16,17 @@
         </div>
        
         <div class="card-body card-list-section border-0 pt-0">
-            <div class="p-3">
-                <span v-for="(v, k) in gridMatrix">
-                    <span class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)" v-on:click="checkFilter(k)"><span class="pl-2">{{ k }}</span></span>
-                </span>
+            <div class="container-fluid p-1 pb-0" >
+                <div class="row">
+                    <div class="col-2 p-3 m-0 text-left">
+                        <span v-for="(v, k) in gridMatrix">
+                            <div class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)" v-on:click="checkFilter(k)"><span class="pl-2">{{ k }}</span></div>
+                        </span>
+                    </div>
+                    <div class="col-10 p-3 m-0 text-right">
+                        ----
+                    </div>
+                </div>
             </div>
 
             <div class="list-group" v-if="!filteredResult().length"> 
@@ -39,7 +46,6 @@
                                     {{item.serverType}}<br/>
                                     <h3>{{item.name}}</h3>
                                 </div>
-                                
                             </div>
                             <div class="col-7 p-0 m-0 text-left">
                                 <span class="ml-1">
