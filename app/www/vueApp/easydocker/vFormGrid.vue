@@ -84,7 +84,7 @@ module.exports = {
         setTimeout(
             function() {
                 me.getGrids();
-                me.ggetGridMatrix (); 
+                me.getGridMatrix (); 
             }, 50
         );
     },
