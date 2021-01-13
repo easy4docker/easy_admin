@@ -93,11 +93,8 @@ module.exports = {
             var me = this;
             me.root.dataEngine().runPost('/_grid/', 'getGridMatrix', {},
                 function(result) {
-                    console.log(result);
-                    gridMatrix = result;
-                }, function(result) {
-                    
-                });
+                    me.gridMatrix = result;
+                }, function(result) {});
         },
         addGrid() {
             var me = this;
