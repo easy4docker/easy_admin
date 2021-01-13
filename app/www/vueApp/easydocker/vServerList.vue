@@ -18,12 +18,12 @@
         <div class="card-body card-list-section border-0 pt-0">
             <div class="container-fluid p-1 pb-0" >
                 <div class="row">
-                    <div class="col-2 p-3 m-0 text-left alert-secondary">
+                    <div class="col-2 p-3 m-0 text-left alert-secondary grids-svr-section">
                         <span v-for="(v, k) in gridMatrix">
                             <div class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)" v-on:click="checkFilter(k)"><span class="pl-2">{{ k }}</span></div>
                         </span>
                     </div>
-                    <div class="col-10 p-3 m-0 text-left">
+                    <div class="col-10 p-0 m-0 text-left">
 
                         <div class="list-group" v-if="!filteredResult().length"> 
                             <div class="list-group-item list-group-item-action flex-column align-items-start m-1">
