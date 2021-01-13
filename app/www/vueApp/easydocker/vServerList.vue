@@ -127,7 +127,7 @@ module.exports = {
         getGridMatrix () {
             var me = this;
             me.root.dataEngine().runPost('/_grid/', 'getGridMatrix', {},
-                function(data.result) {
+                function(data) {
                     me.gridMatrix = data.result;
                 }, function(result) {});
         },
