@@ -44,20 +44,6 @@
                         res.send(result);
                     });
                     break;
-                /*
-                case 'getGrids':
-                    res.send(req.body);
-                 //   res.send(me.getGrids()); 
-                    break;
-                */
-                /*
-                case 'addGrid':
-                    me.addGrid(req.body); 
-                    break;
-                */
-                case 'removeGrid':
-                    me.removeGrid(req.body); 
-                    break;
                 default:
                     res.send('wrong cmd ' + req.body.cmd);
                     break;        
@@ -83,7 +69,7 @@
                 cbk(false);
             }
         }
-
+          //------
         me.getGrids = () => {
             res.send(me.dataGrids());
         }
@@ -94,7 +80,7 @@
             } catch (e) {}
             return grids;
         }
-        }
+
         me.makeid = (length) => {
             var result           = '';
             var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -105,8 +91,9 @@
             return result;
          }
 
-          //------
-        me.addGrid = (data) => {
+
+        me.addGrid = () => {
+            var data = req.body;
             const _f = {};
 
             let gridServer = me.dataGrids();
@@ -133,11 +120,11 @@
                 });
             }
             CP.serial(_f, (data) => {
-                res.send(me.dataGrids());
+                me.getGrids();
             }, 3000)
 
         }
-        
+        //------
         me.syncAppCode = () => {
             const shell_str = 'cd ' + git_root + ' && git pull';
             exec(shell_str, {maxBuffer: 1024 * 2048},
@@ -145,10 +132,10 @@
                     res.send({status : 'success'})
             });
         }
-        //------
-        me.removeGrid = (data) => {
+        me.removeGrid = () => {
+            var data = req.body;
             const _f = {};
-            let gridServer = me.getGrids();
+            let gridServer = me.dataGrids();
             _f['demoveGrid'] = (cbk) => {
                 if (data.gridServer) {
                     delete gridServer[data.gridServer];
@@ -166,7 +153,7 @@
             }
             
             CP.serial(_f, (data) => {
-                res.send(me.getGrids());
+                me.getGrids();
             }, 3000)
         }
 

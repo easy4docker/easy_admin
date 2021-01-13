@@ -60,7 +60,8 @@ module.exports = {
         runPost(url, cmd, params, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
-            let data = {params : params, cmd: cmd};
+            let data = params;
+            data.cmd = cmd;
             $.ajax({
                 type: 'POST',
                 url: url,
