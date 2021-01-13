@@ -82,7 +82,8 @@ module.exports = {
             me.root.dataEngine().runPost('/_grid/', 'syncAppCode', {},
                 function(result) {
                     me.root.$forceUpdate();
-                    console.log(1)
+                    me.$router.go(0);
+                    console.log(11)
                 }, function(result) {
                     me.root.$forceUpdate();
                     console.log(2)
