@@ -37,8 +37,11 @@ module.exports = {
         }
     },
     mounted () {
+        var me = this;
         document._iFrameBridge = (!document._iFrameBridge) ? {} : document._iFrameBridge;
-        this.getGridMatrix();
+        setTimeout(function() {
+            me.getGridMatrix()
+        },50);
     },
     methods :{
         getGridMatrix() {
