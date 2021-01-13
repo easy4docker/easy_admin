@@ -83,7 +83,7 @@ module.exports = {
                 function(result) {
                    setTimeout(function() {
                         window.location.reload();
-                   },1000);
+                   },3000);
                 }, function(result) {});
         }
     }
