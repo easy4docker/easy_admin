@@ -4,7 +4,7 @@
             fs = require('fs'),
             exec = require('child_process').exec,
             CP = new pkg.crowdProcess(),
-            app_dir = '/var/_localAppData',
+            app_dir = '/var/_localApp',
             data_dir = '/var/_localAppData',
             key_dir = '/var/_localAppKey',
             gridStatusFn = app_dir + '/_grid.json',
