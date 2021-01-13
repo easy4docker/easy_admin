@@ -24,6 +24,7 @@
                 </div>
             </div>
             <div class="list-group" v-for="item in filteredResult()">
+            {{gridMatrix}}
                 <div class="list-group-item list-group-item-action flex-column align-items-start m-1 list-group-border">
                     <div class="container-fluid m-0">
                         <div class="row">
@@ -101,7 +102,8 @@ module.exports = {
             },
             serverTypeFilter : [],
             root :  this.$parent.root,
-            currentServer : ''
+            currentServer : '',
+            gridMatrix();
         }
     },
     mounted() {
@@ -110,7 +112,7 @@ module.exports = {
         setTimeout(
             function() {
                 me.getVServerList();
-                $('a').tooltip('show')
+                me.getGridMatrix ();
             }, 50
         );
     },
@@ -120,6 +122,13 @@ module.exports = {
         }
     },
     methods : {
+        getGridMatrix () {
+            var me = this;
+            me.root.dataEngine().runPost('/_grid/', 'getGridMatrix', {},
+                function(result) {
+                    me.gridMatrix = result;
+                }, function(result) {});
+        },
         isFilterChecked(k) {
             var me = this;
             return (me.serverTypeFilter.indexOf(k) !== -1);
