@@ -8,7 +8,7 @@
             app_dir = '/var/_localApp',
             data_dir = '/var/_localAppData',
             key_dir = '/var/_localAppKey',
-            gridStatusFn = app_dir + '/_grid.json',
+            gridStatusFn = data_dir + '/_grid.json',
             gridServerFn = key_dir + '/_gridServers.json';
             
         var _env = {};
