@@ -23,8 +23,7 @@
                             <div class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)" v-on:click="checkFilter(k)"><span class="pl-2">{{ k }}</span></div>
                         </span>
                     </div>
-                    <div class="col-10 p-3 m-0 text-right">
-
+                    <div class="col-10 p-3 m-0 text-left">
 
                         <div class="list-group" v-if="!filteredResult().length"> 
                             <div class="list-group-item list-group-item-action flex-column align-items-start m-1">
@@ -93,7 +92,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                 </div>
             </div>
