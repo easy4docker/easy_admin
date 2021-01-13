@@ -103,7 +103,7 @@ module.exports = {
             serverTypeFilter : [],
             root :  this.$parent.root,
             currentServer : '',
-            gridMatrix; {}
+            gridMatrix: {}
         }
     },
     mounted() {
@@ -112,7 +112,7 @@ module.exports = {
         setTimeout(
             function() {
                 me.getVServerList();
-            //    me.getGridMatrix();
+                me.getGridMatrix();
             }, 50
         );
     },
@@ -122,14 +122,14 @@ module.exports = {
         }
     },
     methods : {
-        /*
+        
         getGridMatrix () {
             var me = this;
             me.root.dataEngine().runPost('/_grid/', 'getGridMatrix', {},
                 function(result) {
                     me.gridMatrix = result;
                 }, function(result) {});
-        },*/
+        },
         isFilterChecked(k) {
             var me = this;
             return (me.serverTypeFilter.indexOf(k) !== -1);
