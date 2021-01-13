@@ -4,10 +4,11 @@
             fs = require('fs'),
             exec = require('child_process').exec,
             CP = new pkg.crowdProcess(),
+            app_dir = '/var/_localAppData',
             data_dir = '/var/_localAppData',
-            app_dir = '/var/_localAppKey',
+            key_dir = '/var/_localAppKey',
             gridStatusFn = app_dir + '/_grid.json',
-            gridServerFn = data_dir + '/_gridServers.json';
+            gridServerFn = key_dir + '/_gridServers.json';
             
         var _env = {};
         try {
