@@ -37,14 +37,11 @@
             
         };
 
-        me.post = () => {
-            switch (req.body.cmd)  {
-                default:
-                    res.send('wrong cmd ' + req.body.cmd);
-                    break;        
-            }
-        };
+        me.post = {
 
+
+        };
+        // ---- get related ---->
         me.getGridMatrix = () => {
             res.send(me.dataGridMatrix());
         }
@@ -67,7 +64,7 @@
                 cbk(false);
             }
         }
-          //------
+        // <---- get related ---->
         me.getGrids = () => {
             res.send(me.dataGrids());
         }
