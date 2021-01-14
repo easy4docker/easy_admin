@@ -20,6 +20,8 @@
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             if (mp) {
+                res.send(mp);
+                return true;
                 switch (mp[2])  {
                     case 'updateStatus':
                         me.updateStatus(req.query, (result) => {
@@ -38,8 +40,22 @@
             
         };
 
-        me.postThrough = {
-
+        me.post = () => {
+			if (typeof me[req.body.cmd] === 'function') {
+				mGrid[req.body.cmd]();
+			} else {
+				switch(req.body.cmd) {
+					case 'getGrids' 	:
+					case 'addGrid' 		:
+					case 'removeGrid' 	:
+						var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
+						let mGrid =  new MAGrid(env, pkg, req, res);
+						mGrid.post();
+						break;
+					default :
+						res.send({status:'failure', message : '404 wrong cmd ' + req.body.cmd + ' !'});
+				}
+			}
 
         };
         // ---- get related ---->

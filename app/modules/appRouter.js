@@ -101,7 +101,9 @@
 						maupter.call();
 						break; 
 					case '_grid':
-						me.postGrid();
+						var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
+						let mGrid =  new MAGrid(env, pkg, req, res);
+						mGrid.post();
 						break; 
 					case 'api':
 						me.postApi();
