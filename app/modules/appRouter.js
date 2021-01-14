@@ -71,6 +71,7 @@
 				}
 			)
 		};
+		/*
 		me.postGrid = () => {
 			var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
 			let mGrid =  new MAGrid(env, pkg, req, res);
@@ -89,7 +90,7 @@
 						res.send({status:'failure', message : '404 wrong cmd ' + req.body.cmd + ' !'});
 				}
 			}
-		};
+		};*/
 		me.post = () => {
 			let p = req.params[0],
 				mp = p.match(/\/([^\/]+)(\/|$)/);

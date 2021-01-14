@@ -42,7 +42,7 @@
         me.post = () => {
             
 			if (typeof me[req.body.cmd] === 'function') {
-				mGrid[req.body.cmd]();
+				me[req.body.cmd]();
 			} else {
                 res.send({status:'failure', message : '404 wrong cmd ' + req.body.cmd + ' !'});
                 /*
