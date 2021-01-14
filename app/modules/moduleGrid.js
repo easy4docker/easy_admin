@@ -26,9 +26,15 @@
                             res.send(result);
                         });
                         break;
+
                     case 'getGridMatrix':
                         me.getGridMatrix();
                         break;
+
+                    case 'postHub':
+                        me.postHub();
+                        break;
+
                     default:
                         res.send('wrong path ' + p);
                         break;        
@@ -48,6 +54,16 @@
 			}
 
         };
+
+
+        me.postHub = () => {
+            var request = require('request');
+            request('http://165.22.37.16:10000/_grid/getGridMatrix/', function (error, response, body) {
+             // console.error('error:', error); // Print the error if one occurred
+             // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+              res.send(response); // Print the HTML for the Google homepage.
+            });
+        }
         // ---- get related ---->
         me.getGridMatrix = () => {
             res.send(me.dataGridMatrix());

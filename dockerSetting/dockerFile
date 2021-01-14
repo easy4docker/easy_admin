@@ -13,6 +13,7 @@ RUN npm install ect
 RUN npm install express
 RUN npm install body-parser
 RUN npm install md5
+RUN npm install request
 
 COPY _entrypoint.sh /var/_entrypoint.sh
 RUN (crontab -l ; echo "* * * * * sh /var/_localApp/cronjob/minute_cron.sh >> /var/_localData/log/cron.log") | crontab
