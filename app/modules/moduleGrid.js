@@ -30,7 +30,7 @@
                         me.getGridMatrix();
                         break;
                     default:
-                        res.send('wrong path');
+                        res.send('wrong path ' + p);
                         break;        
                 }
             } else {
@@ -105,7 +105,6 @@
             }
             return result;
          }
-
 
         me.addGrid = () => {
             var data = req.body;
