@@ -31,8 +31,8 @@
                         me.getGridMatrix();
                         break;
 
-                    case 'postHub':
-                        me.postHub();
+                    case 'gridHub':
+                        me.gridHub();
                         break;
 
                     default:
@@ -56,12 +56,12 @@
         };
 
 
-        me.postHub = () => {
+        me.gridHub = () => {
             var request = require('request');
-            request('http://165.22.37.16:10000/_grid/getGridMatrix/', function (error, response, body) {
+            request('https://bbs.wenxuecity.com/rdzn/', function (error, response, body) {
              // console.error('error:', error); // Print the error if one occurred
              // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-              res.send(response); // Print the HTML for the Google homepage.
+              res.send(body); // Print the HTML for the Google homepage.
             });
         }
         // ---- get related ---->
@@ -76,6 +76,7 @@
             } catch (e) {}
             return grids;
         }
+
         me.updateStatus = (data, cbk) => {
             var grids = me.dataGridMatrix();
             if (data.ip) {
