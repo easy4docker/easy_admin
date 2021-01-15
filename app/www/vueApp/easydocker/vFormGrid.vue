@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                {{gridMatrix}}
+                {{root.gridMatrix}}
             </div>
         </form>
     </div>
@@ -84,7 +84,7 @@ module.exports = {
         setTimeout(
             function() {
                 me.getGrids();
-                me.getGridMatrix (); 
+                me.root.getGridMatrix (); 
             }, 50
         );
     },
