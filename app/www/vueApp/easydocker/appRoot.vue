@@ -52,10 +52,13 @@ module.exports = {
                     me.gridMatrix = data.result;
                 }, function(result) {});
         },
+        gridServer(ip, port) {
+            return window.location.protocol + '//' + (ip)?  (ip + ':' + port) : window.location.host
+        },
         callGridHub() {
             var me = this;
             me.dataEngine().gridPost({
-                    server : window.location.protocol + '//' + window.location.host,
+                    server : me.gridServer((),
                     cmd:'getGridMatrix',
                     data : {},
                     type : 'json'
