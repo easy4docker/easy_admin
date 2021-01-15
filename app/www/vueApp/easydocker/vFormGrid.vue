@@ -135,14 +135,6 @@ module.exports = {
         isSaveDisabled() {
             var me = this;
             return (!me.form.tag || me.form.gridServer.split('.').length !== 3) ? true : false;
-        },
-
-        syncAppCode() {
-            var me = this;
-            me.root.dataEngine().runPost('/_grid/', 'syncAppCode', {},
-                function(result) {
-                window.location.reload();
-                }, function(result) {});
         }
     }
 }
