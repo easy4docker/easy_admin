@@ -66,7 +66,10 @@
                 var request = require('request');
                 var server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
                 var channel = (!setting.channel) ? '_grid' : setting.channel;
-                request.post({url: server + '/' + channel + '/', form: setting}, function(err,httpResponse,body){     
+               // res.send(server + ':10000/' + channel + '/');
+               res.send(server + ':10000/' + channel + '/');
+              //  return true;
+                request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){     
                     if (setting.type === 'json') {
                         var result = {};
                         try { result = JSON.parse(body);} catch (e) {}   
