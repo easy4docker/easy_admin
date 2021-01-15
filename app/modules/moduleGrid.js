@@ -9,7 +9,7 @@
             data_dir = '/var/_localAppData',
             key_dir = '/var/_localAppKey',
             gridStatusFn = data_dir + '/_gridMatrix.json',
-            gridServerFn = key_dir + '/_gridServers.json';
+            gridServerFn = key_dir + '/_gridServers.json',
             gridTokenFn = key_dir + '/_gridToken.json';
             
         var _env = {};
@@ -133,15 +133,14 @@
             }
 
             _f['saveGrids'] = (cbk) => {
-                fs.writeFile(gridServerFn, me.makeid(64), (err) => {
+                fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
                     cbk(true);
                 });
             };
 
-            _f['saveGridToken'] = (cbk) => {
-                fs.writeFile(gridTokenFn, JSON.stringify(tokens), 
-                (err) => {
-                    callback(tokens);
+            _f['gridTokenFn'] = (cbk) => {
+                fs.writeFile(gridTokenFn, me.makeid(32), (err) => {
+                    cbk(true);
                 });
             };
 
