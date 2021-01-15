@@ -131,7 +131,9 @@
             if (data.gridServer) {
                 gridServer[data.gridServer] = data.tag;
             }
-
+            res.send(gridServer);
+            return true;
+            
             _f['saveGrids'] = (cbk) => {
                 fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
                     cbk(true);

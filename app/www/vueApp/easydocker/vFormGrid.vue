@@ -98,12 +98,10 @@ module.exports = {
         },
         addGrid() {
             const me = this;
-            console.log(me.form);
-            alert(444)
-            return true;
             me.root.dataEngine().runPost('/_grid/', 'addGrid', me.form,
                 function(result) {
-                    me.getGrids();
+                    console.log(result);
+                  //  me.getGrids();
                 }, function(result) {});
         },
         removeGrid(v) {
