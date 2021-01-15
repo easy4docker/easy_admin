@@ -37,6 +37,7 @@
                         break;
 
                     case 'getIP':
+                    case 'getToken': 
                         me.getIP();
                         break;
 
@@ -132,10 +133,18 @@
             }
 
             _f['saveGrids'] = (cbk) => {
-                fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
+                fs.writeFile(gridServerFn, me.makeid(64), (err) => {
                     cbk(true);
                 });
             };
+
+            _f['saveGridToken'] = (cbk) => {
+                fs.writeFile(gridTokenFn, JSON.stringify(tokens), 
+                (err) => {
+                    callback(tokens);
+                });
+            };
+
             _f['addToCron'] = (cbk) => {
                 let shell_str = 'echo "*/5 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
                     data.gridServer + ' ' + data.tag + ' ' + me.makeid(32) + ')" >> ';
@@ -197,6 +206,11 @@
                 
         me.getIP = () => {
             fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
+                res.send(data);
+            });
+        }
+        me.getToken = () => {
+            fs.readFile(gridTokenFn, 'utf-8', (err, data) => {
                 res.send(data);
             });
         }
