@@ -54,12 +54,13 @@
         };
 
         me.gridHub = (setting) => {
-            if (!setting || !setting.server || !setting.cmd) {
+            if (!setting || !setting.server || !setting.cmd || setting.cmd === 'gridHub') {
                 res.send({status:'failuer', message: 'missing server or/and cmd'});
             } else {
                 var request = require('request');
                 var server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
-                request.post({url: server + '/_api/', form: setting}, function(err,httpResponse,body){     
+                var channel = (!setting.channel) ? '_api' : setting.channel;
+                request.post({url: server + '/' + channel + '/', form: setting}, function(err,httpResponse,body){     
                     if (setting.type === 'json') {
                         var result = {};
                         try { result = JSON.parse(body);} catch (e) {}   
