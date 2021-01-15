@@ -57,7 +57,7 @@ module.exports = {
                 dataType: 'JSON'
             });
         },
-        // gridPost(server, postData, success, error) {
+
         gridPost(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;

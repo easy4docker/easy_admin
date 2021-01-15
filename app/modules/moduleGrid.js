@@ -59,7 +59,7 @@
             } else {
                 var request = require('request');
                 var server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
-                request.post({url: 'http://' + server + '/_api/', form: setting}, function(err,httpResponse,body){     
+                request.post({url: server + '/_api/', form: setting}, function(err,httpResponse,body){     
                     if (setting.type === 'json') {
                         var result = {};
                         try { result = JSON.parse(body);} catch (e) {}   
