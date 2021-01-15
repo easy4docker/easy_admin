@@ -71,8 +71,7 @@
                 });
             }
         }
-        // ---- get related ---->
-       
+   
         me.getGridMatrix = () => {
             res.send({status: 'success', result: me.dataGridMatrix()});
         }
@@ -96,7 +95,7 @@
                 cbk(false);
             }
         }
-        // <---- get related ---->
+
         me.getGrids = () => {
             res.send(me.dataGrids());
         }
@@ -150,7 +149,7 @@
             }, 3000)
 
         }
-        //------
+        
         me.syncAppCode = () => {
             const shell_str = 'cd ' + git_root + ' && git pull';
             exec(shell_str, {maxBuffer: 1024 * 2048},
