@@ -47,7 +47,7 @@ module.exports = {
     methods :{
         getGridMatrix() {
             var me = this;
-            me.dataEngine().runPost('/_grid/', 'getGridMatrix', {},
+            me.dataEngine().runPost('/_api/', 'getGridMatrix', {},
                 function(data) {
                     me.gridMatrix = data.result;
                 }, function(result) {});
