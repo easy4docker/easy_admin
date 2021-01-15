@@ -93,7 +93,7 @@ module.exports = {
                 success: function(result) {
                     me.$parent.triggerSpinner = false;
                     if (typeof  success === 'function') {
-                        success({status : 'success', result : result});
+                        success(result);
                     }
                 },
                 error: function (jqXHR) { 
