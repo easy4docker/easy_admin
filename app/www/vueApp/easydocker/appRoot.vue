@@ -58,7 +58,7 @@ module.exports = {
         callGridHub() {
             var me = this;
             me.dataEngine().gridPost({
-                    server : me.gridServer((),
+                    server : me.gridServer(),
                     cmd:'getGridMatrix',
                     data : {},
                     type : 'json'
