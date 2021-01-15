@@ -14,7 +14,6 @@
         } catch (e) {}
 
         me.post = () => {
-            
 			if (typeof me[req.body.cmd] === 'function') {
 				me[req.body.cmd]();
 			} else {
@@ -23,7 +22,7 @@
 
         };
         me.getGridMatrix = () => {
-            res.send({status: 'successA', result: 'me.dataGridMatrix()'});
+            res.send({status: 'success', result: 'me.dataGridMatrix()'});
         }
 
     }

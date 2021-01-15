@@ -54,7 +54,11 @@ module.exports = {
         },
         callGridHub() {
             var me = this;
-            me.dataEngine().gridPost('localhost', 'gridHub', {url:'/_api/', cmd:'getGridMatrix'},
+            me.dataEngine().gridPost({
+                    server : 'localhost',
+                    cmd:'getGridMatrix',
+                    data : {}
+                },
                 function(data) {
                     console.log('---getGridHub--->');
                     console.log(data);

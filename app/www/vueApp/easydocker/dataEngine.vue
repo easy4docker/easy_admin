@@ -57,12 +57,11 @@ module.exports = {
                 dataType: 'JSON'
             });
         },
-        gridPost(server, cmd, params, success, error) {
+        // gridPost(server, postData, success, error) {
+        gridPost(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
-            let gridData = params;
-            gridData.server =  server;
-            let data = {server: server, cmd: cmd, gridData: gridData};
+            let data = {cmd: 'gridHub', setting : setting};
             $.ajax({
                 type: 'POST',
                 url: '/_grid/',

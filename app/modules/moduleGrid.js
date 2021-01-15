@@ -58,14 +58,15 @@
 
         me.gridHub = () => {
             var request = require('request');
-            if (!req.body || !req.body.gridData || req.body.gridData.cmd !== 'gridHub') {
-                var server = (/^localhost/ig.test(req.body.server)) ? 'localhost' : req.body.server;
-                request.post({url: 'http://' + server + '/_api/', form: req.body.gridData}, function(err,httpResponse,body){     
+            if (!req.body || !req.body.setting || req.body.setting.cmd !== 'gridHub') {
+                var setting = req.body.setting;
+                var server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
+                request.post({url: 'http://' + server + '/_api/', form: req.body.setting}, function(err,httpResponse,body){     
                     var result = {};
                     try {
                         result = JSON.parse(body);
                     } catch (e) {}   
-                    res.send(body); 
+                    res.send(result); 
                 });
             } else {
                 res.send({status:'failuer', message: 'can not grid post cmd gridHub'});
