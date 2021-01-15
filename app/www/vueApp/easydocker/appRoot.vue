@@ -60,11 +60,12 @@ module.exports = {
                     server : 'localhost',
                     cmd:'getGridMatrix',
                     data : {},
-                    type : 'json1'
+                    type : 'json'
                 },
                 function(data) {
                     console.log('---getGridHub--->');
                     console.log(data);
+                    me.gridMatrix = data.result.result.result;
                 }, function(err) {
                     console.log(err);
                 });
