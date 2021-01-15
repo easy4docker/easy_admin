@@ -102,8 +102,7 @@ module.exports = {
             const me = this;
             me.root.dataEngine().runPost('/_grid/', 'addGrid', me.form,
                 function(result) {
-                    console.log(result);
-                  //  me.getGrids();
+                    me.getGrids();
                 }, function(result) {});
         },
         removeGrid(v) {
