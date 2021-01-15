@@ -57,6 +57,31 @@ module.exports = {
                 dataType: 'JSON'
             });
         },
+        gridPost(server, cmd, params, success, error) {
+            var me = this;
+            me.$parent.triggerSpinner = true;
+            let gridData = params;
+            gridData.server =  server;
+            let data = {server: server, cmd: cmd, gridData: gridData};
+            $.ajax({
+                type: 'POST',
+                url: '/_grid/',
+                data: data,
+                success: function(result) {
+                    me.$parent.triggerSpinner = false;
+                    if (typeof  success === 'function') {
+                        success({status : 'success', result : result});
+                    }
+                },
+                error: function (jqXHR) { 
+                    me.$parent.triggerSpinner = false;
+                    if (typeof error === 'function') {
+                        error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
+                    }
+                },
+                dataType: 'JSON'
+            });
+        },
         runPost(url, cmd, params, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;

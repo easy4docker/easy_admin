@@ -507,7 +507,7 @@
             }
         }
 
-        this.templateCMD = (tplName, serverName) => {
+        me.templateCMD = (tplName, serverName) => {
             let cmd = '';
             try {
                 const tpl = pkg.ECT({ watch: true, cache: false, root: me.siteDockerTemplatePath(serverName) + '/', ext : '.tpl' });
@@ -518,11 +518,11 @@
             return cmd;
         }
 
-        this.addDocker = (serverName, callback) => {
+        me.addDocker = (serverName, callback) => {
             me.setCron('addDocker-' + serverName, me.templateCMD('addDockerApp.tpl', serverName), callback);
         }
 
-        this.removeDocker = (serverName, callback) => {
+        me.removeDocker = (serverName, callback) => {
             me.setCron('removeDocker-' + serverName, me.templateCMD('removeDockerApp.tpl', serverName), callback);
         }
     }

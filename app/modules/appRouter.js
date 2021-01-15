@@ -86,6 +86,11 @@
 						let mGrid =  new MAGrid(env, pkg, req, res);
 						mGrid.post();
 						break; 
+					case '_api':
+						var MApi= pkg.require(env.root+ '/modules/moduleApi.js');
+						let api =  new MApi(env, pkg, req, res);
+						api.post();
+						break; 
 					case 'api':
 						me.postApi();
 						break; 
@@ -259,6 +264,14 @@
 						(data) => {
 							me.refreshTokenSend(data);
 						});
+					break;
+
+					case 'deleteVServer' :
+						var Servers = new MServers(req.body.data.serverType, env, pkg);
+						Servers.deleteVServer(req.body.data.serverName,
+							(data) => {
+								me.refreshTokenSend(data);
+							});
 					break;
 				default :
 					res.send({status:'failure', message : '404 wrong cmd!'});

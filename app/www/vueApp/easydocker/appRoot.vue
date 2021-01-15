@@ -40,7 +40,8 @@ module.exports = {
         var me = this;
         document._iFrameBridge = (!document._iFrameBridge) ? {} : document._iFrameBridge;
         setTimeout(function() {
-            me.getGridMatrix()
+            me.getGridMatrix();
+            // me.getGridHub();
         },50);
     },
     methods :{
@@ -50,6 +51,16 @@ module.exports = {
                 function(data) {
                     me.gridMatrix = data.result;
                 }, function(result) {});
+        },
+        callGridHub() {
+            var me = this;
+            me.dataEngine().gridPost('localhost', 'gridHub', {url:'/_api/', cmd:'getGridMatrix'},
+                function(data) {
+                    console.log('---getGridHub--->');
+                    console.log(data);
+                }, function(err) {
+                    console.log(err);
+                });
         },
         isSignin() {
             return (!this.root.auth || !this.root.auth.isSignIn || !this.root.auth.isAuthExist) ? false : true

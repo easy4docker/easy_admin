@@ -58,15 +58,22 @@
 
         me.gridHub = () => {
             var request = require('request');
-            request('https://bbs.wenxuecity.com/rdzn/', function (error, response, body) {
-             // console.error('error:', error); // Print the error if one occurred
-             // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-              res.send(body); // Print the HTML for the Google homepage.
-            });
+            if (!req.body || !req.body.gridData || req.body.gridData.cmd !== 'gridHub') {
+                var server = (/^localhost/ig.test(req.body.server)) ? 'localhost' : req.body.server;
+                request.post({url: 'http://' + server + '/_api/', form: req.body.gridData}, function(err,httpResponse,body){     
+                    var result = {};
+                    try {
+                        result = JSON.parse(body);
+                    } catch (e) {}   
+                    res.send(body); 
+                });
+            } else {
+                res.send({status:'failuer', message: 'can not grid post cmd gridHub'});
+            }
         }
         // ---- get related ---->
         me.getGridMatrix = () => {
-            res.send(me.dataGridMatrix());
+            res.send({status: 'success', result: me.dataGridMatrix()});
         }
 
         me.dataGridMatrix = () => {
