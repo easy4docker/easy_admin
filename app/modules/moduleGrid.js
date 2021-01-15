@@ -196,9 +196,9 @@
 
                 
         me.getIP = () => {
-            res.send(_env.data_folder + '/_ip');
+            res.send(data_dir + '/_ip');
             return true;
-            fs.readFile(_env.data_folder + '/_ip', 'utf-8', (err, data) => {
+            fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
                 res.send(data);
             });
         }
