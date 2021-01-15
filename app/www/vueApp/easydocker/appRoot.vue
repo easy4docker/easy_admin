@@ -49,6 +49,8 @@ module.exports = {
             var me = this;
             me.dataEngine().runPost('/_api/', 'getGridMatrix', {},
                 function(data) {
+                    console.log('====data====>');
+                    console.log(data);
                     me.gridMatrix = data.result;
                 }, function(result) {});
         },
