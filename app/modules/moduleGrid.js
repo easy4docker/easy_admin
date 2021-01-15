@@ -103,7 +103,7 @@
         }
 
         me.getGrids = () => {
-            res.send(me.dataGrids());
+            res.send({{status: "success", result: me.dataGrids()});
         }
         me.dataGrids = () => {
             let grids = {};
