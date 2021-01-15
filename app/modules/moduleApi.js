@@ -15,14 +15,14 @@
 
         me.post = () => {
 			if (typeof me[req.body.cmd] === 'function') {
-				me[req.body.cmd]();
+				me[req.body.cmd](req.body);
 			} else {
                 res.send({status:'failure', message : '404 wrong cmd ' + req.body.cmd + ' !'});
 			}
 
         };
-        me.getGridMatrix = () => {
-            res.send({status: 'success', result: 'me.dataGridMatrix()'});
+        me.getGridMatrix = (data) => {
+            res.send({status: 'success', result: 'me.dataGridMatrix()', data: data});
         }
 
     }
