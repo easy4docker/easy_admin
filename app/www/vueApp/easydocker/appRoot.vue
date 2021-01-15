@@ -57,7 +57,8 @@ module.exports = {
             me.dataEngine().gridPost({
                     server : 'localhost',
                     cmd:'getGridMatrix',
-                    data : {}
+                    data : {},
+                    type : 'json1'
                 },
                 function(data) {
                     console.log('---getGridHub--->');

@@ -59,15 +59,16 @@
             } else {
                 var request = require('request');
                 var server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
-                request.post({url: 'http://' + server + '/_api/', form: req.body.setting}, function(err,httpResponse,body){     
-                    var result = {};
-                    try {
-                        result = JSON.parse(body);
-                    } catch (e) {}   
-                    res.send(result); 
+                request.post({url: 'http://' + server + '/_api/', form: setting}, function(err,httpResponse,body){     
+                    if (setting.type === 'json') {
+                        var result = {};
+                        try { result = JSON.parse(body);} catch (e) {}   
+                        res.send(result);
+                    } else {
+                        res.send(body);
+                    } 
                 });
             }
-
         }
         // ---- get related ---->
         me.getGridMatrix = () => {
