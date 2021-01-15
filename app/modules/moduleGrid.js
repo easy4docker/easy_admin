@@ -38,7 +38,7 @@
 
                     case 'getIP':
                     case 'getToken': 
-                        me.getIP();
+                        me[mp[2]]();
                         break;
 
                     default:
