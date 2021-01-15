@@ -49,10 +49,11 @@ module.exports = {
         getGridMatrix() {
             const me = this;
             me.dataEngine().gridPost({
-                    server : me.gridServer(),
-                    cmd:'getGridMatrix',
-                    data : {},
-                    type : 'json'
+                    server  : me.gridServer(),
+                    cmd     :'getGridMatrix',
+                    channel : '_api',
+                    data    : {},
+                    type    : 'json'
                 },
                 function(data) {
                     me.gridMatrix = data.result;
