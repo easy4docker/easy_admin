@@ -73,7 +73,7 @@
         // ---- get related ---->
        
         me.getGridMatrix = () => {
-            res.send({status: 'successA', result: me.dataGridMatrix()});
+            res.send({status: 'success', result: me.dataGridMatrix()});
         }
 
         me.dataGridMatrix = () => {
