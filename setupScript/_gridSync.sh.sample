@@ -4,10 +4,11 @@ GRID_SERVER="$1"
 SCR_DIR=$(cd `dirname $0` && pwd)
 
 IP=$(cat ${SCR_DIR}/data/_ip)
+TOKEN=$(cat ${SCR_DIR}/easydocker_KEY/_gridToken)
 
 if [ -n $IP ]; then
     curl https://ipinfo.io/ip > ${SCR_DIR}/data/_ip
     IP=$(cat ${SCR_DIR}/data/_ip)
 fi
 
-curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=${IP}\&server=${GRID_SERVER}\&tag=$2\&token=$3
+curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=${IP}\&server=${GRID_SERVER}\&tag=$2\&token=${TOKEN}

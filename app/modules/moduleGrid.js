@@ -10,7 +10,7 @@
             key_dir = '/var/_localAppKey',
             gridStatusFn = data_dir + '/_gridMatrix.json',
             gridServerFn = key_dir + '/_gridServers.json',
-            gridTokenFn = key_dir + '/_gridToken.json';
+            gridTokenFn = key_dir + '/_gridToken';
             
         var _env = {};
         try {
