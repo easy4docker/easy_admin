@@ -38,10 +38,9 @@ module.exports = {
     },
     mounted () {
         var me = this;
-        document._iFrameBridge = (!document._iFrameBridge) ? {} : document._iFrameBridge;
         setTimeout(function() {
             me.getGridHub();
-        },50);
+        },100);
     },
     methods :{
         gridServer(ip, port) {
