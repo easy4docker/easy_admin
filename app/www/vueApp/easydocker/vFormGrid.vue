@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                =={{root.gridMatrix}}==
+                --{{gridMatrix}}--
             </div>
         </form>
     </div>
@@ -92,9 +92,9 @@ module.exports = {
         getGridMatrix () {
             var me = this;
             me.root.dataEngine().runPost('/_grid/', 'getGridMatrix', {},
-                function(result) {
-                    me.gridMatrix = result;
-                }, function(result) {});
+                function(data) {
+                    me.gridMatrix = data.result;
+                }, function(err) {});
         },
         addGrid() {
             var me = this;
