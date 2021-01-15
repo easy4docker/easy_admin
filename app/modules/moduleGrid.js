@@ -36,6 +36,10 @@
                         me.gridHub(req.query);
                         break;
 
+                    case 'getIP':
+                        me.getIP();
+                        break;
+
                     default:
                         res.send('wrong path ' + p);
                         break;        
