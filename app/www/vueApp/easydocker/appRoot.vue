@@ -39,15 +39,28 @@ module.exports = {
     mounted () {
         var me = this;
         setTimeout(function() {
-           // me.getGridHub();
-            me.callGridHub();
-        },100);
+            me.getGridMatrix();
+        },50);
     },
     methods :{
         gridServer(ip, port) {
             return window.location.protocol + '//' + ((ip) ?  (ip + ':' + port) : window.location.host)
         },
-        callGridHub() {
+        getGridMatrix() {
+            const me = this;
+            me.dataEngine().gridPost({
+                    server : me.gridServer(),
+                    cmd:'getGridMatrix',
+                    data : {},
+                    type : 'json'
+                },
+                function(data) {
+                    me.gridMatrix = data.result;
+                }, function(err) {
+                    console.log(err);
+                });
+        },
+        test() {
             const me = this;
             me.dataEngine().gridPost({
                     server : me.gridServer(),
