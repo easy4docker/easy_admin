@@ -158,10 +158,7 @@
                 });
             }
             CP.serial(_f, (data) => {
-                res.send('gridServer');
-                return true;
-                
-              //  me.getGrids();
+                me.getGrids();
             }, 3000)
 
         }
