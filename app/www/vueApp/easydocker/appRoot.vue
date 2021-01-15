@@ -40,18 +40,11 @@ module.exports = {
         var me = this;
         document._iFrameBridge = (!document._iFrameBridge) ? {} : document._iFrameBridge;
         setTimeout(function() {
-            me.getGridMatrix();
-            // me.getGridHub();
+            // me.getGridMatrix();
+            me.getGridHub();
         },50);
     },
     methods :{
-        getGridMatrix() {
-            var me = this;
-            me.dataEngine().runPost('/_api/', 'getGridMatrix', {},
-                function(data) {
-                    me.gridMatrix = data.result;
-                }, function(result) {});
-        },
         gridServer(ip, port) {
             return window.location.protocol + '//' + ((ip) ?  (ip + ':' + port) : window.location.host)
         },
