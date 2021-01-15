@@ -97,7 +97,8 @@ module.exports = {
                 }, function(err) {});
         },
         addGrid() {
-            var me = this;
+            const me = this;
+            console.log(me.form);
             alert(444)
             return true;
             me.root.dataEngine().runPost('/_grid/', 'addGrid', me.form,
