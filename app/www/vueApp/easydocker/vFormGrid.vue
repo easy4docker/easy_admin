@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                {{root.gridMatrix}}
+                =={{root.gridMatrix}}==
             </div>
         </form>
     </div>
