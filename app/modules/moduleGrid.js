@@ -196,11 +196,9 @@
 
                 
         me.getIP = () => {
-            res.send(_env.data_folder + '/_ip');
-            /*
             fs.readFile(_env.data_folder + '/_ip', 'utf-8', (err, data) => {
                 res.send(data);
-            });*/
+            });
         }
         /*
         me.askGridTokens = () => { // use this
