@@ -146,7 +146,7 @@
 
             _f['addToCron'] = (cbk) => {
                 let shell_str = 'echo "*/5 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
-                    data.gridServer + ' ' + data.tag + ' ' + me.makeid(32) + ')" >> ';
+                    data.gridServer + ' ' + data.tag + ')" >> ';
 
                 if (_env.env === 'local') {
                     shell_str += _env.data_folder + '/log/ctab';
