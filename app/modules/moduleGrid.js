@@ -187,7 +187,7 @@
             }, 3000)
         }
 
-        this.setCron = (code, str, callback) => {
+        me.setCron = (code, str, callback) => {
             fs.writeFile(data_dir + '/commCron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
                 callback({status:'success'});
             });
@@ -196,9 +196,11 @@
 
                 
         me.getIP = () => {
-            fs.readFile(_env.data_folder + '_ip', (err, data) => {
-                res.send((data);
-            });
+            res.send(_env.data_folder + '/_ip');
+            /*
+            fs.readFile(_env.data_folder + '/_ip', 'utf-8', (err, data) => {
+                res.send(data);
+            });*/
         }
         /*
         me.askGridTokens = () => { // use this
