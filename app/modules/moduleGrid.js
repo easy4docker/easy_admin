@@ -32,7 +32,7 @@
                         break;
 
                     case 'gridHub':
-                        me.gridHub();
+                        me.gridHub(req.query);
                         break;
 
                     default:
@@ -46,20 +46,18 @@
         };
 
         me.post = () => {
-            
-			if (typeof me[req.body.cmd] === 'function') {
-				me[req.body.cmd]();
-			} else {
+            if (typeof me[req.body.cmd] === 'function') {
+                me[req.body.cmd](req.body.setting);
+            } else {
                 res.send({status:'failure', message : '404 wrong cmd ' + req.body.cmd + ' !'});
-			}
-
+            }
         };
 
-
-        me.gridHub = () => {
-            var request = require('request');
-            if (!req.body || !req.body.setting || req.body.setting.cmd !== 'gridHub') {
-                var setting = req.body.setting;
+        me.gridHub = (setting) => {
+            if (!setting || !setting.server || !setting.cmd) {
+                res.send({status:'failuer', message: 'missing server or/and cmd'});
+            } else {
+                var request = require('request');
                 var server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
                 request.post({url: 'http://' + server + '/_api/', form: req.body.setting}, function(err,httpResponse,body){     
                     var result = {};
@@ -68,9 +66,8 @@
                     } catch (e) {}   
                     res.send(result); 
                 });
-            } else {
-                res.send({status:'failuer', message: 'can not grid post cmd gridHub'});
             }
+
         }
         // ---- get related ---->
         me.getGridMatrix = () => {
