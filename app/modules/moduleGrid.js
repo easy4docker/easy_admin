@@ -131,9 +131,7 @@
             if (data.gridServer) {
                 gridServer[data.gridServer] = data.tag;
             }
-            res.send(gridServer);
-            return true;
-            
+
             _f['saveGrids'] = (cbk) => {
                 fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
                     cbk(true);
@@ -160,7 +158,10 @@
                 });
             }
             CP.serial(_f, (data) => {
-                me.getGrids();
+                res.send('gridServer');
+                return true;
+                
+              //  me.getGrids();
             }, 3000)
 
         }
