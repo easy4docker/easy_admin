@@ -26,7 +26,7 @@
         };
 
         me.getGridMatrix = (data) => {
-            res.send({status: 'successB', result: me.dataGridMatrix()});
+            res.send({status: 'success', result: me.dataGridMatrix()});
         }
 
         me.dataGridMatrix = () => {

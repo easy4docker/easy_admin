@@ -63,7 +63,7 @@
                     if (setting.type === 'json') {
                         var result = {};
                         try { result = JSON.parse(body);} catch (e) {}   
-                        res.send(result.result);
+                        res.send(result);
                     } else {
                         res.send(body);
                     } 
