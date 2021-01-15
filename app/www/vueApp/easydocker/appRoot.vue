@@ -65,7 +65,7 @@ module.exports = {
                 function(data) {
                     console.log('---getGridHub--->');
                     console.log(data);
-                    me.gridMatrix = data;
+                    me.gridMatrix = data.result;
                 }, function(err) {
                     console.log(err);
                 });
