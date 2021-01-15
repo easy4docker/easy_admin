@@ -34,6 +34,16 @@
                 grids = pkg.require(gridStatusFn);
             } catch (e) {}
             return grids;
+        },
+        me.getIP = () => {
+            fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
+                res.send(data);
+            });
+        },
+        me.getToken = () => {
+            fs.readFile(gridTokenFn, 'utf-8', (err, data) => {
+                res.send(data);
+            });
         }
     }
     module.exports = obj;
