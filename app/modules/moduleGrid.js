@@ -10,6 +10,7 @@
             key_dir = '/var/_localAppKey',
             gridStatusFn = data_dir + '/_gridMatrix.json',
             gridServerFn = key_dir + '/_gridServers.json';
+            gridTokenFn = key_dir + '/_gridToken.json';
             
         var _env = {};
         try {
@@ -149,7 +150,7 @@
             }, 3000)
 
         }
-        
+
         me.syncAppCode = () => {
             const shell_str = 'cd ' + git_root + ' && git pull';
             exec(shell_str, {maxBuffer: 1024 * 2048},
@@ -187,6 +188,52 @@
                 callback({status:'success'});
             });
         }
+        // === gridToken section S =====
+
+                
+        me.getIP = () => {
+            fs.readFile(_env.data_folder + '_ip', (err, data) => {
+                res.send((data);
+            });
+        }
+        /*
+        me.askGridTokens = () => { // use this
+            let tokens = {};
+            try {
+                tokens = pkg.require(gridTokenFn);
+            } catch(e) {}
+            return tokens;
+        }
+
+        me.addGridToken= (ip, callback) => { 
+            let tokens = me.askGridTokens();
+            if (!ip) {
+                callback(tokens);
+            } else {
+                tokens[ip] = (!tokens[ip]) ? {} : tokens[ip];
+                tokens[ip].token = {token : me.makeid(64), tm: new Date().getTime()};
+                fs.writeFile(gridTokenFn, JSON.stringify(tokens), 
+                    (err) => {
+                        callback(tokens);
+                });
+            }
+
+        }
+
+        this.deleteGridToken= (token, callback) => { 
+            let tokens = me.askGridToken();
+            for ((k, v) in tokens) {}
+                if (v.token === token) {
+                    delete tokens[k];
+                }
+            }
+            fs.writeFile(gridTokenFn, JSON.stringify(tokens), 
+                (err) => {
+                    callback(tokens);
+            });
+        }
+        */
+        // === gridToken section E=====
     }
     module.exports = obj;
 })()
