@@ -40,7 +40,6 @@ module.exports = {
         var me = this;
         document._iFrameBridge = (!document._iFrameBridge) ? {} : document._iFrameBridge;
         setTimeout(function() {
-            // me.getGridMatrix();
             me.getGridHub();
         },50);
     },
