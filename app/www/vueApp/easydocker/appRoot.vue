@@ -39,7 +39,8 @@ module.exports = {
     mounted () {
         var me = this;
         setTimeout(function() {
-            me.getGridHub();
+           // me.getGridHub();
+            me.callGridHub();
         },100);
     },
     methods :{
@@ -47,7 +48,7 @@ module.exports = {
             return window.location.protocol + '//' + ((ip) ?  (ip + ':' + port) : window.location.host)
         },
         callGridHub() {
-            var me = this;
+            const me = this;
             me.dataEngine().gridPost({
                     server : me.gridServer(),
                     cmd:'getGridMatrix',
