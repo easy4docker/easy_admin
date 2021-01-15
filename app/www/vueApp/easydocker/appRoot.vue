@@ -53,7 +53,7 @@ module.exports = {
                 }, function(result) {});
         },
         gridServer(ip, port) {
-            return window.location.protocol + '//' + (ip)?  (ip + ':' + port) : window.location.host
+            return window.location.protocol + '//' + ((ip) ?  (ip + ':' + port) : window.location.host)
         },
         callGridHub() {
             var me = this;
