@@ -68,7 +68,7 @@
 
         me.gridHub = (setting, callback) => {
             fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
-                if ((!setting || !setting.token || setting.token != token) && req.hostname !== 'localhost') {
+                if ((!setting || !setting.token || setting.token != token) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
                     callback({status:'failuer', message: 'Unauthorized token!'});
                 } else {
                     const request = require('request');
