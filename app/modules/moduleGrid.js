@@ -67,8 +67,7 @@
                 } else {
                     const request = require('request');
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
-                    res.send(server + '---' + req.hostname);
-                    return true;
+                    
                     if (server === req.hostname) {
                         res.send({status:'failuer', message: req.hostname +' can not hub itself'});
                     } else {
