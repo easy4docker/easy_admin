@@ -232,8 +232,6 @@
         me.getToken = () => {
  
             const fs = require('fs');
-            res.send('OK1');
-            return true;
             fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
                 res.send(data);
             });
