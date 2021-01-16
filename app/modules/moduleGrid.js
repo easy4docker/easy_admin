@@ -232,7 +232,7 @@
         me.getToken = () => {
 
             fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
-                res.send(data);
+                res.send(token);
             });
         }
         
