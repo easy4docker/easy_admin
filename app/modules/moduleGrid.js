@@ -61,7 +61,7 @@
 
 
         me.gridHub = (setting) => {
-             fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
+            fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
                 if ((!setting || !setting.token || setting.token != token) && req.hostname !== 'localhost') {
                     res.send({status:'failuer', message: 'Autherntication failed'});
                 } else {
@@ -221,9 +221,9 @@
             });
         }
 
-        me.getToken = (cbk) => {
-            fs.readFile(gridTokenFn, 'utf-8', (err, data) => {
-                cbk(data);
+        me.getToken = () => {
+            fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
+                res.send(data);
             });
         }
         
