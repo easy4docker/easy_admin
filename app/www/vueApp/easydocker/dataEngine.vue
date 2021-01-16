@@ -89,7 +89,7 @@ module.exports = {
             $.ajax({
                 type: 'POST',
                 url: url,
-                data: data,
+                data: me.withAuth(data),
                 success: function(result) {
                     me.$parent.triggerSpinner = false;
                     if (typeof  success === 'function') {
