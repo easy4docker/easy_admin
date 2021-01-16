@@ -40,7 +40,9 @@
 
                     case 'getIP':
                     case 'getToken': 
-                        me[mp[2]]();
+                        me[mp[2]](null, (result) => {
+                            res.send(result);
+                        });
                         break;
 
                     default:
@@ -216,16 +218,16 @@
         // === gridToken section S =====
 
                 
-        me.getIP = () => {
+        me.getIP = (data, callback) => {
             fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
-                res.send(data);
+                callback(data);
             });
         }
 
-        me.getToken = () => {
+        me.getToken = (data, callback) => {
 
             fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
-                res.send(token);
+                callback(token);
             });
         }
         
