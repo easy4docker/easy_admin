@@ -63,35 +63,36 @@
         me.gridHub = (setting) => {
             const _f = {};
             _f['getToken'] = (cbk) => {
-                const fs = require('fs');
                 fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
                     cbk(token);
                 });
             }
             _f['runHub'] = (cbk) => {
-                let token = CP.data.getToken;
-                if ((!setting || !setting.token || setting.token != token) && req.hostname !== 'localhost') {
-                    cbk({status:'failuer', message: 'Autherntication failed'});
-                } else {
-                    const request = require('request');
-                    let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
-
-                    if (setting.cmd === 'gridHub') {
-                        cbk({status:'failuer', message: 'gridHub can not hub itself'});
+                // let token = CP.data.getToken;
+                fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
+                    if ((!setting || !setting.token || setting.token != token) && req.hostname !== 'localhost') {
+                        cbk({status:'failuer', message: 'Autherntication failed'});
                     } else {
-                        server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
-                        var channel = (!setting.channel) ? '_grid' : setting.channel;
-                        request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){      
-                            if (setting.type === 'json') {
-                                var result = {};
-                                try { result = JSON.parse(body);} catch (e) {}   
-                                cbk(result);
-                            } else {
-                                cbk(body);
-                            } 
-                        });
+                        const request = require('request');
+                        let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
+
+                        if (setting.cmd === 'gridHub') {
+                            cbk({status:'failuer', message: 'gridHub can not hub itself'});
+                        } else {
+                            server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
+                            var channel = (!setting.channel) ? '_grid' : setting.channel;
+                            request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){      
+                                if (setting.type === 'json') {
+                                    var result = {};
+                                    try { result = JSON.parse(body);} catch (e) {}   
+                                    cbk(result);
+                                } else {
+                                    cbk(body);
+                                } 
+                            });
+                        }
                     }
-                }
+                });
             }
             CP.serial(_f, (data) => {
                 res.send(CP.data.runHub);
