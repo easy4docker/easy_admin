@@ -100,15 +100,21 @@
             return grids;
         }
 
-        me.updateStatus = (data, cbk) => {
+        me.updateStatus = (data, callback) => {
             let grids = me.dataGridMatrix();
             if (!data || !data.ip || !data.token || !grids[data.ip] || data.token !== grids[data.ip].gridToken) {
                 cbk(false);
             } else {
-                grids[data.ip] = {tm: new Date().getTime(), gridToken: data.token, server: data.server, tag: data.tag};
-                fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
-                    cbk(true);
-                });
+                const _f = {};
+                _f['saveGridStatus'] = (cbk) => {
+                    grids[data.ip] = {tm: new Date().getTime(), gridToken: data.token, server: data.server, tag: data.tag};
+                    fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
+                        cbk(true);
+                    });
+                }
+                CP.serial(_f, (data) => {
+                    callback(true);
+                }, 3000)
             } 
         }
 
