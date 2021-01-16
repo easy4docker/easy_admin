@@ -68,7 +68,7 @@
                 });
             }
             _f['runHub'] = (cbk) => {
-                const token = CP.data.getToken;
+                let token = CP.data.getToken;
                 if ((!setting || !setting.token || setting.token != token) && req.hostname !== 'localhost') {
                     cbk({status:'failuer', message: 'Autherntication failed'});
                 } else {
