@@ -38,26 +38,7 @@ module.exports = {
                 dataType: 'JSON'
             });
         },
-       restartProxy() {
-            var me = this;
-            me.$parent.triggerSpinner = true;
-
-            $.ajax({
-                type: 'POST',
-                url:'/api',
-                data: {
-                    cmd :'restartProxy'
-                },
-                success: function(result) {
-                    me.$parent.triggerSpinner = false;
-                },
-                error: function (jqXHR, textStatus, errorThrown) { 
-                    me.$parent.triggerSpinner = false;
-                },
-                dataType: 'JSON'
-            });
-        },
-
+ 
         gridPost(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
@@ -101,25 +82,6 @@ module.exports = {
                     if (typeof error === 'function') {
                         error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
                     }
-                },
-                dataType: 'JSON'
-            });
-        },
-        removeAllServers() {
-            var me = this;
-            me.$parent.triggerSpinner = true;
-
-            $.ajax({
-                type: 'POST',
-                url:'/api',
-                data: {
-                    cmd :'removeAllServers'
-                },
-                success: function(result) {
-                    me.$parent.triggerSpinner = false;
-                },
-                error: function (jqXHR, textStatus, errorThrown) { 
-                    me.$parent.triggerSpinner = false;
                 },
                 dataType: 'JSON'
             });
