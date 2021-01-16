@@ -61,7 +61,7 @@
 
         me.gridHub = (setting) => {
             me.getToken((token) => {
-                if ((!setting || !setting.token || setting.token != token) && setting.server !== 'localhost') {
+                if ((!setting || !setting.token || setting.token != token) && req.hostname !== 'localhost') {
                     res.send({status:'failuer', message: 'Autherntication failed'});
                 } else {
                     var request = require('request');
