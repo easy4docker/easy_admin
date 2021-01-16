@@ -112,6 +112,29 @@
                         cbk(true);
                     });
                 }
+                _f['removeCron'] = (cbk) => {
+                    let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
+                    let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
+                    me.setCron('remove-grid', shell_str, (err) => {
+                        cbk(true);
+                    });
+                }
+                _f['addToCron'] = (cbk) => {
+                    let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
+                    let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
+                  
+                    shell_str += "\n" + 'echo "*/5 * * * *  root (echo _EASY_GRID_SYNC && echo 1 && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
+                        data.gridServer + ' ' + data.tag + ')" >> ';
+    
+                    if (_env.env === 'local') {
+                        shell_str += _env.data_folder + '/log/ctab';
+                    } else {
+                        shell_str += '/etc/crontab';
+                    }
+                    me.setCron('gridSync', shell_str, (err) => {
+                        cbk(true);
+                    });
+                }
                 CP.serial(_f, (data) => {
                     callback(true);
                 }, 3000)
