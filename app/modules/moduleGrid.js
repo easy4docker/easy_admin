@@ -67,9 +67,9 @@
 
 
         me.gridHub = (setting, callback) => {
-            fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
-                if ((!setting || !setting.token || setting.token != token) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
-                    callback({status:'failuer', message: 'Unauthorized token!'});
+            fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
+                if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
+                    callback({status:'failuer', message: 'Unauthorized gridToken!'});
                 } else {
                     const request = require('request');
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
@@ -110,7 +110,7 @@
         me.updateStatus = (data, cbk) => {
             var grids = me.dataGridMatrix();
             if (data.ip) {
-                grids[data.ip] = {tm: new Date().getTime(), token: data.token, server: data.server, tag: data.tag};
+                grids[data.ip] = {tm: new Date().getTime(), gridToken: data.token, server: data.server, tag: data.tag};
                 fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
                     cbk(true);
                 });
@@ -228,8 +228,8 @@
 
         me.getToken = (data, callback) => {
 
-            fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
-                callback(token);
+            fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
+                callback(gridToken);
             });
         }
         
