@@ -235,7 +235,8 @@
             try {
                 tokens = pkg.require(gridTokenFn);
             } catch(e) {}
-            return tokens;
+            return gridTokenFn;
+            // tokens;
         }
         /*
         me.addGridToken= (ip, callback) => { 
