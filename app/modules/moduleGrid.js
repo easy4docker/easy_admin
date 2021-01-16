@@ -64,7 +64,7 @@
                 if (!setting || !setting.token || setting.token != token) {
                     res.send({status:'failuer', message: 'Autherntication failed'});
                 } else {
-                    res.send(token);                var request = require('request');
+                    var request = require('request');
                     var server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
                     server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
                     var channel = (!setting.channel) ? '_grid' : setting.channel;
@@ -76,7 +76,8 @@
                         } else {
                             res.send(body);
                         } 
-                    });                }
+                    });
+                }
             });
         }
 
