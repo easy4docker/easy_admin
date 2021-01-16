@@ -33,7 +33,9 @@
                         break;
 
                     case 'gridHub':
-                        me.gridHub(req.query);
+                        me.gridHub(req.query, (result) => {
+                            res.send(result);
+                        });
                         break;
 
                     case 'getIP':
@@ -53,23 +55,25 @@
 
         me.post = () => {
             if (typeof me[req.body.cmd] === 'function') {
-                me[req.body.cmd](req.body.setting);
+                me[req.body.cmd](req.body.setting, (result) => {
+                    res.send(result);
+                });
             } else {
                 res.send({status:'failure', message : '404 wrong cmd ' + req.body.cmd + ' !'});
             }
         };
 
 
-        me.gridHub = (setting) => {
+        me.gridHub = (setting, callback) => {
             fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
                 if ((!setting || !setting.token || setting.token != token) && req.hostname !== 'localhost') {
-                    res.send({status:'failuer', message: 'Autherntication failed'});
+                    callback({status:'failuer', message: 'Autherntication failed'});
                 } else {
                     const request = require('request');
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
 
                     if (setting.cmd === 'gridHub') {
-                        res.send({status:'failuer', message: 'gridHub can not hub itself'});
+                        callback({status:'failuer', message: 'gridHub can not hub itself'});
                     } else {
                         server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
@@ -77,9 +81,9 @@
                             if (setting.type === 'json') {
                                 var result = {};
                                 try { result = JSON.parse(body);} catch (e) {}   
-                                res.send(result);
+                                callback(result);
                             } else {
-                                res.send(body);
+                                callback(body);
                             } 
                         });
                     }
