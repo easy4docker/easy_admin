@@ -62,7 +62,7 @@
         me.gridHub = (setting, callback) => {
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
-                    callback({status:'failuer', message: 'Unauthorized gridToken!' + gridToken});
+                    callback({status:'failuer', message: 'Unauthorized gridToken!'});
                 } else {
                     const request = require('request');
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
@@ -74,10 +74,7 @@
                     } else {
                         server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
-                        // let form = {cmd : setting.cmd, token: dataGridMatrix[server].gridToken};
-                        request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){   
-                            callback(setting);
-                            return true;   
+                        request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){      
                             if (setting.type === 'json') {
                                 var result = {};
                                 try { result = JSON.parse(body);} catch (e) {}   
@@ -250,6 +247,45 @@
                 callback(gridToken);
             });
         }
+        
+        me.askGridTokens = () => { // use this
+            let tokens = {};
+            try {
+                tokens = pkg.require(gridTokenFn);
+            } catch(e) {}
+            return gridTokenFn;
+            // tokens;
+        }
+        /*
+        me.addGridToken= (ip, callback) => { 
+            let tokens = me.askGridTokens();
+            if (!ip) {
+                callback(tokens);
+            } else {
+                tokens[ip] = (!tokens[ip]) ? {} : tokens[ip];
+                tokens[ip].token = {token : me.makeid(64), tm: new Date().getTime()};
+                fs.writeFile(gridTokenFn, JSON.stringify(tokens), 
+                    (err) => {
+                        callback(tokens);
+                });
+            }
+
+        }
+
+        this.deleteGridToken= (token, callback) => { 
+            let tokens = me.askGridToken();
+            for ((k, v) in tokens) {}
+                if (v.token === token) {
+                    delete tokens[k];
+                }
+            }
+            fs.writeFile(gridTokenFn, JSON.stringify(tokens), 
+                (err) => {
+                    callback(tokens);
+            });
+        }
+        */
+        // === gridToken section E=====
     }
     module.exports = obj;
 })()
