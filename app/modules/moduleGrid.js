@@ -233,7 +233,7 @@
             });
         }
         // === gridToken section S =====
-
+        /*
                 
         me.getIP = (data, callback) => {
             fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
@@ -247,7 +247,7 @@
                 callback(gridToken);
             });
         }
-        /*
+        
         me.askGridTokens = () => { // use this
             let tokens = {};
             try {
