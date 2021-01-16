@@ -85,7 +85,7 @@
                                 try { result = JSON.parse(body);} catch (e) {}   
                                 callback(me.dataGridMatrix());
                             } else {
-                                callback(bme.dataGridMatrix());
+                                callback(me.dataGridMatrix());
                             } 
                         });
                     }
