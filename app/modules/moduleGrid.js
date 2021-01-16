@@ -102,11 +102,18 @@
 
         me.updateStatus = (data, callback) => {
             let grids = me.dataGridMatrix();
-            // || data.token !== grids[data.ip].gridToken
-            if (!data || !data.ip || !data.token || !grids[data.ip] ) {
+            if (!data || !data.ip || !data.token ) {
                 cbk(false);
             } else {
                 const _f = {};
+                _f['validation'] = (cbk) => {
+                    fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
+                        if (gridToken !== data.token) {
+                            CP.exit=true;
+                        }
+                        cbk(true);
+                    });
+                }
                 _f['saveGridStatus'] = (cbk) => {
                     grids[data.ip] = {tm: new Date().getTime(), gridToken: data.token, server: data.server, tag: data.tag};
                     fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
