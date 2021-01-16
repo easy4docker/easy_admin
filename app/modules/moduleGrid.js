@@ -61,7 +61,14 @@
 
 
         me.gridHub = (setting) => {
-            fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
+            const _f = {};
+            _f['getToken'] = (cbk) => {
+                fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
+                    cbk(token);
+                });
+            }
+            _f['runHub'] = (cbk) => {
+                const token = CP.data.getToken;
                 if ((!setting || !setting.token || setting.token != token) && req.hostname !== 'localhost') {
                     res.send({status:'failuer', message: 'Autherntication failed'});
                 } else {
@@ -77,17 +84,17 @@
                             if (setting.type === 'json') {
                                 var result = {};
                                 try { result = JSON.parse(body);} catch (e) {}   
-                                res.send(result);
+                                cbk(result);
                             } else {
-                                res.send(body);
+                                cbk(body);
                             } 
                         });
-
                     }
-
-
                 }
-            });
+            }
+            CP.serial(_f, (data) => {
+                res.send(CP.data.runHub);
+            }, 3000)
         }
 
         me.getGridMatrix = () => {
