@@ -70,13 +70,13 @@
             _f['runHub'] = (cbk) => {
                 const token = CP.data.getToken;
                 if ((!setting || !setting.token || setting.token != token) && req.hostname !== 'localhost') {
-                    res.send({status:'failuer', message: 'Autherntication failed'});
+                    cbk({status:'failuer', message: 'Autherntication failed'});
                 } else {
                     const request = require('request');
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
 
                     if (setting.cmd === 'gridHub') {
-                        res.send({status:'failuer', message: 'gridHub can not hub itself'});
+                        cbk({status:'failuer', message: 'gridHub can not hub itself'});
                     } else {
                         server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
