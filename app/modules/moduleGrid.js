@@ -247,45 +247,6 @@
                 callback(gridToken);
             });
         }
-        
-        me.askGridTokens = () => { // use this
-            let tokens = {};
-            try {
-                tokens = pkg.require(gridTokenFn);
-            } catch(e) {}
-            return gridTokenFn;
-            // tokens;
-        }
-        /*
-        me.addGridToken= (ip, callback) => { 
-            let tokens = me.askGridTokens();
-            if (!ip) {
-                callback(tokens);
-            } else {
-                tokens[ip] = (!tokens[ip]) ? {} : tokens[ip];
-                tokens[ip].token = {token : me.makeid(64), tm: new Date().getTime()};
-                fs.writeFile(gridTokenFn, JSON.stringify(tokens), 
-                    (err) => {
-                        callback(tokens);
-                });
-            }
-
-        }
-
-        this.deleteGridToken= (token, callback) => { 
-            let tokens = me.askGridToken();
-            for ((k, v) in tokens) {}
-                if (v.token === token) {
-                    delete tokens[k];
-                }
-            }
-            fs.writeFile(gridTokenFn, JSON.stringify(tokens), 
-                (err) => {
-                    callback(tokens);
-            });
-        }
-        */
-        // === gridToken section E=====
     }
     module.exports = obj;
 })()
