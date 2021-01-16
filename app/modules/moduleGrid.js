@@ -60,6 +60,8 @@
         };
 
         me.gridHub = (setting) => {
+            me.isAuth(setting);
+            return true;
             if (!setting || !setting.server || !setting.cmd || setting.cmd === 'gridHub') {
                 res.send({status:'failuer', message: 'missing server or/and cmd'});
             } else {
@@ -78,7 +80,20 @@
                 });
             }
         }
-   
+        me.isAuth = (setting) => {
+            res.send(me.dataGridMatrix());
+          //  res.send(setting);
+            /*
+            res.send(me.askGridTokens());
+            */
+            /*
+            if (!setting || !setting.token) {
+
+            } else {
+
+            }*/
+        }
+
         me.getGridMatrix = () => {
             res.send({status: 'success', result: me.dataGridMatrix()});
         }
@@ -214,7 +229,7 @@
                 res.send(data);
             });
         }
-        /*
+        
         me.askGridTokens = () => { // use this
             let tokens = {};
             try {
@@ -222,7 +237,7 @@
             } catch(e) {}
             return tokens;
         }
-
+        /*
         me.addGridToken= (ip, callback) => { 
             let tokens = me.askGridTokens();
             if (!ip) {
