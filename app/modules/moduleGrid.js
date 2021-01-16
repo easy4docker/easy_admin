@@ -81,7 +81,12 @@
             }
         }
         me.isAuth = (setting) => {
-            res.send(me.askGridTokens());
+            me.getToken(
+                function(data) {
+                    res.send(data);
+                }
+            );
+           
           //  res.send(setting);
             /*
             res.send(me.askGridTokens());
@@ -224,9 +229,9 @@
                 res.send(data);
             });
         }
-        me.getToken = () => {
+        me.getToken = (cbk) => {
             fs.readFile(gridTokenFn, 'utf-8', (err, data) => {
-                res.send(data);
+                cbk(data);
             });
         }
         
