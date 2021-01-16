@@ -69,15 +69,15 @@
         me.gridHub = (setting, callback) => {
             fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
                 if ((!setting || !setting.token || setting.token != token) && req.hostname !== 'localhost') {
-                    callback({status:'failuer', message: 'Autherntication failed'});
+                    callback({status:'failuer', message: 'Unauthorized token!'});
                 } else {
                     const request = require('request');
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
                     const dataGridMatrix = me.dataGridMatrix();
                     if (!dataGridMatrix[server]) {
-                        callback({status:'failuer', message: 'unauthorized server for gridHub ' + server});
+                        callback({status:'failuer', message: 'gridHub refused unauthorized server ' + server + '!'});
                     } else if (setting.cmd === 'gridHub') {
-                        callback({status:'failuer', message: 'gridHub can not hub itself'});
+                        callback({status:'failuer', message: 'gridHub can not hub route itself!'});
                     } else {
                         server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
