@@ -74,7 +74,7 @@
                     } else {
                         server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
-                        let form = {cmd : setting.cmd, token: dataGridMatrix[server].gridToken};
+                        // let form = {cmd : setting.cmd, token: dataGridMatrix[server].gridToken};
                         request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){   
                             callback(setting);
                             return true;   
