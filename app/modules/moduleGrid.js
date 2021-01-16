@@ -67,18 +67,27 @@
                 } else {
                     const request = require('request');
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
-                    server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
-                    var channel = (!setting.channel) ? '_grid' : setting.channel;
-                    request.post({url: server + ':10000/', form: setting}, function(err,httpResponse,body){  
-                   // request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){      
-                        if (setting.type === 'json') {
-                            var result = {};
-                            try { result = JSON.parse(body);} catch (e) {}   
-                            res.send(result);
-                        } else {
-                            res.send(body);
-                        } 
-                    });
+                    res.send(server);
+                    return true;
+                    if (server === req.hostname) {
+                        res.send({status:'failuer', message: req.hostname +' can not hub itself'});
+                    } else {
+                        server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
+                        var channel = (!setting.channel) ? '_grid' : setting.channel;
+                        request.post({url: server + ':10000/', form: setting}, function(err,httpResponse,body){  
+                        // request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){      
+                            if (setting.type === 'json') {
+                                var result = {};
+                                try { result = JSON.parse(body);} catch (e) {}   
+                                res.send(result);
+                            } else {
+                                res.send(body);
+                            } 
+                        });
+
+                    }
+
+
                 }
             });
         }
