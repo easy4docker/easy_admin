@@ -65,7 +65,24 @@
             } else {
                 var request = require('request');
                 var server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
+                server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
                 var channel = (!setting.channel) ? '_grid' : setting.channel;
+              //  res.send(setting);
+               // request('http://165.22.37.16:10000/_grid/', function(err,httpResponse,body){ 
+                 //  res.send(server + ':10000/' + channel + '/');
+                 //  return true;
+
+                request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){      
+                    if (setting.type === 'json') {
+                        var result = {};
+                        try { result = JSON.parse(body);} catch (e) {}   
+                        res.send(result);
+                    } else {
+                        res.send(body);
+                    } 
+                });
+
+                return true;
                 request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){     
                     if (setting.type === 'json') {
                         var result = {};
