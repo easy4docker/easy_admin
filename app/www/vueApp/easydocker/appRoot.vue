@@ -56,6 +56,7 @@ module.exports = {
                     type    : 'json'
                 },
                 function(data) {
+                    console.log(data);
                     me.gridMatrix = data.result;
                 }, function(err) {
                     console.log(err);
