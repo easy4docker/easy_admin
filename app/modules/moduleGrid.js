@@ -247,7 +247,7 @@
                 callback(gridToken);
             });
         }
-        
+        /*
         me.askGridTokens = () => { // use this
             let tokens = {};
             try {
@@ -256,6 +256,7 @@
             return gridTokenFn;
             // tokens;
         }
+        */
         /*
         me.addGridToken= (ip, callback) => { 
             let tokens = me.askGridTokens();
