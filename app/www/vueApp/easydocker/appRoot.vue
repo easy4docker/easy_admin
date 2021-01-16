@@ -58,7 +58,7 @@ module.exports = {
                 },
                 function(data) {
                     console.log(data);
-                    me.gridMatrix = data.result;
+                    me.gridMatrix = data;
                 }, function(err) {
                     console.log(err);
                 });
