@@ -81,7 +81,7 @@
             }
         }
         me.isAuth = (setting) => {
-            res.send(me.dataGridMatrix());
+            res.send(me.askGridTokens());
           //  res.send(setting);
             /*
             res.send(me.askGridTokens());
