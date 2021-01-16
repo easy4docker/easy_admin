@@ -53,7 +53,8 @@ module.exports = {
                     cmd     :'getGridMatrix',
                     channel : '_api',
                     data    : {},
-                    type    : 'json'
+                    type    : 'json',
+                    token   : 'G1uwwRBRuxLgwUFies8V6HF2VwUVmrhl'
                 },
                 function(data) {
                     console.log(data);
