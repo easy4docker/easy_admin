@@ -64,8 +64,8 @@
                 if ((!setting || !setting.token || setting.token != token) && req.hostname !== 'localhost') {
                     res.send({status:'failuer', message: 'Autherntication failed'});
                 } else {
-                    var request = require('request');
-                    var server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
+                    const request = require('request');
+                    let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
                     server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
                     var channel = (!setting.channel) ? '_grid' : setting.channel;
                     request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){      
