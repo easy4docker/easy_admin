@@ -102,7 +102,7 @@
 
         me.updateStatus = (data, cbk) => {
             let grids = me.dataGridMatrix();
-            if (!data || !data.ip || !data.token || !grids[data.ip] || data.token!== grids[data.ip].gridToken) {
+            if (!data || !data.ip || !data.token || !grids[data.ip] || data.token !== grids[data.ip].gridToken) {
                 cbk(false);
             } else {
                 grids[data.ip] = {tm: new Date().getTime(), gridToken: data.token, server: data.server, tag: data.tag};
