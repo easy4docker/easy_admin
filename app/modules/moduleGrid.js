@@ -82,9 +82,12 @@
         }
         me.isAuth = (setting) => {
             me.getToken((token) => {
+                if (!setting || !setting.token || setting.token != token) {
+                    res.send({status:'failuer', message: 'Autherntication failed'});
+                } else {
                     res.send(token);
+                }
             });
-           
           //  res.send(setting);
             /*
             res.send(me.askGridTokens());
