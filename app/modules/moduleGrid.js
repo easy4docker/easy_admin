@@ -23,6 +23,7 @@
             if (mp) {
                 switch (mp[2])  {
                     case 'updateStatus':
+                        // for cron access 
                         me.updateStatus(req.query, (result) => {
                             res.send(result);
                         });
@@ -37,14 +38,6 @@
                             res.send(result);
                         });
                         break;
-
-                    case 'getIP':
-                    case 'getToken': 
-                        me[mp[2]](null, (result) => {
-                            res.send(result);
-                        });
-                        break;
-
                     default:
                         res.send('wrong path ' + p);
                         break;        
@@ -108,15 +101,15 @@
         }
 
         me.updateStatus = (data, cbk) => {
-            var grids = me.dataGridMatrix();
-            if (data.ip) {
+            let grids = me.dataGridMatrix();
+            if (!data || !data.ip || !data.token || !grids[data.ip] || data.token!== grids[data.ip].gridToken) {
+                cbk(false);
+            } else {
                 grids[data.ip] = {tm: new Date().getTime(), gridToken: data.token, server: data.server, tag: data.tag};
                 fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
                     cbk(true);
                 });
-            } else {
-                cbk(false);
-            }
+            } 
         }
 
         me.getGrids = () => {
