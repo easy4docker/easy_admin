@@ -81,11 +81,9 @@
             }
         }
         me.isAuth = (setting) => {
-            me.getToken(
-                function(data) {
-                    res.send(data);
-                }
-            );
+            me.getToken((token) => {
+                    res.send(token);
+            });
            
           //  res.send(setting);
             /*
