@@ -73,8 +73,10 @@
                 } else {
                     const request = require('request');
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
-
-                    if (setting.cmd === 'gridHub') {
+                    const dataGridMatrix = me.dataGridMatrix;
+                    if (!dataGridMatrix[server]) {
+                        callback({status:'failuer', message: 'unauthorized server for gridHub'});
+                    } else if (setting.cmd === 'gridHub') {
                         callback({status:'failuer', message: 'gridHub can not hub itself'});
                     } else {
                         server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
