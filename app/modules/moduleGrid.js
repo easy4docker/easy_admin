@@ -131,7 +131,7 @@
                     } else {
                         shell_str += '/etc/crontab';
                     }
-                    me.setCron('gridSync', shell_str, (err) => {
+                    me.setCron('gridSyncUpdate', shell_str, (err) => {
                         cbk(true);
                     });
                 }
