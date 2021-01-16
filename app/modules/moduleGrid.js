@@ -112,13 +112,6 @@
                         cbk(true);
                     });
                 }
-                _f['removeCron'] = (cbk) => {
-                    let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
-                    let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
-                    me.setCron('remove-grid', shell_str, (err) => {
-                        cbk(true);
-                    });
-                }
                 _f['addToCron'] = (cbk) => {
                     let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
                     let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
