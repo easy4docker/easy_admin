@@ -114,17 +114,24 @@
                         cbk(true);
                     });
                 }
+                _f['newToken'] = (cbk) => {
+                    const newToken = me.makeid(32);
+                    fs.writeFile(gridTokenFn, newToken, (err) => {
+                        cbk(newToken);
+                    });
+                }
                 _f['saveGridStatus'] = (cbk) => {
-                    grids[data.ip] = {tm: new Date().getTime(), gridToken: data.token, server: data.server, tag: data.tag};
+                    grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag};
                     fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
                         cbk(true);
                     });
                 }
+                /*
                 _f['addToCron'] = (cbk) => {
                     let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
                     let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
                   
-                    shell_str += "\n" + 'echo "*/2 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
+                    shell_str += "\n" + 'echo "* /2 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
                         data.server + ' ' + data.tag + ')" >> ';
     
                     if (_env.env === 'local') {
@@ -135,7 +142,8 @@
                     me.setCron('gridSyncUpdate', shell_str, (err) => {
                         cbk(true);
                     });
-                }
+                }*/
+                
                 CP.serial(_f, (data) => {
                     callback(true);
                 }, 3000)
