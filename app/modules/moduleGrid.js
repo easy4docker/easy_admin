@@ -63,6 +63,7 @@
         me.gridHub = (setting) => {
             const _f = {};
             _f['getToken'] = (cbk) => {
+                const fs = require('fs');
                 fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
                     cbk(token);
                 });
@@ -229,6 +230,7 @@
         }
 
         me.getToken = () => {
+            const fs = require('fs');
             fs.readFile(gridTokenFn, 'utf-8', (err, token) => {
                 res.send(data);
             });
