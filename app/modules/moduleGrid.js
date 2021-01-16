@@ -60,44 +60,24 @@
         };
 
         me.gridHub = (setting) => {
-            me.isAuth(setting);
-            return true;
-            if (!setting || !setting.server || !setting.cmd || setting.cmd === 'gridHub') {
-                res.send({status:'failuer', message: 'missing server or/and cmd'});
-            } else {
-                var request = require('request');
-                var server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
-                server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
-                var channel = (!setting.channel) ? '_grid' : setting.channel;
-                request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){      
-                    if (setting.type === 'json') {
-                        var result = {};
-                        try { result = JSON.parse(body);} catch (e) {}   
-                        res.send(result);
-                    } else {
-                        res.send(body);
-                    } 
-                });
-            }
-        }
-        me.isAuth = (setting) => {
             me.getToken((token) => {
                 if (!setting || !setting.token || setting.token != token) {
                     res.send({status:'failuer', message: 'Autherntication failed'});
                 } else {
-                    res.send(token);
-                }
+                    res.send(token);                var request = require('request');
+                    var server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
+                    server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
+                    var channel = (!setting.channel) ? '_grid' : setting.channel;
+                    request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){      
+                        if (setting.type === 'json') {
+                            var result = {};
+                            try { result = JSON.parse(body);} catch (e) {}   
+                            res.send(result);
+                        } else {
+                            res.send(body);
+                        } 
+                    });                }
             });
-          //  res.send(setting);
-            /*
-            res.send(me.askGridTokens());
-            */
-            /*
-            if (!setting || !setting.token) {
-
-            } else {
-
-            }*/
         }
 
         me.getGridMatrix = () => {
