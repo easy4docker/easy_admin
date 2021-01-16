@@ -116,7 +116,7 @@
                     let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
                     let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
                   
-                    shell_str += "\n" + 'echo "*/5 * * * *  root (echo _EASY_GRID_SYNC && echo 1 && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
+                    shell_str += "\n" + 'echo "*/2 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
                         data.server + ' ' + data.tag + ')" >> ';
     
                     if (_env.env === 'local') {
@@ -177,7 +177,7 @@
             };
 
             _f['addToCron'] = (cbk) => {
-                let shell_str = 'echo "*/5 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
+                let shell_str = 'echo "*/2 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
                     data.gridServer + ' ' + data.tag + ')" >> ';
 
                 if (_env.env === 'local') {
