@@ -5,7 +5,7 @@
           <v-form-server v-if="root.matrix('form')"></v-form-server>
           <v-server-list v-if="root.matrix('list')"></v-server-list>
           <v-form-grid v-if="root.matrix('gridSetup')"></v-form-grid>
-          <local-grid></local-grid>
+          <local-grid v-if="root.matrix('localGrid')"></local-grid>
         </span>
     </div>
 </template>
