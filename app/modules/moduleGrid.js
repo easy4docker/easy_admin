@@ -130,12 +130,18 @@
                     const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.token;
                     exec(cmdStr, {maxBuffer: 1024 * 2048},
                         function(error, stdout, stderr) {
-                            const v = stdout.replace(/\s+/, '');
-                            if (error || !v) {
+                            
+                            if (error) {
                                 cbk(false);
                                 CP.exit = true;
                             } else {
-                                cbk(v)
+                                var v = stdout.replace(/\s+/, '');
+                                if (!v) {
+                                    cbk(false);
+                                    CP.exit = true;    
+                                } else {
+                                    bk(v)
+                                }
                             }
                     });
                 }
