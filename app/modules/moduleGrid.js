@@ -110,11 +110,11 @@
             const oldToken = req.query.old;
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 if (gridToken !== oldToken) {
-                    cbk('');
+                    callback('');
                 } else {
                     const newToken = me.makeid(32);
                     fs.writeFile(gridTokenFn, newToken, (err) => {
-                        cbk((err) ? '' : newToken);
+                        callback((err) ? '' : newToken);
                     });
                 }
             });
