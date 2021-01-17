@@ -1,6 +1,6 @@
 <template>
    <span>
-      <div v-if="!auth.isAuthExist" class="card m-1">
+      <div v-if="auth.isAuthExist" class="card m-1">
          <div class="m-3 p-3 card-body card-list-section">
          LocalGrid
          </div>
