@@ -30,7 +30,6 @@
                         break;
 
                     case 'renewToken':
-                        // for cron access 
                         me.renewToken((result) => {
                             res.send(result);
                         });
@@ -128,15 +127,16 @@
                         }
                         cbk(true);
                     });
-                }*
-                _f['newToken'] = (cbk) => {
-                    const newToken = me.makeid(32);
-                    fs.writeFile(gridTokenFn, newToken, (err) => {
-                        cbk(newToken);
-                    });
                 }*/
+                _f['newToken'] = (cbk) => {
+                    const cmdStr = 'http://' + data.ip + ':10000/_grid/renewToken';
+                    exec(cmdStr, {maxBuffer: 1024 * 2048},
+                        function(error, stdout, stderr) {
+                            cbk((error) ? data.token: stdout.replace(/\s+/, ''));
+                    });
+                }
                 _f['saveGridStatus'] = (cbk) => {
-                    grids[data.ip] = {tm: new Date().getTime(), gridToken: data.token, server: data.server, tag: data.tag};
+                    grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag};
                     fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
                         cbk(true);
                     });
