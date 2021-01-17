@@ -64,17 +64,7 @@ module.exports = {
         },
         test() {
             const me = this;
-            me.dataEngine().gridPost({
-                    server : me.gridServer(),
-                    cmd:'getGridMatrix',
-                    data : {},
-                    type : 'json'
-                },
-                function(data) {
-                    me.gridMatrix = data.result;
-                }, function(err) {
-                    console.log(err);
-                });
+           alert('test');
         },
         isSignin() {
             return (!this.root.auth || !this.root.auth.isSignIn || !this.root.auth.isAuthExist) ? false : true
