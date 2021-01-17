@@ -126,20 +126,12 @@
                 cbk(false);
             } else {
                 const _f = {};
-                /*
-                _f['validation'] = (cbk) => {
-                    fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
-                        if (gridToken !== data.token) {
-                            CP.exit=true;
-                        }
-                        cbk(true);
-                    });
-                }*/
                 _f['newToken'] = (cbk) => {
                     const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.token;
                     exec(cmdStr, {maxBuffer: 1024 * 2048},
                         function(error, stdout, stderr) {
-                            cbk((error) ? data.token: stdout.replace(/\s+/, ''));
+                            const v = stdout.replace(/\s+/, '');
+                            cbk((error || !v) ? data.token : v );
                     });
                 }
                 _f['saveGridStatus'] = (cbk) => {
