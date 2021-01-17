@@ -106,6 +106,7 @@
                 cbk(false);
             } else {
                 const _f = {};
+                /*
                 _f['validation'] = (cbk) => {
                     fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                         if (gridToken !== data.token) {
@@ -113,7 +114,7 @@
                         }
                         cbk(true);
                     });
-                }
+                }*/
                 _f['newToken'] = (cbk) => {
                     const newToken = me.makeid(32);
                     fs.writeFile(gridTokenFn, newToken, (err) => {
