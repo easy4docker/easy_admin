@@ -191,9 +191,11 @@
                     cbk(true);
                 });
             };
-
             _f['addToCron'] = (cbk) => {
-                let shell_str = 'echo "*/2 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
+                let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
+                let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
+              
+                shell_str += "\n" + 'echo "*/2 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
                     data.gridServer + ' ' + data.tag + ')" >> ';
 
                 if (_env.env === 'local') {
@@ -248,61 +250,6 @@
                 callback({status:'success'});
             });
         }
-        // === gridToken section S =====
-        /*
-                
-        me.getIP = (data, callback) => {
-            fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
-                callback(data);
-            });
-        }
-
-        me.getToken = (data, callback) => {
-
-            fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
-                callback(gridToken);
-            });
-        }
-        
-        me.askGridTokens = () => { // use this
-            let tokens = {};
-            try {
-                tokens = pkg.require(gridTokenFn);
-            } catch(e) {}
-            return gridTokenFn;
-            // tokens;
-        }
-        */
-        /*
-        me.addGridToken= (ip, callback) => { 
-            let tokens = me.askGridTokens();
-            if (!ip) {
-                callback(tokens);
-            } else {
-                tokens[ip] = (!tokens[ip]) ? {} : tokens[ip];
-                tokens[ip].token = {token : me.makeid(64), tm: new Date().getTime()};
-                fs.writeFile(gridTokenFn, JSON.stringify(tokens), 
-                    (err) => {
-                        callback(tokens);
-                });
-            }
-
-        }
-
-        this.deleteGridToken= (token, callback) => { 
-            let tokens = me.askGridToken();
-            for ((k, v) in tokens) {}
-                if (v.token === token) {
-                    delete tokens[k];
-                }
-            }
-            fs.writeFile(gridTokenFn, JSON.stringify(tokens), 
-                (err) => {
-                    callback(tokens);
-            });
-        }
-        */
-        // === gridToken section E=====
     }
     module.exports = obj;
 })()
