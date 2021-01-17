@@ -29,6 +29,13 @@
                         });
                         break;
 
+                    case 'renewToken':
+                        // for cron access 
+                        me.renewToken((result) => {
+                            res.send(result);
+                        });
+                        break;
+
                     case 'getGridMatrix':
                         me.getGridMatrix();
                         break;
@@ -100,6 +107,13 @@
             return grids;
         }
 
+        me.renewToken = (callback) => {
+            const newToken = me.makeid(32);
+            fs.writeFile(gridTokenFn, newToken, (err) => {
+                callback(newToken);
+            });
+        }
+    
         me.updateStatus = (data, callback) => {
             let grids = me.dataGridMatrix();
             if (!data || !data.ip || !data.token ) {
@@ -114,13 +128,13 @@
                         }
                         cbk(true);
                     });
-                }*/
+                }*
                 _f['newToken'] = (cbk) => {
                     const newToken = me.makeid(32);
                     fs.writeFile(gridTokenFn, newToken, (err) => {
                         cbk(newToken);
                     });
-                }
+                }*/
                 _f['saveGridStatus'] = (cbk) => {
                     grids[data.ip] = {tm: new Date().getTime(), gridToken: data.token, server: data.server, tag: data.tag};
                     fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
