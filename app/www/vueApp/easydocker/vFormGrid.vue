@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                --{{gridMatrix}}--
+                --{{root.gridMatrix}}--
             </div>
         </form>
     </div>
@@ -84,20 +84,11 @@ module.exports = {
         setTimeout(
             function() {
                 me.getGrids();
-                me.getGridMatrix (); 
+                me.root.getGridMatrix (); 
             }, 50
         );
     },
     methods : {
-        getGridMatrix () {
-            var me = this;
-            me.root.dataEngine().runPost('/_grid/', 'getGridMatrix', {},
-                function(data) {
-                    me.gridMatrix = data.result;
-                    console.log('---data--->');
-                    console.log(data);
-                }, function(err) {});
-        },
         addGrid() {
             const me = this;
             me.root.dataEngine().runPost('/_grid/', 'addGrid', me.form,
