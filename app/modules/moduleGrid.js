@@ -131,7 +131,12 @@
                     exec(cmdStr, {maxBuffer: 1024 * 2048},
                         function(error, stdout, stderr) {
                             const v = stdout.replace(/\s+/, '');
-                            cbk((error || !v) ? data.token : v );
+                            if (error || !v) {
+                                cbk(false);
+                                CP.exit = true;
+                            } else {
+                                cbk(v)
+                            }
                     });
                 }
                 _f['saveGridStatus'] = (cbk) => {
