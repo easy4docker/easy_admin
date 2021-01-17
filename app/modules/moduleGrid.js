@@ -129,7 +129,7 @@
                     });
                 }*/
                 _f['newToken'] = (cbk) => {
-                    const cmdStr = 'http://' + data.ip + ':10000/_grid/renewToken';
+                    const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.token;
                     exec(cmdStr, {maxBuffer: 1024 * 2048},
                         function(error, stdout, stderr) {
                             cbk((error) ? data.token: stdout.replace(/\s+/, ''));
