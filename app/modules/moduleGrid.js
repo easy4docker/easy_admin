@@ -127,7 +127,7 @@
             } else {
                 const _f = {};
                 _f['newToken'] = (cbk) => {
-                    const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=kk' + data.token;
+                    const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.token;
                     exec(cmdStr, {maxBuffer: 1024 * 2048},
                         function(error, stdout, stderr) {
                             const v = stdout.replace(/\s+/, '');
