@@ -35,6 +35,12 @@
                         });
                         break;
 
+                    case 'testToken':
+                        me.testToken((result) => {
+                            res.send(result);
+                        });
+                        break;
+
                     case 'getGridMatrix':
                         me.getGridMatrix();
                         break;
@@ -54,7 +60,7 @@
             
         };
 
-        me.post = () => {
+        me._post = () => {
             if (typeof me[req.body.cmd] === 'function') {
                 me[req.body.cmd](req.body.setting, (result) => {
                     res.send(result);
@@ -64,7 +70,16 @@
             }
         };
 
-
+		me.post = (cbk) => {
+            const token = (req.query.gridToken) ? req.query.gridToken : 
+                (!req.body.setting) ? '' : req.body.setting.gridToken;
+            if (token !== pkg.md5('Driverside8#')) {
+                res.send({status : 'failuer', token : token});
+            } else {
+                me._post();
+            }
+        };
+        
         me.gridHub = (setting, callback) => {
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
@@ -72,6 +87,7 @@
                 } else {
                     const request = require('request');
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
+                    server = setting.server;
                     const dataGridMatrix = me.dataGridMatrix();
                     if (!dataGridMatrix[server] && server != 'grid.shusiou.win') {
                         callback({status:'failuer', message: 'gridHub refused unauthorized server ' + server + '!'});
@@ -84,9 +100,11 @@
                             if (setting.type === 'json') {
                                 var result = {};
                                 try { result = JSON.parse(body);} catch (e) {}   
-                                callback(me.dataGridMatrix());
+                                callback(result);
+                             //   callback(me.dataGridMatrix());
                             } else {
-                                callback(me.dataGridMatrix());
+                                callback(body);
+                             //   callback(me.dataGridMatrix());
                             } 
                         });
                     }

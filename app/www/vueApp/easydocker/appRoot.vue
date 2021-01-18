@@ -51,13 +51,14 @@ module.exports = {
             me.dataEngine().gridPost({
                     server  : 'grid.shusiou.win',
                     cmd     :'getGridMatrix',
-                    channel : '_api',
+                    channel : '_grid',
                     data    : {},
-                    type    : 'json'
+                    type    : 'json',
+                    gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
                 },
                 function(data) {
                     console.log(data);
-                    me.gridMatrix = data;
+                    me.gridMatrix = data.result;
                 }, function(err) {
                     console.log(err);
                 });

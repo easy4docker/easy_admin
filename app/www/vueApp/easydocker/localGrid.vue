@@ -2,7 +2,10 @@
    <span>
       <div class="card m-1">
          <div class="m-3 p-3 card-body card-list-section">
-         LocalGrid
+             <input type="text" class="form-control" v-model="form.gridServer"  placeholder="xxx.xxx.xxx">
+         </div>
+         <div class="m-3 p-3 card-body card-list-section">
+             <input type="text" class="form-control" v-model="form.gridServer"  placeholder="xxx.xxx.xxx">
          </div>
       </div>
    </span>
@@ -13,18 +16,18 @@ module.exports = {
    props: [],
    data: function() {
       return {
-         root :  this.$parent.root
+         root :  this.$parent.root,
+         form : {
+            gridServer : '',
+            password : ''
+         }
       }
    },
    mounted() {
-      var me = this;
-      me.checkAuthExist();
-      me.checkIsTokenLogin();
+      const me = this;
    },
    methods : {}
 }
 </script>
 <style>
-
-
 </style>
