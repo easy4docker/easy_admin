@@ -78,6 +78,7 @@
         };
         
         me.gridHub = (setting, callback) => {
+ 
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
                     callback({status:'failuer', message: 'Unauthorized gridToken!'});
@@ -85,7 +86,14 @@
                     const request = require('request');
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
                     server = setting.server;
+
+     
                     const dataGridMatrix = me.dataGridMatrix();
+
+                    res.send(dataGridMatrix);
+                    return true;
+
+
                     if (!dataGridMatrix[server] && server != 'grid.shusiou.win') {
                         callback({status:'failuer', message: 'gridHub refused unauthorized server ' + server + '!'});
                     } else if (setting.cmd === 'gridHub') {
