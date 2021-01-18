@@ -10,6 +10,7 @@
                   <label>Password:</label>
                   <input type="password" class="form-control" v-model="form.password"  placeholder="">
                </div>
+               <button type="button" class="btn btn-info" v-on:click="saveGrid()">Save the virtual host</button>
          </form>
       </div>
    </div>
@@ -35,7 +36,11 @@ module.exports = {
             }, 50
         );
    },
-   methods : {}
+   methods : {
+      saveGrid() {
+         alert('saveGrid');
+      }
+   }
 }
 </script>
 <style>
