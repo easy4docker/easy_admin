@@ -86,6 +86,11 @@
 						let mGrid =  new MAGrid(env, pkg, req, res);
 						mGrid.post();
 						break; 
+					case '_gridHub':
+						var MGridHub= pkg.require(env.root+ '/modules/moduleGridHub.js');
+						let mGridHub =  new MAGridHub(env, pkg, req, res);
+						mGridHub.post();
+						break; 
 					case '_api':
 						var MApi= pkg.require(env.root+ '/modules/moduleApi.js');
 						let api =  new MApi(env, pkg, req, res);

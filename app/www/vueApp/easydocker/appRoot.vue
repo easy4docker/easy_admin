@@ -78,7 +78,28 @@ module.exports = {
         },
         test() {
             const me = this;
-           alert('test');
+            me.dataEngine().gridPost({
+                server  : 'grid.shusiou.win',
+                cmd     :'getGridMatrix',
+                channel : '_grid',
+                data    : {},
+                type    : 'json',
+                gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
+            },
+            function(result) {
+                console.log('---data--->');
+                console.log(result);
+                if (result.status === 'success') {
+                    me.gridMatrix = result.result;
+                } else {
+                    me.gridServer = null;
+                }
+                
+                //  me.gridServer = localStorage.getItem('easydockerFP');
+            }, function(err) {
+                me.gridServer = false;
+                console.log(err);
+            });
         },
         isSignin() {
             return (!this.root.auth || !this.root.auth.isSignIn || !this.root.auth.isAuthExist) ? false : true
