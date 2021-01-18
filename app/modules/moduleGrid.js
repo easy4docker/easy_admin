@@ -76,12 +76,19 @@
             if (pkg.md5(token) !== pkg.md5('Driverside8#')) {
                 res.send({status : 'failuer', token : token});
             } else {
-                req.body.setting.token = pkg.md5(token);
+                req.body.setting.gridToken = pkg.md5(token);
                 me._post();
             }
         };
         
         me.gridHub = (setting, callback) => {
+            /*
+            if (pkg.md5(token) !== pkg.md5('Driverside8#')) {
+                res.send({status : 'failuer', token : token});
+            } else {
+                req.body.setting.token = pkg.md5(token);
+            }*/
+
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
                     callback({status:'failuer', message: 'Unauthorized gridToken!'});
