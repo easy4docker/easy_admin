@@ -38,7 +38,7 @@ module.exports = {
          const me = this;
          me.root.dataEngine().runPost('/_grid/', 'gridAccess', me.form,
             function(result0) {
-               me.dataEngine().gridPost({
+               me.root.dataEngine().gridPost({
                     server  : me.form.gridServer,
                     cmd     :'getGridMatrix',
                     channel : '_grid',
