@@ -36,12 +36,30 @@ module.exports = {
    methods : {
       accessGrid() {
          const me = this;
-         var data = me.form;
-         data.cmd = 'gridAccess';
-         me.root.dataEngine().ajaxPost('/_grid/', me.form,
-         function(result) {
-            console.log(result);
-         });
+         me.root.dataEngine().runPost('/_grid/', 'gridAccess', me.form,
+            function(result0) {
+               me.dataEngine().gridPost({
+                    server  : me.form.gridServer,
+                    cmd     :'getGridMatrix',
+                    channel : '_grid',
+                    data    : {},
+                    type    : 'json',
+                    gridToken  : result0.token
+                },
+                function(result) {
+                    console.log('---data--->');
+                    console.log(result);
+                    if (result.status === 'success') {
+                       // me.gridMatrix = result.result;
+                    } else {
+                       // me.gridServer = null;
+                    }
+                }, function(err) {
+                  //  me.gridServer = false;
+                    console.log(err);
+                });
+
+            }, function(err) {});
       }
    }
 }
