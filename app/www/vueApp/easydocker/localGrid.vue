@@ -1,14 +1,16 @@
 <template>
-   <span>
+   <div>
       <div class="card m-1 local-grid-section">
-         <div class="m-1 p-3 card-body">
-             <input type="text" class="form-control" v-model="form.gridServer"  placeholder="xxx.xxx.xxx">
+         <div class="m-1 p-0 card-body">
+            <label>Grid Admin Server:</label>
+            <input type="text" class="form-control" v-model="form.gridServer"  placeholder="xxx.xxx.xxx">
          </div>
-         <div class="m-1 p-3 card-body">
-             <input type="text" class="form-control" v-model="form.password"  placeholder="xxx.xxx.xxx">
+         <div class="m-1 p-0 card-body">
+            <label>Password:</label>
+            <input type="text" class="form-control" v-model="form.password"  placeholder="xxx.xxx.xxx">
          </div>
       </div>
-   </span>
+   </div>
 </template>
  
 <script>
