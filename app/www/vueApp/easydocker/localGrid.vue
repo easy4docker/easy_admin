@@ -1,6 +1,6 @@
 <template>
    <span>
-      <div class="card m-1">
+      <div class="card m-1 local-grid-section">
          <div class="m-1 p-3 card-body">
              <input type="text" class="form-control" v-model="form.gridServer"  placeholder="xxx.xxx.xxx">
          </div>
@@ -30,4 +30,7 @@ module.exports = {
 }
 </script>
 <style>
+.local-grid-section {
+    min-height: 20rem
+}
 </style>
