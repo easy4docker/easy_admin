@@ -32,11 +32,6 @@ module.exports = {
    },
    mounted() {
         var me = this;
-        setTimeout(
-            function() {
-                me.root.getGridMatrix (); 
-            }, 50
-        );
    },
    methods : {
       accessGrid() {
@@ -52,7 +47,7 @@ module.exports = {
          function(result) {
             if (result.status === 'success') {
                localStorage.setItem('easygockerGridServer', me.form.gridServer);
-               localStorage.setItem('easygockerGridPass', me.form.gridPassword);
+               localStorage.setItem('easygockerGridToken', me.form.password);
                window.location.reload();
             } else {
                me.error = 'Access failure!';
