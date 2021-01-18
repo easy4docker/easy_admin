@@ -40,11 +40,11 @@ module.exports = {
     mounted () {
         var me = this;
         setTimeout(function() {
-            me.getGridMatrix();
             me.gridServer = {
                 server : localStorage.getItem('easygockerGridServer'),
                 token: localStorage.getItem('easygockerGridToken')
             };
+            me.getGridMatrix();
         },50);
     },
     methods :{
@@ -54,12 +54,12 @@ module.exports = {
         getGridMatrix() {
             const me = this;
             me.dataEngine().gridPost({
-                    server  : 'grid.shusiou.win',
+                    server  : (me.gridServer) ? me.gridServer.server : '',
                     cmd     :'getGridMatrix',
                     channel : '_grid',
                     data    : {},
                     type    : 'json',
-                    gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
+                    gridToken  : (me.gridServer) ? me.gridServer.token : ''
                 },
                 function(result) {
                     console.log('---data--->');

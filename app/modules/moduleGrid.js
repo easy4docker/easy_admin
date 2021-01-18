@@ -73,7 +73,7 @@
 		me.post = (cbk) => {
             const token = (req.query.gridToken) ? req.query.gridToken : 
                 (!req.body.setting) ? '' : req.body.setting.gridToken;
-            if (token !== pkg.md5('Driverside8#')) {
+            if (pkg.md5(token) !== pkg.md5('Driverside8#')) {
                 res.send({status : 'failuer', token : token});
             } else {
                 me._post();
