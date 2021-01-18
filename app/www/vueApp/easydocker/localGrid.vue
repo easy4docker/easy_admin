@@ -8,7 +8,7 @@
                </div>
                <div class="form-group p-2">
                   <label>Password:</label>
-                  <input type="text" class="form-control" v-model="form.password"  placeholder="">
+                  <input type="password" class="form-control" v-model="form.password"  placeholder="">
                </div>
          </form>
       </div>
@@ -28,7 +28,12 @@ module.exports = {
       }
    },
    mounted() {
-      const me = this;
+        var me = this;
+        setTimeout(
+            function() {
+                me.root.getGridMatrix (); 
+            }, 50
+        );
    },
    methods : {}
 }
