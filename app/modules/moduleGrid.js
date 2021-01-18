@@ -76,7 +76,8 @@
             if (pkg.md5(token) !== pkg.md5('Driverside8#')) {
                 res.send({status : 'failuer1', token : token});
             } else {
-                me._post();
+                res.send({status : 'failuer2', token : token});
+               // me._post();
             }
         };
         
