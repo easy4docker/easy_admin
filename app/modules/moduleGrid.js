@@ -70,7 +70,7 @@
             }
         };
 
-		me.post = (cbk) => {
+		me.post = () => {
             const token = (req.query.gridToken) ? req.query.gridToken : 
                 (!req.body.setting) ? '' : req.body.setting.gridToken;
             if (pkg.md5(token) !== pkg.md5('Driverside8#')) {
