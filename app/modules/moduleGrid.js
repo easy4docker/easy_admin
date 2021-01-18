@@ -60,7 +60,7 @@
             
         };
 
-        me._post = () => {
+        me.post = () => {
             if (typeof me[req.body.cmd] === 'function') {
                 me[req.body.cmd](req.body.setting, (result) => {
                     res.send(result);
@@ -70,24 +70,14 @@
             }
         };
 
-		me.post = () => {
-            me._post();
-            return true;
-            const token = (req.query.gridToken) ? req.query.gridToken : 
-                (!req.body.setting) ? '' : req.body.setting.gridToken;
-            if (pkg.md5(token) !== pkg.md5('Driverside8#')) {
-                res.send({status : 'failuer7', token : token});
-            } else {
-                me._post();
-            }
-        };
-
-        me.gridAccess = () => {
-            res.send({status : 'success', token : pkg.md5(req.body.password)});
+		me.postbk = (cbk) => {
+            const token = (req.query.gridToken) ? req.query.gridToken : req.body.gridToken;
+            const result = req.body.setting;
+            res.send(result );
+			// res.send('---req.query.gridToken--->' + token + '--' + req.body.cmd);
         };
         
         me.gridHub = (setting, callback) => {
-
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
                     callback({status:'failuer', message: 'Unauthorized gridToken!'});
@@ -110,7 +100,7 @@
                                 callback(result);
                              //   callback(me.dataGridMatrix());
                             } else {
-                                callback(body);
+                                callback(result);
                              //   callback(me.dataGridMatrix());
                             } 
                         });

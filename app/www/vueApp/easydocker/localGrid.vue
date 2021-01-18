@@ -38,8 +38,12 @@ module.exports = {
          const me = this;
          me.root.dataEngine().runPost('/_grid/', 'gridAccess', me.form,
             function(result0) {
+               console.log('---data0--->');
+               console.log(result0);
+               console.log(me.form);
+               console.log(result0.token);
                me.root.dataEngine().gridPost({
-                    server  : me.form.gridServer,
+                    server  : 'grid.shusiou.win',
                     cmd     :'getGridMatrix',
                     channel : '_grid',
                     data    : {},
