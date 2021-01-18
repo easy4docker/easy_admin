@@ -11,6 +11,7 @@
                   <input type="password" class="form-control" v-model="form.password"  placeholder="">
                </div>
                <button type="button" class="btn btn-info" v-on:click="accessGrid()">Access the Grid</button>
+               =={{error}}==
          </form>
       </div>
    </div>
@@ -25,7 +26,8 @@ module.exports = {
          form : {
             gridServer : '',
             password : ''
-         }
+         },
+         error : ''
       }
    },
    mounted() {
@@ -38,7 +40,24 @@ module.exports = {
    },
    methods : {
       accessGrid() {
-         alert('addGrid');
+         const me = this;
+         me.dataEngine().gridPost({
+                  server  : me.form.gridServer,
+                  cmd     :'getGridMatrix',
+                  channel : '_grid',
+                  data    : {},
+                  type    : 'json',
+                  gridToken   : me.form.password
+               },
+               function(result) {
+                  if (result.status === 'success') {
+                    localStorage.setItem('easygockerGridServer', me.form.gridServer);
+                    localStorage.setItem('easygockerGridPass', me.form.gridPassword);
+                  } else {
+                     me.error = 'Access failure!';
+                  }
+               }, function(err) {
+               });
       }
    }
 }

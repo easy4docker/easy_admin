@@ -34,14 +34,17 @@ module.exports = {
             triggerSpinner : false,
             module : 'list',
             menu   : '',
-            gridServer : null,
+            gridServer : null
         }
     },
     mounted () {
         var me = this;
-        
         setTimeout(function() {
             me.getGridMatrix();
+            me.gridServer = {
+                server : localStorage.getItem('easygockerGridServer'),
+                token: localStorage.getItem('easygockerGridToken')
+            };
         },50);
     },
     methods :{
