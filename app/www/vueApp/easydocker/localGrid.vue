@@ -8,7 +8,7 @@
                </div>
                <div class="form-group p-2">
                   <label>Password:</label>
-                  <input type="text" class="form-control" v-model="form.password"  placeholder="xxx.xxx.xxx">
+                  <input type="text" class="form-control" v-model="form.password"  placeholder="">
                </div>
          </form>
       </div>
