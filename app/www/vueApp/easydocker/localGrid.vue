@@ -56,10 +56,15 @@ module.exports = {
                     }
                 }, function(err) {
                   //  me.gridServer = false;
+                     console.log('---err-1-->');
                     console.log(err);
                 });
 
-            }, function(err) {});
+            }, function(err) {
+
+                  console.log('---err--->');
+                  console.log(err);
+            });
       }
    }
 }
