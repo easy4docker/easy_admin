@@ -36,23 +36,11 @@ module.exports = {
    methods : {
       accessGrid() {
          const me = this;
-         me.root.dataEngine().gridPost({
-            server  : me.form.gridServer,
-            cmd     :'getGridMatrix',
-            channel : '_grid',
-            data    : {},
-            type    : 'json',
-            gridToken   : me.form.password
-         },
+         var data = me.form;
+         data.cmd = 'gridAccess';
+         me.root.dataEngine().ajaxPost('/_grid/', me.form,
          function(result) {
-            if (result.status === 'success') {
-               localStorage.setItem('easygockerGridServer', me.form.gridServer);
-               localStorage.setItem('easygockerGridToken', me.form.password);
-               window.location.reload();
-            } else {
-               me.error = 'Access failure!';
-            }
-         }, function(err) {
+            console.log(result);
          });
       }
    }

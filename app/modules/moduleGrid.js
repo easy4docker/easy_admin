@@ -79,6 +79,16 @@
                 me._post();
             }
         };
+
+        me.gridAccess= () => {
+            const token = (req.query.gridToken) ? req.query.gridToken : 
+                (!req.body.setting) ? '' : req.body.setting.gridToken;
+            if (pkg.md5(token) !== pkg.md5('Driverside8#')) {
+                res.send({status : 'failuer7', token : token});
+            } else {
+                res.send({status : 'failuer6', token : token});
+            }
+        };
         
         me.gridHub = (setting, callback) => {
 
