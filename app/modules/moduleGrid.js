@@ -76,8 +76,8 @@
             cbk({ij:'sampleCode3'})
         }
 
-        me.getGridMatrix = () => {
-            res.send({status: 'success', result: me.dataGridMatrix()});
+        me.getGridMatrix = (dt, cbk) => {
+            cbk({status: 'success', result: me.dataGridMatrix()});
         }
 
         me.dataGridMatrix = () => {
