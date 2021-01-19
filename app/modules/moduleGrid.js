@@ -90,15 +90,10 @@
 
         me.gridAccess = (cbk) => {
             const data = req.body.data;
-            const setting = {
-                url : 'http' + data.gridServer + ':10000/_grid/',
-                cmd : 'verifyToken',
-                data : data
-            };
           //  cbk({gridServer : data.gridServer, token : pkg.md5(data.password)});
             const request = require('request');
             data.cmd = 'verifyToken';
-            request.post({url: 'http' + data.gridServer + ':10000/_grid/', form: setting}, function(err,httpResponse,body){ 
+            request.post({url: 'http://' + data.gridServer + ':10000/_grid/', form: data}, function(err,httpResponse,body){ 
                 cbk(body);   
                 // cbk({gridServer : data.gridServer, token : pkg.md5(data.password)});
             });
