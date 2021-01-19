@@ -34,8 +34,7 @@
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
     
 
-                    var dataGridMatrix = {};
-                    // me.dataGridMatrix();
+                    var dataGridMatrix = me.dataGridMatrix();
 
 
                     if (!dataGridMatrix[server] && server != 'grid.shusiou.win') {
