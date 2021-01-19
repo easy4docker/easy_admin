@@ -88,8 +88,8 @@
 						break; 
 
 					case '_gridHub':
-						var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
-						let mGridHub =  new MAGrid(env, pkg, req, res);
+						var MAGridHub= pkg.require(env.root+ '/modules/moduleGridHub.js');
+						let mGridHub =  new MAGridHub(env, pkg, req, res);
 						mGridHub.post();
 						break; 
 
