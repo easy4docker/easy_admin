@@ -36,13 +36,13 @@
 
                     var dataGridMatrix = me.dataGridMatrix();
 
-
+                    /*
                     if (!dataGridMatrix[server] && server != 'grid.shusiou.win') {
                         res.send({status:'failuer', message: 'gridHub refused unauthorized server ' + server + '!'});
                     } else if (setting.cmd === 'gridHub') {
                         res.send({status:'failuer', message: 'gridHub can not hub route itself!'});
                     } else {
-
+                    */
                         server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
                         request.post({url: server + '/' + channel + '/', form: setting}, function(err,httpResponse,body){      
@@ -55,7 +55,7 @@
                             } 
                         });
                       
-                    }
+                   // }
                }
             });
             return  true;
