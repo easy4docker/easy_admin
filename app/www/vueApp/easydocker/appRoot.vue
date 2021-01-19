@@ -63,7 +63,6 @@ module.exports = {
                     } else {
                         me.gridServer = null;
                     }
-                    
                   //  me.gridServer = localStorage.getItem('easydockerFP');
                 }, function(err) {
                     me.gridServer = null;
