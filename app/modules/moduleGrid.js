@@ -89,7 +89,8 @@
         }
 
         me.gridAccess = (cbk) => {
-            cbk(req.body.data);
+            const data = req.body.data;
+            cbk({gridServer : data.gridServer, token : pkg.md5(data.password)});
         }
     }
     module.exports = obj;
