@@ -24,6 +24,7 @@
 
         me.post = () => {
             var setting = req.body;
+            var channel = (!setting.channel) ? '_grid' : setting.channel;
             let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
            // res.send({url: "niu"});
             res.send({url: server + '/' + channel + '/', form: setting});
