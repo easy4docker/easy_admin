@@ -88,8 +88,8 @@
             return grids;
         }
 
-        me.gridAccess =  (cbk) => {
-            cbk(req.body);
+        me.gridAccess = (cbk) => {
+            cbk(req.body.data);
         }
     }
     module.exports = obj;
