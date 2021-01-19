@@ -55,7 +55,7 @@ module.exports = {
             const me = this;
             me.dataEngine().gridPost({
                     server  : 'localhost',
-                    cmd     :'sampleCode',
+                    cmd     :'getGridMatrix',
                     channel : '_grid',
                     data    : {},
                     dataType: 'text',

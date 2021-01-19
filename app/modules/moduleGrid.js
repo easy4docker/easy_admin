@@ -75,6 +75,18 @@
         me.sampleCode = (dt, cbk) => {
             cbk({ij:'sampleCode3'})
         }
+
+        me.getGridMatrix = () => {
+            res.send({status: 'success', result: me.dataGridMatrix()});
+        }
+
+        me.dataGridMatrix = () => {
+            let grids = {};
+            try {
+                grids = pkg.require(gridStatusFn);
+            } catch (e) {}
+            return grids;
+        }
     }
     module.exports = obj;
 })()
