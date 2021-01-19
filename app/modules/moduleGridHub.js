@@ -45,26 +45,14 @@
                     } else {
 */
                         server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
-                       // res.send(setting);
-                       // return true;
-     
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
                         request.post({url: server + '/' + channel + '/', form: setting}, function(err,httpResponse,body){      
                             if (setting.type === 'json') {
-                               // callback('result0');
-
                                 var result = {};
                                 try { result = JSON.parse(body);} catch (e) {}   
-                               // callback(result);
                                res.send(result);
-                              //  res.send({url: server + ':10000/' + channel + '/', ss: setting, BD : body});
-                                return true;
-                             //   callback(me.dataGridMatrix());
                             } else {
                                 res.send(body);
-                                return true;
-                               // callback('result1');
-                             //   callback(me.dataGridMatrix());
                             } 
                         });
 /*                        
