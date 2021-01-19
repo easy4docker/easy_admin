@@ -48,9 +48,9 @@
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
                         request.post({url: server + '/' + channel + '/', form: setting}, function(err,httpResponse,body){      
                             if (setting.type === 'json') {
-                                var result = {};
-                                try { result = JSON.parse(body);} catch (e) {}   
-                               res.send(result);
+                               // var result = {};
+                               // try { result = JSON.parse(body);} catch (e) {}   
+                               res.send(body);
                             } else {
                                 res.send(body);
                             } 

@@ -58,7 +58,7 @@ module.exports = {
                     cmd     :'sampleCode',
                     channel : '_grid',
                     data    : {},
-                    type    : 'text',
+                    dataType: 'text',
                     gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
                 },
                 function(result) {
@@ -84,12 +84,12 @@ module.exports = {
                 cmd     :'sampleCode',
                 channel : '_grid',
                 data    : {},
-                type    : 'json',
+                dataType: 'text',
                 gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
             },
             function(result) {
                 console.log('---data--->');
-                console.log(result);
+                console.log(JSON.parse(result));
                 if (result.status === 'success') {
                     me.gridMatrix = result.result;
                 } else {
