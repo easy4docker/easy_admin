@@ -152,10 +152,6 @@
             } catch (e) {}
             return grids;
         }
-        /* --- POST function ---->> */
-        me.getGrids = (cbk) => {
-            cbk({status: "success", result: me.dataGrids()});
-        }
 
         me.addGrid = () => {
             var data = req.body;
@@ -196,6 +192,11 @@
             CP.serial(_f, (data) => {
                 me.getGrids();
             }, 3000)
+        }
+
+        /* --- POST function ---->> */
+        me.getGrids = (cbk) => {
+            cbk({status: "success", result: me.dataGrids()});
         }
 
         me.syncAppCode = () => {
