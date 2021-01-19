@@ -49,7 +49,7 @@ module.exports = {
                 success: function(result) {
                     me.$parent.triggerSpinner = false;
                     if (typeof  success === 'function') {
-                        success(result);
+                        success(JSON.parse(result));
                     }
                 },
                 error: function (jqXHR) { 
@@ -58,7 +58,7 @@ module.exports = {
                         error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
                     }
                 },
-                dataType: 'text'
+                dataType: (!setting.dataType) ? 'text' : setting.dataType
             });
         },
         appPost(setting, success, error) {
@@ -84,7 +84,7 @@ module.exports = {
                         error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
                     }
                 },
-                dataType: 'JSON'
+                dataType: (!setting.dataType) ? 'text' : setting.dataType
             });
         },
         runPost(url, cmd, params, success, error) {
