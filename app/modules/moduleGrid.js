@@ -18,8 +18,6 @@
         } catch (e) {}
         
         me.get = () => {
-            res.send('===uuu===');
-            return true;
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             if (mp) {
@@ -36,7 +34,7 @@
                             res.send(result);
                         });
                         break;
-
+                    /*
                     case 'testToken':
                         me.testToken((result) => {
                             res.send(result);
@@ -52,6 +50,7 @@
                             res.send(result);
                         });
                         break;
+                    */    
                     default:
                         res.send('wrong path ' + p);
                         break;        
@@ -71,14 +70,53 @@
                 res.send({status:'failure', message : '404 wrong cmd ' + req.body.cmd + ' !'});
             }
         };
-
-        me.sampleCode = (cbk) => {
-            cbk({ij:'sampleCode3'})
+        /* --- Get function ---->> */
+        me.renewToken = (callback) => {
+            const oldToken = req.query.old;
+            fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
+                if (gridToken !== oldToken) {
+                    callback('');
+                } else {
+                    const newToken = me.makeid(32);
+                    fs.writeFile(gridTokenFn, newToken, (err) => {
+                        callback((err) ? '' : newToken);
+                    });
+                }
+            });
         }
-
-        me.getGridMatrix = (cbk) => {
-            cbk({status: 'success', result: me.dataGridMatrix()});
+    
+        me.updateStatus = (data, callback) => {
+            let grids = me.dataGridMatrix();
+            if (!data || !data.ip || !data.token ) {
+                cbk(false);
+            } else {
+                const _f = {};
+                _f['newToken'] = (cbk) => {
+                    const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.token;
+                    exec(cmdStr, {maxBuffer: 1024 * 2048},
+                        function(error, stdout, stderr) {
+                            var v = stdout.replace(/\s+/, '');
+                            if ((error) || !v) {
+                                cbk(false);
+                                CP.exit = true;
+                            } else {
+                                cbk(v);
+                            }
+                    });
+                }
+                _f['saveGridStatus'] = (cbk) => {
+                    grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag};
+                    fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
+                        cbk(true);
+                    });
+                }
+                
+                CP.serial(_f, (data) => {
+                    callback(true);
+                }, 3000)
+            } 
         }
+        /* --- data functions ---->> */
 
         me.dataGridMatrix = () => {
             let grids = {};
@@ -87,6 +125,16 @@
             } catch (e) {}
             return grids;
         }
+
+        /* --- Post function ---->> */
+        me.sampleCode = (cbk) => {
+            cbk({ij:'sampleCode3'})
+        }
+
+        me.getGridMatrix = (cbk) => {
+            cbk({status: 'success', result: me.dataGridMatrix()});
+        }
+
 
         me.gridAccess = (cbk) => {
             const data = req.body.data;
