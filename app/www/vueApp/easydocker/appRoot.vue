@@ -34,28 +34,35 @@ module.exports = {
             triggerSpinner : false,
             module : 'list',
             menu   : '',
-            gridServer : null
+            gridServer : null,
+            svr : '',
+            token : ''
         }
     },
     mounted () {
         var me = this;
+
         setTimeout(function() {
             me.getGridMatrix();
             me.gridServer = {
-                server : localStorage.getItem('easygockerGridServer'),
-                token: localStorage.getItem('easygockerGridToken')
+        //        server : localStorage.getItem('easygockerGridServer'),
+        //        token: localStorage.getItem('easygockerGridToken')
             };
         },50);
     },
     methods :{
         getGridMatrix() {
             const me = this;
+            const svr = localStorage.getItem('easydockerSVR');
+            const token = localStorage.getItem('easydockerTOKEN');
+            // '49ba83ae33879460f8cbcd491ef1d1a5'
+            // 'grid.shusiou.win'
             me.dataEngine().gridPost({
-                    server  : 'grid.shusiou.win',
-                    cmd     :'sampleCode',
+                    server  : svr.replace(/\_/g, '.'),
+                    cmd     :'getGridMatrix',
                     data    : {},
                     dataType: 'json',
-                    gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
+                    gridToken   : token
                 },
                 function(result) {
                     if (result.status === 'success') {
