@@ -24,6 +24,7 @@
 
         me.post = () => {
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
+               // if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
                if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
                     callback({status:'failuer', message: 'Unauthorized gridToken!'});
                } else {
