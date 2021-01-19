@@ -105,7 +105,7 @@
         }
 
         me.verifyToken = (cbk) => {
-            res.send(req.body.data);
+            res.send(req.body);
         };
     }
     module.exports = obj;

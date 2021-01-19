@@ -64,14 +64,12 @@ module.exports = {
         appPost(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
-          //  console.log(setting);
             $.ajax({
                 type: 'POST',
                 url:  setting.url,
                 data: setting,
                 success: function(result) {
                     me.$parent.triggerSpinner = false;
-                        console.log(result);
                     if (typeof  success === 'function') {
                         success(result);
                     }
