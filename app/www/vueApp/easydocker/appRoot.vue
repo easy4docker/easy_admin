@@ -56,7 +56,6 @@ module.exports = {
             me.dataEngine().gridPost({
                     server  : 'grid.shusiou.win',
                     cmd     :'getGridMatrix',
-                    channel : '_grid',
                     data    : {},
                     dataType: 'json',
                     gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
@@ -83,7 +82,7 @@ module.exports = {
                 url  : 'http://grid.shusiou.win:10000/_grid/',
                 cmd     :'getGridMatrix',
                 data    : {},
-                dataType: 'text',
+                dataType: 'json',
                 gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
             },
             function(result) {
