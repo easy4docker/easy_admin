@@ -58,8 +58,6 @@ module.exports = {
                     gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
                 },
                 function(result) {
-                    console.log('---data--A->');
-                    console.log(result);
                     if (result.status === 'success') {
                         me.gridMatrix = result.result;
                     } else {
@@ -68,8 +66,7 @@ module.exports = {
                     
                   //  me.gridServer = localStorage.getItem('easydockerFP');
                 }, function(err) {
-                    me.gridServer = false;
-                    console.log('---data--2->');
+                    me.gridServer = null;
                     console.log(err);
                 });
         },
