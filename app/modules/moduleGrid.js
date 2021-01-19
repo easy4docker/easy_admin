@@ -36,6 +36,12 @@
                             res.send(result);
                         });
                         break;
+                    case 'testToken':
+                    case 'getGridMatrix':
+                    case 'gridHub':
+                        res.send('===uuu===');
+                        break;
+                        
                     /*    
                     case 'testToken':
                         me.testToken((result) => {
