@@ -54,8 +54,8 @@ module.exports = {
         getGridMatrix() {
             const me = this;
             me.dataEngine().gridPost({
-                    server  : 'localhost',
-                    cmd     :'getGridMatrix',
+                    server  : 'grid.shusiou.win',
+                    cmd     :'sampleCode',
                     channel : '_grid',
                     data    : {},
                     dataType: 'text',
@@ -80,15 +80,15 @@ module.exports = {
         test() {
             const me = this;
             me.dataEngine().appPost({
-                server  : 'localhost',
-                cmd     :'sampleCode',
+                server  : 'grid.shusiou.win',
+                cmd     :'getGridMatrix',
                 channel : '_grid',
                 data    : {},
-                dataType: 'text',
+                dataType: 'json',
                 gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
             },
             function(result) {
-                console.log('---data--->');
+                console.log('---data-2-->');
                 console.log(JSON.parse(result));
                 if (result.status === 'success') {
                     me.gridMatrix = result.result;
