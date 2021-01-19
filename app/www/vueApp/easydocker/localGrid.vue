@@ -36,19 +36,14 @@ module.exports = {
    methods : {
       accessGrid() {
          const me = this;
-         me.dataEngine().appPost({
-            url  : 'http://grid.shusiou.win:10000/_grid/',
+         me.root.dataEngine().appPost({
+            url  : '/_grid/',
             cmd     :'gridAccess',
             data    : me.form,
-            dataType: 'json',
-            gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
+            dataType: 'json'
          },
          function(result) {
-            if (result.status === 'success') {
-               me.gridMatrix = result.result;
-            } else {
-               me.gridServer = null;
-            }
+            console.log(result);
             //  me.gridServer = localStorage.getItem('easydockerFP');
          }, function(err) {
             me.gridServer = false;

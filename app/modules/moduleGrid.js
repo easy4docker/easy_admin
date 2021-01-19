@@ -64,7 +64,7 @@
 
         me.post = () => {
             if (typeof me[req.body.cmd] === 'function') {
-                me[req.body.cmd](req.body, (result) => {
+                me[req.body.cmd]((result) => {
                     res.send(result);
                 });
             } else {
@@ -72,11 +72,11 @@
             }
         };
 
-        me.sampleCode = (dt, cbk) => {
+        me.sampleCode = (cbk) => {
             cbk({ij:'sampleCode3'})
         }
 
-        me.getGridMatrix = (dt, cbk) => {
+        me.getGridMatrix = (cbk) => {
             cbk({status: 'success', result: me.dataGridMatrix()});
         }
 
@@ -86,6 +86,10 @@
                 grids = pkg.require(gridStatusFn);
             } catch (e) {}
             return grids;
+        }
+
+        me.gridAccess =  (cbk) => {
+            cbk(req.body);
         }
     }
     module.exports = obj;
