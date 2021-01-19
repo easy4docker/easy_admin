@@ -89,8 +89,8 @@
         }
 
         me.gridAccess = (cbk) => {
-            const data = {gridServer : data.gridServer, token : pkg.md5(data.password)};
-            cbk(data);
+            const data = req.body;
+            cbk({gridServer : data.gridServer, token : pkg.md5(data.password)});
         }
 
         me.verifyToken = (cbk) => {
