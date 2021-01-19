@@ -93,6 +93,7 @@
           //  cbk({gridServer : data.gridServer, token : pkg.md5(data.password)});
             const request = require('request');
             data.cmd = 'verifyToken';
+            data.type = 'text';
             request.post({url: 'http://' + data.gridServer + ':10000/_grid/', form: data}, function(err,httpResponse,body){ 
                 cbk(body);   
                 // cbk({gridServer : data.gridServer, token : pkg.md5(data.password)});
