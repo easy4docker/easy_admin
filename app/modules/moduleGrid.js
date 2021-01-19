@@ -199,11 +199,11 @@
             cbk({status: "success", result: me.dataGrids()});
         }
 
-        me.syncAppCode = () => {
+        me.syncAppCode = (cbk) => {
             const shell_str = 'cd ' + git_root + ' && git pull';
             exec(shell_str, {maxBuffer: 1024 * 2048},
                 function(error, stdout, stderr) {
-                    res.send({status : 'success'})
+                    cbk({status : 'success'})
             });
         }
 
