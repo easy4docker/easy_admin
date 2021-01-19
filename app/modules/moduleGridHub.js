@@ -23,8 +23,10 @@
         };
 
         me.post = () => {
-            res.send({url: "niu"});
-            // res.send({url: server + '/' + channel + '/', form: setting});
+            var setting = req.body;
+            let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
+           // res.send({url: "niu"});
+            res.send({url: server + '/' + channel + '/', form: setting});
              return true;
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                // if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
