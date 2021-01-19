@@ -40,7 +40,8 @@ module.exports = {
             url  : '/_grid/',
             cmd     :'gridAccess',
             data    : me.form,
-            dataType: 'json'
+            dataType: 'json',
+            gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
          },
          function(result) {
             console.log(result);
