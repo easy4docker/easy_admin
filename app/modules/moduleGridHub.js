@@ -42,10 +42,10 @@
 
                     const request = require('request');
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
-                    var channel = (!setting.channel) ? '_grid' : setting.channel;
+                  //  var channel = (!setting.channel) ? '_grid' : setting.channel;
                     // res.send({url: "niu"});
-                    res.send({url: server + '/' + channel + '/', form: setting});
-                    return true;
+                   // res.send({url: server + '/' + channel + '/', form: setting});
+                  //  return true;
                     var dataGridMatrix = me.dataGridMatrix();
 
                     /*
