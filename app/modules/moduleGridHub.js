@@ -32,8 +32,9 @@
 
                     const request = require('request');
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
-    
-                    res.send({url: server + '/' + channel + '/', form: setting});
+
+                    res.send({url: "niu"});
+                   // res.send({url: server + '/' + channel + '/', form: setting});
                     return true;
                     var dataGridMatrix = me.dataGridMatrix();
 
