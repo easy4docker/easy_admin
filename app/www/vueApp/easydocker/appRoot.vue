@@ -55,7 +55,7 @@ module.exports = {
             const me = this;
             me.dataEngine().gridPost({
                     server  : 'grid.shusiou.win',
-                    cmd     :'sampleCode',
+                    cmd     :'getGridMatrix',
                     channel : '_grid',
                     data    : {},
                     dataType: 'json',

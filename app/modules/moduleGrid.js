@@ -65,7 +65,7 @@
         me.post = () => {
             if (typeof me[req.body.cmd] === 'function') {
                 me[req.body.cmd](req.body, (result) => {
-                    res.send(req.body);
+                    res.send(result);
                 });
             } else {
                 res.send({status:'failure', message : '404 wrong cmd ' + req.body.cmd + ' !'});
