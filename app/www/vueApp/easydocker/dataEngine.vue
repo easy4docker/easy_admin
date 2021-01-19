@@ -58,7 +58,7 @@ module.exports = {
                         error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
                     }
                 },
-                dataType: 'JSON'
+                dataType: 'text'
             });
         },
         appPost(setting, success, error) {
