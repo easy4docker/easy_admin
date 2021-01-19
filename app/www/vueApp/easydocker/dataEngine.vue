@@ -71,6 +71,7 @@ module.exports = {
                 url: '/_grid/',
                 data: setting,
                 success: function(result) {
+                    console.log('===sss==1=');
                     me.$parent.triggerSpinner = false;
                     if (typeof  success === 'function') {
                         success(result);
@@ -78,6 +79,7 @@ module.exports = {
                 },
                 error: function (jqXHR) { 
                     me.$parent.triggerSpinner = false;
+                    console.log('===sss==2=');
                     if (typeof error === 'function') {
                         error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
                     }
