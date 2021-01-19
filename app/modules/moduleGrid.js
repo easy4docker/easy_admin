@@ -145,8 +145,18 @@
             } catch (e) {}
             return grids;
         }
-
+        me.dataGrids = () => {
+            let grids = {};
+            try {
+                grids = pkg.require(gridServerFn);
+            } catch (e) {}
+            return grids;
+        }
         /* --- POST function ---->> */
+        me.getGrids = (cbk) => {
+            cbk({status: "success", result: me.dataGrids()});
+        }
+
         me.addGrid = () => {
             var data = req.body;
             const _f = {};
@@ -195,7 +205,7 @@
                     res.send({status : 'success'})
             });
         }
-        
+
         me.sampleCode = (cbk) => {
             cbk({ij:'sampleCode3'})
         }
