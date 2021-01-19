@@ -65,7 +65,7 @@
         me.post = () => {
             if (typeof me[req.body.cmd] === 'function') {
                 me[req.body.cmd](req.body, (result) => {
-                    res.send(result);
+                    res.send(req.body);
                 });
             } else {
                 res.send({status:'failure', message : '404 wrong cmd ' + req.body.cmd + ' !'});
@@ -85,7 +85,7 @@
             try {
                 grids = pkg.require(gridStatusFn);
             } catch (e) {}
-            return grids;
+            return 'grids';
         }
     }
     module.exports = obj;

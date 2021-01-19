@@ -64,8 +64,7 @@ module.exports = {
         appPost(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
-            let data = {cmd: 'gridHub', setting : setting};
- 
+            console.log(setting);
             $.ajax({
                 type: 'POST',
                 url:  setting.url,

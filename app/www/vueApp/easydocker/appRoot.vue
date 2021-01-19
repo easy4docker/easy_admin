@@ -80,11 +80,10 @@ module.exports = {
         test() {
             const me = this;
             me.dataEngine().appPost({
-                url  : 'http://grid.shusiou.win:10000/_grid',
+                url  : 'http://grid.shusiou.win:10000/_grid/',
                 cmd     :'getGridMatrix',
-                channel : '_grid',
                 data    : {},
-                dataType: 'json',
+                dataType: 'text',
                 gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
             },
             function(result) {
