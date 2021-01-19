@@ -25,15 +25,11 @@
             if (mp) {
                 switch (mp[2])  {
                     case 'updateStatus':
-                        res.send('===uuu===');
-                        break;
-                        /*
                         // for cron access 
                         me.updateStatus(req.query, (result) => {
                             res.send(result);
                         });
                         break;
-                        */
                     case 'renewToken':
                         me.renewToken((result) => {
                             res.send(result);
