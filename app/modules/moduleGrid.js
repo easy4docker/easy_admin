@@ -100,7 +100,7 @@
         }
 
         me.verifyToken = (cbk) => {
-            cbk('req.body');
+            cbk(req.body);
         };
     }
     module.exports = obj;
