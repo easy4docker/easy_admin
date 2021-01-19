@@ -95,7 +95,7 @@
                 cmd : 'verifyToken',
                 data : data
             };
-            cbk({gridServer : data.gridServer, token : pkg.md5(data.password)});
+          //  cbk({gridServer : data.gridServer, token : pkg.md5(data.password)});
             const request = require('request');
             data.cmd = 'verifyToken';
             request.post({url: 'http' + data.gridServer + ':10000/_grid/', form: setting}, function(err,httpResponse,body){ 
