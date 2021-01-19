@@ -48,9 +48,6 @@ module.exports = {
         },50);
     },
     methods :{
-        gridServer(ip, port) {
-            return window.location.protocol + '//' + ((ip) ?  (ip + ':' + port) : window.location.host)
-        },
         getGridMatrix() {
             const me = this;
             me.dataEngine().gridPost({
