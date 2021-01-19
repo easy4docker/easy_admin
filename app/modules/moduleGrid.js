@@ -153,7 +153,8 @@
             return grids;
         }
 
-        me.addGrid = () => {
+        /* --- POST function ---->> */
+        me.addGrid = (callback) => {
             var data = req.body;
             const _f = {};
 
@@ -190,11 +191,10 @@
                 });
             }
             CP.serial(_f, (data) => {
-                me.getGrids();
+                me.getGrids(callback);
             }, 3000)
         }
 
-        /* --- POST function ---->> */
         me.getGrids = (cbk) => {
             cbk({status: "success", result: me.dataGrids()});
         }
