@@ -54,10 +54,10 @@
                             if (setting.type === 'json') {
                                 var result = {};
                                 try { result = JSON.parse(body);} catch (e) {}   
-                                callback(result);
+                                callback('result');
                              //   callback(me.dataGridMatrix());
                             } else {
-                                callback(result);
+                                callback('result1');
                              //   callback(me.dataGridMatrix());
                             } 
                         });

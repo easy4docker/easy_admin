@@ -65,10 +65,11 @@ module.exports = {
             var me = this;
             me.$parent.triggerSpinner = true;
             let data = {cmd: 'gridHub', setting : setting};
+ 
             $.ajax({
                 type: 'POST',
                 url: '/_grid/',
-                data: data,
+                data: setting,
                 success: function(result) {
                     me.$parent.triggerSpinner = false;
                     if (typeof  success === 'function') {

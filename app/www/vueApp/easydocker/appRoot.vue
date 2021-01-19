@@ -73,14 +73,15 @@ module.exports = {
                   //  me.gridServer = localStorage.getItem('easydockerFP');
                 }, function(err) {
                     me.gridServer = false;
+                    console.log('---data--2->');
                     console.log(err);
                 });
         },
         test() {
             const me = this;
-            me.dataEngine().gridPost({
-                server  : 'grid.shusiou.win',
-                cmd     :'getGridMatrix',
+            me.dataEngine().appPost({
+                server  : 'localhost',
+                cmd     :'sampleCode',
                 channel : '_grid',
                 data    : {},
                 type    : 'json',
