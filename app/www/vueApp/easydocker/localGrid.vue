@@ -36,40 +36,24 @@ module.exports = {
    methods : {
       accessGrid() {
          const me = this;
-         me.root.dataEngine().runPost('/_grid/', 'gridAccess', me.form,
-            function(result0) {
-               console.log('---data0--->');
-               console.log(result0);
-               console.log(me.form);
-               console.log(result0.token);
-               me.root.dataEngine().gridPost({
-                    server  : 'grid.shusiou.win',
-                    cmd     :'getGridMatrix',
-                    channel : '_grid',
-                    data    : {},
-                    type    : 'json',
-                    gridToken  : result0.token
-                },
-                function(result) {
-                    console.log('---data--->');
-                    console.log(result);
-                    if (result.status === 'success') {
-                       // me.gridMatrix = result.result;
-                    } else {
-                       // me.gridServer = null;
-                    }
-                }, function(err) {
-                  //  me.gridServer = false;
-                     console.log('---err-1-->');
-                    console.log(err);
-                });
-
-            }, function(err) {
-
-                  console.log('---err--->');
-                  console.log(err);
-            });
-      }
+         me.dataEngine().appPost({
+            url  : 'http://grid.shusiou.win:10000/_grid/',
+            cmd     :'gridAccess',
+            data    : me.form,
+            dataType: 'json',
+            gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
+         },
+         function(result) {
+            if (result.status === 'success') {
+               me.gridMatrix = result.result;
+            } else {
+               me.gridServer = null;
+            }
+            //  me.gridServer = localStorage.getItem('easydockerFP');
+         }, function(err) {
+            me.gridServer = false;
+            console.log(err);
+         });
    }
 }
 </script>
