@@ -55,14 +55,14 @@ module.exports = {
             const me = this;
             me.dataEngine().gridPost({
                     server  : 'localhost',
-                    cmd     :'getGridMatrix',
+                    cmd     :'sampleCode',
                     channel : '_grid',
                     data    : {},
                     type    : 'json',
                     gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
                 },
                 function(result) {
-                    console.log('---data--->');
+                    console.log('---data--1->');
                     console.log(result);
                     if (result.status === 'success') {
                         me.gridMatrix = result.result;

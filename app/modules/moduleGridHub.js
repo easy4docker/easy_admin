@@ -28,26 +28,27 @@
                //     callback({status:'failuer', message: 'Unauthorized gridToken!'});
                // } else {
                     var setting = req.body;
-                    res.send(setting);
-                    return true;
+
                     const request = require('request');
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
                     server = setting.server;
 
-     
-                    const dataGridMatrix = me.dataGridMatrix();
 
+                //    const dataGridMatrix = me.dataGridMatrix();
+
+
+
+/*
                     if (!dataGridMatrix[server] && server != 'grid.shusiou.win') {
                         callback({status:'failuer', message: 'gridHub refused unauthorized server ' + server + '!'});
                     } else if (setting.cmd === 'gridHub') {
                         callback({status:'failuer', message: 'gridHub can not hub route itself!'});
                     } else {
-
+*/
                         server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
-
-                        res.send(server);
-                        return true;
-
+                       // res.send(setting);
+                       // return true;
+     
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
                         request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){      
                             if (setting.type === 'json') {
@@ -60,7 +61,9 @@
                              //   callback(me.dataGridMatrix());
                             } 
                         });
+/*                        
                     }
+                    */
                // }
             });
             return  true;
