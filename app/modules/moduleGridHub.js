@@ -26,7 +26,7 @@
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                // if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
                if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
-                    callback({status:'failuer', message: 'Unauthorized gridToken!'});
+                    res.send({status:'failuer', message: 'Unauthorized gridToken!'});
                } else {
                     var setting = req.body;
 
@@ -34,15 +34,14 @@
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
     
 
-                    const dataGridMatrix = me.dataGridMatrix();
-
-
+                    var dataGridMatrix = {};
+                    // me.dataGridMatrix();
 
 
                     if (!dataGridMatrix[server] && server != 'grid.shusiou.win') {
-                        callback({status:'failuer', message: 'gridHub refused unauthorized server ' + server + '!'});
+                        res.send({status:'failuer', message: 'gridHub refused unauthorized server ' + server + '!'});
                     } else if (setting.cmd === 'gridHub') {
-                        callback({status:'failuer', message: 'gridHub can not hub route itself!'});
+                        res.send({status:'failuer', message: 'gridHub can not hub route itself!'});
                     } else {
 
                         server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
@@ -62,6 +61,14 @@
             });
             return  true;
         };
+
+        me.dataGridMatrix = () => {
+            let grids = {};
+            try {
+                grids = pkg.require(gridStatusFn);
+            } catch (e) {}
+            return grids;
+        }
     }
     module.exports = obj;
 })()
