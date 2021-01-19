@@ -152,7 +152,11 @@
             } catch (e) {}
             return grids;
         }
-
+        me.setCron = (code, str, callback) => {
+            fs.writeFile(data_dir + '/commCron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
+                callback({status:'success'});
+            });
+        }
         /* --- POST function ---->> */
         me.removeGrid = (callback) => {
             var data = req.body;
