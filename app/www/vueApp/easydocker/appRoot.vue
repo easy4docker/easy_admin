@@ -55,7 +55,7 @@ module.exports = {
             const me = this;
             me.dataEngine().gridPost({
                     server  : 'grid.shusiou.win',
-                    cmd     :'getGridMatrix',
+                    cmd     :'sampleCode',
                     channel : '_grid',
                     data    : {},
                     dataType: 'json',
@@ -80,22 +80,19 @@ module.exports = {
         test() {
             const me = this;
             me.dataEngine().appPost({
-                server  : 'grid.shusiou.win',
+                url  : 'http://grid.shusiou.win:10000/_grid',
                 cmd     :'getGridMatrix',
                 channel : '_grid',
                 data    : {},
-                dataType: 'text',
+                dataType: 'json',
                 gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
             },
             function(result) {
-                console.log('---data-2-->');
-                console.log(result);
                 if (result.status === 'success') {
                     me.gridMatrix = result.result;
                 } else {
                     me.gridServer = null;
                 }
-                
                 //  me.gridServer = localStorage.getItem('easydockerFP');
             }, function(err) {
                 me.gridServer = false;

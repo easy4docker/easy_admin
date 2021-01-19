@@ -68,10 +68,9 @@ module.exports = {
  
             $.ajax({
                 type: 'POST',
-                url: '/_grid/',
+                url:  setting.url,
                 data: setting,
                 success: function(result) {
-                    console.log('===sss==1=');
                     me.$parent.triggerSpinner = false;
                     if (typeof  success === 'function') {
                         success(result);
