@@ -124,7 +124,7 @@
                 }
                 
                 CP.serial(_f, (data) => {
-                    callback(data);
+                    callback(true);
                 }, 3000)
             } 
         }
