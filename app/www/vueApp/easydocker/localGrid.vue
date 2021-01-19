@@ -54,6 +54,7 @@ module.exports = {
             me.gridServer = false;
             console.log(err);
          });
+      }
    }
 }
 </script>
