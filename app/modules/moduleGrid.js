@@ -64,7 +64,7 @@
 
         me.post = () => {
             if (typeof me[req.body.cmd] === 'function') {
-                me[req.body.cmd](req.body.setting, (result) => {
+                me[req.body.cmd](req.body, (result) => {
                     res.send(result);
                 });
             } else {
@@ -73,7 +73,7 @@
         };
 
         me.sampleCode = (dt, cbk) => {
-            cbk({r: 'sampleCode'})
+            cbk({"AA" :"sampleCode"})
         }
     }
     module.exports = obj;

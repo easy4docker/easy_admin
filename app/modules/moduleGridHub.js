@@ -30,9 +30,8 @@
                     var setting = req.body;
 
                     const request = require('request');
-                    let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
-                    server = setting.server;
-
+                    let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
+    
 
                 //    const dataGridMatrix = me.dataGridMatrix();
 
@@ -50,18 +49,19 @@
                        // return true;
      
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
-                        request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){      
+                        request.post({url: server + '/' + channel + '/', form: setting}, function(err,httpResponse,body){      
                             if (setting.type === 'json') {
                                // callback('result0');
 
                                 var result = {};
                                 try { result = JSON.parse(body);} catch (e) {}   
                                // callback(result);
-                                res.send({sa: result});
+                               res.send(result);
+                              //  res.send({url: server + ':10000/' + channel + '/', ss: setting, BD : body});
                                 return true;
                              //   callback(me.dataGridMatrix());
                             } else {
-                                res.send({tt: body});
+                                res.send(body);
                                 return true;
                                // callback('result1');
                              //   callback(me.dataGridMatrix());
