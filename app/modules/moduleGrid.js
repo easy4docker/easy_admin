@@ -147,6 +147,55 @@
         }
 
         /* --- POST function ---->> */
+        me.addGrid = () => {
+            var data = req.body;
+            const _f = {};
+
+            let gridServer = me.dataGrids();
+            if (data.gridServer) {
+                gridServer[data.gridServer] = data.tag;
+            }
+
+            _f['saveGrids'] = (cbk) => {
+                fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
+                    cbk(true);
+                });
+            };
+
+            _f['gridTokenFn'] = (cbk) => {
+                fs.writeFile(gridTokenFn, me.makeid(32), (err) => {
+                    cbk(true);
+                });
+            };
+            _f['addToCron'] = (cbk) => {
+                let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
+                let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
+              
+                shell_str += "\n" + 'echo "*/2 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
+                    data.gridServer + ' ' + data.tag + ')" >> ';
+
+                if (_env.env === 'local') {
+                    shell_str += _env.data_folder + '/log/ctab';
+                } else {
+                    shell_str += '/etc/crontab';
+                }
+                me.setCron('gridSync', shell_str, (err) => {
+                    cbk(true);
+                });
+            }
+            CP.serial(_f, (data) => {
+                me.getGrids();
+            }, 3000)
+        }
+
+        me.syncAppCode = () => {
+            const shell_str = 'cd ' + git_root + ' && git pull';
+            exec(shell_str, {maxBuffer: 1024 * 2048},
+                function(error, stdout, stderr) {
+                    res.send({status : 'success'})
+            });
+        }
+        
         me.sampleCode = (cbk) => {
             cbk({ij:'sampleCode3'})
         }
