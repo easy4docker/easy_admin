@@ -38,8 +38,12 @@
                     </div>
                     <div class="col-6 p-30 m-0 text-right">
                         <a class="btn btn-sm btn-secondary m-1 border-danger shadow-sm" 
-                            href="JavaScript:void(0)" v-on:click="root.test()">
+                            href="JavaScript:void(0)" v-on:click="clickMenu('localGrid')">
                             * test code
+                        </a>
+                        <a class="btn btn-sm btn-secondary m-1 border-danger shadow-sm" 
+                            href="JavaScript:void(0)" v-on:click="root.test()">
+                            * sample code
                         </a>
                         <a class="btn btn-sm btn-warning m-1 border-danger shadow-sm" 
                             href="JavaScript:void(0)" v-on:click="syncAppCode()">
