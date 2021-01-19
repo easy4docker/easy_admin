@@ -85,7 +85,7 @@
             try {
                 grids = pkg.require(gridStatusFn);
             } catch (e) {}
-            return 'grids';
+            return grids;
         }
     }
     module.exports = obj;
