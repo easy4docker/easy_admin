@@ -49,7 +49,7 @@ module.exports = {
                 success: function(result) {
                     me.$parent.triggerSpinner = false;
                     if (typeof  success === 'function') {
-                        success(JSON.parse(result));
+                        success(result);
                     }
                 },
                 error: function (jqXHR) { 
@@ -78,8 +78,7 @@ module.exports = {
                     }
                 },
                 error: function (jqXHR) { 
-                    me.$parent.triggerSpinner = false;
-                    console.log('===sss==2=');
+                    me.$parent.triggerSpinner = false; 
                     if (typeof error === 'function') {
                         error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
                     }
