@@ -23,10 +23,12 @@
         };
 
         me.post = () => {
+            /*
             var setting = req.body;
             var channel = (!setting.channel) ? '_grid' : setting.channel;
             let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
            // res.send({url: "niu"});
+           */
             res.send({url: server + '/' + channel + '/', form: setting});
              return true;
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
@@ -38,9 +40,9 @@
 
                     const request = require('request');
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
-
-                    res.send({url: "niu"});
-                   // res.send({url: server + '/' + channel + '/', form: setting});
+                    var channel = (!setting.channel) ? '_grid' : setting.channel;
+                    // res.send({url: "niu"});
+                    res.send({url: server + '/' + channel + '/', form: setting});
                     return true;
                     var dataGridMatrix = me.dataGridMatrix();
 
