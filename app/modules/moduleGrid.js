@@ -158,7 +158,7 @@
             var data = req.body;
             const _f = {};
             let gridServer = me.dataGrids();
-            _f['demoveGrid'] = (cbk) => {
+            _f['removeGrid'] = (cbk) => {
                 if (data.gridServer) {
                     delete gridServer[data.gridServer];
                 }
