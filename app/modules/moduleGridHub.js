@@ -23,49 +23,25 @@
         };
 
         me.post = () => {
-            /*
-            var setting = req.body;
-            var channel = (!setting.channel) ? '_grid' : setting.channel;
-            let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
-           // res.send({url: "niu"});
-          
-            res.send({url: server + '/' + channel + '/', form: setting});
-             return true;
-              */
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 var setting = req.body;
                // if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
                if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
                     res.send({status:'failuer', message: 'Unauthorized gridToken!'});
                } else {
-                    var setting = req.body;
-
                     const request = require('request');
-                    let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
-                  //  var channel = (!setting.channel) ? '_grid' : setting.channel;
-                    // res.send({url: "niu"});
-                   // res.send({url: server + '/' + channel + '/', form: setting});
-                  //  return true;
-                    var dataGridMatrix = me.dataGridMatrix();
 
-                    /*
-                    if (!dataGridMatrix[server] && server != 'grid.shusiou.win') {
-                        res.send({status:'failuer', message: 'gridHub refused unauthorized server ' + server + '!'});
-                    } else if (setting.cmd === 'gridHub') {
-                        res.send({status:'failuer', message: 'gridHub can not hub route itself!'});
-                    } else {
-                    */
-                        server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
-                        var channel = (!setting.channel) ? '_grid' : setting.channel;
-                        request.post({url: server + '/' + channel + '/', form: setting}, function(err,httpResponse,body){      
-                            if (setting.type === 'json') {
-                               // var result = {};
-                               // try { result = JSON.parse(body);} catch (e) {}   
-                               res.send(body);
-                            } else {
-                                res.send(body);
-                            } 
-                        });
+                    let server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
+                    var channel = (!setting.channel) ? '_grid' : setting.channel;
+                    request.post({url: server + '/' + channel + '/', form: setting}, function(err,httpResponse,body){      
+                        if (setting.type === 'json') {
+                            // var result = {};
+                            // try { result = JSON.parse(body);} catch (e) {}   
+                            res.send(body);
+                        } else {
+                            res.send(body);
+                        } 
+                    });
                       
                    // }
                }
