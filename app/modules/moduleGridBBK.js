@@ -18,25 +18,38 @@
         } catch (e) {}
         
         me.get = () => {
-            // res.send('===uuu===');
-            // return true;
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             if (mp) {
                 switch (mp[2])  {
                     case 'updateStatus':
-                        
                         // for cron access 
-                        
                         me.updateStatus(req.query, (result) => {
                             res.send(result);
                         });
                         break;
+
                     case 'renewToken':
                         me.renewToken((result) => {
                             res.send(result);
                         });
-                        break;   
+                        break;
+
+                    case 'testToken':
+                        me.testToken((result) => {
+                            res.send(result);
+                        });
+                        break;
+
+                    case 'getGridMatrix':
+                        me.getGridMatrix();
+                        break;
+
+                    case 'gridHub':
+                        me.gridHub(req.query, (result) => {
+                            res.send(result);
+                        });
+                        break;
                     default:
                         res.send('wrong path ' + p);
                         break;        
@@ -48,15 +61,78 @@
         };
 
         me.post = () => {
+            res.send('===rrr===');
             if (typeof me[req.body.cmd] === 'function') {
-                me[req.body.cmd]((result) => {
+                me[req.body.cmd](req.body.setting, (result) => {
                     res.send(result);
                 });
             } else {
                 res.send({status:'failure', message : '404 wrong cmd ' + req.body.cmd + ' !'});
             }
         };
-        /* --- GET function ---->> */
+        me.sampleCode = (dt, cbk) => {
+            cbk('sampleCode')
+        }
+        /*
+		me.postbk = (cbk) => {
+            const token = (req.query.gridToken) ? req.query.gridToken : req.body.gridToken;
+            const result = req.body.setting;
+            res.send(result );
+			// res.send('---req.query.gridToken--->' + token + '--' + req.body.cmd);
+        };
+        
+        me.gridHub = (setting, callback) => {
+ 
+            fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
+                if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
+                    callback({status:'failuer', message: 'Unauthorized gridToken!'});
+                } else {
+                    const request = require('request');
+                    let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
+                    server = setting.server;
+
+     
+                    const dataGridMatrix = me.dataGridMatrix();
+
+                    res.send(dataGridMatrix);
+                    return true;
+
+
+                    if (!dataGridMatrix[server] && server != 'grid.shusiou.win') {
+                        callback({status:'failuer', message: 'gridHub refused unauthorized server ' + server + '!'});
+                    } else if (setting.cmd === 'gridHub') {
+                        callback({status:'failuer', message: 'gridHub can not hub route itself!'});
+                    } else {
+                        server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
+                        var channel = (!setting.channel) ? '_grid' : setting.channel;
+                        request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){      
+                            if (setting.type === 'json') {
+                                var result = {};
+                                try { result = JSON.parse(body);} catch (e) {}   
+                                callback(result);
+                             //   callback(me.dataGridMatrix());
+                            } else {
+                                callback(result);
+                             //   callback(me.dataGridMatrix());
+                            } 
+                        });
+                    }
+                }
+            });
+        }
+
+        me.getGridMatrix = () => {
+            res.send({status: 'success', result: me.dataGridMatrix()});
+        }
+
+        me.dataGridMatrix = () => {
+            let grids = {};
+            try {
+                grids = pkg.require(gridStatusFn);
+            } catch (e) {}
+            return grids;
+        }
+
         me.renewToken = (callback) => {
             const oldToken = req.query.old;
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
@@ -102,22 +178,9 @@
                 }, 3000)
             } 
         }
-        /* --- DATA function ---->> */
-        me.makeid = (length) => {
-            var result           = '';
-            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            var charactersLength = characters.length;
-            for ( var i = 0; i < length; i++ ) {
-               result += characters.charAt(Math.floor(Math.random() * charactersLength));
-            }
-            return result;
-        }
-        me.dataGridMatrix = () => {
-            let grids = {};
-            try {
-                grids = pkg.require(gridStatusFn);
-            } catch (e) {}
-            return grids;
+
+        me.getGrids = () => {
+            res.send({status: "success", result: me.dataGrids()});
         }
         me.dataGrids = () => {
             let grids = {};
@@ -126,38 +189,18 @@
             } catch (e) {}
             return grids;
         }
-        me.setCron = (code, str, callback) => {
-            fs.writeFile(data_dir + '/commCron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
-                callback({status:'success'});
-            });
-        }
-        /* --- POST function ---->> */
-        me.removeGrid = (callback) => {
-            var data = req.body;
-            const _f = {};
-            let gridServer = me.dataGrids();
-            _f['removeGrid'] = (cbk) => {
-                if (data.gridServer) {
-                    delete gridServer[data.gridServer];
-                }
-                fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
-                    cbk(true);
-                });
-            };
-            _f['removeCron'] = (cbk) => {
-                let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
-                let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
-                me.setCron('remove-grid', shell_str, (err) => {
-                    cbk(true);
-                });
-            }
-            
-            CP.serial(_f, (data) => {
-                me.getGrids(callback);
-            }, 3000)
-        }
 
-        me.addGrid = (callback) => {
+        me.makeid = (length) => {
+            var result           = '';
+            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+               result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+         }
+
+        me.addGrid = () => {
             var data = req.body;
             const _f = {};
 
@@ -194,34 +237,47 @@
                 });
             }
             CP.serial(_f, (data) => {
-                me.getGrids(callback);
+                me.getGrids();
             }, 3000)
+
         }
 
-        me.getGrids = (cbk) => {
-            cbk({status: "success", result: me.dataGrids()});
-        }
-
-        me.syncAppCode = (cbk) => {
+        me.syncAppCode = () => {
             const shell_str = 'cd ' + git_root + ' && git pull';
             exec(shell_str, {maxBuffer: 1024 * 2048},
                 function(error, stdout, stderr) {
-                    cbk({status : 'success'})
+                    res.send({status : 'success'})
             });
         }
-
-        me.sampleCode = (cbk) => {
-            cbk({ij:'sampleCode3'})
+        me.removeGrid = () => {
+            var data = req.body;
+            const _f = {};
+            let gridServer = me.dataGrids();
+            _f['demoveGrid'] = (cbk) => {
+                if (data.gridServer) {
+                    delete gridServer[data.gridServer];
+                }
+                fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
+                    cbk(true);
+                });
+            };
+            _f['removeCron'] = (cbk) => {
+                let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
+                let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
+                me.setCron('remove-grid', shell_str, (err) => {
+                    cbk(true);
+                });
+            }
+            
+            CP.serial(_f, (data) => {
+                me.getGrids();
+            }, 3000)
         }
 
-        me.getGridMatrix = (cbk) => {
-            cbk({status: 'success', result: me.dataGridMatrix()});
-        }
-
-
-        me.gridAccess = (cbk) => {
-            const data = req.body.data;
-            cbk({gridServer : data.gridServer, token : pkg.md5(data.password)});
+        me.setCron = (code, str, callback) => {
+            fs.writeFile(data_dir + '/commCron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
+                callback({status:'success'});
+            });
         }
     }
     module.exports = obj;
