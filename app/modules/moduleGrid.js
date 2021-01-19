@@ -36,9 +36,13 @@
                         });
                         break;
                     case 'testToken':
+                        res.send('===uuu1===');
+                        break;
                     case 'getGridMatrix':
+                        res.send('===uuu2===');
+                        break;
                     case 'gridHub':
-                        res.send('===uuu===');
+                        res.send('===uuu3===');
                         break;
                     /*    
                     case 'testToken':
