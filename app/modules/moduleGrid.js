@@ -18,8 +18,11 @@
         } catch (e) {}
         
         me.get = () => {
+            
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
+                res.send(mp)
+                return true;
             if (mp) {
                 switch (mp[2])  {
                     case 'updateStatus':
