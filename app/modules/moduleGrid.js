@@ -73,7 +73,7 @@
         };
 
         me.sampleCode = (dt, cbk) => {
-            cbk('sampleCode3')
+            cbk({res : 'sampleCode3'})
         }
     }
     module.exports = obj;
