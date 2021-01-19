@@ -33,8 +33,7 @@
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : setting.server;
                     server = setting.server;
 
-                    res.send('5555');
-                    return true;
+
                 //    const dataGridMatrix = me.dataGridMatrix();
 
 
@@ -53,13 +52,18 @@
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
                         request.post({url: server + ':10000/' + channel + '/', form: setting}, function(err,httpResponse,body){      
                             if (setting.type === 'json') {
-                                callback('result0');
+                               // callback('result0');
+
                                 var result = {};
                                 try { result = JSON.parse(body);} catch (e) {}   
-                                callback(result);
+                               // callback(result);
+                                res.send({sa: result});
+                                return true;
                              //   callback(me.dataGridMatrix());
                             } else {
-                                callback('result1');
+                                res.send({tt: body});
+                                return true;
+                               // callback('result1');
                              //   callback(me.dataGridMatrix());
                             } 
                         });
