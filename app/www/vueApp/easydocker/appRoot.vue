@@ -43,7 +43,7 @@ module.exports = {
         var me = this;
 
         setTimeout(function() {
-        //    me.getGridMatrix();
+            me.getGridMatrix();
             me.gridServer = {
         //        server : localStorage.getItem('easygockerGridServer'),
         //        token: localStorage.getItem('easygockerGridToken')
