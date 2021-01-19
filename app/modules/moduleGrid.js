@@ -105,8 +105,6 @@
                 const _f = {};
                 _f['newToken'] = (cbk) => {
                     const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.token;
-                    cbk(cmdStr);
-                    return true;
                     exec(cmdStr, {maxBuffer: 1024 * 2048},
                         function(error, stdout, stderr) {
                             var v = stdout.replace(/\s+/, '');
@@ -119,8 +117,6 @@
                     });
                 }
                 _f['saveGridStatus'] = (cbk) => {
-                    cbk('--cmdStr-->');
-                    return true;
                     grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag};
                     fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
                         cbk(true);
