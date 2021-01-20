@@ -7,7 +7,7 @@
         </span>
         <hr/>
         <button type="button" class="btn btn-danger" v-on:click="removeGrid()" v-if="isShowRemoveGrid()">Remove Grid</button>
-        <button type="button" class="btn btn-sm btn-info m-1 border-danger shadow-sm" v-if="!isShowRemoveGrid()"
+        <button type="button" class="btn btn-sm btn-info m-1 border-danger shadow-sm" v-if="isShowRemoveGrid()"
             v-on:click="addGridMonitor()">
             Add Monitor
         </button>
