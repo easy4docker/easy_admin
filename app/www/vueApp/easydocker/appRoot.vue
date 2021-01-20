@@ -4,6 +4,12 @@
             <div class="col-1 p-0"></div>
             <div class="col-10 p-0 card text-center shadow border rounded">
                 <app-header></app-header>
+            </div>
+            <div class="col-1 p-0"></div>
+        </div>
+        <div class="row">
+            <div class="col-1 p-0"></div>
+            <div class="col-10 p-0 card text-center shadow border rounded">
                 <app-body ref="appBody"></app-body>
                 <auth ref="auth"></auth>
             </div>
