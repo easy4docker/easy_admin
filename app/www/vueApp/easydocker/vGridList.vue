@@ -5,6 +5,8 @@
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3"><input type="checkbox"><span class="pl-2">{{ k }}</span></div>
         </span>
+        <hr/>
+        <button type="button" class="btn btn-danger" v-on:click="removeGrid()" v-if="isLocalGrid()">Remove Grid</button>
     </div>
 </template>
  
@@ -23,7 +25,15 @@ module.exports = {
     watch: {
     },
     methods : {
-
+      isLocalGrid() {
+         return (!localStorage.getItem('easydockerSVR') || !localStorage.getItem('easydockerTOKEN')) ? false : true
+      },
+      removeGrid() {
+         const me = this;
+         localStorage.removeItem('easydockerSVR');
+         localStorage.removeItem('easydockerTOKEN');
+         window.location.reload();
+      }
     },
     components: VUEApp.loadComponents({
         LOAD    : {
