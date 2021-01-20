@@ -4,7 +4,10 @@
         <hr/>
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3">
-                <input type="checkbox"><span class="pl-2">{{ k }} ({{Math.ceil((v.MemAvailable / v.MemTotal)  * 100)}}% Available) </span>
+                <input type="checkbox"><span class="pl-2">{{ k }} 
+                <div class="text-right text-info">
+                    ({{Math.ceil((v.MemAvailable / v.MemTotal)  * 100)}}% Available)</span> 
+                </div>
             </div>
         </span>
         <hr v-if="root.isLocalhost() && Object.keys(root.gridMatrix).length"/>
