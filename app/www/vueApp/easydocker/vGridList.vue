@@ -27,7 +27,7 @@ module.exports = {
     methods : {
       isShowRemoveGrid() {
         const me = this;
-        return (!me.root.isLocalhoust || !localStorage.getItem('easydockerSVR') || !localStorage.getItem('easydockerTOKEN')) ? false : true
+        return (!me.root.isLocalhost() || !localStorage.getItem('easydockerSVR') || !localStorage.getItem('easydockerTOKEN')) ? false : true
       },
       removeGrid() {
          const me = this;
