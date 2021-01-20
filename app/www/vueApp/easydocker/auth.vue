@@ -133,11 +133,17 @@ module.exports = {
       submit() {
          this.signIn();
       },
+      gridToken(code) {
+         let hostname = window.localtion.hostname,
+             token = code;
+         alert(hostname);
+      },
       signIn() {
          var me = this;
          me.root.dataEngine().ajaxPost({cmd: 'auth', data : {code : 'signin', password: me.formSignin.password }}, function(result) {
                if (result.status === 'success') {
-                  alert('on');
+                  me.gridToken(me.formSignin.password)
+                  
                   localStorage.setItem('easydockerFP', result.token);
                   me.checkIsTokenLogin();
                } else {
