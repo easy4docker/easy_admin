@@ -24,8 +24,8 @@ module.exports = {
       return {
          root :  this.$parent.root,
          form : {
-            gridServer : '',
-            password : ''
+            gridServer : localStorage.setItem('easydockerSVR', result.gridServer.replace(/\_/g, '.')),
+            password : localStorage.setItem('easydockerTOKEN', result.token)
          },
          error : ''
       }
