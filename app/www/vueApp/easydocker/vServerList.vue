@@ -330,7 +330,7 @@ module.exports = {
             'selectBranch'   : '/vueApp/easydocker/selectBranch.vue',
             'dockerAdupter'  : '/vueApp/easydocker/dockerAdupter.vue',
             'iframeObj'      : '/vueApp/easydocker/_iframe.vue',
-         //   'gridList'      : '/vueApp/easydocker/vGridList.vue'
+            'gridList'      : '/vueApp/easydocker/vGridList.vue'
         }, 
         TPL :{}
     })
