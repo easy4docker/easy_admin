@@ -10,21 +10,11 @@ module.exports = {
     data: function() {
         let me = this;
         return {
-            list : [],
-            serverTypeFilter : [],
-            root :  this.$parent.root,
-            currentServer : '',
-            gridMatrix: {}
+            root :  this.$parent.root
         }
     },
     mounted() {
         var me = this;
-        me.serverTypeFilter = Object.keys(me.serverTypes);
-        setTimeout(
-            function() {
-                me.getVServerList();
-            }, 50
-        );
     },
     watch: {
         serverTypeFilter: function(val) {
