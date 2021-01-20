@@ -118,25 +118,14 @@
             }
             return result;
         }
-        /*
         me.dataGridMatrix = () => {
             let grids = {};
             try {
                 grids = pkg.require(gridStatusFn);
             } catch (e) {}
             return grids;
-        }*/
-        me.dataGridMatrix = () => {
-            let grids = {}, resp = {};
-            try {
-                grids = pkg.require(gridStatusFn);
-            } catch (e) {}
-
-            for (let key in grids) {
-                resp[key] = new Date().getTime();
-            }
-            return resp;
         }
+
         me.dataGrids = () => {
             let grids = {};
             try {
@@ -233,10 +222,23 @@
         }
 
         me.getGridMatrix = (cbk) => {
-            cbk({status: 'success', result: me.dataGridMatrix()});
+            let grids = {}, resp = {};
+            try {
+                grids = pkg.require(gridStatusFn);
+            } catch (e) {}
+            const _f = {};
+            for (let key in grids) {
+                _f[key] = ((key)=> {
+                    return (cbk) => {
+                        resp[key] = new Date().getTime();
+                        cbk(true);
+                    }
+                })(key)
+            }
+            CP.serial(_f, (data) => {
+                cbk({status: 'success', result: resp});
+            }, 3000)
         }
-
-
         me.gridAccess = (cbk) => {
             const data = req.body.data;
             cbk({gridServer : data.gridServer, token : pkg.md5(data.password)});
