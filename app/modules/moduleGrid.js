@@ -231,7 +231,11 @@
                 _f[key] = ((key)=> {
                     return (cbk) => {
                         resp[key] = new Date().getTime();
-                        cbk(true);
+                        me.serverMem(
+                            (data) => {
+                            resp[key] = data;
+                            cbk(true);
+                        });
                     }
                 })(key)
             }
