@@ -20,6 +20,7 @@
                 <div class="row">
                     <div class="col-2 p-3 m-0 text-left alert-secondary border rounded grids-list-section">
                         <grid-list></grid-list>
+                        <hr/>
                         <span v-for="(v, k) in root.gridMatrix">
                             <div class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)" v-on:click="checkFilter(k)"><span class="pl-2">{{ k }}</span></div>
                         </span>
