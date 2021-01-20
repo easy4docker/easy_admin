@@ -27,6 +27,11 @@ module.exports = {
     },
     mounted() {
         var me = this;
+        setTimeout(
+            function() {
+                me.getVServerList();
+            }, 50
+        );
     },
     methods : {
         isFilterChecked(k) {
