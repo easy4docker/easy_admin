@@ -118,12 +118,24 @@
             }
             return result;
         }
+        /*
         me.dataGridMatrix = () => {
             let grids = {};
             try {
                 grids = pkg.require(gridStatusFn);
             } catch (e) {}
             return grids;
+        }*/
+        me.dataGridMatrix = () => {
+            let grids = {}, resp = {};
+            try {
+                grids = pkg.require(gridStatusFn);
+            } catch (e) {}
+
+            for (let key in grids) {
+                resp[key] = new Date().getTime();
+            }
+            return resp;
         }
         me.dataGrids = () => {
             let grids = {};
