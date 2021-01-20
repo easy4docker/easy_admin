@@ -1,9 +1,9 @@
 <template>
-    <span>
+    <div class="text-left  alert-secondary border rounded grids-list-section">
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3"><input type="checkbox"><span class="pl-2">{{ k }}</span></div>
         </span>
-    </span>
+    </div>
 </template>
  
 <script>
