@@ -10,7 +10,8 @@
                   <label>Password:</label>
                   <input type="password" class="form-control" v-model="form.password"  placeholder="">
                </div>
-               <button type="button" class="btn btn-info" v-on:click="accessGrid()">Access the Grid</button>
+               <button type="button" class="btn btn-info" v-on:click="accessGrid()" v-if="!isGrid()">Access the Grid</button>
+               <button type="button" class="btn btn-danger" v-on:click="aremoveGrid()" v-if="isGrid()">Remove the Grid</button>
                <div class="local-grid-error">{{error}}</div>
          </form>
       </div>
@@ -34,6 +35,9 @@ module.exports = {
         var me = this;
    },
    methods : {
+      isGrid() {
+         return (!localStorage.removeItem('easydockerSVR') || !localStorage.removeItem('easydockerTOKEN')) ? true : false
+      },
       accessGrid() {
          const me = this;
          me.root.dataEngine().appPost({
@@ -52,6 +56,12 @@ module.exports = {
             me.gridServer = false;
             console.log(err);
          });
+      },
+      removeGrid() {
+         const me = this;
+         localStorage.removeItem('easydockerSVR');
+         localStorage.removeItem('easydockerTOKEN');
+         window.location.reload();
       }
    }
 }
