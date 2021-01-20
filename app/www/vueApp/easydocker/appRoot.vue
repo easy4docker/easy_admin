@@ -57,7 +57,7 @@ module.exports = {
                 token = localStorage.getItem('easydockerTOKEN');
              
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
-            
+
             me.dataEngine().gridPost({
                     server  : svr,
                     cmd     :'getGridMatrix',
@@ -71,7 +71,6 @@ module.exports = {
                     } else {
                         me.gridServer = null;
                     }
-                  //  me.gridServer = localStorage.getItem('easydockerFP');
                 }, function(err) {
                     me.gridServer = null;
                     console.log(err);
