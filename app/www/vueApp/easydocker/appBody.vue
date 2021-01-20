@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid m-0 mt-2 mb-3" >
         <div class="row">
-            <div class="col-2 p-0">
+            <div class="col-2 p-0">--
                 <span v-for="(v, k) in root.gridMatrix">
                     <div class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)" v-on:click="checkFilter(k)"><span class="pl-2">{{ k }}</span></div>
                 </span>
