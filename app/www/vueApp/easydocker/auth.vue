@@ -159,7 +159,6 @@ module.exports = {
                   localStorage.setItem('easydockerFP', result.token);
                   me.accessGrid(me.formSignin.password);
                   me.checkIsTokenLogin();
-                  console.log()
                } else {
                   alert('Authentication failure.');
                }
