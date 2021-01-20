@@ -11,7 +11,7 @@
                   <input type="password" class="form-control" v-model="form.password"  placeholder="">
                </div>
                <button type="button" class="btn btn-info" v-on:click="accessGrid()">Access the Grid</button>
-               =={{error}}==
+               <div class="local-grid-error">{{error}}</div>
          </form>
       </div>
    </div>
@@ -59,5 +59,8 @@ module.exports = {
 <style>
 .local-grid-section {
     min-height: 20rem
+}
+.local-grid-error {
+   color : #ff0000
 }
 </style>

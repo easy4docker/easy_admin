@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                --{{root.gridMatrix}}--
+                <div class="local-grid-error">{{root.gridMatrix}}</div>
             </div>
         </form>
     </div>
@@ -162,5 +162,8 @@ input.dockerSetting[readonly] {
 }
 .grid-list {
     min-height: 20rem
+}
+.local-grid-error {
+   color : #ff0000
 }
 </style>
