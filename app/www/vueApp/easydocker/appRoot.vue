@@ -44,10 +44,6 @@ module.exports = {
 
         setTimeout(function() {
             me.getGridMatrix();
-            me.gridServer = {
-        //        server : localStorage.getItem('easygockerGridServer'),
-        //        token: localStorage.getItem('easygockerGridToken')
-            };
         },50);
     },
     methods :{
@@ -57,7 +53,9 @@ module.exports = {
                 token = localStorage.getItem('easydockerTOKEN');
              
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
-
+            if (!svr || !token) {
+                return true;
+            }
             me.dataEngine().gridPost({
                     server  : svr,
                     cmd     :'getGridMatrix',
