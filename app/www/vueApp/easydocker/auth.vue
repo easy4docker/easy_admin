@@ -87,8 +87,6 @@ module.exports = {
       var me = this;
       me.checkAuthExist();
       me.checkIsTokenLogin();
-                        console.log('---->');
-                  console.log(localStorage.getItem('easydockerTOKEN'));
    },
    methods : {
       checkIsTokenLogin() {
@@ -178,8 +176,6 @@ module.exports = {
          me.accessGrid(null) 
          me.checkAuthExist();
          me.checkIsTokenLogin();
-         console.log('---->');
-         console.log(localStorage.getItem('easydockerTOKEN'));
       }
    }
 }
