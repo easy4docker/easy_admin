@@ -58,7 +58,8 @@ module.exports = {
             localStorage.setItem('easydockerSVR', result.gridServer.replace(/\./g, '_'));
             localStorage.setItem('easydockerTOKEN', result.token);
             me.parent.close();
-            window.location.reload();
+            me.root.$forceUpdate();
+            // window.location.reload();
          }, function(err) {
             me.gridServer = false;
             console.log(err);
