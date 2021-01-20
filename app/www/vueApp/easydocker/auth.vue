@@ -137,6 +137,7 @@ module.exports = {
          var me = this;
          me.root.dataEngine().ajaxPost({cmd: 'auth', data : {code : 'signin', password: me.formSignin.password }}, function(result) {
                if (result.status === 'success') {
+                  alert('on');
                   localStorage.setItem('easydockerFP', result.token);
                   me.checkIsTokenLogin();
                } else {
@@ -146,6 +147,7 @@ module.exports = {
       },
       signOff() {
          var me = this;
+         alert('off');
          localStorage.removeItem('easydockerFP');
          me.checkAuthExist();
          me.checkIsTokenLogin();
