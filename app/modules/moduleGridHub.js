@@ -48,11 +48,15 @@
         };
 
         me.dataGridMatrix = () => {
-            let grids = {};
+            let grids = {}, resp = {};
             try {
                 grids = pkg.require(gridStatusFn);
             } catch (e) {}
-            return grids;
+
+            for ((key, v) in grids) {
+                resp[key] = new Date().getTime();
+            }
+            return resp;
         }
 
 
