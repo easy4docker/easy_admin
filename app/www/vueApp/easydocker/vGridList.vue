@@ -1,6 +1,8 @@
 <template>
-    <span v-for="(v, k) in root.gridMatrix">===
-        <div class="pr-3"><input type="checkbox"><span class="pl-2">{{ k }}</span></div>
+    <span>===
+        <span v-for="(v, k) in root.gridMatrix">
+            <div class="pr-3"><input type="checkbox"><span class="pl-2">{{ k }}</span></div>
+        </span>
     </span>
 </template>
  
