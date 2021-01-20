@@ -7,6 +7,10 @@
         </span>
         <hr/>
         <button type="button" class="btn btn-danger" v-on:click="removeGrid()" v-if="isShowRemoveGrid()">Remove Grid</button>
+        <button type="button" class="btn btn-sm btn-info m-1 border-danger shadow-sm" v-if="!isShowRemoveGrid()"
+            v-on:click="addGridMonitor()">
+            Add Monitor
+        </button>
     </div>
 </template>
  
@@ -34,13 +38,25 @@ module.exports = {
          localStorage.removeItem('easydockerSVR');
          localStorage.removeItem('easydockerTOKEN');
          window.location.reload();
+      },
+      addGridMonitor() {
+        const me = this;
+        me.root.popUp(me).show({
+            insideModule: 'addGridMonitor',
+            data : {
+
+            },
+            noDefaultCancel : true
+        });
       }
     },
     components: VUEApp.loadComponents({
         LOAD    : {
-
+            'addGridMonitor' : '/vueApp/easydocker/popUpModals/addGridMonitor.vue'
         }, 
-        TPL :{}
+        TPL :{
+
+        }
     })
 }
 </script>

@@ -32,8 +32,10 @@ module.exports = {
         },
         loadModule() {
            let me = this;
-           let list = ['switchBranch', 'confirmDelete', 'iframeObj'];
-           return (list.indexOf(me.cfg.insideModule)  === -1) ? '' : me.cfg.insideModule;
+           return me.cfg.insideModule;
+           /*
+           let list = ['switchBranch', 'confirmDelete', 'iframeObj', 'addGridMonitor'];
+           return (list.indexOf(me.cfg.insideModule)  === -1) ? '' : me.cfg.insideModule;*/
         },
         close() {
             var me = this;
@@ -49,7 +51,7 @@ module.exports = {
             'iframeObj' : '/vueApp/easydocker/popUpModals/iframeObj.vue'
         }, 
         TPL :{
-            
+            'addGridMonitor' : '/vueApp/easydocker/popUpModals/addGridMonitor.vue'
         }
     })
 }
