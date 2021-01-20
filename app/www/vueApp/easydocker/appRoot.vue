@@ -75,6 +75,7 @@ module.exports = {
                     } else {
                         me.gridServer = null;
                     }
+                    me.$forceUpdate();
                 }, function(err) {
                     me.gridServer = null;
                     console.log(err);
