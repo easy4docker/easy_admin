@@ -3,7 +3,7 @@
         <div class="text-center">Grid Servers</div>
         <hr/>
         <span v-for="(v, k) in root.gridMatrix">
-            <div class="pr-3"><input type="checkbox"><span class="pl-2">{{ k }} ({{v.MemAvailable}}) </span></div>
+            <div class="pr-3"><input type="checkbox"><span class="pl-2">{{ k }} ({{Math.ceil(v.MemAvailable * 0.00) }}) </span></div>
         </span>
         <hr v-if="root.isLocalhost() && Object.keys(root.gridMatrix).length"/>
         <button type="button" class="btn btn-sm btn-warning" v-on:click="removeGrid()" v-if="root.isLocalhost() && isShowRemoveGrid()">
