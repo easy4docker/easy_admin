@@ -21,7 +21,7 @@
                 <div class="row" v-if="root.isSignin()">
                     <div class="col-6 p-0 m-0 text-left">
                         <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
-                            :disabled = "isDisabled('gridSetup')"
+                            :disabled = "isDisabled('gridSetup')" v-if="isLocalhost()"
                             v-on:click="clickMenu('gridSetup')">
                             <i class="fa fa-cogs" aria-hidden="true"></i> Grid Setup
                         </button>
