@@ -1,8 +1,9 @@
 <template>
     <div class="container-fluid m-0 mt-2 mb-3" >
         <div class="row">
-            <div class="col-1 p-0"></div>
-            <div class="col-11 p-0 card text-center shadow border rounded">
+            <div class="col-2 p-0">
+            </div>
+            <div class="col-10 p-0 card text-center shadow border rounded">
                 <span v-if="root.isSignin()">
                     <v-form-server v-if="root.matrix('form')"></v-form-server>
                     <v-server-list v-if="root.matrix('list')"></v-server-list>
