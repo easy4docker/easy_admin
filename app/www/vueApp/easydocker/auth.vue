@@ -166,7 +166,7 @@ module.exports = {
                   me.accessGrid(me.formSignin.password);
                   me.checkIsTokenLogin();
                   console.log('---->');
-                  console.log(localStorage.removeItem('easydockerTOKEN'));
+                  console.log(localStorage.getItem('easydockerTOKEN'));
                } else {
                   alert('Authentication failure.');
                }
@@ -179,7 +179,7 @@ module.exports = {
          me.checkAuthExist();
          me.checkIsTokenLogin();
          console.log('---->');
-         console.log(localStorage.removeItem('easydockerTOKEN'));
+         console.log(localStorage.getItem('easydockerTOKEN'));
       }
    }
 }
