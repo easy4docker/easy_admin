@@ -1,11 +1,7 @@
 <template>
-    <div class="card m-1 text-left">
-        <div class="p-3 m-0 text-left alert-secondary border rounded grids-list-section">
-            <span v-for="(v, k) in root.gridMatrix">
-                <div class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)" v-on:click="checkFilter(k)"><span class="pl-2">{{ k }}</span></div>
-            </span>
-        </div>
-    </div>
+    <span v-for="(v, k) in root.gridMatrix">
+        <div class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)" v-on:click="checkFilter(k)"><span class="pl-2">{{ k }}</span></div>
+    </span>
 </template>
  
 <script>
