@@ -137,6 +137,9 @@ module.exports = {
          const me = this;
          let hostname = window.location.hostname,
              token = code;
+         if  (hostname === 'localhost') {
+            return true;
+         }
          if (code) {
             me.root.dataEngine().appPost({
                url  : '/_grid/',
