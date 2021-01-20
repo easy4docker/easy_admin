@@ -29,6 +29,10 @@ module.exports = {
         var me = this;
     },
     methods : {
+        isFilterChecked(k) {
+            var me = this;
+            return (me.serverTypeFilter.indexOf(k) !== -1);
+        }
     },
     components: VUEApp.loadComponents({
         LOAD    : {
