@@ -11,7 +11,7 @@
                   <input type="password" class="form-control" v-model="form.password"  placeholder="">
                </div>
                <button type="button" class="btn btn-info" v-on:click="accessGrid()" v-if="!isGrid()">Access the Grid</button>
-               <button type="button" class="btn btn-danger" v-on:click="aremoveGrid()" v-if="isGrid()">Remove the Grid</button>
+               <button type="button" class="btn btn-danger" v-on:click="removeGrid()" v-if="isGrid()">Remove the Grid</button>
                <div class="local-grid-error">{{error}}</div>
          </form>
       </div>
