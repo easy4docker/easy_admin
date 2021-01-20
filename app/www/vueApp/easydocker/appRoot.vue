@@ -53,8 +53,10 @@ module.exports = {
     methods :{
         getGridMatrix() {
             const me = this;
-            const svr = localStorage.getItem('easydockerSVR');
-            const token = localStorage.getItem('easydockerTOKEN');
+            let svr = localStorage.getItem('easydockerSVR'),
+                token = localStorage.getItem('easydockerTOKEN');
+             
+            svr = (!scr) ? '' :  svr.replace(/\_/g, '.');
             
             console.log({
                     server  : svr.replace(/\_/g, '.'),
