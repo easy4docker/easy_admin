@@ -75,7 +75,8 @@ module.exports = {
     },
     methods :{
         isLocalhost() {
-            retuen (window.location.hostname === 'localhost') ? true : false;
+            return true;
+        //    retuen (window.location.hostname === 'localhost') ? true : false;
         },
         isDisabled(v) {
             return (this.$parent.module === v);
