@@ -5,12 +5,13 @@
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3"><input type="checkbox"><span class="pl-2">{{ k }}</span></div>
         </span>
-        <hr/>
+        <hr v-if="root.isLocalhost()"/>
         <button type="button" class="btn btn-danger" v-on:click="removeGrid()" v-if="root.isLocalhost() && isShowRemoveGrid()">Remove Grid</button>
         <button type="button" class="btn btn-sm btn-info m-1 border-danger shadow-sm" v-if="root.isLocalhost() &&  !isShowRemoveGrid()"
             v-on:click="addGridMonitor()">
             Add Monitor
         </button>
+        <hr v-if="root.isLocalhost()"/>
     </div>
 </template>
  
@@ -52,7 +53,7 @@ module.exports = {
     },
     components: VUEApp.loadComponents({
         LOAD    : {
-            'addGridMonitor' : '/vueApp/easydocker/popUpModals/addGridMonitor.vue'
+        //    'addGridMonitor' : '/vueApp/easydocker/popUpModals/addGridMonitor.vue'
         }, 
         TPL :{
 
