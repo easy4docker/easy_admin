@@ -103,6 +103,9 @@ module.exports = {
                 console.log(err);
             });
         },
+        isLocalhost() {
+            return (window.location.hostname === 'localhost') ? true : false;
+        },
         isSignin() {
             return (!this.root.auth || !this.root.auth.isSignIn || !this.root.auth.isAuthExist) ? false : true
         },

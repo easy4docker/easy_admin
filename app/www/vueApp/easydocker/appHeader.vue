@@ -21,7 +21,7 @@
                 <div class="row" v-if="root.isSignin()">
                     <div class="col-6 p-0 m-0 text-left">
                         <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
-                            :disabled = "isDisabled('gridSetup')" v-if="isLocalhost()"
+                            :disabled = "isDisabled('gridSetup')"
                             v-on:click="clickMenu('gridSetup')">
                             <i class="fa fa-cogs" aria-hidden="true"></i> Grid Setup
                         </button>
@@ -37,7 +37,7 @@
                         </button>
                     </div>
                     <div class="col-6 p-30 m-0 text-right">
-                        <a class="btn btn-sm btn-info m-1 border-danger shadow-sm" v-if="isLocalhost()"
+                        <a class="btn btn-sm btn-info m-1 border-danger shadow-sm" v-if="root.isLocalhost()"
                             href="JavaScript:void(0)" v-on:click="clickMenu('localGrid')">
                             Grid Monitor
                         </a>
@@ -74,9 +74,6 @@ module.exports = {
         this.root.token = v;
     },
     methods :{
-        isLocalhost() {
-            return (window.location.hostname === 'localhost') ? true : false;
-        },
         isDisabled(v) {
             return (this.$parent.module === v);
         },
