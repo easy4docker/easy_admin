@@ -5,9 +5,9 @@
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3"><input type="checkbox"><span class="pl-2">{{ k }}</span></div>
         </span>
-        <hr v-if="root.isLocalhost()"/>
-        <button type="button" class="btn btn-danger" v-on:click="removeGrid()" v-if="root.isLocalhost() && isShowRemoveGrid()">Remove Grid</button>
-        <button type="button" class="btn btn-sm btn-info m-1 border-danger shadow-sm" v-if="root.isLocalhost() &&  !isShowRemoveGrid()"
+        <hr v-if="root.isLocalhost() && Object.keys(root.gridMatrix).length"/>
+        <button type="button" class="btn btn-sm btn-warning" v-on:click="removeGrid()" v-if="root.isLocalhost() && isShowRemoveGrid()">Remove Grid</button>
+        <button type="button" class="btn btn-sm btn-success" v-if="root.isLocalhost() &&  !isShowRemoveGrid()"
             v-on:click="addGridMonitor()">
             Add Monitor
         </button>
