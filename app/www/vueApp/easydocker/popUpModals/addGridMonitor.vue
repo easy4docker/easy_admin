@@ -3,7 +3,7 @@
       <div class="card-body text-left ">
          <form>
                 <div class="form-group pl-2">
-                  <label><b>Add Grid Monitor</b></label>
+                  <b>Add Grid Monitor</b>
                </div>
                <div class="form-group p-2">
                   <label>Grid Hub Server:</label>

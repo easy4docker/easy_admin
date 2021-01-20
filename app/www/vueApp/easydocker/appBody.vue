@@ -6,7 +6,6 @@
                     <v-form-server v-if="root.matrix('form')"></v-form-server>
                     <v-server-list v-if="root.matrix('list')"></v-server-list>
                     <v-form-grid v-if="root.matrix('gridSetup')"></v-form-grid>
-                    <local-grid v-if="root.matrix('localGrid')"></local-grid>
                 </span>
             </div>
         </div>   
@@ -26,9 +25,7 @@ module.exports = {
     methods : {
     },
     components: VUEApp.loadComponents({
-        LOAD    : {
-            'localGrid' : '/vueApp/easydocker/localGrid.vue'
-        }, 
+        LOAD    : {}, 
         TPL :{
             'vServerList' : '/vueApp/easydocker/vServerList.vue',
             'vFormServer' : '/vueApp/easydocker/vFormServer.vue',
