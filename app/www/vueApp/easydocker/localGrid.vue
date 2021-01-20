@@ -25,18 +25,19 @@ module.exports = {
       return {
          root :  this.$parent.root,
          form : {
-            gridServer : localStorage.getItem('easydockerSVR').replace(/\_/g, '.'),
-            password : localStorage.getItem('easydockerTOKEN')
+            gridServer : '',
+            password : ''
          },
          error : ''
       }
    },
    mounted() {
         var me = this;
+        me.form.gridServer = !(localStorage.getItem('easydockerSVR')) ? '' : localStorage.getItem('easydockerSVR').replace(/\_/g, '.');
    },
    methods : {
       isGrid() {
-         return (!localStorage.removeItem('easydockerSVR') || !localStorage.removeItem('easydockerTOKEN')) ? true : false
+         return (!localStorage.getItem('easydockerSVR') || !localStorage.getItem('easydockerTOKEN')) ? true : false
       },
       accessGrid() {
          const me = this;
