@@ -37,13 +37,13 @@
                         </button>
                     </div>
                     <div class="col-6 p-30 m-0 text-right">
-                        <a class="btn btn-sm btn-secondary m-1 border-danger shadow-sm" 
+                        <a class="btn btn-sm btn-info m-1 border-danger shadow-sm" 
                             href="JavaScript:void(0)" v-on:click="clickMenu('localGrid')">
-                            * test code
+                            Grid Monitor
                         </a>
                         <a class="btn btn-sm btn-secondary m-1 border-danger shadow-sm" 
                             href="JavaScript:void(0)" v-on:click="root.test()">
-                            * sample code
+                            * test code
                         </a>
                         <a class="btn btn-sm btn-warning m-1 border-danger shadow-sm" 
                             href="JavaScript:void(0)" v-on:click="syncAppCode()">
@@ -74,6 +74,9 @@ module.exports = {
         this.root.token = v;
     },
     methods :{
+        isLocalHouse() {
+            retuen (window.location.hostname === 'localhost') ? true : false;
+        },
         isDisabled(v) {
             return (this.$parent.module === v);
         },
