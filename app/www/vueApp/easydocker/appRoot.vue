@@ -56,21 +56,9 @@ module.exports = {
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
              
-            svr = (!scr) ? '' :  svr.replace(/\_/g, '.');
-            
-            console.log({
-                    server  : svr.replace(/\_/g, '.'),
-                    cmd     :'getGridMatrix',
-                    data    : {},
-                    dataType: 'json',
-                    gridToken   : token
-                });
-          //  return true;
-
-            // '49ba83ae33879460f8cbcd491ef1d1a5'
-            // 'grid.shusiou.win'
+            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
             me.dataEngine().gridPost({
-                    server  : svr.replace(/\_/g, '.'),
+                    server  : svr,
                     cmd     :'getGridMatrix',
                     data    : {},
                     dataType: 'json',
