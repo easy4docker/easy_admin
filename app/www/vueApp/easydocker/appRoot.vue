@@ -9,10 +9,7 @@
         </div>
         <div class="row">
             <div class="col-1 p-0"></div>
-            <div class="col-1 p-0">
-                <div class="card text-center shadow border rounded">test</div>
-            </div>
-            <div class="col-9 p-0 card text-center shadow border rounded">
+            <div class="col-10 p-0 card text-center shadow border rounded">
                 <app-body ref="appBody"></app-body>
                 <auth ref="auth"></auth>
             </div>
@@ -145,5 +142,5 @@ module.exports = {
 </script>
  
 <style>
-
+.grid-section { min-height : 32rem }
 </style>
