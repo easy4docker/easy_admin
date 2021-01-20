@@ -18,7 +18,7 @@
         } catch (e) {}
         
         me.get = () => {
-            res.send(req.query);
+            res.send({status:'failure', message : '500 invalid access !'});
             return true;
         };
 
