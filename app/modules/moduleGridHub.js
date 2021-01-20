@@ -18,7 +18,6 @@
         } catch (e) {}
         
         me.get = () => {
-            res.send(me.dataGridMatrix());
             res.send({status:'failure', message : '500 invalid access !'});
             return true;
         };
