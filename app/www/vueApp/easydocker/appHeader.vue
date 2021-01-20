@@ -37,7 +37,7 @@
                         </button>
                     </div>
                     <div class="col-6 p-30 m-0 text-right">
-                        <a class="btn btn-sm btn-info m-1 border-danger shadow-sm" v-if = "isLocalhost()"
+                        <a class="btn btn-sm btn-info m-1 border-danger shadow-sm" v-if="isLocalhost()"
                             href="JavaScript:void(0)" v-on:click="clickMenu('localGrid')">
                             Grid Monitor
                         </a>
