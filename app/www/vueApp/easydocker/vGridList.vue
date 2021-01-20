@@ -9,7 +9,7 @@
         <button type="button" class="btn btn-sm btn-warning" v-on:click="removeGrid()" v-if="root.isLocalhost() && isShowRemoveGrid()">Remove Grid</button>
         <button type="button" class="btn btn-sm btn-success" v-if="root.isLocalhost() &&  !isShowRemoveGrid()"
             v-on:click="addGridMonitor()">
-            Add Monitor
+            Add Grid Monitor
         </button>
         <hr v-if="root.isLocalhost()"/>
     </div>
