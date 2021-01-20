@@ -6,8 +6,8 @@
             <div class="pr-3"><input type="checkbox"><span class="pl-2">{{ k }}</span></div>
         </span>
         <hr/>
-        <button type="button" class="btn btn-danger" v-on:click="removeGrid()" v-if="isShowRemoveGrid()">Remove Grid</button>
-        <button type="button" class="btn btn-sm btn-info m-1 border-danger shadow-sm" v-if="isShowRemoveGrid()"
+        <button type="button" class="btn btn-danger" v-on:click="removeGrid()" v-if="root.isLocalhost() && isShowRemoveGrid()">Remove Grid</button>
+        <button type="button" class="btn btn-sm btn-info m-1 border-danger shadow-sm" v-if="root.isLocalhost() &&  !isShowRemoveGrid()"
             v-on:click="addGridMonitor()">
             Add Monitor
         </button>
@@ -31,7 +31,7 @@ module.exports = {
     methods : {
       isShowRemoveGrid() {
         const me = this;
-        return (!me.root.isLocalhost() || !localStorage.getItem('easydockerSVR') || !localStorage.getItem('easydockerTOKEN')) ? false : true
+        return (!localStorage.getItem('easydockerSVR') || !localStorage.getItem('easydockerTOKEN')) ? false : true
       },
       removeGrid() {
          const me = this;
