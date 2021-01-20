@@ -17,15 +17,15 @@
 				mp = p.match(/\/([^\/]+)(\/|$)/);
 
 			if (mp && mp[1] === '_grid') {
-				var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
-				let mGrid =  new MAGrid(env, pkg, req, res);
+				var MGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
+				let mGrid =  new MGrid(env, pkg, req, res);
 				mGrid.get();
 				return true;
 			}
 
 			if (mp && mp[1] === '_gridHub') {
-				var MAGridHub= pkg.require(env.root+ '/modules/moduleGridHub.js');
-				let mGridHun =  new MAGridHub(env, pkg, req, res);
+				var MGridHub= pkg.require(env.root+ '/modules/moduleGridHub.js');
+				let mGridHub =  new MGridHub(env, pkg, req, res);
 				mGridHub.get();
 				return true;
 			}
