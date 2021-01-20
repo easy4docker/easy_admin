@@ -82,6 +82,8 @@ module.exports = {
         },
         test() {
             const me = this;
+            alert('test');
+            return true;
             me.dataEngine().appPost({
                 url  : 'http://grid.shusiou.win:10000/_grid/',
                 cmd     :'getGridMatrix',
