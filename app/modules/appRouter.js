@@ -23,6 +23,13 @@
 				return true;
 			}
 
+			if (mp && mp[1] === '_gridHub') {
+				var MAGridHub= pkg.require(env.root+ '/modules/moduleGridHub.js');
+				let mGridHun =  new MAGridHub(env, pkg, req, res);
+				mGridHub.get();
+				return true;
+			}
+
 			if (mp && mp[1] === '_cloud') {
 				var MCloud= pkg.require(env.root+ '/modules/moduleCloud.js');
 				let mc =  new MCloud(env, pkg, req, res);
