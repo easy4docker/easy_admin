@@ -36,6 +36,12 @@
                         me.renewToken((result) => {
                             res.send(result);
                         });
+                        break;
+
+                    case 'serverMem':
+                        me.serverMem((result) => {
+                            res.send(result);
+                        });
                         break;   
                     default:
                         res.send('wrong path ' + p);
@@ -222,6 +228,23 @@
         me.gridAccess = (cbk) => {
             const data = req.body.data;
             cbk({gridServer : data.gridServer, token : pkg.md5(data.password)});
+        }
+
+        me.serverMem = (cbk) => {
+            var info = {};
+            fs.readFile('/proc/meminfo', {encoding : 'utf-8'}, (err, data) => {
+                data.split(/\n/g).forEach(function(line){
+                    line = line.split(':');
+            
+                    // Ignore invalid lines, if any
+                    if (line.length < 2) {
+                        return;
+                    }
+                    // Remove parseInt call to make all values strings
+                    info[line[0]] = parseInt(line[1].trim(), 10);
+                });
+                return cbk(info);
+            });
         }
     }
     module.exports = obj;

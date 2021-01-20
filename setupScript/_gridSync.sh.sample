@@ -12,3 +12,5 @@ if [ -n $IP ]; then
 fi
 
 curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=${IP}\&server=${GRID_SERVER}\&tag=$2\&token=${TOKEN}
+
+free -h >/tmp/grid_server_report.txt
