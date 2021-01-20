@@ -173,7 +173,7 @@ module.exports = {
       signOff() {
          const me = this;
          localStorage.removeItem('easydockerFP');
-         me.accessGrid(code) 
+         me.accessGrid(null) 
          me.checkAuthExist();
          me.checkIsTokenLogin();
       }
