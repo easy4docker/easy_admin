@@ -1,6 +1,6 @@
 <template>
     <span v-for="(v, k) in root.gridMatrix">===
-        <div class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)" v-on:click="checkFilter(k)"><span class="pl-2">{{ k }}</span></div>
+        <div class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)"><span class="pl-2">{{ k }}</span></div>
     </span>
 </template>
  
