@@ -33,11 +33,11 @@ module.exports = {
    },
    mounted() {
         var me = this;
-        me.form.gridServer = !(localStorage.getItem('easydockerSVR')) ? '' : localStorage.getItem('easydockerSVR').replace(/\_/g, '.');
+        me.form.gridServer = (!localStorage.getItem('easydockerSVR')) ? '' : localStorage.getItem('easydockerSVR').replace(/\_/g, '.');
    },
    methods : {
       isGrid() {
-         return (!localStorage.getItem('easydockerSVR') || !localStorage.getItem('easydockerTOKEN')) ? true : false
+         return (!localStorage.getItem('easydockerSVR') || !localStorage.getItem('easydockerTOKEN')) ? false : true
       },
       accessGrid() {
          const me = this;
