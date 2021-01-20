@@ -18,7 +18,8 @@
         <div class="card-body card-list-section border-0 pt-0">
             <div class="container-fluid p-1 pb-0" >
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-2 text-center">
+                        Grig Servers
                         <grid-list></grid-list>
                     </div>
                     <div class="col-10 p-0 m-0 text-left">
