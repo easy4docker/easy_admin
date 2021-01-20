@@ -125,7 +125,7 @@ module.exports = {
          });   
       },
       initAdminPassword() {
-         var me = this;
+         const me = this;
          me.root.dataEngine().ajaxPost({cmd: 'auth', data : {code : 'initPassword', password: me.formInit.password }}, function(result) {
                me.checkAuthExist();
          });
@@ -133,20 +133,33 @@ module.exports = {
       submit() {
          this.signIn();
       },
-      gridToken(code) {
+      accessGrid(code) {
+         const me = this;
          let hostname = window.location.hostname,
              token = code;
-         alert(hostname);
+         me.root.dataEngine().appPost({
+            url  : '/_grid/',
+            cmd     :'gridAccess',
+            data    : {
+               gridServer  : hostname,
+               password    : code
+            },
+            dataType: 'json'
+         },
+         function(result) {
+            localStorage.setItem('easydockerSVR', result.gridServer.replace(/\./g, '_'));
+            localStorage.setItem('easydockerTOKEN', result.token);
+            window.location.reload();
+         }, function(err) {}); 
       },
       signIn() {
          var me = this;
          me.root.dataEngine().ajaxPost({cmd: 'auth', data : {code : 'signin', password: me.formSignin.password }}, function(result) {
                if (result.status === 'success') {
                   localStorage.setItem('easydockerFP', result.token);
-                  me.gridToken(me.formSignin.password)
-                  
-                  
+                  me.accessGrid(me.formSignin.password);
                   me.checkIsTokenLogin();
+                  console.log()
                } else {
                   alert('Authentication failure.');
                }
