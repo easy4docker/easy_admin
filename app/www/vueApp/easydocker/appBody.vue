@@ -37,7 +37,16 @@ module.exports = {
         isFilterChecked(k) {
             var me = this;
             return (me.serverTypeFilter.indexOf(k) !== -1);
-        }
+        },
+        getVServerList() {
+            var me = this;
+            me.root.dataEngine().getVServerList(
+                false,
+                function(result) {
+                    me.list = result.list;
+                }
+            );
+        },
     },
     components: VUEApp.loadComponents({
         LOAD    : {
