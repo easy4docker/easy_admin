@@ -233,9 +233,7 @@ module.exports = {
     },
     components: VUEApp.loadComponents({
         LOAD    : {
-            'selectBranch'   : '/vueApp/easydocker/selectBranch.vue',
-            'dockerAdupter'  : '/vueApp/easydocker/dockerAdupter.vue',
-            'iframeObj'      : '/vueApp/easydocker/_iframe.vue'
+
         }, 
         TPL :{}
     })

@@ -19,6 +19,7 @@
             <div class="container-fluid p-1 pb-0" >
                 <div class="row">
                     <div class="col-2 p-3 m-0 text-left alert-secondary border rounded grids-list-section">
+                        <grid-list></grid-list>
                         <span v-for="(v, k) in root.gridMatrix">
                             <div class="pr-3"><input type="checkbox" :checked="isFilterChecked(k)" v-on:click="checkFilter(k)"><span class="pl-2">{{ k }}</span></div>
                         </span>
@@ -327,7 +328,8 @@ module.exports = {
         LOAD    : {
             'selectBranch'   : '/vueApp/easydocker/selectBranch.vue',
             'dockerAdupter'  : '/vueApp/easydocker/dockerAdupter.vue',
-            'iframeObj'      : '/vueApp/easydocker/_iframe.vue'
+            'iframeObj'      : '/vueApp/easydocker/_iframe.vue',
+            'gridList'      : '/vueApp/easydocker/vGridList.vue'
         }, 
         TPL :{}
     })
