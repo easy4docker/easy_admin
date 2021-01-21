@@ -294,7 +294,7 @@
         me.niu = (cbk) =>{
             var ret = {};
             if (req.body.data) {
-                data.split(/\n/g).forEach(function(line){
+                req.body.data.split(/\n/g).forEach(function(line){
                     line = line.split(':');
             
                     // Ignore invalid lines, if any
