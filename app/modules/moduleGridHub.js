@@ -34,7 +34,7 @@
                 var setting = req.body;
                // if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
                if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
-                    res.send({status:'failuer', message: 'Unauthorized gridToken!' + auth.root + '---' + setting.gridToken});
+                    res.send({status:'failuer', message: 'Unauthorized gridToken!'});
                } else {
                     const request = require('request');
                     const grid = me.dataGridMatrix(); 
@@ -43,7 +43,6 @@
                     var channel = (!setting.channel) ? '_grid' : setting.channel;
                     if (setting.target && grid[setting.target]) {
                         url = 'http://' + setting.target + ':10000/' + channel + '/';
-                        // postData.gridToken = grid;
                         postData.gridToken = grid[setting.target].gridToken;
                     } else {
                         url = 'http://' + setting.server + ':10000/' + channel + '/';
