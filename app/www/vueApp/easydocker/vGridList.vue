@@ -6,7 +6,7 @@
             <div class="pr-3">
                 <input type="checkbox"><span class="pl-2"><a href="javaScript:void(0)" v-on:click="test(k, {s:k})">{{ k }}</a> 
                 <div class="text-right text-info">
-                    ({{Math.ceil((v.MemAvailable / v.MemTotal)  * 100)}}% Available)</span> 
+                    {{v.MemAvailable + '-' + v.MemTotal}}({{Math.ceil((v.MemAvailable / v.MemTotal)  * 100)}}% Available)</span> 
                 </div>
             </div>
         </span>

@@ -273,7 +273,8 @@
                                 return;
                             }
                             // Remove parseInt call to make all values strings
-                            ret[line[0]] = parseInt(line[1].trim(), 10);
+                            var k = line[0].replace(/\{/,'');
+                            ret[k] = parseInt(line[1].trim(), 10);
                         });
                     }
                     cbk(ret);
