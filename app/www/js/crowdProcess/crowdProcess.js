@@ -71,7 +71,5 @@
             , 1); 		
         };
     };
-    window.crowdProcess = function() {
-        return obj; 
-    }
+    window.crowdProcess =  obj; 
 })();
