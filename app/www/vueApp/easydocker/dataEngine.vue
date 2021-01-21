@@ -44,7 +44,7 @@ module.exports = {
             me.$parent.triggerSpinner = true;
             $.ajax({
                 type: 'POST',
-                url: 'http://' + setting.server + '/_gridHub/',
+                url: '/_gridHub/',
                 data: setting,
                 success: function(result) {
                     me.$parent.triggerSpinner = false;
