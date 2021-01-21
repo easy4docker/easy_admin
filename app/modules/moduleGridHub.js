@@ -23,11 +23,18 @@
         };
 
         me.post = () => {
+            const authfn = '/var/_localAppData/authData.json';
+            let auth = {}, authToken = {};
+            try {
+                auth = pkg.require(authfn);
+            } catch (e) {}
+
+
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 var setting = req.body;
                // if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
-               if (!setting || !setting.gridToken || setting.gridToken != gridToken) {
-                    res.send({status:'failuer', message: 'Unauthorized gridToken!'});
+               if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== gridToken)) {
+                    res.send({status:'failuer', message: 'Unauthorized gridToken!' + auth.root});
                } else {
                     const request = require('request');
                     const grid = me.dataGridMatrix(); 
