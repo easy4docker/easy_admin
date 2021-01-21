@@ -19,10 +19,10 @@
         "/js/popper.1.12.9.min.js",
         "/js/bootstrap.4.4.1.min.js",
         "/js/json2/json2.min.js",
+        "/js/crowdProcess/crowdProcess.js",
         "/vueApp/jsLib/vueIntegration.js",
         "/vueApp/jsLib/vue-router.min.js",
         "/vueApp/jsLib/vueApp.js",
-        "/js/package/_entrance/easydockerMain.js",
-        "/js/crowdProcess/crowdProcess.js"
+        "/js/package/_entrance/easydockerMain.js"
     ]
 }
