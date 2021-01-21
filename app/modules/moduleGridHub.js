@@ -32,10 +32,11 @@
                     const request = require('request');
                     const grid = me.dataGridMatrix(); 
                     var postData = {};
-                    let url = '';
+                    let url = setting;
                     var channel = (!setting.channel) ? '_grid' : setting.channel;
                     if (grid[setting.server]) {
-                        url = 'http://' + setting.server + ':10000/' + channel + '/'
+                        url = 'http://' + setting.server + ':10000/' + channel + '/';
+                        postData.gridToken = grid[setting.server].gridToken;
                     } else {
                         url = 'http://' + ((/^localhost/ig.test(setting.server)) ? 'localhost/' : (setting.server + ':10000/')) + channel + '/';
                     }
@@ -45,7 +46,7 @@
                 //    server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
                     
  
-                    request.post({url: url, form: setting}, function(err,httpResponse,body){      
+                    request.post({url: url, form: postData}, function(err,httpResponse,body){      
                         if (setting.type === 'json') {
                             // var result = {};
                             // try { result = JSON.parse(body);} catch (e) {}   
