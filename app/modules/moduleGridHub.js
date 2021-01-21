@@ -40,7 +40,7 @@
                         // grid[setting.server].gridToken;
                     } else {
                         url = 'http://' + ((/^localhost/ig.test(setting.server)) ? 'localhost/' : (setting.server + ':10000/')) + channel + '/';
-                        postData.gridToken = 'grid';
+                        postData.gridToken = grid;
                     }
                     // res.send(grid);
                     // return true;
