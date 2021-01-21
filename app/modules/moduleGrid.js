@@ -222,7 +222,7 @@
         }
 
         me.testNiuBi = (cbk) => {
-            cbk(req);
+            cbk(req.query);
             return true;
 
             let grids = {}, resp = {};
