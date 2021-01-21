@@ -290,6 +290,10 @@
                 return cbk(info);
             });
         }
+
+        me.niu = (cbk) =>{
+            return cbk(res.body);
+        }
     }
     module.exports = obj;
 })()
