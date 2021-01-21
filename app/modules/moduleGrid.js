@@ -293,6 +293,7 @@
 
         me.statusUpdate = (cbk) =>{
             let grids = me.dataGridMatrix();
+            let data = req.query;
             if (!data || !data.ip || !data.token ) {
                 cbk(false);
             } else {
