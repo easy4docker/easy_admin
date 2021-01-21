@@ -11,6 +11,5 @@ if [ -n $IP ]; then
     IP=$(cat ${SCR_DIR}/data/_ip)
 fi
 
-curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=${IP}\&server=${GRID_SERVER}\&tag=$2\&token=${TOKEN}
-
-free -h >/tmp/grid_server_report.txt
+#curl ${GRID_SERVER}:10000/_grid/updateStatus/?ip=${IP}\&server=${GRID_SERVER}\&tag=$2\&token=${TOKEN}
+curl -d "cmd=statusUpdate&data={$(cat /proc/meminfo)}"  -X POST ${GRID_SERVER}:10000/_grid/?ip=${IP}\&server=${GRID_SERVER}\&tag=$2\&token=${TOKEN}
