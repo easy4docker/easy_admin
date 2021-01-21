@@ -49,7 +49,6 @@ module.exports = {
    components: VUEApp.loadComponents({
         LOAD    : {
             'switchBranch' : '/vueApp/easydocker/popUpModals/switchBranch.vue',
-            'confirmDelete' : '/vueApp/easydocker/popUpModals/confirmDelete.vue',
             'iframeObj' : '/vueApp/easydocker/popUpModals/iframeObj.vue'
         }, 
         TPL :{}

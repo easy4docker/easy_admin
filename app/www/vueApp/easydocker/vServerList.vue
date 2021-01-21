@@ -171,6 +171,7 @@ module.exports = {
             var me = this;
             me.root.popUp(me).show({
                 insideModule: 'confirmDelete',
+                insideModuleUrl: '/vueApp/easydocker/popUpModals/confirmDelete.vue',
                 data : {
                     serverName : record.name,
                     serverType : record.serverType
@@ -187,6 +188,7 @@ module.exports = {
 
             me.root.popUp(me).show({
                 insideModule: 'switchBranch',
+                insideModuleUrl: '/vueApp/easydocker/popUpModals/switchBranch.vue',
                 data : data
             });            
         },
