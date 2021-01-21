@@ -68,8 +68,9 @@ module.exports = {
                 return true;
             }
             console.log('testNiuBi-' + k + '---' + token);
+            console.log('http://' + k + ':10000/_grid/');
             me.root.dataEngine().gridPost({
-                server  : k + ':1000/_grid/',
+                server  : 'http://' + k + ':10000/_grid/',
                 cmd     :'testNiuBi',
                 data    : {},
                 dataType: 'json',
@@ -77,9 +78,9 @@ module.exports = {
             },
             function(result) {
                 if (result.status === 'success') {
-                    console.log(result.result);
+                    console.log(result);
                 } else {
-                    console.log(result.result);
+                    console.log(result);
                 }
                 me.$forceUpdate();
             }, function(err) {
