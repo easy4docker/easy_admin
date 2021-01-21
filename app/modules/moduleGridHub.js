@@ -31,13 +31,21 @@
                } else {
                     const request = require('request');
                     const grid = me.dataGridMatrix(); 
-                    res.send(grid);
-                    return true;
-                    let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
-                    server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
+                    var postData = {};
+                    let url = '';
                     var channel = (!setting.channel) ? '_grid' : setting.channel;
+                    if (grid[setting.server]) {
+                        url = 'http://' + setting.server + ':10000/' + channel + '/'
+                    } else {
+                        url = 'http://' + ((/^localhost/ig.test(setting.server)) ? 'localhost/' : (setting.server + ':10000/')) + channel + '/';
+                    }
+                    // res.send(grid);
+                    // return true;
+                //    let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
+                //    server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
+                    
  
-                    request.post({url: server + '/' + channel + '/', form: setting}, function(err,httpResponse,body){      
+                    request.post({url: url, form: setting}, function(err,httpResponse,body){      
                         if (setting.type === 'json') {
                             // var result = {};
                             // try { result = JSON.parse(body);} catch (e) {}   
