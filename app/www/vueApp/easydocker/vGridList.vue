@@ -70,7 +70,8 @@ module.exports = {
             console.log('testNiuBi-' + k + '---' + token);
             console.log('http://' + k + ':10000/_grid/');
             me.root.dataEngine().gridPost({
-                server  : 'http://' + k + ':10000/_grid/',
+                server  : k,
+                path    : '/_grid/',
                 cmd     :'testNiuBi',
                 data    : {},
                 dataType: 'json',

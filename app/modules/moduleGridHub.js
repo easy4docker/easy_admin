@@ -30,8 +30,6 @@
                     res.send({status:'failuer', message: 'Unauthorized gridToken!'});
                } else {
                     const request = require('request');
-                    res.send(setting.server);
-                    return true;
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
                     server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
                     var channel = (!setting.channel) ? '_grid' : setting.channel;
@@ -40,7 +38,7 @@
                         if (setting.type === 'json') {
                             // var result = {};
                             // try { result = JSON.parse(body);} catch (e) {}   
-                            res.send(setting);
+                            res.send(body);
                         } else {
                             res.send(body);
                         } 
