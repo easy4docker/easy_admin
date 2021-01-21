@@ -247,7 +247,7 @@
             }, 3000)
         }
 
-        me.getGridMatrix = (cakkback) => {
+        me.getGridMatrix = (cbk) => {
             let grids = {}, resp = {};
             try {
                 grids = pkg.require(gridStatusFn);
@@ -257,30 +257,16 @@
                 _f[key] = ((key)=> {
                     return (cbk) => {
                         resp[key] = new Date().getTime();
-                        let url = 'http://' + key + ':10000/_grid/',
-                            postData = {cmd : 'serverMem', dataType: 'json'};
-
-                        request.post({url: url, form: postData}, function(err,httpResponse,body){      
-                            if (postData.type === 'json') {
-                                // var result = {};
-                                // try { result = JSON.parse(body);} catch (e) {}   
-                                resp[key] = data;
-                            } else {
-                                resp[key] = data;
-                            }
-                            cbk(true);
-                        });
-                        /*
                         me.serverMem(
                             (data) => {
                             resp[key] = data;
                             cbk(true);
-                        });*/
+                        });
                     }
                 })(key)
             }
             CP.serial(_f, (data) => {
-                callback({status: 'success', result: resp});
+                cbk({status: 'success', result: resp});
             }, 3000)
         }
         me.gridAccess = (cbk) => {
