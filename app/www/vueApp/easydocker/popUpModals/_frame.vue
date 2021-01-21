@@ -23,6 +23,8 @@ module.exports = {
     },
     mounted() {
         var me = this;
+        console.log('---> components--->');
+        console.log(me.components);
     },
    methods :{
         show(param) {

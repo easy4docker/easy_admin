@@ -141,7 +141,8 @@ module.exports = {
             'popUpModal': '/vueApp/easydocker/popUpModals/_frame.vue',
             'dataEngine': '/vueApp/easydocker/dataEngine.vue',
             'spinner'   : '/vueApp/easydocker/spinner.vue',
-            'appHeader' : '/vueApp/easydocker/appHeader.vue'
+            'appHeader' : '/vueApp/easydocker/appHeader.vue',
+            'addGridMonitor' : '/vueApp/easydocker/popUpModals/addGridMonitor.vue'
         }
     })
 }
