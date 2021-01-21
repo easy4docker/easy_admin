@@ -63,23 +63,23 @@ module.exports = {
                 return true;
             }
             me.dataEngine().gridPost({
-                    server  : svr,
-                    cmd     :'getGridMatrix',
-                    data    : {},
-                    dataType: 'json',
-                    gridToken   : token
-                },
-                function(result) {
-                    if (result.status === 'success') {
-                        me.gridMatrix = result.result;
-                    } else {
-                        me.gridServer = null;
-                    }
-                    me.$forceUpdate();
-                }, function(err) {
+                server  : svr,
+                cmd     :'getGridMatrix',
+                data    : {},
+                dataType: 'json',
+                gridToken   : token
+            },
+            function(result) {
+                if (result.status === 'success') {
+                    me.gridMatrix = result.result;
+                } else {
                     me.gridServer = null;
-                    console.log(err);
-                });
+                }
+                me.$forceUpdate();
+            }, function(err) {
+                me.gridServer = null;
+                console.log(err);
+            });
         },
         test() {
             const me = this;

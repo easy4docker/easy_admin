@@ -37,16 +37,16 @@ module.exports = {
     watch: {
     },
     methods : {
-      isShowRemoveGrid() {
-        const me = this;
-        return (!localStorage.getItem('easydockerSVR') || !localStorage.getItem('easydockerTOKEN')) ? false : true
-      },
-      removeGrid() {
-         const me = this;
-         localStorage.removeItem('easydockerSVR');
-         localStorage.removeItem('easydockerTOKEN');
-         window.location.reload();
-      },
+        isShowRemoveGrid() {
+            const me = this;
+            return (!localStorage.getItem('easydockerSVR') || !localStorage.getItem('easydockerTOKEN')) ? false : true
+        },
+        removeGrid() {
+            const me = this;
+            localStorage.removeItem('easydockerSVR');
+            localStorage.removeItem('easydockerTOKEN');
+            window.location.reload();
+        },
         addGridMonitor() {
             const me = this;
             me.root.popUp(me).show({
@@ -59,7 +59,31 @@ module.exports = {
             });
         },
         test() {
-            alert('test');
+            const me = this;
+            let svr = localStorage.getItem('easydockerSVR'),
+                token = localStorage.getItem('easydockerTOKEN');
+                
+            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+            if (!svr || !token) {
+                return true;
+            }
+            me.dataEngine().gridPost({
+                server  : svr,
+                cmd     :'getGridMatrix',
+                data    : {},
+                dataType: 'json',
+                gridToken   : token
+            },
+            function(result) {
+                if (result.status === 'success') {
+                    console.log(result.result);
+                } else {
+                    console.log(result.result);
+                }
+                me.$forceUpdate();
+            }, function(err) {
+                console.log(err);
+            });
         }
     },
     components: VUEApp.loadComponents({
