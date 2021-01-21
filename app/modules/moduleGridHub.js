@@ -26,7 +26,7 @@
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 var setting = req.body;
                // if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
-               if (!setting || !setting.gridToken) {
+               if (!setting || !setting.gridToken || setting.gridToken != gridToken) {
                     res.send({status:'failuer', message: 'Unauthorized gridToken!'});
                } else {
                     const request = require('request');
@@ -40,15 +40,7 @@
                         postData.gridToken = grid[setting.target].gridToken;
                     } else {
                         url = 'http://' + setting.server + ':10000/' + channel + '/';
-                      //  url = 'http://' + ((/^localhost/ig.test(setting.server)) ? 'localhost/' : (setting.server + ':10000/')) + channel + '/';
-                        // postData.gridToken = grid;
                     }
-                    // res.send(grid);
-                    // return true;
-                //    let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
-                //    server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
-                    
- 
                     request.post({url: url, form: postData}, function(err,httpResponse,body){      
                         if (setting.type === 'json') {
                             // var result = {};
