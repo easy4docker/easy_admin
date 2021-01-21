@@ -64,11 +64,10 @@ module.exports = {
                 token = localStorage.getItem('easydockerTOKEN');
                 
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
-            alert(svr);
             if (!svr || !token) {
                 return true;
             }
-            me.dataEngine().gridPost({
+            me.root.dataEngine().gridPost({
                 server  : svr,
                 cmd     :'getGridMatrix',
                 data    : {},
