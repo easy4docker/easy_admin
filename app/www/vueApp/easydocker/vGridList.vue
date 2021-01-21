@@ -4,7 +4,7 @@
         <hr/>
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3">
-                <input type="checkbox"><span class="pl-2"><a href="javaScript:void(0)" v-on:click="test()">{{ k }}</a> 
+                <input type="checkbox"><span class="pl-2"><a href="javaScript:void(0)" v-on:click="test()">-{{ k }}</a> 
                 <div class="text-right text-info">
                     ({{Math.ceil((v.MemAvailable / v.MemTotal)  * 100)}}% Available)</span> 
                 </div>
@@ -59,11 +59,14 @@ module.exports = {
             });
         },
         test() {
+            alert(123);
+            /*
             const me = this;
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
                 
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+            alert(svr);
             if (!svr || !token) {
                 return true;
             }
@@ -83,7 +86,7 @@ module.exports = {
                 me.$forceUpdate();
             }, function(err) {
                 console.log(err);
-            });
+            });*/
         }
     },
     components: VUEApp.loadComponents({
