@@ -42,8 +42,6 @@ module.exports = {
         gridPost(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
-            console.log('http://' + setting.server + '/_gridHub/');
-            console.log(setting);
             $.ajax({
                 type: 'POST',
                 url: 'http://' + setting.server + ':10000/_gridHub/',
