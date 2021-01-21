@@ -24,14 +24,6 @@
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             if (mp) {
                 switch (mp[2])  {
-                    case 'updateStatus':
-                        
-                        // for cron access 
-                        
-                        me.updateStatus(req.query, (result) => {
-                            res.send(result);
-                        });
-                        break;
                     case 'renewToken':
                         me.renewToken((result) => {
                             res.send(result);
@@ -77,37 +69,6 @@
             });
         }
     
-        me.updateStatus = (data, callback) => {
-            let grids = me.dataGridMatrix();
-            if (!data || !data.ip || !data.token ) {
-                cbk(false);
-            } else {
-                const _f = {};
-                _f['newToken'] = (cbk) => {
-                    const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.token;
-                    exec(cmdStr, {maxBuffer: 1024 * 2048},
-                        function(error, stdout, stderr) {
-                            var v = stdout.replace(/\s+/, '');
-                            if ((error) || !v) {
-                                cbk(false);
-                                CP.exit = true;
-                            } else {
-                                cbk(v);
-                            }
-                    });
-                }
-                _f['saveGridStatus'] = (cbk) => {
-                    grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag};
-                    fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
-                        cbk(true);
-                    });
-                }
-                
-                CP.serial(_f, (data) => {
-                    callback(true);
-                }, 3000)
-            } 
-        }
         /* --- DATA function ---->> */
         me.makeid = (length) => {
             var result           = '';
