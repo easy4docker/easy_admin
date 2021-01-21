@@ -292,7 +292,20 @@
         }
 
         me.niu = (cbk) =>{
-            return cbk(req.body);
+            var ret = {};
+            if (req.body.data) {
+                data.split(/\n/g).forEach(function(line){
+                    line = line.split(':');
+            
+                    // Ignore invalid lines, if any
+                    if (line.length < 2) {
+                        return;
+                    }
+                    // Remove parseInt call to make all values strings
+                    ret[line[0]] = parseInt(line[1].trim(), 10);
+                });
+            }
+            return cbk(ret);
         }
     }
     module.exports = obj;
