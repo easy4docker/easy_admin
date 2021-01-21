@@ -222,7 +222,7 @@
         }
 
         me.testNiuBi = (cbk) => {
-            cbk(req.body);
+            cbk(req.form);
             return true;
 
             let grids = {}, resp = {};
