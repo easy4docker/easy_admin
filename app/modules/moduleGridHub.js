@@ -33,8 +33,8 @@
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 var setting = req.body;
                // if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
-               if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== gridToken)) {
-                    res.send({status:'failuer', message: 'Unauthorized gridToken!' + auth.root});
+               if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
+                    res.send({status:'failuer', message: 'Unauthorized gridToken!' + auth.root + '---' + setting.gridToken});
                } else {
                     const request = require('request');
                     const grid = me.dataGridMatrix(); 
