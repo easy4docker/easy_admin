@@ -71,7 +71,7 @@ module.exports = {
             console.log('http://' + k + ':10000/_grid/');
             me.root.dataEngine().gridPost({
                 server  : k,
-                path    : '/_grid/',
+                channel    : '_grid',
                 cmd     :'testNiuBi',
                 data    : {},
                 dataType: 'json',
