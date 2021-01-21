@@ -4,7 +4,7 @@
         <hr/>
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3">
-                <input type="checkbox"><span class="pl-2"><a href="javaScript:void(0)">{{ k }}</a> 
+                <input type="checkbox"><span class="pl-2"><a href="javaScript:void(0)" v-on:click="test()">{{ k }}</a> 
                 <div class="text-right text-info">
                     ({{Math.ceil((v.MemAvailable / v.MemTotal)  * 100)}}% Available)</span> 
                 </div>
@@ -47,7 +47,7 @@ module.exports = {
          localStorage.removeItem('easydockerTOKEN');
          window.location.reload();
       },
-      addGridMonitor() {
+    addGridMonitor() {
         const me = this;
         me.root.popUp(me).show({
             insideModule: 'addGridMonitor',
@@ -58,6 +58,9 @@ module.exports = {
             noDefaultCancel : true
         });
       }
+    },
+    test() {
+        alert('test');
     },
     components: VUEApp.loadComponents({
         LOAD    : {
