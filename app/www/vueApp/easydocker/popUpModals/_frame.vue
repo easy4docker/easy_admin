@@ -23,21 +23,21 @@ module.exports = {
     },
     mounted() {
         var me = this;
-        console.log('---> components--->');
-        console.log(me.components);
     },
    methods :{
         show(param) {
             var me = this;
             me.cfg = param;
+            if (me.cfg.insideModuleUrl) {
+                const v = {};
+                v[me.cfg.insideModule] = me.cfg.insideModuleUrl;
+                VUEApp.dynamicLoadComponent(v);
+            }
             $('#confirm_modal').modal({backdrop: false, show: true});
         },
         loadModule() {
-           let me = this;
-           return me.cfg.insideModule;
-           /*
-           let list = ['switchBranch', 'confirmDelete', 'iframeObj', 'addGridMonitor'];
-           return (list.indexOf(me.cfg.insideModule)  === -1) ? '' : me.cfg.insideModule;*/
+            let me = this;
+            return me.cfg.insideModule;
         },
         close() {
             var me = this;
@@ -52,9 +52,7 @@ module.exports = {
             'confirmDelete' : '/vueApp/easydocker/popUpModals/confirmDelete.vue',
             'iframeObj' : '/vueApp/easydocker/popUpModals/iframeObj.vue'
         }, 
-        TPL :{
-            'addGridMonitor' : '/vueApp/easydocker/popUpModals/addGridMonitor.vue'
-        }
+        TPL :{}
     })
 }
 </script>

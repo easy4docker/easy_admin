@@ -12,7 +12,8 @@ $(document).ready(
                     components: VUEApp.loadComponents({
                         LOAD    : {}, 
                         TPL :{
-                            'appRoot' : '/vueApp/easydocker/appRoot.vue'
+                            'appRoot' : '/vueApp/easydocker/appRoot.vue',
+                            'addGridMonitor' : '/vueApp/easydocker/popUpModals/addGridMonitor.vue'
                         }
                     })
                 });

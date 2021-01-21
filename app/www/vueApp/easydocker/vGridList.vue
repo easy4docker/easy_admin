@@ -51,6 +51,7 @@ module.exports = {
         const me = this;
         me.root.popUp(me).show({
             insideModule: 'addGridMonitor',
+            insideModuleUrl: '/vueApp/easydocker/popUpModals/addGridMonitor.vue',
             data : {
 
             },
