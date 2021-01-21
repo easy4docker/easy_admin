@@ -69,7 +69,7 @@ module.exports = {
             }
             me.root.dataEngine().gridPost({
                 server  : svr,
-                cmd     :'getGridMatrix',
+                cmd     :'testNiuBi',
                 data    : {},
                 dataType: 'json',
                 gridToken   : token
