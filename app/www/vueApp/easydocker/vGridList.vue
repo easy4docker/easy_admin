@@ -69,7 +69,7 @@ module.exports = {
             }
             console.log('testNiuBi-' + k);
             me.root.dataEngine().gridPost({
-                server  : svr,
+                server  : k,
                 cmd     :'testNiuBi',
                 data    : {},
                 dataType: 'json',
