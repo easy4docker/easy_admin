@@ -63,23 +63,23 @@ module.exports = {
                 return true;
             }
             me.dataEngine().gridPost({
-                server  : svr,
-                cmd     :'getGridMatrix',
-                data    : {},
-                dataType: 'json',
-                gridToken   : token
-            },
-            function(result) {
-                if (result.status === 'success') {
-                    me.gridMatrix = result.result;
-                } else {
+                    server  : svr,
+                    cmd     :'getGridMatrix',
+                    data    : {},
+                    dataType: 'json',
+                    gridToken   : token
+                },
+                function(result) {
+                    if (result.status === 'success') {
+                        me.gridMatrix = result.result;
+                    } else {
+                        me.gridServer = null;
+                    }
+                    me.$forceUpdate();
+                }, function(err) {
                     me.gridServer = null;
-                }
-                me.$forceUpdate();
-            }, function(err) {
-                me.gridServer = null;
-                console.log(err);
-            });
+                    console.log(err);
+                });
         },
         test() {
             alert('test');
@@ -143,8 +143,7 @@ module.exports = {
             'popUpModal': '/vueApp/easydocker/popUpModals/_frame.vue',
             'dataEngine': '/vueApp/easydocker/dataEngine.vue',
             'spinner'   : '/vueApp/easydocker/spinner.vue',
-            'appHeader' : '/vueApp/easydocker/appHeader.vue',
-            'addGridMonitor' : '/vueApp/easydocker/popUpModals/addGridMonitor.vue'
+            'appHeader' : '/vueApp/easydocker/appHeader.vue'
         }
     })
 }
