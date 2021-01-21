@@ -96,8 +96,21 @@
                             }
                     });
                 }
+                _f['memStatus'] = (cbk) => {
+                    const cmdStr = 'curl -d "cmd=statusUpdate&data={$(cat /proc/meminfo)}"  -X POST http://' + data.ip + ':10000/_grid/';
+                    exec(cmdStr, {maxBuffer: 1024 * 2048},
+                        function(error, stdout, stderr) {
+                            var v = stdout.replace(/\s+/, '');
+                            if ((error) || !v) {
+                                cbk('');
+                            } else {
+                                cbk(v);
+                            }
+                    });
+                }
                 _f['saveGridStatus'] = (cbk) => {
-                    grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag};
+                    grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag,
+                    mem : P.data.memStatus};
                     fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
                         cbk(true);
                     });
