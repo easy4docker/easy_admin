@@ -222,6 +222,9 @@
         }
 
         me.testNiuBi = (cbk) => {
+            cbk(req.body);
+            return true;
+
             let grids = {}, resp = {};
             try {
                 grids = pkg.require(gridStatusFn);
