@@ -30,6 +30,8 @@
                     res.send({status:'failuer', message: 'Unauthorized gridToken!'});
                } else {
                     const request = require('request');
+                    const grid = me.dataGridMatrix(); 
+
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
                     server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
                     var channel = (!setting.channel) ? '_grid' : setting.channel;
@@ -38,7 +40,7 @@
                         if (setting.type === 'json') {
                             // var result = {};
                             // try { result = JSON.parse(body);} catch (e) {}   
-                            res.send(body);
+                            res.send(grid);
                         } else {
                             res.send(body);
                         } 
