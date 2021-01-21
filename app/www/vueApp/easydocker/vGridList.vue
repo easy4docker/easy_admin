@@ -73,7 +73,7 @@ module.exports = {
                 channel    : '_grid',
                 cmd     :'testNiuBi',
                 target  : k,
-                data    : {},
+                data    : {k : k},
                 dataType: 'json',
                 gridToken   : token
             },
