@@ -59,8 +59,6 @@ module.exports = {
             });
         },
         test() {
-            alert(123);
-            /*
             const me = this;
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
@@ -86,7 +84,7 @@ module.exports = {
                 me.$forceUpdate();
             }, function(err) {
                 console.log(err);
-            });*/
+            });
         }
     },
     components: VUEApp.loadComponents({
