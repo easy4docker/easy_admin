@@ -292,7 +292,7 @@
         }
 
         me.niu = (cbk) =>{
-            return cbk(res.body);
+            return cbk(req.body);
         }
     }
     module.exports = obj;
