@@ -67,13 +67,12 @@ module.exports = {
             if (!svr || !token) {
                 return true;
             }
-            console.log('testNiuBi-' + k + '---' + token);
-            console.log('http://' + k + ':10000/_grid/');
+
             me.root.dataEngine().gridPost({
-                server  : k,
+                server  : svr
                 channel    : '_grid',
                 cmd     :'testNiuBi',
-                data    : {},
+                data    : {target : k},
                 dataType: 'json',
                 gridToken   : token
             },
