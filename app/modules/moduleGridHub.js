@@ -39,7 +39,8 @@
                         postData.gridToken = grid;
                         // grid[setting.server].gridToken;
                     } else {
-                        url = 'http://' + ((/^localhost/ig.test(setting.server)) ? 'localhost/' : (setting.server + ':10000/')) + channel + '/';
+                        url = 'http://' + setting.server + ':10000/' + channel + '/';
+                      //  url = 'http://' + ((/^localhost/ig.test(setting.server)) ? 'localhost/' : (setting.server + ':10000/')) + channel + '/';
                         postData.gridToken = grid;
                     }
                     // res.send(grid);
