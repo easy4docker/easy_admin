@@ -213,22 +213,12 @@
             try {
                 grids = pkg.require(gridStatusFn);
             } catch (e) {}
-            const _f = {};
+
             for (let key in grids) {
-                _f[key] = ((key)=> {
-                    return (cbk) => {
-                        resp[key] = new Date().getTime();
-                        me.serverMem(
-                            (data) => {
-                            resp[key] = data;
-                            cbk(true);
-                        });
-                    }
-                })(key)
+                resp[key] = grids[key].mem;
+
             }
-            CP.serial(_f, (data) => {
-                cbk({status: 'success', result: resp});
-            }, 3000)
+            cbk({status: 'success', result: resp});
         }
         me.gridAccess = (cbk) => {
             const data = req.body.data;
