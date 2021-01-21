@@ -37,7 +37,7 @@
                     if (setting.target && grid[setting.target]) {
                         url = 'http://' + setting.target + ':10000/' + channel + '/';
                         // postData.gridToken = grid;
-                        postData.gridToken = grid[setting.server].gridToken;
+                        postData.gridToken = grid[setting.target].gridToken;
                     } else {
                         url = 'http://' + setting.server + ':10000/' + channel + '/';
                       //  url = 'http://' + ((/^localhost/ig.test(setting.server)) ? 'localhost/' : (setting.server + ':10000/')) + channel + '/';
