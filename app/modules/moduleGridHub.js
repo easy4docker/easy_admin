@@ -49,9 +49,9 @@
                         if (setting.type === 'json') {
                             // var result = {};
                             // try { result = JSON.parse(body);} catch (e) {}   
-                            res.send(grid);
+                            res.send(body);
                         } else {
-                            res.send(grid);
+                            res.send(body);
                         } 
                     });
                }
