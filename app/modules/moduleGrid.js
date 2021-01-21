@@ -295,7 +295,7 @@
             let grids = me.dataGridMatrix();
             let data = req.query;
             if (!data || !data.ip || !data.token ) {
-                cbk(false);
+                callback(false);
             } else {
                 const _f = {};
                 _f['newToken'] = (cbk) => {
