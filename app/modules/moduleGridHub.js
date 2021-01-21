@@ -31,8 +31,8 @@
                } else {
                     const request = require('request');
                     const grid = me.dataGridMatrix(); 
-                    var postData = {};
-                    let url = setting;
+                    var postData =  setting;
+                    let url = '';
                     var channel = (!setting.channel) ? '_grid' : setting.channel;
                     if (grid[setting.server]) {
                         url = 'http://' + setting.server + ':10000/' + channel + '/';
