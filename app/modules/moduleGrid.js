@@ -96,21 +96,8 @@
                             }
                     });
                 }
-                _f['memStatus'] = (cbk) => {
-                    const cmdStr = 'curl -d "cmd=statusUpdate&data={$(cat /proc/meminfo)}"  -X POST http://' + data.ip + ':10000/_grid/';
-                    exec(cmdStr, {maxBuffer: 1024 * 2048},
-                        function(error, stdout, stderr) {
-                            var v = stdout.replace(/\s+/, '');
-                            if ((error) || !v) {
-                                cbk('');
-                            } else {
-                                cbk(v);
-                            }
-                    });
-                }
                 _f['saveGridStatus'] = (cbk) => {
-                    grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag,
-                    mem : P.data.memStatus};
+                    grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag};
                     fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
                         cbk(true);
                     });
@@ -305,20 +292,52 @@
         }
 
         me.statusUpdate = (cbk) =>{
-            var ret = {};
-            if (req.body.data) {
-                req.body.data.split(/\n/g).forEach(function(line){
-                    line = line.split(':');
-            
-                    // Ignore invalid lines, if any
-                    if (line.length < 2) {
-                        return;
+            let grids = me.dataGridMatrix();
+            if (!data || !data.ip || !data.token ) {
+                cbk(false);
+            } else {
+                const _f = {};
+                _f['newToken'] = (cbk) => {
+                    const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.token;
+                    exec(cmdStr, {maxBuffer: 1024 * 2048},
+                        function(error, stdout, stderr) {
+                            var v = stdout.replace(/\s+/, '');
+                            if ((error) || !v) {
+                                cbk(false);
+                                CP.exit = true;
+                            } else {
+                                cbk(v);
+                            }
+                    });
+                }
+                _f['memStatus'] = (cbk) => {
+                    var ret = {};
+                    if (req.body.data) {
+                        req.body.data.split(/\n/g).forEach(function(line){
+                            line = line.split(':');
+                    
+                            // Ignore invalid lines, if any
+                            if (line.length < 2) {
+                                return;
+                            }
+                            // Remove parseInt call to make all values strings
+                            ret[line[0]] = parseInt(line[1].trim(), 10);
+                        });
                     }
-                    // Remove parseInt call to make all values strings
-                    ret[line[0]] = parseInt(line[1].trim(), 10);
-                });
-            }
-            return cbk(ret);
+                    cbk(ret);
+                }
+                _f['saveGridStatus'] = (cbk) => {
+                    grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag,
+                    mem : CP.data.memStatus};
+                    fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
+                        cbk(true);
+                    });
+                }
+                
+                CP.serial(_f, (data) => {
+                    callback(true);
+                }, 3000)
+            } 
         }
     }
     module.exports = obj;
