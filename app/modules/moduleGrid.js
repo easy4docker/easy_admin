@@ -257,11 +257,25 @@
                 _f[key] = ((key)=> {
                     return (cbk) => {
                         resp[key] = new Date().getTime();
+                        let url = 'http://' + key + ':10000/_grid/',
+                            postData = {cmd : 'serverMem', dataType: 'json'};
+
+                        request.post({url: url, form: postData}, function(err,httpResponse,body){      
+                            if (setting.type === 'json') {
+                                // var result = {};
+                                // try { result = JSON.parse(body);} catch (e) {}   
+                                resp[key] = data;
+                            } else {
+                                resp[key] = data;
+                            }
+                            cbk(true);
+                        });
+                        /*
                         me.serverMem(
                             (data) => {
                             resp[key] = data;
                             cbk(true);
-                        });
+                        });*/
                     }
                 })(key)
             }
