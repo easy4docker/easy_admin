@@ -261,7 +261,7 @@
                             postData = {cmd : 'serverMem', dataType: 'json'};
 
                         request.post({url: url, form: postData}, function(err,httpResponse,body){      
-                            if (setting.type === 'json') {
+                            if (postData.type === 'json') {
                                 // var result = {};
                                 // try { result = JSON.parse(body);} catch (e) {}   
                                 resp[key] = data;
