@@ -67,6 +67,7 @@ module.exports = {
             if (!svr || !token) {
                 return true;
             }
+            console.log('testNiuBi');
             me.root.dataEngine().gridPost({
                 server  : svr,
                 cmd     :'testNiuBi',
