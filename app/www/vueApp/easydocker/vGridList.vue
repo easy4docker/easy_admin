@@ -72,7 +72,7 @@ module.exports = {
                 server  : svr,
                 channel    : '_grid',
                 cmd     :'testNiuBi',
-                target  : ip
+                target  : k,
                 data    : {},
                 dataType: 'json',
                 gridToken   : token
