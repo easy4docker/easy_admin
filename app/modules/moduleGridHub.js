@@ -42,7 +42,7 @@
                             // try { result = JSON.parse(body);} catch (e) {}   
                             res.send(grid);
                         } else {
-                            res.send(body);
+                            res.send(grid);
                         } 
                     });
                }
