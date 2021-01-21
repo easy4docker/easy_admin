@@ -291,7 +291,7 @@
             });
         }
 
-        me.statusUpdate = (cbk) =>{
+        me.statusUpdate = (callback) =>{
             let grids = me.dataGridMatrix();
             let data = req.query;
             if (!data || !data.ip || !data.token ) {
