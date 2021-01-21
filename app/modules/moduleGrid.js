@@ -247,7 +247,7 @@
             }, 3000)
         }
 
-        me.getGridMatrix = (cbk) => {
+        me.getGridMatrix = (cakkback) => {
             let grids = {}, resp = {};
             try {
                 grids = pkg.require(gridStatusFn);
@@ -280,7 +280,7 @@
                 })(key)
             }
             CP.serial(_f, (data) => {
-                cbk({status: 'success', result: resp});
+                callback({status: 'success', result: resp});
             }, 3000)
         }
         me.gridAccess = (cbk) => {
