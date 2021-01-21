@@ -4,7 +4,7 @@
         <hr/>
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3">
-                <input type="checkbox"><span class="pl-2"><a href="javaScript:void(0)" v-on:click="test()">-{{ k }}</a> 
+                <input type="checkbox"><span class="pl-2"><a href="javaScript:void(0)" v-on:click="test()">{{ k }}</a> 
                 <div class="text-right text-info">
                     ({{Math.ceil((v.MemAvailable / v.MemTotal)  * 100)}}% Available)</span> 
                 </div>
