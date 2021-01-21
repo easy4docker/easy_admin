@@ -26,7 +26,7 @@
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 var setting = req.body;
                // if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
-               if (!setting || !setting.gridToken || setting.gridToken != gridToken) {
+               if (!setting || !setting.gridToken) {
                     res.send({status:'failuer', message: 'Unauthorized gridToken!'});
                } else {
                     const request = require('request');
