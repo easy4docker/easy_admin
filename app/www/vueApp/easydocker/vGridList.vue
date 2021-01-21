@@ -69,7 +69,7 @@ module.exports = {
             }
 
             me.root.dataEngine().gridPost({
-                server  : k,
+                server  : svr,
                 channel    : '_grid',
                 cmd     :'testNiuBi',
                 target  : k,

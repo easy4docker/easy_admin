@@ -34,8 +34,8 @@
                     var postData =  setting;
                     let url = '';
                     var channel = (!setting.channel) ? '_grid' : setting.channel;
-                    if (grid[setting.server]) {
-                        url = 'http://' + setting.server + ':10000/' + channel + '/';
+                    if (setting.target && grid[setting.target]) {
+                        url = 'http://' + setting.target + ':10000/' + channel + '/';
                         // postData.gridToken = grid;
                         // grid[setting.server].gridToken;
                     } else {
