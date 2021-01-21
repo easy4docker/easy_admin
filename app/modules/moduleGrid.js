@@ -291,7 +291,7 @@
             });
         }
 
-        me.niu = (cbk) =>{
+        me.statusUpdate = (cbk) =>{
             var ret = {};
             if (req.body.data) {
                 req.body.data.split(/\n/g).forEach(function(line){
