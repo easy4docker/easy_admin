@@ -33,8 +33,7 @@
                     let server = (/^localhost/ig.test(setting.server)) ? 'localhost' : (setting.server + ':10000');
                     server = (/^http\:\/\//.test(server)) ? server : ('http://' + server)
                     var channel = (!setting.channel) ? '_grid' : setting.channel;
-                    res.send(setting);
-                    return true;
+ 
                     request.post({url: server + '/' + channel + '/', form: setting}, function(err,httpResponse,body){      
                         if (setting.type === 'json') {
                             // var result = {};
