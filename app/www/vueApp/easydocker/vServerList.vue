@@ -277,6 +277,7 @@ module.exports = {
             var port = me.arrayPorts(item);
             me.root.popUp(me).show({
                 insideModule: 'iframeObj',
+                insideModuleUrl: '/vueApp/easydocker/popUpModals/iframeObj.vue',
                 data : {
                     url : '/html/tools/cloudTokenAdmin.ect?port=' + port + '&serverName=' + item.name + '&serverType=' + item.serverType
                 },
@@ -293,6 +294,7 @@ module.exports = {
             var me = this;
             me.root.popUp(me).show({
                 insideModule: 'iframeObj',
+                insideModuleUrl: '/vueApp/easydocker/popUpModals/iframeObj.vue',
                 data : {
                     url : '/html/tools/aceEditor.ect?mode=json',
                     item : record

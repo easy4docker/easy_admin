@@ -48,8 +48,7 @@ module.exports = {
    },
    components: VUEApp.loadComponents({
         LOAD    : {
-            'switchBranch' : '/vueApp/easydocker/popUpModals/switchBranch.vue',
-            'iframeObj' : '/vueApp/easydocker/popUpModals/iframeObj.vue'
+
         }, 
         TPL :{}
     })
