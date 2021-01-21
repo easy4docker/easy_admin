@@ -47,28 +47,24 @@ module.exports = {
          localStorage.removeItem('easydockerTOKEN');
          window.location.reload();
       },
-    addGridMonitor() {
-        const me = this;
-        me.root.popUp(me).show({
-            insideModule: 'addGridMonitor',
-            insideModuleUrl: '/vueApp/easydocker/popUpModals/addGridMonitor.vue',
-            data : {
+        addGridMonitor() {
+            const me = this;
+            me.root.popUp(me).show({
+                insideModule: 'addGridMonitor',
+                insideModuleUrl: '/vueApp/easydocker/popUpModals/addGridMonitor.vue',
+                data : {
 
-            },
-            noDefaultCancel : true
-        });
-      }
-    },
-    test() {
-        alert('test');
+                },
+                noDefaultCancel : true
+            });
+        },
+        test() {
+            alert('test');
+        }
     },
     components: VUEApp.loadComponents({
-        LOAD    : {
-        //    'addGridMonitor' : '/vueApp/easydocker/popUpModals/addGridMonitor.vue'
-        }, 
-        TPL :{
-
-        }
+        LOAD    : {}, 
+        TPL :{}
     })
 }
 </script>
