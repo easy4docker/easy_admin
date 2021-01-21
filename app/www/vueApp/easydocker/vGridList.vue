@@ -4,7 +4,7 @@
         <hr/>
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3">
-                <input type="checkbox"><span class="pl-2"><a href="javaScript:void(0)" v-on:click="test()">{{ k }}</a> 
+                <input type="checkbox"><span class="pl-2"><a href="javaScript:void(0)" v-on:click="test(k)">{{ k }}</a> 
                 <div class="text-right text-info">
                     ({{Math.ceil((v.MemAvailable / v.MemTotal)  * 100)}}% Available)</span> 
                 </div>
@@ -58,7 +58,7 @@ module.exports = {
                 noDefaultCancel : true
             });
         },
-        test() {
+        test(k) {
             const me = this;
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
@@ -67,7 +67,7 @@ module.exports = {
             if (!svr || !token) {
                 return true;
             }
-            console.log('testNiuBi');
+            console.log('testNiuBi-' + k);
             me.root.dataEngine().gridPost({
                 server  : svr,
                 cmd     :'testNiuBi',
