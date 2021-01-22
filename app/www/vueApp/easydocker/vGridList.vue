@@ -5,9 +5,14 @@
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3">
                 <input type="checkbox"><span class="pl-2"><a href="javaScript:void(0)" v-on:click="test(k, {s:k})">{{ k }}</a> 
-                <div class="text-right text-info">
-                    {{Math.round(v.MemAvailable  * 0.001)}}M ({{Math.ceil((v.MemAvailable / v.MemTotal)  * 100)}}%)</span> 
+                <div class="text-right text-info pl-3">
+                    <div class="progress bg-secondary ml-3">
+                        <div class="progress-bar bg-success" v-bind:style="{width: (Math.ceil((v.MemAvailable / v.MemTotal)  * 100) + '%')}" >
+                        {{Math.round(v.MemAvailable  * 0.001)}}M
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </span>
         <hr v-if="root.isLocalhost() && Object.keys(root.gridMatrix).length"/>
