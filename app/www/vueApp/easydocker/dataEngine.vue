@@ -89,12 +89,14 @@ module.exports = {
             var me = this;
             me.$parent.triggerSpinner = true;
             me.gridPost({
-                server  : setting.hubServer,
+                server  : setting.server,
                 cmd     :'askServerToken',
-                target  : setting.targetServer,
+                target  : setting.target,
                 dataType: 'json',
                 gridToken   : setting.gridToken
             }, function(result) {
+                console.log(result);
+                return true;
                 $.ajax({
                     type: 'POST',
                     url: 'http://' + result.ip + ':10000/_grid/',
@@ -119,6 +121,7 @@ module.exports = {
             }, function(err) {
                 error(err);
             });
+
         },
 
         runPost(url, cmd, params, success, error) {
