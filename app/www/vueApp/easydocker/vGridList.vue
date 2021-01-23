@@ -73,10 +73,10 @@ module.exports = {
                 return true;
             }
             me.root.dataEngine().serverPost({
-                server  : svr,
+                hubServer  : svr,
                 cmd     :'sampleCode',
                 data    : {},
-                target  : k,
+                targetServer  : 'http://' + k + ':10000',
                 dataType: 'json',
                 gridToken   : token
             },

@@ -89,9 +89,9 @@ module.exports = {
             var me = this;
             me.$parent.triggerSpinner = true;
             me.gridPost({
-                server  : setting.server,
+                server  : setting.hubServer,
                 cmd     :'askServerToken',
-                target  : setting.target,
+                target  : setting.targetServer,
                 dataType: 'json',
                 gridToken   : setting.gridToken
             }, function(result) {
