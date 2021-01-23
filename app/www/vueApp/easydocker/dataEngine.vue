@@ -95,8 +95,8 @@ module.exports = {
                 dataType: 'json',
                 gridToken   : setting.gridToken
             }, function(result) {
-                console.log(result);
-                return true;
+              //  console.log(result);
+              //  return true;
                 $.ajax({
                     type: 'POST',
                     url: 'http://' + result.ip + ':10000/_grid/',
