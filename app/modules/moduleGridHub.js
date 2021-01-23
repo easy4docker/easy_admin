@@ -41,7 +41,7 @@
                     var postData =  setting;
                     let url = '';
                     if (setting.cmd === 'askServerToken') {
-                        res.send((!setting.target) ? {status:'failuer', message: 'Missing setting.target!'} : grid[setting.target]);
+                        res.send(me.askServerToken(setting));
                     } else {
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
                         if (setting.target && grid[setting.target]) {
@@ -64,6 +64,18 @@
                }
             });
             return  true;
+        };
+
+        me.askServerToken  = (setting) => {
+            const grid = me.dataGridMatrix();
+            var result = {}
+            if (!setting.target) {
+                result = {status:'failuer', message: 'Missing setting.target!'};
+            } else {
+                result = grid[setting.target];
+                result.ip = setting.target;
+            }
+            return result;
         };
 
         me.dataGridMatrix = () => {
