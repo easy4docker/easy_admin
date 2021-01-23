@@ -180,33 +180,6 @@
             cbk({ij:'sampleCode3'})
         }
 
-        me.askServerToken = (cbk) => {
-           // cbk(req.body);
-            cbk(me.dataGrids());
-            return true;
-
-            let grids = {}, resp = {};
-            try {
-                grids = pkg.require(gridStatusFn);
-            } catch (e) {}
-            const _f = {};
-            for (let key in grids) {
-                _f[key] = ((key)=> {
-                    return (cbk) => {
-                        resp[key] = new Date().getTime();
-                        me.serverMem(
-                            (data) => {
-                            resp[key] = data;
-                            cbk(true);
-                        });
-                    }
-                })(key)
-            }
-            CP.serial(_f, (data) => {
-                cbk({status: 'success', result: resp});
-            }, 3000)
-        }
-
         me.getGridMatrix = (cbk) => {
             let grids = {}, resp = {};
             try {
