@@ -36,13 +36,13 @@
                if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
                     res.send({status:'failuer', message: 'Unauthorized gridToken!'});
                } else {
-                    const request = require('request');
-                    const grid = me.dataGridMatrix(); 
-                    var postData =  setting;
-                    let url = '';
                     if (setting.cmd === 'askServerToken') {
                         res.send(me.askServerToken(setting));
                     } else {
+                        const request = require('request');
+                        const grid = me.dataGridMatrix(); 
+                        var postData =  setting;
+                        let url = '';
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
                         if (setting.target && grid[setting.target]) {
                             url = 'http://' + setting.target + ':10000/' + channel + '/';
