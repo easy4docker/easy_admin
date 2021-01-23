@@ -266,28 +266,6 @@ module.exports = {
                 dataType: 'JSON'
             });
         },
-        viewLogs(record) {
-            var me = this;
-            me.$parent.triggerSpinner = true;
-
-            $.ajax({
-                type: 'POST',
-                url:'/api',
-                data: {
-                    cmd :'viewLogs',
-                    serverName : record.name,
-                    serverType : record.serverType
-                },
-                success: function(result) {
-                    me.$parent.triggerSpinner = false;
-                    console.log(result);
-                },
-                error: function (jqXHR, textStatus, errorThrown) { 
-                    me.$parent.triggerSpinner = false;
-                },
-                dataType: 'JSON'
-            });
-        },
         removeVirtualServer(data, callback) {
             var me = this;
             me.$parent.triggerSpinner = true;

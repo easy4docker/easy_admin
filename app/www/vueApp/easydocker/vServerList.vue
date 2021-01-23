@@ -64,9 +64,6 @@
                                             <a class="m-1" href="JavaScript:void(0)" v-on:click="switchBranch(item)">
                                                 <i class="fa fa-github" aria-hidden="true"></i> Switch branch
                                             </a><br/>
-                                            <!--a class="m-1" href="JavaScript:void(0)" v-on:click="viewLogs(item)">
-                                                <i class="fa fa-file" aria-hidden="true"></i> Read Logs
-                                            </a><br/-->
                                             <a class="m-1" href="JavaScript:void(0)" v-on:click="popupEditor(item)">
                                                 <i class="fa fa-file-code-o mr-2" aria-hidden="true"></i>Edit Site Variabls
                                             </a><br/>
@@ -200,10 +197,6 @@ module.exports = {
             var me = this;
             me.root.dataEngine().pullCode(record);
         },    
-        viewLogs(record) {
-            var me = this;
-            me.root.dataEngine().viewLogs(record);
-        },       
         startVServer(record) {
             var me = this;
             me.root.dataEngine().startVServer(record);

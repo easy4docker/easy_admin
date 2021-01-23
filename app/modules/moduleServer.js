@@ -62,16 +62,6 @@
             });
         }; 
 
-        this.viewLogs = (serverName, callback) => {
-            var _f = {};
-            _f['sendClone'] = function(cbk) {
-                me.setCron('afterAddDocker-' + serverName, me.templateCMD('afterAddDockerApp.tpl', serverName), cbk);
-            }
-            CP.serial(_f, function(data) {
-                callback({status:'successC'});
-            }, 30000);
-        }; 
-
         this.stopVServer = (serverName, callback) => {
             me.setCron('stopVServer-' + serverName, me.templateCMD('removeDockerApp.tpl', serverName), callback);
         };

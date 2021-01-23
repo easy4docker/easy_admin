@@ -169,7 +169,6 @@
 					break;
 			    
 				case 'pullCode' :
-				case 'viewLogs' :
 				case 'stopVServer' :
 				case 'stopVServer' :
 					var Servers = new MServers(req.body.serverType, env, pkg);
