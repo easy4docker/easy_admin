@@ -74,7 +74,7 @@
             } else {
                 var v = grid[setting.target];
 
-                result = {ip : setting.target, serverToken  : v.gridToken};
+                result = {status: 'success', ip : setting.target, serverToken  : v.gridToken};
             }
             return result;
         };
