@@ -181,7 +181,8 @@
         }
 
         me.askServerToken = (cbk) => {
-            cbk(req.body);
+           // cbk(req.body);
+            cbk(me.dataGrids());
             return true;
 
             let grids = {}, resp = {};

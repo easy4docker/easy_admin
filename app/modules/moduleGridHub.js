@@ -40,22 +40,27 @@
                     const grid = me.dataGridMatrix(); 
                     var postData =  setting;
                     let url = '';
-                    var channel = (!setting.channel) ? '_grid' : setting.channel;
-                    if (setting.target && grid[setting.target]) {
-                        url = 'http://' + setting.target + ':10000/' + channel + '/';
-                        postData.gridToken = grid[setting.target].gridToken;
+                    if (setting.cmd === 'askServerToken') {
+                        res.send(grid);
                     } else {
-                        url = 'http://' + setting.server + ':10000/' + channel + '/';
-                    }
-                    request.post({url: url, form: postData}, function(err,httpResponse,body){      
-                        if (setting.type === 'json') {
-                            // var result = {};
-                            // try { result = JSON.parse(body);} catch (e) {}   
-                            res.send(body);
+                        var channel = (!setting.channel) ? '_grid' : setting.channel;
+                        if (setting.target && grid[setting.target]) {
+                            url = 'http://' + setting.target + ':10000/' + channel + '/';
+                            postData.gridToken = grid[setting.target].gridToken;
                         } else {
-                            res.send(body);
-                        } 
-                    });
+                            url = 'http://' + setting.server + ':10000/' + channel + '/';
+                        }
+                        request.post({url: url, form: postData}, function(err,httpResponse,body){      
+                            if (setting.type === 'json') {
+                                // var result = {};
+                                // try { result = JSON.parse(body);} catch (e) {}   
+                                res.send(body);
+                            } else {
+                                res.send(body);
+                            } 
+                        });
+                    }
+
                }
             });
             return  true;
