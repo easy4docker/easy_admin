@@ -76,7 +76,7 @@ module.exports = {
             me.root.dataEngine().gridPost({
                 server  : svr,
                 channel    : '_grid',
-                cmd     :'testNiuBi',
+                cmd     :'askServerToken',
                 target  : k,
                 data    : dt,
                 dataType: 'json',

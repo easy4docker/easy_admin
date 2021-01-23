@@ -18,8 +18,6 @@
         } catch (e) {}
         
         me.get = () => {
-            // res.send('===uuu===');
-            // return true;
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             if (mp) {
@@ -182,7 +180,7 @@
             cbk({ij:'sampleCode3'})
         }
 
-        me.testNiuBi = (cbk) => {
+        me.askServerToken = (cbk) => {
             cbk(req.body);
             return true;
 
