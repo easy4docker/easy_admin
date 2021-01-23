@@ -72,8 +72,9 @@
             if (!setting.target) {
                 result = {status:'failuer', message: 'Missing setting.target!'};
             } else {
-                result = grid[setting.target];
-                result.ip = setting.target;
+                var v = grid[setting.target];
+
+                result = {ip : setting.target, serverToken  : v.gridToken};
             }
             return result;
         };
