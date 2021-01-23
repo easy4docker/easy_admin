@@ -72,10 +72,10 @@ module.exports = {
             if (!svr || !token) {
                 return true;
             }
-
-            me.root.dataEngine().gridPost({
+            me.root.dataEngine().serverPost({
                 server  : svr,
-                cmd     :'askServerToken',
+                cmd     :'sampleCode',
+                data    : {},
                 target  : k,
                 dataType: 'json',
                 gridToken   : token

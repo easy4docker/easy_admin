@@ -88,24 +88,36 @@ module.exports = {
         serverPost(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
-            $.ajax({
-                type: 'POST',
-                url:  setting.url,
-                data: setting,
-                success: function(result) {
-                    me.$parent.triggerSpinner = false;
-                    if (typeof  success === 'function') {
-                        success(result);
-                    }
-                },
-                error: function (jqXHR) { 
-                    me.$parent.triggerSpinner = false; 
-                    console.log('error');
-                    if (typeof error === 'function') {
-                        error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
-                    }
-                },
-                dataType: (!setting.dataType) ? 'text' : setting.dataType
+            me.gridPost({
+                server  : setting.server,
+                cmd     :'askServerToken',
+                target  : setting.target,
+                dataType: 'json',
+                gridToken   : setting.gridToken
+            }, function(result) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://' + result.ip + ':10000/_grid/',
+                    data: {
+                        cmd : setting.cmd,
+                        data : setting.data
+                    },
+                    success: function(result1) {
+                        me.$parent.triggerSpinner = false;
+                        if (typeof  success === 'function') {
+                            success(result1);
+                        }
+                    },
+                    error: function (jqXHR) { 
+                        me.$parent.triggerSpinner = false; 
+                        if (typeof error === 'function') {
+                            error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
+                        }
+                    },
+                    dataType: (!setting.dataType) ? 'text' : setting.dataType
+                });
+            }, function(err) {
+                error(err);
             });
         },
 
