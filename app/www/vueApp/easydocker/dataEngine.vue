@@ -95,7 +95,7 @@ module.exports = {
                 dataType: 'json',
                 gridToken   : setting.gridToken
             }, function(result) {
-                console.log(setting);
+                console.log(result);
                 return true;
                 $.ajax({
                     type: 'POST',
