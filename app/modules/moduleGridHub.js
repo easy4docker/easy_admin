@@ -41,7 +41,7 @@
                     var postData =  setting;
                     let url = '';
                     if (setting.cmd === 'askServerToken') {
-                        res.send(grid);
+                        res.send(grid[setting.target]);
                     } else {
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
                         if (setting.target && grid[setting.target]) {
