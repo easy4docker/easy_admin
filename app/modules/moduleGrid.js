@@ -11,7 +11,7 @@
             gridStatusFn = data_dir + '/_gridMatrix.json',
             gridServerFn = key_dir + '/_gridServers.json',
             gridTokenFn = key_dir + '/_gridToken';
-            
+            gridOldTokenFn = key_dir + '/_gridOldToken';
         var _env = {};
         try {
             _env = require(data_dir + '/_env.json');
@@ -60,8 +60,10 @@
                     callback('');
                 } else {
                     const newToken = me.makeid(32);
-                    fs.writeFile(gridTokenFn, newToken, (err) => {
-                        callback((err) ? '' : newToken);
+                    fs.writeFile(gridOldTokenFn, oldToken, (err) => {
+                        fs.writeFile(gridTokenFn, newToken, (err) => {
+                            callback((err) ? '' : newToken);
+                        });
                     });
                 }
             });
