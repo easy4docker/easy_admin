@@ -70,7 +70,7 @@
         }
     
         /* --- DATA function ---->> */
-        me.tokenValidation = (success, failed) => {
+        me.gridTokenValidation = (success, failed) => {
             const gridToken = (req.query.gridToken) ? req.query.gridToken : req.body.gridToken;
             fs.readFile(gridTokenFn, 'utf-8', (err, data) => {
                 if (data === gridToken) {
