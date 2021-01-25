@@ -70,6 +70,23 @@
         }
     
         /* --- DATA function ---->> */
+        me.tokenValidation = (success, failed) => {
+            const gridToken = (req.query.gridToken) ? req.query.gridToken : req.body.gridToken;
+            fs.readFile(gridTokenFn, 'utf-8', (err, data) => {
+                if (data === gridToken) {
+                    success();
+                } else {
+                    fs.readFile(gridTokenFn, 'utf-8', (err, dataOld) => {
+                        if (dataOld === gridToken) {
+                            success();
+                        } else {
+                            failed();
+                        }
+                    });
+                }
+            })
+        }
+
         me.makeid = (length) => {
             var result           = '';
             var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
