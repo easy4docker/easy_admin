@@ -48,7 +48,7 @@
         },
         me.getIP = () => {
             fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
-                res.send(err.message);
+                res.send(data_dir+ '/_ip');
             });
         },
         me.getToken = () => {
