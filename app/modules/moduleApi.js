@@ -24,6 +24,17 @@
 			}
 
         };
+
+        me.get = () => {
+            let p = req.params[0],
+                mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
+			try {
+                me[mp[2]]();
+            } catch (e) {
+                res.send({status:'failure', message : '404 wrong path ' + p + ' !'});
+			}
+        };
+
         me.getGridMatrix = (data) => {
             res.send({status: 'success', result: me.dataGridMatrix()});
         }

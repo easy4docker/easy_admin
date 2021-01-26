@@ -37,6 +37,13 @@
 				return true
 			}
 
+			if (mp && mp[1] === '_api') {
+				var MApi= pkg.require(env.root+ '/modules/moduleApi.js');
+				let api =  new MApi(env, pkg, req, res);
+				api.get();
+				return true
+			}
+
 			if (p == '/') {
 				var fn = env.root + '/www/index.html';
 				res.sendFile(fn);
