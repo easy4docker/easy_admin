@@ -7,7 +7,7 @@ IP=$(cat ${SCR_DIR}/data/_ip)
 IPA=$(cat ${SCR_DIR}/data/_ipA)
 TOKEN=$(cat ${SCR_DIR}/easydocker_KEY/_gridToken)
 
-if [ ${IPA} != ${IP} ] | [ -z ${IP} ]; then
+if [ "${IPA}" != "${IP}" ] | [ -z "${IP}" ] | [ -z "${IPA}" ]; then
     echo "ASK OUTSIDE" 
     curl ipinfo.io/ip > ${SCR_DIR}/data/_ip
     curl ifconfig.me > ${SCR_DIR}/data/_ipA
