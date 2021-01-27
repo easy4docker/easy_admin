@@ -9,7 +9,7 @@
             data_dir = '/var/_localAppData',
             key_dir = '/var/_localAppKey',
             gridStatusFn = data_dir + '/_gridMatrix.json',
-            gridServerFn = key_dir + '/_gridServers.json';
+            authToken = data_dir + '/authToken.json';
 
         var _env = {};
         try {
@@ -20,7 +20,7 @@
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             const METHODS = [
-                'getIP', 'getGridMatrix'
+                'getIP', 'getGridMatrix', 'getToken'
             ];
             if (METHODS.indexOf(mp[2]) === -1) {
                 me.sendErrorJson(p);
@@ -52,6 +52,20 @@
             }
         };
 
+        me.localTokenValidation = (token, cbk) => {
+            fs.readFile(authToken, 'utf-8', (err, data) => {
+                if (data === token) {
+                    cbk();
+                } else {
+                    me.sendUnauthErrorJson('');
+                }
+            });
+        }
+
+        me.sendUnauthErrorJson = () => {
+            res.send({status:'failure', actionCode : 'unauth'});
+        }
+
         me.sendErrorJson = (p) => {
             res.send({status:'failure', message : '404 wrong path or cmd ' + p + ' !'});
         }
@@ -70,15 +84,17 @@
                 grids = pkg.require(gridStatusFn);
             } catch (e) {}
             return grids;
-        },
+        }
+
         me.getIP = (cbk) => {
             fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
                 cbk(data);
             });
-        },
-        me.getToken = () => {
-            fs.readFile(gridTokenFn, 'utf-8', (err, data) => {
-                res.send(data);
+        }
+        
+        me.getToken = (cbk) => {
+            fs.readFile(authToken, 'utf-8', (err, data) => {
+                cbk(data);
             });
         }
     }
