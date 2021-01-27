@@ -16,11 +16,15 @@
             _env = require(data_dir + '/_env.json');
         } catch (e) {}
 
-        me.call = (rest, cbk) => {
-            var token = (req.query.authToken) ? req.query.authToken : (req.body.authToken) ? req.body.authToken : '';
-            me.localTokenValidation(
-                token, () =>   me[rest]
-            );
+        me.call = (rest, bypassLocalAuth) => {
+            if (!bypassLocalAuth) {
+                var token = (req.query.authToken) ? req.query.authToken : (req.body.authToken) ? req.body.authToken : '';
+                me.localTokenValidation(
+                    token, () =>   me[rest]
+                );
+            } else {
+                me[rest]();
+            }
         }
         me.get = () => {
             let p = req.params[0],

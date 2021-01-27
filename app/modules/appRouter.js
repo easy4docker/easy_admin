@@ -40,7 +40,7 @@
 			if (mp && mp[1] === '_api') {
 				var MApi= pkg.require(env.root+ '/modules/moduleApi.js');
 				let api =  new MApi(env, pkg, req, res);
-				api.call('get');
+				api.call('get', true);
 				return true
 			}
 
@@ -103,7 +103,7 @@
 					case '_api':
 						var MApi= pkg.require(env.root+ '/modules/moduleApi.js');
 						let api =  new MApi(env, pkg, req, res);
-						api.call('post');
+						api.call('post', true);
 						break; 
 					case 'api':
 						me.postApi();
