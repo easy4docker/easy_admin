@@ -37,7 +37,7 @@
             } else {
                 try {
                     me[mp[2]]((data) => {
-                        me.sendOutput(data);
+                        pkg.common.output(data);
                     });
                 } catch (e) {
                     pkg.common.sendErrorJson('wrong path ' + p + '!');
@@ -54,7 +54,7 @@
             } else {
                 try {
                     me[req.body.cmd]((data) => {
-                        me.sendOutput(data);
+                        pkg.common.output(data);
                     });
                 } catch (e) {
                     pkg.common.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
@@ -75,11 +75,6 @@
         me.sendUnauthErrorJson = () => {
             res.send({status:'failure', actionCode : 'unauth'});
         }
-
-        me.sendOutput = (data) => {
-            res.send(data);
-        }    
-
 
         me.getGridMatrix = (cbk) => {
            cbk({status: 'success', result: me.dataGridMatrix()});

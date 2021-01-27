@@ -4,6 +4,9 @@
         me.sendErrorJson = (message) => {
             res.send({status:'failure', code: '404', message : message});
         }
+        me.output = (data) => {
+            res.send(data);
+        }
     }
     module.exports = obj;
 })()
