@@ -5,6 +5,8 @@
 		var path = require('path');
 
 		this.route = (rest) => {
+			var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
+			pkg.common = new MCommon(env, pkg, req, res);
 			if (rest === 'get') {
 				me.get();
 			} else {
@@ -103,7 +105,7 @@
 					case '_api':
 						var MApi= pkg.require(env.root+ '/modules/moduleApi.js');
 						let api =  new MApi(env, pkg, req, res);
-						api.call('post', true);
+						api.call('post', false);
 						break; 
 					case 'api':
 						me.postApi();

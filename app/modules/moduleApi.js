@@ -33,14 +33,14 @@
                 'getIP', 'getGridMatrix', 'getToken'
             ];
             if (METHODS.indexOf(mp[2]) === -1) {
-                me.sendErrorJson(p);
+                pkg.common.sendErrorJson('wrong path ' + p + '!');
             } else {
                 try {
                     me[mp[2]]((data) => {
                         me.sendOutput(data);
                     });
                 } catch (e) {
-                    me.sendErrorJson(p);
+                    pkg.common.sendErrorJson('wrong path ' + p + '!');
                 }
             }
         };
@@ -50,14 +50,14 @@
                 'getIP'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
-                me.sendErrorJson();
+                pkg.common.sendErrorJson('missing cmd!');
             } else {
                 try {
                     me[req.body.cmd]((data) => {
                         me.sendOutput(data);
                     });
                 } catch (e) {
-                    me.sendErrorJson(req.body.cmd);
+                    pkg.common.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
                 }
             }
         };
@@ -76,9 +76,6 @@
             res.send({status:'failure', actionCode : 'unauth'});
         }
 
-        me.sendErrorJson = (p) => {
-            res.send({status:'failure', message : '404 wrong path or cmd ' + p + ' !'});
-        }
         me.sendOutput = (data) => {
             res.send(data);
         }    
