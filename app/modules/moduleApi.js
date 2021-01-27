@@ -20,17 +20,17 @@
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             const METHODS = [
-                'getIP'
+                'getIP', 'getGridMatrix'
             ];
             if (mp[2].indexOf(METHODS) === -1) {
-                me.sendErrorJson();
+                me.sendErrorJson(p);
             } else {
                 try {
                     me[mp[2]]((data) => {
                         me.sendOutput(data);
                     });
                 } catch (e) {
-                    me.sendErrorJson();
+                    me.sendErrorJson(p);
                 }
             }
         };
@@ -47,21 +47,21 @@
                         me.sendOutput(data);
                     });
                 } catch (e) {
-                    me.sendErrorJson();
+                    me.sendErrorJson(req.body.cmd);
                 }
             }
         };
 
-        me.sendErrorJson = () => {
-            res.send({status:'failure', message : '404 wrong path ' + p + ' !'});
+        me.sendErrorJson = (p) => {
+            res.send({status:'failure', message : '404 wrong path or cmd ' + p + ' !'});
         }
         me.sendOutput = (data) => {
             res.send(data);
         }    
 
 
-        me.getGridMatrix = (data) => {
-            res.send({status: 'success', result: me.dataGridMatrix()});
+        me.getGridMatrix = (cbk) => {
+           cbk({status: 'success', result: me.dataGridMatrix()});
         }
 
         me.dataGridMatrix = () => {
