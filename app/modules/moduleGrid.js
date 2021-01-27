@@ -17,6 +17,37 @@
             _env = require(data_dir + '/_env.json');
         } catch (e) {}
         
+        me.call = (rest, bypassLocalAuth) => {
+            if (!bypassLocalAuth) {
+                var token = (req.query.authToken) ? req.query.authToken : (req.body.authToken) ? req.body.authToken : '';
+                me.gridTokenValidation(
+                    token, () =>   me[rest]
+                );
+            } else {
+                me[rest]();
+            }
+        }
+
+        me._get = () => {
+            let p = req.params[0],
+            mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
+            const METHODS = [
+                'renewToken', 'serverMem'
+            ];
+            if (METHODS.indexOf(mp[2]) === -1) {
+                pkg.common.sendErrorJson('wrong path ' + p + '!');
+            } else {
+                try {
+                    me[mp[2]]((data) => {
+                        pkg.common.output(data);
+                    });
+                } catch (e) {
+                    pkg.common.sendErrorJson('wrong path ' + p + '!');
+                }
+            }
+            
+        };
+
         me.get = () => {
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
@@ -42,6 +73,25 @@
             }
             
         };
+
+        me._post = () => {
+            const methods = [
+                'getIP'
+            ];
+            if (METHODS.indexOf(req.body.cmd) === -1) {
+                pkg.common.sendErrorJson('missing cmd!');
+            } else {
+                try {
+                    me[req.body.cmd]((data) => {
+                        pkg.common.output(data);
+                    });
+                } catch (e) {
+                    pkg.common.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
+                }
+            }
+        };
+
+
 
         me.post = () => {
             if (typeof me[req.body.cmd] === 'function') {

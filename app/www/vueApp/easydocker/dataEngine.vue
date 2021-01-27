@@ -38,7 +38,7 @@ module.exports = {
                 dataType: 'JSON'
             });
         },
- 
+        /* ------------ confirmed ------------*/
         gridPost(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
@@ -61,6 +61,7 @@ module.exports = {
                 dataType: (!setting.dataType) ? 'text' : setting.dataType
             });
         },
+        /* ------------ confirmed ------------*/
         appPost(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
