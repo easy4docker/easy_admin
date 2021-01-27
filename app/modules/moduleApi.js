@@ -26,6 +26,7 @@
                 me[rest]();
             }
         }
+        
         me.get = () => {
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
