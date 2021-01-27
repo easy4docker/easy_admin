@@ -22,7 +22,7 @@
             const METHODS = [
                 'getIP', 'getGridMatrix'
             ];
-            if (mp[2].indexOf(METHODS) === -1) {
+            if (METHODS.indexOf(mp[2]) === -1) {
                 me.sendErrorJson(p);
             } else {
                 try {
@@ -39,7 +39,7 @@
             const methods = [
                 'getIP'
             ];
-            if (req.body.cmd.indexOf(METHODS) === -1) {
+            if (METHODS.indexOf(req.body.cmd) === -1) {
                 me.sendErrorJson();
             } else {
                 try {
