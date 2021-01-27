@@ -67,13 +67,9 @@
                 if (data === token) {
                     success();
                 } else {
-                    me.sendUnauthErrorJson('');
+                    pkg.common.sendAction('', 'wrong authentication token!');
                 }
             });
-        }
-
-        me.sendUnauthErrorJson = () => {
-            res.send({status:'failure', actionCode : 'unauth'});
         }
 
         me.getGridMatrix = (cbk) => {

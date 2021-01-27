@@ -7,6 +7,9 @@
         me.output = (data) => {
             res.send(data);
         }
+        me.sendAction = (code, message) => {
+            res.send({status:'failure', action: code, message : message});
+        }
     }
     module.exports = obj;
 })()
