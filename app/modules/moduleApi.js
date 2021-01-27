@@ -16,6 +16,12 @@
             _env = require(data_dir + '/_env.json');
         } catch (e) {}
 
+        me.call = (rest, cbk) => {
+            var token = (req.query.authToken) ? req.query.authToken : (req.body.authToken) ? req.body.authToken : '';
+            me.localTokenValidation(
+                token, () =>   me[rest]
+            );
+        }
         me.get = () => {
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
@@ -52,10 +58,10 @@
             }
         };
 
-        me.localTokenValidation = (token, cbk) => {
+        me.localTokenValidation = (token, success) => {
             fs.readFile(authToken, 'utf-8', (err, data) => {
                 if (data === token) {
-                    cbk();
+                    success();
                 } else {
                     me.sendUnauthErrorJson('');
                 }
