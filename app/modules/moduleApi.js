@@ -16,24 +16,49 @@
             _env = require(data_dir + '/_env.json');
         } catch (e) {}
 
-        me.post = () => {
-			if (typeof me[req.body.cmd] === 'function') {
-				me[req.body.cmd](req.body);
-			} else {
-                res.send({status:'failure', message : '404 wrong cmd ' + req.body.cmd + ' !'});
-			}
-
-        };
-
         me.get = () => {
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
-			try {
-                me[mp[2]]();
-            } catch (e) {
-                res.send({status:'failure', message : '404 wrong path ' + p + ' !'});
-			}
+            const METHODS = [
+                'getIP'
+            ];
+            if (mp[2].indexOf(METHODS) === -1) {
+                me.sendErrorJson();
+            } else {
+                try {
+                    me[mp[2]]((data) => {
+                        me.sendOutput(data);
+                    });
+                } catch (e) {
+                    me.sendErrorJson();
+                }
+            }
         };
+
+        me.post = () => {
+            const methods = [
+                'getIP'
+            ];
+            if (req.body.cmd.indexOf(METHODS) === -1) {
+                me.sendErrorJson();
+            } else {
+                try {
+                    me[req.body.cmd]((data) => {
+                        me.sendOutput(data);
+                    });
+                } catch (e) {
+                    me.sendErrorJson();
+                }
+            }
+        };
+
+        me.sendErrorJson = () => {
+            res.send({status:'failure', message : '404 wrong path ' + p + ' !'});
+        }
+        me.sendOutput = (data) => {
+            res.send(data);
+        }    
+
 
         me.getGridMatrix = (data) => {
             res.send({status: 'success', result: me.dataGridMatrix()});
@@ -46,9 +71,9 @@
             } catch (e) {}
             return grids;
         },
-        me.getIP = () => {
+        me.getIP = (cbk) => {
             fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
-                res.send(data);
+                cbk(data);
             });
         },
         me.getToken = () => {
