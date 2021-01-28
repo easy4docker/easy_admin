@@ -99,7 +99,6 @@
                 (err) => {
                     callback({status: 'success', token : token});
                 });
-                callback({status: 'success', token : token});
             }
         };
         
