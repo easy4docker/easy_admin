@@ -292,18 +292,6 @@
                 callback(false);
                 return true;
             } else {
-                const cmdStr = 'curl http://r' + data.ip + ':10000/_grid/renewToken/?old=' + data.gridToken;
-                exec(cmdStr, {maxBuffer: 1024 * 2048},
-                    (error, stdout, stderr) => {
-                        var v = (!stdout) ? '' : stdout.replace(/\s+/, '');
-                        if ((error) || !v) {
-                            callback(false);
-                          //  CP.exit = true;
-                        } else {
-                            callback(v);
-                        }
-                });
-                return true;
                 const _f = {};
                 _f['newToken'] = (cbk) => {
                     const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.gridToken;
@@ -312,7 +300,7 @@
                             var v = (!stdout) ? '' : stdout.replace(/\s+/, '');
                             if ((error) || !v) {
                                 cbk(false);
-                                CP.exit = true;
+                              //  CP.exit = true;
                             } else {
                                 cbk(v);
                             }
