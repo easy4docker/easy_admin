@@ -106,7 +106,7 @@
                     callback('===');
                 } else {
                     const newToken = me.makeid(32);
-                    fs.writeFile(gridOldTokenFn, oldToken, (err) => {
+                    fs.writeFile(gridOldTokenFn, gridToken, (err) => {
                         fs.writeFile(gridTokenFn, newToken, (err) => {
                             callback((err) ? '' : newToken);
                         });
