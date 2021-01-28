@@ -18,7 +18,7 @@
         } catch (e) {}
         
         me.get = () => {
-            res.send({status:'failure', message : '500 invalid access !'});
+            pkg.common.sendErrorJson('500 invalid access !');
             return true;
         };
 
@@ -29,6 +29,8 @@
                 auth = pkg.require(authfn);
             } catch (e) {}
 
+            pkg.common.sendErrorJson('500 invalid access !');
+            return true;
 
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 var setting = req.body;
