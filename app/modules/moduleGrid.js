@@ -291,10 +291,6 @@
                 callback('-statusUpdate-A');
                 return true;
             } else {
-                const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.gridToken;
-                callback(cmdStr);
-                return true;
-
                 const _f = {};
                 _f['newToken'] = (cbk) => {
                     const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.token;
@@ -309,7 +305,10 @@
                             }
                     });
                 }
+                
                 _f['memStatus'] = (cbk) => {
+                    cbk({});
+                    return true;
                     var ret = {};
                     if (req.body.data) {
                         req.body.data.split(/\n/g).forEach(function(line){
@@ -335,7 +334,10 @@
                 }
                 
                 CP.serial(_f, (data) => {
-                    callback(true);
+                    const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.gridToken;
+                    callback(cmdStr);
+                    return true;
+                   // callback(true);
                 }, 3000)
             } 
         }
