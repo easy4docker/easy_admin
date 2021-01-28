@@ -62,6 +62,7 @@ module.exports = {
             });
         },
         /* ------------ confirmed ------------*/
+        // 
         appPost(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
@@ -85,7 +86,8 @@ module.exports = {
                 dataType: (!setting.dataType) ? 'text' : setting.dataType
             });
         },
-
+        /* ------------ confirmed ------------*/
+        // based on grid post to target server 
         serverPost(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
@@ -96,8 +98,6 @@ module.exports = {
                 dataType: 'json',
                 gridToken   : setting.gridToken
             }, function(result) {
-              //  console.log(result);
-              //  return true;
                 $.ajax({
                     type: 'POST',
                     url: 'http://' + result.ip + ':10000/_grid/',

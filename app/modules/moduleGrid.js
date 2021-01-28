@@ -19,16 +19,16 @@
         
         me.call = (rest, bypassLocalAuth) => {
             if (!bypassLocalAuth) {
-                var token = (req.query.authToken) ? req.query.authToken : (req.body.authToken) ? req.body.authToken : '';
+                var gridToken = (req.query.gridToken) ? req.query.gridToken : (req.body.gridToken) ? req.body.gridToken : '';
                 me.gridTokenValidation(
-                    token, () =>   me[rest]
+                    gridToken, () =>   me[rest]
                 );
             } else {
                 me[rest]();
             }
         }
 
-        me._get = () => {
+        me.get = () => {
             let p = req.params[0],
             mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             const METHODS = [
@@ -48,7 +48,7 @@
             
         };
 
-        me.get = () => {
+        me._get = () => {
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             if (mp) {
@@ -74,9 +74,9 @@
             
         };
 
-        me._post = () => {
+        me.post = () => {
             const methods = [
-                'getIP'
+                'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'syncAppCode', 'serverMem', 'sampleCode'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                 pkg.common.sendErrorJson('missing cmd!');
@@ -91,9 +91,7 @@
             }
         };
 
-
-
-        me.post = () => {
+        me._post = () => {
             if (typeof me[req.body.cmd] === 'function') {
                 me[req.body.cmd]((result) => {
                     res.send(result);
@@ -120,8 +118,8 @@
         }
     
         /* --- DATA function ---->> */
-        me.gridTokenValidation = (success, failed) => {
-            const gridToken = (req.query.gridToken) ? req.query.gridToken : req.body.gridToken;
+
+        me.gridTokenValidation = (gridToken, success) => {
             fs.readFile(gridTokenFn, 'utf-8', (err, data) => {
                 if (data === gridToken) {
                     success();
@@ -130,7 +128,7 @@
                         if (dataOld === gridToken) {
                             success();
                         } else {
-                            failed();
+                            pkg.common.sendAction('', 'wrong authentication gridToken!');;
                         }
                     });
                 }

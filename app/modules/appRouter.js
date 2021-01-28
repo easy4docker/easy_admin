@@ -21,7 +21,7 @@
 			if (mp && mp[1] === '_grid') {
 				var MGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
 				let mGrid =  new MGrid(env, pkg, req, res);
-				mGrid.get();
+				mGrid.call('get', true);
 				return true;
 			}
 
@@ -93,7 +93,7 @@
 					case '_grid':
 						var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
 						let mGrid =  new MAGrid(env, pkg, req, res);
-						mGrid.post();
+						mGrid.call('post', false);
 						break; 
 
 					case '_gridHub':
