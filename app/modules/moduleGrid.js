@@ -17,8 +17,8 @@
             _env = require(data_dir + '/_env.json');
         } catch (e) {}
         
-        me.call = (rest, bypassLocalAuth) => {
-            if (!bypassLocalAuth) {
+        me.call = (rest, bypassGridAuth) => {
+            if (!bypassGridAuth) {
                 var gridToken = (req.query.gridToken) ? req.query.gridToken : (req.body.gridToken) ? req.body.gridToken : '';
                 me.gridTokenValidation(
                     gridToken, () =>   me[rest]
