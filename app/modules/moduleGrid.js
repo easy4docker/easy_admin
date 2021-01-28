@@ -89,7 +89,7 @@
                         console.log('===> ! grid call post end ' + req.body.cmd);
                     });
                 } catch (e) {
-                    console.log('===> ! grid call post end e ' + req.body.cmd) + '==>'+ e.message);
+                    console.log('===> ! grid call post end e ' + req.body.cmd + '==>'+ e.message);
                     pkg.common.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
                 }
             }
