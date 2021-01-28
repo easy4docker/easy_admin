@@ -21,8 +21,11 @@
             pkg.common.sendErrorJson('invalid access !');
             return true;
         };
-
         me.post = () => {
+            pkg.common.sendErrorJson('invalid access !');
+            return true;
+        }
+        me._post = () => {
             const authfn = '/var/_localAppData/authData.json';
             let auth = {}, authToken = {};
             try {
