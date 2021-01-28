@@ -283,7 +283,7 @@
         }
 
         me.statusUpdate = (callback) =>{
-            callback('statusUpdate');
+            callback('-statusUpdate-');
             return true;
             let grids = me.dataGridMatrix();
             let data = req.query;
