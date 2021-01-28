@@ -292,6 +292,8 @@
                 callback(false);
                 return true;
             } else {
+                callback(false);
+                return true;
                 const _f = {};
                 _f['newToken'] = (cbk) => {
                     const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.gridToken;
