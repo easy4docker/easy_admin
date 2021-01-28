@@ -81,6 +81,7 @@
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                 pkg.common.sendErrorJson('missing cmd!');
+                console.log('===> ! grid call end 1');
             } else {
                 try {
                     console.log('===> ! grid call post start ' + req.body.cmd);
@@ -93,7 +94,7 @@
                     pkg.common.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
                 }
             }
-            console.log('===> ! grid call end');
+            console.log('===> ! grid call end 2');
         };
 
         me._post = () => {
