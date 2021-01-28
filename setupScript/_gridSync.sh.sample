@@ -13,5 +13,5 @@ if [ "${IPA}" != "${IP}" ] | [ -z "${IP}" ] | [ -z "${IPA}" ]; then
     curl ifconfig.me > ${SCR_DIR}/data/_ipA
     IP=$(cat ${SCR_DIR}/data/_ip)
 fi
-echo curl -d "cmd=statusUpdate&data={$(cat /proc/meminfo)}"  -X POST ${GRID_SERVER}:10000/_grid/?ip=${IP}\&server=${GRID_SERVER}\&tag=$2\&token=${TOKEN} > /tmp/niu
-curl -d "cmd=statusUpdate&data={$(cat /proc/meminfo)}"  -X POST ${GRID_SERVER}:10000/_grid/?ip=${IP}\&server=${GRID_SERVER}\&tag=$2\&token=${TOKEN}
+echo curl -d "cmd=statusUpdate&data={$(cat /proc/meminfo)}"  -X POST ${GRID_SERVER}:10000/_grid/?ip=${IP}\&server=${GRID_SERVER}\&tag=$2\&gridToken=${TOKEN} > /tmp/niu
+curl -d "cmd=statusUpdate&data={$(cat /proc/meminfo)}"  -X POST ${GRID_SERVER}:10000/_grid/?ip=${IP}\&server=${GRID_SERVER}\&tag=$2\&gridToken=${TOKEN}
