@@ -20,6 +20,8 @@
         me.call = (rest, bypassGridAuth) => {
             if (!bypassGridAuth) {
                 var gridToken = (req.query.gridToken) ? req.query.gridToken : (req.body.gridToken) ? req.body.gridToken : '';
+                res.send(gridToken + '===');
+                return true;
                 me.gridTokenValidation(
                     gridToken, () =>   me[rest]
                 );
