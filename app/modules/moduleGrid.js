@@ -296,7 +296,7 @@
                     const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.token;
                     exec(cmdStr, {maxBuffer: 1024 * 2048},
                         function(error, stdout, stderr) {
-                            var v = stdout.replace(/\s+/, '');
+                            var v = (!stdout) ? '' : stdout.replace(/\s+/, '');
                             if ((error) || !v) {
                                 cbk(false);
                                 CP.exit = true;
