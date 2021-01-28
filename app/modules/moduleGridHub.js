@@ -11,14 +11,16 @@
             gridStatusFn = data_dir + '/_gridMatrix.json',
             gridServerFn = key_dir + '/_gridServers.json',
             gridTokenFn = key_dir + '/_gridToken';
-            
+
+        var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
+        me.common = new MCommon(env, pkg, req, res);
         var _env = {};
         try {
             _env = require(data_dir + '/_env.json');
         } catch (e) {}
         
         me.get = () => {
-            pkg.common.sendErrorJson('invalid access !');
+           me.common.sendErrorJson('invalid access !');
             return true;
         };
         me.post = () => {
@@ -26,7 +28,7 @@
                 me._post();
             } catch (e) {
                 console.log('===> !' + e.message);
-                pkg.common.sendErrorJson('===> !' + e.message);
+               me.common.sendErrorJson('===> !' + e.message);
             }
             
             return true;
@@ -42,7 +44,7 @@
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 var setting = req.body;
                if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
-                    pkg.common.sendAction('', 'Unauthorized gridToken!');
+                   me.common.sendAction('', 'Unauthorized gridToken!');
                } else {
                     if (setting.cmd === 'askServerToken') {
                         res.send(me.askServerToken(setting));

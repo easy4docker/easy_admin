@@ -10,7 +10,9 @@
             key_dir = '/var/_localAppKey',
             gridStatusFn = data_dir + '/_gridMatrix.json',
             authToken = data_dir + '/authToken.json';
-
+            
+		var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
+		me.common = new MCommon(env, pkg, req, res);
         var _env = {};
         try {
             _env = require(data_dir + '/_env.json');
@@ -34,14 +36,14 @@
                 'getIP', 'getGridMatrix', 'getToken'
             ];
             if (METHODS.indexOf(mp[2]) === -1) {
-                pkg.common.sendErrorJson('wrong path ' + p + '!');
+               me.common.sendErrorJson('wrong path ' + p + '!');
             } else {
                 try {
                     me[mp[2]]((data) => {
-                        pkg.common.output(data);
+                       me.common.output(data);
                     });
                 } catch (e) {
-                    pkg.common.sendErrorJson('wrong path ' + p + '!');
+                   me.common.sendErrorJson('wrong path ' + p + '!');
                 }
             }
         };
@@ -51,14 +53,14 @@
                 'getIP'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
-                pkg.common.sendErrorJson('missing cmd!');
+               me.common.sendErrorJson('missing cmd!');
             } else {
                 try {
                     me[req.body.cmd]((data) => {
-                        pkg.common.output(data);
+                       me.common.output(data);
                     });
                 } catch (e) {
-                    pkg.common.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
+                   me.common.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
                 }
             }
         };
@@ -68,7 +70,7 @@
                 if (data === token) {
                     success();
                 } else {
-                    pkg.common.sendAction('', 'wrong authentication token!');
+                   me.common.sendAction('', 'wrong authentication token!');
                 }
             });
         }

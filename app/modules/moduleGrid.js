@@ -12,6 +12,9 @@
             gridServerFn = key_dir + '/_gridServers.json',
             gridTokenFn = key_dir + '/_gridToken',
             gridOldTokenFn = key_dir + '/_gridOldToken';
+
+        var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
+        me.common = new MCommon(env, pkg, req, res);
         var _env = {};
         try {
             _env = require(data_dir + '/_env.json');
@@ -35,14 +38,14 @@
                 'renewToken', 'serverMem'
             ];
             if (METHODS.indexOf(mp[2]) === -1) {
-                pkg.common.sendErrorJson('wrong path ' + p + '!');
+               me.common.sendErrorJson('wrong path ' + p + '!');
             } else {
                 try {
                     me[mp[2]]((data) => {
-                        pkg.common.output(data);
+                       me.common.output(data);
                     });
                 } catch (e) {
-                    pkg.common.sendErrorJson('wrong path ' + p + '!');
+                   me.common.sendErrorJson('wrong path ' + p + '!');
                 }
             }
             console.log('===> ! grid call get end');
@@ -80,21 +83,21 @@
                 'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'syncAppCode', 'serverMem', 'sampleCode'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
-                pkg.common.sendErrorJson('missing cmd!');
+               me.common.sendErrorJson('missing cmd!');
                 console.log('===> ! grid call end 1');
             } else {
                 try {
                     console.log('===> ! grid call post start ' + req.body.cmd);
                     me[req.body.cmd]((data) => {
                         console.log('===> TTT 1');
-                        // pkg.common.output(data);
+                        //me.common.output(data);
                         res.send(data);
                         console.log('===> TTT 2');
                         console.log('===> ! grid call post end ' + req.body.cmd);
                     });
                 } catch (e) {
                     console.log('===> ! grid call post end e ' + req.body.cmd + '==>'+ e.message);
-                    pkg.common.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
+                   me.common.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
                 }
             }
             console.log('===> ! grid call end 2');
@@ -142,7 +145,7 @@
                         if (dataOld === gridToken) {
                             success();
                         } else {
-                            pkg.common.sendAction('', 'wrong authentication gridToken!');;
+                           me.common.sendAction('', 'wrong authentication gridToken!');;
                         }
                     });
                 }
