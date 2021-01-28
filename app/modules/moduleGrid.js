@@ -75,7 +75,7 @@
         };
 
         me.post = () => {
-            const methods = [
+            const METHODS = [
                 'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'syncAppCode', 'serverMem', 'sampleCode'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
