@@ -36,6 +36,8 @@
                if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
                     res.send({status:'failuer', message: 'Unauthorized gridToken!'});
                } else {
+                   res.send(setting);
+                   return true;
                     if (setting.cmd === 'askServerToken') {
                         res.send(me.askServerToken(setting));
                     } else {
