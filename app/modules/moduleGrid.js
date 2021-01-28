@@ -20,9 +20,7 @@
         me.call = (rest, bypassGridAuth) => {
             if (!bypassGridAuth) {
                 var gridToken = (req.query.gridToken) ? req.query.gridToken : (req.body.gridToken) ? req.body.gridToken : '';
-                me.gridTokenValidation(
-                    gridToken, me[rest]
-                );
+                me.gridTokenValidation(gridToken, me[rest]);
             } else {
                 me[rest]();
             }
@@ -285,7 +283,7 @@
         }
 
         me.statusUpdate = (callback) =>{
-            callback(false);
+            callback('statusUpdate');
             return true;
             let grids = me.dataGridMatrix();
             let data = req.query;
