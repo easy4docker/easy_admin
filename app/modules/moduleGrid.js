@@ -266,6 +266,7 @@
         }
 
         me.getGridMatrix = (cbk) => {
+            console.log('===xxx==1=>');
             let grids = {}, resp = {};
             try {
                 grids = pkg.require(gridStatusFn);
@@ -277,6 +278,7 @@
                 resp[key] = grids[key].mem;
 
             }
+            console.log('===xxx==2=>');
             cbk({status: 'success', result: resp});
         }
         me.gridAccess = (cbk) => {
