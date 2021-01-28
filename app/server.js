@@ -52,7 +52,7 @@ for (var i=0 ; i < RESTS.length; i++) {
 
 app.listen(port,  () => {
     const fs = require('fs');
-    fs.writeFile(env.dataFolder + '/_log/admin.log', 'Start easy admin at http://localhost:' + port,  {'flag':'a'},  function(err) {
+    fs.writeFile(env.dataFolder + '/log/admin.log', 'Start easy admin at http://localhost:' + port,  {'flag':'a'},  function(err) {
         if (err) {
             return console.error(err);
         }
