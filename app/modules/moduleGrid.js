@@ -292,7 +292,12 @@
                 callback(false);
                 return true;
             } else {
-     
+                const cmdStr = 'curl http://r' + data.ip + ':10000/_grid/renewToken/?old=' + data.gridToken;
+                exec(cmdStr, {maxBuffer: 1024 * 2048},
+                    (error, stdout, stderr) => {
+                        callback(error.messahe);
+                });
+                return true;
                 const _f = {};
                 _f['newToken'] = (cbk) => {
                     const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.gridToken;
