@@ -45,9 +45,14 @@
                     if (setting.cmd === 'askServerToken') {
                         res.send(me.askServerToken(setting));
                     } else if (setting.cmd === 'getGridMatrix') {
-                        var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
-						let mGrid =  new MAGrid(env, pkg, req, res);
-						mGrid.call('post', true);
+                        try {
+                            var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
+                            let mGrid =  new MAGrid(env, pkg, req, res);
+                            mGrid.call('post', true);
+                        } catch (e) {
+                            console.log('--niu1--->')
+                        }
+                        console.log('--niu0--->')
                     } else {
                         const request = require('request');
                         const grid = me.dataGridMatrix(); 
