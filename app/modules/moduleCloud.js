@@ -68,7 +68,7 @@ const { exit } = require('process');
 			const _f = {};
 			_f['deleteFile'] = (cbk) => {
 				const fn = me.env.dataFolder  + '/scheduledTasks/' + data.fileName;
-				exec('rm -fr ' + fn, {maxBuffer: 1024 * 2048},
+				exec('rm -fr ' + fn, {maxBuffer: 224 * 2048},
 				function(error, stdout, stderr) {
 					cbk(true);
 				});
@@ -96,7 +96,7 @@ const { exit } = require('process');
 			switch (data.type) {
 				case 'log':
 					const fn = me.env.dataFolder + '/log/' + data.fileName;
-					exec('rm -fr ' + fn, {maxBuffer: 1024 * 2048},
+					exec('rm -fr ' + fn, {maxBuffer: 224 * 2048},
 					function(error, stdout, stderr) {
 						res.send({status : 'success'});
 					});
@@ -107,7 +107,7 @@ const { exit } = require('process');
 		}
 
 		me.pullGitCode = (data) => {
-			exec('cd ' + _env.code_folder + ' && git pull', {maxBuffer: 1024 * 2048},
+			exec('cd ' + _env.code_folder + ' && git pull', {maxBuffer: 224 * 2048},
 			function(error, stdout, stderr) {
 				res.send({status : 'success'});
 			});
@@ -191,7 +191,7 @@ const { exit } = require('process');
 
 			const _f = {};
 			_f['createDir'] = (cbk) => {
-				exec('mkdir -p ' + dirn, {maxBuffer: 1024 * 2048},
+				exec('mkdir -p ' + dirn, {maxBuffer: 224 * 2048},
 					function(error, stdout, stderr) {
 						cbk(true);
 					}

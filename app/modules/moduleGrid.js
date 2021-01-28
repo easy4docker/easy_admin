@@ -240,7 +240,7 @@
 
         me.syncAppCode = (cbk) => {
             const shell_str = 'cd ' + git_root + ' && git pull';
-            exec(shell_str, {maxBuffer: 1024 * 2048},
+            exec(shell_str, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
                     cbk({status : 'success'})
             });
@@ -297,7 +297,7 @@
                 const _f = {};
                 _f['newToken'] = (cbk) => {
                     const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.gridToken;
-                    exec(cmdStr, {maxBuffer: 1024 * 2048},
+                    exec(cmdStr, {maxBuffer: 224 * 2048},
                         (error, stdout, stderr) => {
                             var v = (!stdout) ? '' : stdout.replace(/\s+/, '');
                             if ((error) || !v) {

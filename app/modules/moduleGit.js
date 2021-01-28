@@ -10,7 +10,7 @@
         this.gitSwitchBranch = (serverName, branch, callback) => {
             var dirn = '/var/_localAppData/sites/' + serverName;
             var cmd = 'cd ' + dirn + ' && git checkout ' + branch;
-            exec(cmd, {maxBuffer: 1024 * 2048},
+            exec(cmd, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
                     callback({status : 'success'});                       
             });
@@ -29,7 +29,7 @@
                 }
                 
                 var cmd = 'git ls-remote ' + uri;
-                exec(cmd, {maxBuffer: 1024 * 2048},
+                exec(cmd, {maxBuffer: 224 * 2048},
                     function(error, stdout, stderr) {
                         var branches = [];
                         var list = stdout.split(/\s+/);
@@ -67,7 +67,7 @@
                     _f1['p_' + i] = (function(i) {
                         return function(cbk1) {
                             var cmd = 'svn cat ' + uri + '/branches/' + branches[i] + '/dockerSetting/config.json';
-                            exec(cmd, {maxBuffer: 1024 * 2048},
+                            exec(cmd, {maxBuffer: 224 * 2048},
                                 function(error, stdout, stderr) {
                                     var setting = [];
                                     try {
@@ -103,7 +103,7 @@
                     uri + ' ' + gitRecord.serverName +  ' && ' + 
                     'cd ' + gitRecord.serverName  + ' && git checkout ' + branchName;
 
-            exec(cmd, {maxBuffer: 1024 * 2048},
+            exec(cmd, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
                     if (!error) {
                         callback({status : 'success'});
@@ -127,7 +127,7 @@
                 ' && git clone ' +  uri + ' . && ' + 
                     'cd ' + dirn + ' && git checkout ' + branchName;
 
-            exec(cmd, {maxBuffer: 1024 * 2048},
+            exec(cmd, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
                     if (!error) {
                         callback({status : 'success'});

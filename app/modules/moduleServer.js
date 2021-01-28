@@ -56,7 +56,7 @@
 
         this.pullCode = (serverName, callback) => {
             var cmd = 'cd ' + this.siteCodePath(serverName) + ' && git pull';
-            exec(cmd, {maxBuffer: 1024 * 2048},
+            exec(cmd, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
                     callback({status:'success'});
             });
@@ -206,7 +206,7 @@
             var _f = {};
             _f['getBranches'] = function(cbk) {
                 var cmd = 'cd ' + me.siteCodePath(serverName) + ' && git branch -r';
-                exec(cmd, {maxBuffer: 1024 * 2048},
+                exec(cmd, {maxBuffer: 224 * 2048},
                     function(error, stdout, stderr) {
                         var branches = [];
                         var list = stdout.split(/\s+/);
@@ -237,7 +237,7 @@
         this.gitSwitchBranch = (serverName, branch, callback) => {
             // var dirn = '/var/_localAppData/sites/' + serverName;
             var cmd = 'cd ' + me.siteCodePath(serverName) + ' && git checkout ' + branch;
-            exec(cmd, {maxBuffer: 1024 * 2048},
+            exec(cmd, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
                     // callback({status : 'successB', cfg : me.getSitesCfg()});
                     me.updateConfigBranch(serverName, branch, 
@@ -321,7 +321,7 @@
             };
             let fn = me.siteEnvPath(serverName) + '/key.json',
                 cmd = 'mkdir -p ' + me.siteEnvPath(serverName);
-            exec(cmd, {maxBuffer: 1024 * 2048},
+            exec(cmd, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
                     fs.writeFile(fn, JSON.stringify(v), function (err) {
                         callback((!err) ? {status : 'success'} : {status : 'failure', message : err.message });
@@ -336,7 +336,7 @@
             };
             let fn = me.siteEnvPath(serverName) + '/token.json',
                 cmd = 'mkdir -p ' + me.siteEnvPath(serverName);
-            exec(cmd, {maxBuffer: 1024 * 2048},
+            exec(cmd, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
                     fs.writeFile(fn, JSON.stringify(v), function (err) {
                         callback((!err) ? {status : 'success'} : {status : 'failure', message : err.message });
@@ -370,7 +370,7 @@
         this.saveVserverValiables = (data, callback) => {
             var fn = me.siteEnvPath(data.serverName) + '/variables.json';
             cmd = 'mkdir -p ' + me.siteEnvPath(data.serverName);
-            exec(cmd, {maxBuffer: 1024 * 2048},
+            exec(cmd, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
                 fs.writeFile(fn, data.contents, function (err) {
                     callback((!err) ? {status : 'success'} : {status : 'failure', message : err.message });
@@ -444,7 +444,7 @@
 
             _f['deleteCode'] = function(cbk) {
                 cmd = 'rm -fr ' + me.sitePath(serverName);;
-                exec(cmd, {maxBuffer: 1024 * 2048},
+                exec(cmd, {maxBuffer: 224 * 2048},
                     function(error, stdout, stderr) {
                         cbk(true);
                 });

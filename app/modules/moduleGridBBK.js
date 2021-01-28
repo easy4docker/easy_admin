@@ -155,7 +155,7 @@
                 const _f = {};
                 _f['newToken'] = (cbk) => {
                     const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.token;
-                    exec(cmdStr, {maxBuffer: 1024 * 2048},
+                    exec(cmdStr, {maxBuffer: 224 * 2048},
                         function(error, stdout, stderr) {
                             var v = stdout.replace(/\s+/, '');
                             if ((error) || !v) {
@@ -244,7 +244,7 @@
 
         me.syncAppCode = () => {
             const shell_str = 'cd ' + git_root + ' && git pull';
-            exec(shell_str, {maxBuffer: 1024 * 2048},
+            exec(shell_str, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
                     res.send({status : 'success'})
             });
