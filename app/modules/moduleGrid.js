@@ -19,11 +19,10 @@
         
         me.call = (rest, bypassGridAuth) => {
             console.log('===> ! grid call start');
-            me[rest]();
-            return true;
             if (!bypassGridAuth) {
                 var gridToken = (req.query.gridToken) ? req.query.gridToken : (req.body.gridToken) ? req.body.gridToken : '';
                 me.gridTokenValidation(gridToken, me[rest]);
+                console.log('===> ! grid call end');
             } else {
                 me[rest]();
             }
