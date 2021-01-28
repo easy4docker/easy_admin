@@ -83,10 +83,13 @@
                 pkg.common.sendErrorJson('missing cmd!');
             } else {
                 try {
+                    console.log('===> ! grid call post start ' + req.body.cmd);
                     me[req.body.cmd]((data) => {
                         pkg.common.output(data);
+                        console.log('===> ! grid call post end ' + req.body.cmd);
                     });
                 } catch (e) {
+                    console.log('===> ! grid call post end e ' + e.message);
                     pkg.common.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
                 }
             }
