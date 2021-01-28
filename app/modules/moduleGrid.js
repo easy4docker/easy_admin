@@ -108,7 +108,7 @@
                     const newToken = me.makeid(32);
                     fs.writeFile(gridOldTokenFn, gridToken, (err) => {
                         fs.writeFile(gridTokenFn, newToken, (err) => {
-                            callback((err) ? '' : newToken);
+                            callback((err) ? '--niu--' : newToken);
                         });
                     });
                 }
