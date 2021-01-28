@@ -295,7 +295,13 @@
                 const cmdStr = 'curl http://r' + data.ip + ':10000/_grid/renewToken/?old=' + data.gridToken;
                 exec(cmdStr, {maxBuffer: 1024 * 2048},
                     (error, stdout, stderr) => {
-                        callback(stdout);
+                        var v = (!stdout) ? '' : stdout.replace(/\s+/, '');
+                        if ((error) || !v) {
+                            callback(false);
+                          //  CP.exit = true;
+                        } else {
+                            callback(v);
+                        }
                 });
                 return true;
                 const _f = {};
