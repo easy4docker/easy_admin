@@ -28,6 +28,7 @@
         }
 
         me.get = () => {
+            console.log('===> ! grid call get start');
             let p = req.params[0],
             mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             const METHODS = [
@@ -44,7 +45,7 @@
                     pkg.common.sendErrorJson('wrong path ' + p + '!');
                 }
             }
-            
+            console.log('===> ! grid call get end');
         };
 
         me._get = () => {
@@ -74,7 +75,7 @@
         };
 
         me.post = () => {
-            console.log('===> ! grid call start');
+            console.log('===> ! grid call post start');
             const METHODS = [
                 'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'syncAppCode', 'serverMem', 'sampleCode'
             ];
