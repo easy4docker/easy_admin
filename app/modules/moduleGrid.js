@@ -283,13 +283,17 @@
         }
 
         me.statusUpdate = (callback) =>{
-            callback('-statusUpdate-');
-            return true;
+           
             let grids = me.dataGridMatrix();
             let data = req.query;
             if (!data || !data.ip || !data.token ) {
-                callback(false);
+                // callback(false);
+                callback('-statusUpdate-A');
+                return true;
             } else {
+                callback('-statusUpdate-B');
+                return true;
+
                 const _f = {};
                 _f['newToken'] = (cbk) => {
                     const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.token;
