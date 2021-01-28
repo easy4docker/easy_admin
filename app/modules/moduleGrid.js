@@ -87,7 +87,8 @@
                     console.log('===> ! grid call post start ' + req.body.cmd);
                     me[req.body.cmd]((data) => {
                         console.log('===> TTT 1');
-                        pkg.common.output(data);
+                        // pkg.common.output(data);
+                        res.send(data);
                         console.log('===> TTT 2');
                         console.log('===> ! grid call post end ' + req.body.cmd);
                     });
