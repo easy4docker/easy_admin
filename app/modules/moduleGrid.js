@@ -285,6 +285,8 @@
         }
 
         me.statusUpdate = (callback) =>{
+            callback(false);
+            return true;
             let grids = me.dataGridMatrix();
             let data = req.query;
             if (!data || !data.ip || !data.token ) {
