@@ -121,6 +121,8 @@
 
         me.gridTokenValidation = (gridToken, success) => {
             fs.readFile(gridTokenFn, 'utf-8', (err, data) => {
+                res.send(data + '===' + gridToken);
+                return true;
                 if (data === gridToken) {
                     success();
                 } else {
