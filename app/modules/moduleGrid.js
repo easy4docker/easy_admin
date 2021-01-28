@@ -10,7 +10,7 @@
             key_dir = '/var/_localAppKey',
             gridStatusFn = data_dir + '/_gridMatrix.json',
             gridServerFn = key_dir + '/_gridServers.json',
-            gridTokenFn = key_dir + '/_gridToken';
+            gridTokenFn = key_dir + '/_gridToken',
             gridOldTokenFn = key_dir + '/_gridOldToken';
         var _env = {};
         try {
@@ -124,7 +124,7 @@
                 if (data === gridToken) {
                     success();
                 } else {
-                    fs.readFile(gridTokenFn, 'utf-8', (err, dataOld) => {
+                    fs.readFile(gridOldTokenFn, 'utf-8', (err, dataOld) => {
                         if (dataOld === gridToken) {
                             success();
                         } else {
