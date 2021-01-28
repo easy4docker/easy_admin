@@ -270,6 +270,7 @@
             try {
                 grids = pkg.require(gridStatusFn);
             } catch (e) {
+                console.log('req-err--' + e.message)
             }
 
             for (let key in grids) {
