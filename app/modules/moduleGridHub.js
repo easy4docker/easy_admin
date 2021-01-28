@@ -50,7 +50,7 @@
                             let mGrid =  new MAGrid(env, pkg, req, res);
                             mGrid.call('post', true);
                         } catch (e) {
-                            console.log('--niu1--->')
+                            console.log('--niu1--->' + e.message)
                         }
                         console.log('--niu0--->')
                     } else {
