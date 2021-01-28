@@ -86,7 +86,9 @@
                 try {
                     console.log('===> ! grid call post start ' + req.body.cmd);
                     me[req.body.cmd]((data) => {
+                        console.log('===> TTT 1');
                         pkg.common.output(data);
+                        console.log('===> TTT 2');
                         console.log('===> ! grid call post end ' + req.body.cmd);
                     });
                 } catch (e) {
@@ -266,20 +268,16 @@
         }
 
         me.getGridMatrix = (cbk) => {
-            console.log('===xxx==1=>');
             let grids = {}, resp = {};
             try {
                 grids = pkg.require(gridStatusFn);
             } catch (e) {
-                console.log('req-err--' + e.message)
-                console.log('===xxx==3=>');
             }
 
             for (let key in grids) {
                 resp[key] = grids[key].mem;
 
             }
-            console.log('===xxx==2=>');
             cbk({status: 'success', result: resp});
         }
         me.gridAccess = (cbk) => {
