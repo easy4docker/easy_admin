@@ -47,12 +47,7 @@
                     if (setting.cmd === 'askServerToken') {
                         res.send(me.askServerToken(setting));
                     } else if (setting.cmd === 'getGridMatrix') {
-                        res.writeHead(200, {
-                            'Content-Type': mimeType,
-                            'Content-Length': contents.length,
-                            'Accept-Ranges': 'bytes',
-                            'Cache-Control': 'no-cache'
-                          });
+  
                         try {
                             var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                             let mGrid =  new MAGrid(env, pkg, req, res);
