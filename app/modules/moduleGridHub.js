@@ -36,7 +36,9 @@
             let auth = {}, authToken = {};
             try {
                 auth = pkg.require(authfn);
-            } catch (e) {}
+            } catch (e) {
+                console.log('--auth--->' + e.message)
+            }
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 var setting = req.body;
                if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
@@ -50,7 +52,7 @@
                             let mGrid =  new MAGrid(env, pkg, req, res);
                             mGrid.call('post', true);
                         } catch (e) {
-                            console.log('--niu1--->' + e.message)
+                            console.log('--niu1--->' + setting.cmd + '--' + e.message)
                         }
                         console.log('--niu0--->')
                     } else {
