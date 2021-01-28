@@ -291,7 +291,8 @@
                 callback('-statusUpdate-A');
                 return true;
             } else {
-                callback('-statusUpdate-B');
+                const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.gridToken;
+                callback(cmdStr);
                 return true;
 
                 const _f = {};
