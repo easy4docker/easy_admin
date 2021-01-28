@@ -53,6 +53,7 @@
                             mGrid.call('post', true);
                         } catch (e) {
                             console.log('--niu1--->' + setting.cmd + '--' + e.message)
+                            res.send('--niu1--->' + setting.cmd + '--' + e.message);
                         }
                         console.log('--niu0--->')
                     } else {
