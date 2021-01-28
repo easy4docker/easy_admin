@@ -18,7 +18,7 @@
         } catch (e) {}
         
         me.get = () => {
-            pkg.common.sendErrorJson('500 invalid access !');
+            pkg.common.sendErrorJson('invalid access !');
             return true;
         };
 
@@ -28,15 +28,10 @@
             try {
                 auth = pkg.require(authfn);
             } catch (e) {}
-
-            pkg.common.sendErrorJson('500 invalid access !');
-            return true;
-
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 var setting = req.body;
-               // if ((!setting || !setting.gridToken || setting.gridToken != gridToken) && req.hostname !== 'localhost' && setting.cmd !== 'getGridMatrix') {
                if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
-                    res.send({status:'failuer', message: 'Unauthorized gridToken!'});
+                    pkg.common.sendAction('', 'Unauthorized gridToken!');
                } else {
                     if (setting.cmd === 'askServerToken') {
                         res.send(me.askServerToken(setting));
@@ -58,15 +53,12 @@
                         }
                         request.post({url: url, form: postData}, function(err,httpResponse,body){      
                             if (setting.type === 'json') {
-                                // var result = {};
-                                // try { result = JSON.parse(body);} catch (e) {}   
                                 res.send(body);
                             } else {
                                 res.send(body);
                             } 
                         });
                     }
-
                }
             });
             return  true;
