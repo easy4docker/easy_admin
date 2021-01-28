@@ -18,11 +18,10 @@
         } catch (e) {}
         
         me.call = (rest, bypassGridAuth) => {
-            console.log('===> ! grid call start');
+            
             if (!bypassGridAuth) {
                 var gridToken = (req.query.gridToken) ? req.query.gridToken : (req.body.gridToken) ? req.body.gridToken : '';
                 me.gridTokenValidation(gridToken, me[rest]);
-                console.log('===> ! grid call end');
             } else {
                 me[rest]();
             }
@@ -75,6 +74,7 @@
         };
 
         me.post = () => {
+            console.log('===> ! grid call start');
             const METHODS = [
                 'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'syncAppCode', 'serverMem', 'sampleCode'
             ];
@@ -89,6 +89,7 @@
                     pkg.common.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
                 }
             }
+            console.log('===> ! grid call end');
         };
 
         me._post = () => {
