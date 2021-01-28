@@ -25,6 +25,7 @@
             try {
                 me._post();
             } catch (e) {
+                console.log('===> !' + e.message);
                 pkg.common.sendErrorJson('===> !' + e.message);
             }
             
