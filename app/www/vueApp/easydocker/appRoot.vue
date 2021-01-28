@@ -49,7 +49,7 @@ module.exports = {
         var me = this;
 
         setTimeout(function() {
-            me.getGridMatrix();
+            me.getGridHub();
         },50);
     },
     methods :{
@@ -62,7 +62,7 @@ module.exports = {
             if (!svr || !token) {
                 return true;
             }
-            me.dataEngine().griHub({
+            me.dataEngine().gridHub({
                     server  : svr,
                     cmd     :'getGridMatrix',
                     data    : {},
