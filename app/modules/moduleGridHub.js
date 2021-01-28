@@ -42,7 +42,7 @@
                      //   res.send({status:'success', result: me.dataGridMatrix()});
                         var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
 						let mGrid =  new MAGrid(env, pkg, req, res);
-						mGrid.call('post', false);
+						mGrid.call('post', true);
 
                     } else {
                         const request = require('request');
