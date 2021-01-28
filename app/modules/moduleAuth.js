@@ -88,19 +88,17 @@
             try {
                 authToken = pkg.require(fnToken);
             } catch (e) {}
-            /*
             for (var o in authToken) {
                 if (new Date().getTime() - authToken[o] > SESSION_TIMEOUT) {
                    delete authToken[o];
                 }
-            }*/
+            }
             if (authToken[token]) {
-                /*
                 authToken[token] = new Date().getTime();
                 fs.writeFile(fnToken, JSON.stringify(authToken), 
                 (err) => {
                     callback({status: 'success', token : token});
-                });*/
+                });
                 callback({status: 'success', token : token});
             }
         };
