@@ -266,21 +266,16 @@
         }
 
         me.getGridMatrix = (cbk) => {
-            console.log('--->BBB');
-            
             let grids = {}, resp = {};
             try {
                 grids = pkg.require(gridStatusFn);
             } catch (e) {
-
-                console.log('--->BBB-->' + e.message);
             }
 
             for (let key in grids) {
                 resp[key] = grids[key].mem;
 
             }
-            console.log('--->BBBEEE-->');
             cbk({status: 'success', result: resp});
         }
         me.gridAccess = (cbk) => {
