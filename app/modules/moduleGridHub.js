@@ -39,6 +39,8 @@
                     if (setting.cmd === 'askServerToken') {
                         res.send(me.askServerToken(setting));
                     } else {
+                        res.send(me.askServerToken(setting));
+                        return true;
                         const request = require('request');
                         const grid = me.dataGridMatrix(); 
                         var postData =  setting;
