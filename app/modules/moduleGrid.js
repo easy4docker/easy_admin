@@ -101,17 +101,17 @@
         /* --- GET function ---->> */
         me.renewToken = (callback) => {
             const oldToken = req.query.old;
-            fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
-                if (gridToken !== oldToken) {
-                    callback('===');
-                } else {
+            fs.readFile(gridTokenFn, 'utf-8', (err, gridoldToken) => {
+               // if (gridToken !== oldToken) {
+               //     callback('===');
+               // } else {
                     const newToken = me.makeid(32);
-                    fs.writeFile(gridOldTokenFn, gridToken, (err) => {
+                    fs.writeFile(gridOldTokenFn, gridoldToken, (err) => {
                         fs.writeFile(gridTokenFn, newToken, (err) => {
                             callback((err) ? '--niu--' : newToken);
                         });
                     });
-                }
+               // }
             });
         }
     
