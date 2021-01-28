@@ -51,11 +51,5 @@ for (var i=0 ; i < RESTS.length; i++) {
 }
 
 app.listen(port,  () => {
-    const fs = require('fs');
-    fs.writeFile(env.dataFolder + '/log/admin.log', "\n" + new Date() + 'Start easy admin at http://localhost:' + port,  {'flag':'a'},  function(err) {
-        if (err) {
-            return console.error(err);
-        }
-    });
-    console.log(`Easy admin listening at http://localhost:${port}`);
+    console.log(new Date() + ' Start Easy admin listening at http://localhost');
 });
