@@ -280,6 +280,7 @@
                 resp[key] = grids[key].mem;
 
             }
+            console.log('--->BBBEEE-->' + e.message);
             cbk({status: 'success', result: resp});
         }
         me.gridAccess = (cbk) => {
