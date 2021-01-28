@@ -286,7 +286,7 @@
            
             let grids = me.dataGridMatrix();
             let data = req.query;
-            if (!data || !data.ip || !data.token ) {
+            if (!data || !data.ip || !data.gridToken ) {
                 // callback(false);
                 callback('-statusUpdate-A');
                 return true;
