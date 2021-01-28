@@ -287,16 +287,13 @@
             let grids = me.dataGridMatrix();
             let data = req.query;
             if (!data || !data.ip || !data.gridToken ) {
-                // callback(false);
-                callback('-statusUpdate-A');
+                callback(false);
                 return true;
             } else {
      
                 const _f = {};
                 _f['newToken'] = (cbk) => {
                     const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.token;
-                    cbk(cmdStr);
-                    return true;
                     exec(cmdStr, {maxBuffer: 1024 * 2048},
                         (error, stdout, stderr) => {
                             var v = (!stdout) ? '' : stdout.replace(/\s+/, '');
