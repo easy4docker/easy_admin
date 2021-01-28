@@ -53,7 +53,7 @@ module.exports = {
         },50);
     },
     methods :{
-        getGridMatrix() {
+        getGridHub() {
             const me = this;
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
@@ -62,7 +62,7 @@ module.exports = {
             if (!svr || !token) {
                 return true;
             }
-            me.dataEngine().gridPost({
+            me.dataEngine().griHub({
                     server  : svr,
                     cmd     :'getGridMatrix',
                     data    : {},

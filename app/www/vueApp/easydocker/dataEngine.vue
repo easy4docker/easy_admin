@@ -39,7 +39,7 @@ module.exports = {
             });
         },
         /* ------------ confirmed ------------*/
-        gridPost(setting, success, error) {
+        gridHub(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
             $.ajax({
@@ -91,7 +91,7 @@ module.exports = {
         serverPost(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
-            me.gridPost({
+            me.gridHub({
                 server  : setting.server,
                 cmd     :'askServerToken',
                 target  : setting.target,
