@@ -51,5 +51,7 @@ for (var i=0 ; i < RESTS.length; i++) {
 }
 
 app.listen(port,  () => {
-    console.log(new Date() + ' Start Easy admin listening at http://localhost');
+    var d = new Date(); // for now
+    datetext = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+    console.log(datetext + ' Start Easy admin listening at http://localhost');
 });
