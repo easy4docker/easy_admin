@@ -272,6 +272,7 @@
                 grids = pkg.require(gridStatusFn);
             } catch (e) {
                 console.log('req-err--' + e.message)
+                console.log('===xxx==3=>');
             }
 
             for (let key in grids) {
