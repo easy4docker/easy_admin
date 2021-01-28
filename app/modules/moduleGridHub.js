@@ -41,8 +41,6 @@
                     } else if (setting.cmd === 'getGridMatrix') {
                         res.send({status:'success', result: me.dataGridMatrix()});
                     } else {
-                        res.send('me.askServerToken(setting)');
-                        return true;
                         const request = require('request');
                         const grid = me.dataGridMatrix(); 
                         var postData =  setting;
@@ -54,8 +52,6 @@
                         } else {
                             url = 'http://' + setting.server + ':10000/' + channel + '/';
                         }
-                        res.send(setting);
-                        return true;
                         request.post({url: url, form: postData}, function(err,httpResponse,body){      
                             if (setting.type === 'json') {
                                 // var result = {};
