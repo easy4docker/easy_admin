@@ -156,10 +156,17 @@
             return result;
         }
         me.dataGridMatrix = () => {
+            console.log('--->AAA')
+            try {
+
+            } catch (e) {
+                console.log('--->EEE-->' + e.message)
+            }
             let grids = {};
             try {
                 grids = pkg.require(gridStatusFn);
             } catch (e) {}
+            console.log('--->bbb')
             return grids;
         }
 
