@@ -291,8 +291,7 @@
                 callback('-statusUpdate-A');
                 return true;
             } else {
-                callback(data);
-                return true;
+     
                 const _f = {};
                 _f['newToken'] = (cbk) => {
                     const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.token;
@@ -337,7 +336,7 @@
                     });
                 }
                 
-                CP.serial(_f, (data) => {
+                CP.serial(_f, (data1) => {
                     const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.gridToken;
                     callback(cmdStr);
                     return true;
