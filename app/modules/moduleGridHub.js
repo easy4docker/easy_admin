@@ -22,7 +22,12 @@
             return true;
         };
         me.post = () => {
-            pkg.common.sendErrorJson('invalid access !');
+            try {
+                me._post();
+            } catch (e) {
+                pkg.common.sendErrorJson('===> !' + e.message);
+            }
+            
             return true;
         }
         me._post = () => {
