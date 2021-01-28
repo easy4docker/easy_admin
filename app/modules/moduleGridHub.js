@@ -39,7 +39,7 @@
                     if (setting.cmd === 'askServerToken') {
                         res.send(me.askServerToken(setting));
                     } else if (setting.cmd === 'getGridMatrix') {
-                        res.send(me.dataGridMatrix());
+                        res.send({statud:'success', result: me.dataGridMatrix()});
                     } else {
                         res.send('me.askServerToken(setting)');
                         return true;
