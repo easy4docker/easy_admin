@@ -27,8 +27,7 @@
                     token, me[rest]
                 );
             } else {
-                // me.common.sendAction('', 'wrong authentication token!');
-                me[rest]();
+                me.common.sendAction('', 'wrong authentication token!');
             }
         }
         
