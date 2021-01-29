@@ -24,7 +24,7 @@
             if (!bypassLocalAuth) {
                 var token = (req.query.authToken) ? req.query.authToken : (req.body.authToken) ? req.body.authToken : '';
                 me.localTokenValidation(
-                    token, () =>   me[rest]
+                    token, me[rest]
                 );
             } else {
                 // me.common.sendAction('', 'wrong authentication token!');
