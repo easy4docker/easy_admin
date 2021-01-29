@@ -75,6 +75,8 @@ module.exports = {
                 function(result) {
                     if (result.status === 'success') {
                         me.gridMatrix = result.result;
+                        console.log('===me.gridMatrix===>');
+                        console.log(me.gridMatrix);
                     } else {
                         me.gridServer = null;
                     }

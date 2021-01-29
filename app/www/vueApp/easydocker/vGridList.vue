@@ -65,6 +65,11 @@ module.exports = {
         },
         test(k, dt) {
             const me = this;
+            //me.root.gridMatrix[k];
+            alert(me.root.gridMatrix[k].gridToken);
+        },
+        testBK(k, dt) {
+            const me = this;
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
                 
