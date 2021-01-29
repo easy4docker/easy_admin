@@ -108,7 +108,7 @@
         }
         
         me.getToken = (cbk) => {
-            fs.readFile(authToken, 'utf-8', (err, data) => {
+            fs.readFile(authTokenFn, 'utf-8', (err, data) => {
                 cbk(data);
             });
         }
