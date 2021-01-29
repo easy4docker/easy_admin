@@ -8,12 +8,13 @@
             app_dir = '/var/_localApp',
             data_dir = '/var/_localAppData',
             key_dir = '/var/_localAppKey',
-            gridStatusFn = data_dir + '/_gridMatrix.json',
-            authTokenFn = data_dir + '/authToken.json';
+            gridStatusFn = data_dir + '/_gridMatrix.json';
 
 		var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
         
+        var authTokenFn = me.comm.file.authToken,
+
         const SESSION_TIMEOUT = 600000;
         var _env = {};
         try {
