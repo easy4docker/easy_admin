@@ -9,10 +9,12 @@
             data_dir = '/var/_localAppData',
             key_dir = '/var/_localAppKey',
             gridStatusFn = data_dir + '/_gridMatrix.json',
-            authToken = data_dir + '/authToken.json';
+            authTokenFn = data_dir + '/authToken.json';
 
 		var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
-		me.common = new MCommon(env, pkg, req, res);
+        me.common = new MCommon(env, pkg, req, res);
+        
+        const SESSION_TIMEOUT = 365 * 24 * 3600000;
         var _env = {};
         try {
             _env = require(data_dir + '/_env.json');
@@ -69,7 +71,7 @@
         me.localTokenValidation = (token, success) => {
             let authToken = {};
             try {
-                authToken = pkg.require(fnToken);
+                authToken = pkg.require(authTokenFn );
             } catch (e) {}
             for (var o in authToken) {
                 if (new Date().getTime() - authToken[o] > SESSION_TIMEOUT) {
