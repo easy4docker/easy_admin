@@ -104,8 +104,6 @@
         /* --- GET function ---->> */
         me.renewToken = (callback) => {
             const oldToken = req.query.old;
-            callback(oldToken);
-            return true;
             fs.readFile(gridTokenFn, 'utf-8', (err, gridoldToken) => {
                // if (gridToken !== oldToken) {
                //     callback('===');
