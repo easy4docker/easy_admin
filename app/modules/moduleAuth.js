@@ -11,8 +11,6 @@
         var fnToken = me.comm.file.authToken,
             authDataFn = me.comm.file.authData;
         
-        const SESSION_TIMEOUT = 6000000;
-
         me.action = (data, callback) => {
             switch(data.code) {
                 case 'isAuthReady' :
@@ -73,7 +71,7 @@
                 let token = 'TK_' + pkg.md5(new Date().getTime());
  
                 for (var o in authToken) {
-                    if (new Date().getTime() - authToken[o] > SESSION_TIMEOUT) {
+                    if (new Date().getTime() - authToken[o] > me.comm.SESSION_TIMEOUT) {
                        delete authToken[o];
                     }
                 }
@@ -94,7 +92,7 @@
                 authToken = pkg.require(fnToken);
             } catch (e) {}
             for (var o in authToken) {
-                if (new Date().getTime() - authToken[o] > SESSION_TIMEOUT) {
+                if (new Date().getTime() - authToken[o] > me.comm.SESSION_TIMEOUT) {
                    delete authToken[o];
                 }
             }
