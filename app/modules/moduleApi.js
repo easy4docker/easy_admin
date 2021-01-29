@@ -80,7 +80,7 @@
             }
             if (authToken[token]) {
                 authToken[token] = new Date().getTime();
-                fs.writeFile(fnToken, JSON.stringify(authToken), 
+                fs.writeFile(authTokenFn, JSON.stringify(authToken), 
                 (err) => {
                     success();
                 });
