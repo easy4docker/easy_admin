@@ -51,7 +51,7 @@
         };
 
         me.post = () => {
-            const methods = [
+            const METHODS = [
                 'getIP', 'getGridMatrix'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
