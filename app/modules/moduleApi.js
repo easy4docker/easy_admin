@@ -25,8 +25,8 @@
                     token, () =>   me[rest]
                 );
             } else {
-                // me.common.sendAction('', 'wrong authentication token!');
-                me[rest]();
+                me.common.sendAction('', 'wrong authentication token!');
+                // me[rest]();
             }
         }
         
@@ -67,13 +67,24 @@
         };
 
         me.localTokenValidation = (token, success) => {
-            fs.readFile(authToken, 'utf-8', (err, data) => {
-                if (data === token) {
-                    success();
-                } else {
-                   me.common.sendAction('', 'wrong authentication token!');
+            let authToken = {};
+            try {
+                authToken = pkg.require(fnToken);
+            } catch (e) {}
+            for (var o in authToken) {
+                if (new Date().getTime() - authToken[o] > SESSION_TIMEOUT) {
+                   delete authToken[o];
                 }
-            });
+            }
+            if (authToken[token]) {
+                authToken[token] = new Date().getTime();
+                fs.writeFile(fnToken, JSON.stringify(authToken), 
+                (err) => {
+                    success();
+                });
+            } else {
+                me.common.sendAction('', 'wrong authentication token!');
+            }
         }
 
         me.getGridMatrix = (cbk) => {
