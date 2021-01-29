@@ -14,7 +14,7 @@
 		var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.common = new MCommon(env, pkg, req, res);
         
-        const SESSION_TIMEOUT = 365 * 24 * 3600000;
+        const SESSION_TIMEOUT = 600000;
         var _env = {};
         try {
             _env = require(data_dir + '/_env.json');
