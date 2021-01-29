@@ -72,7 +72,7 @@
 	
 		me.refreshTokenSend = (data) => {
 			var MAuth= pkg.require(env.root+ '/modules/moduleAuth.js');
-			var auth = new MAuth(env, pkg);
+			var auth = new MAuth(env, pkg, req, res);
 			auth.refreshAuthToken(
 				req.body.authToken,
 				() => {
@@ -126,7 +126,7 @@
             switch(req.body.cmd) {
 				case 'auth' :
 					var MAuth= pkg.require(env.root+ '/modules/moduleAuth.js');
-					var auth = new MAuth(env, pkg);
+					var auth = new MAuth(env, pkg, req, res);
 					var data = (!req.body.data) ? {} : req.body.data;
 					if (req.body.authToken) data.authToken = req.body.authToken;
 					auth.action(data, (data) => {

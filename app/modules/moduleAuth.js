@@ -1,7 +1,7 @@
 (function() {
     var exec = require('child_process').exec;
     const SESSION_TIMEOUT = 6000000;
-    var obj = function(env, pkg) {
+    var obj = function(env, pkg, req, res) {
         var me = this,
             fs = require('fs'),
             exec = require('child_process').exec,
@@ -106,7 +106,7 @@
             }
         };
         
-        mes.refreshAuthToken = (token, callback) => {
+        me.refreshAuthToken = (token, callback) => {
             let authToken = {};
             try {
                 authToken = pkg.require(fnToken);
