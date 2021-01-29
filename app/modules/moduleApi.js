@@ -12,7 +12,7 @@
             authTokenFn = data_dir + '/authToken.json';
 
 		var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
-        me.common = new MCommon(env, pkg, req, res);
+        me.comm = new MCommon(req, res);
         
         const SESSION_TIMEOUT = 600000;
         var _env = {};
@@ -27,7 +27,7 @@
                     token, me[rest]
                 );
             } else {
-                me.common.sendAction('', 'wrong authentication token!');
+                me.comm.sendAction('', 'wrong authentication token!');
             }
         }
         
@@ -38,14 +38,14 @@
                 'getIP', 'getGridMatrix', 'getToken'
             ];
             if (METHODS.indexOf(mp[2]) === -1) {
-               me.common.sendErrorJson('wrong path ' + p + '!');
+               me.comm.sendErrorJson('wrong path ' + p + '!');
             } else {
                 try {
                     me[mp[2]]((data) => {
-                       me.common.output(data);
+                       me.comm.output(data);
                     });
                 } catch (e) {
-                   me.common.sendErrorJson('wrong path ' + p + '!');
+                   me.comm.sendErrorJson('wrong path ' + p + '!');
                 }
             }
         };
@@ -55,14 +55,14 @@
                 'getIP', 'getGridMatrix'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
-               me.common.sendErrorJson('missing cmd!');
+               me.comm.sendErrorJson('missing cmd!');
             } else {
                 try {
                     me[req.body.cmd]((data) => {
-                       me.common.output(data);
+                       me.comm.output(data);
                     });
                 } catch (e) {
-                   me.common.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
+                   me.comm.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
                 }
             }
         };
@@ -84,7 +84,7 @@
                     success();
                 });
             } else {
-                me.common.sendAction('', 'wrong authentication token!');
+                me.comm.sendAction('', 'wrong authentication token!');
             }
         }
 
