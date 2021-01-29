@@ -33,7 +33,7 @@
             return true;
         }
         me._post = () => {
-            const authfn = '/var/_localAppData/authData.json';
+            const authfn =  me.comm.file.authData;
             let auth = {}, authToken = {};
             try {
                 auth = pkg.require(authfn);

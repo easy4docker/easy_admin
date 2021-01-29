@@ -15,7 +15,8 @@
             key  : '/var/_localAppKey'
         }
 
-        me.fn = {
+        me.file = {
+            authData    : me.inside.data + '/authData.json',
             authToken   : me.inside.data + '/authToken.json',
             gridStatus  : me.inside.data +  '/authToken.json'
         }

@@ -1,16 +1,17 @@
 (function() {
-    var exec = require('child_process').exec;
-    const SESSION_TIMEOUT = 6000000;
     var obj = function(env, pkg, req, res) {
         var me = this,
             fs = require('fs'),
             exec = require('child_process').exec,
-            CP = new pkg.crowdProcess(),
-            fn = '/var/_localAppData/authData.json',
-            fnToken = '/var/_localAppData/authToken.json';
+            CP = new pkg.crowdProcess();
 
         var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
+
+        var fnToken = me.comm.file.authToken,
+            authDatafn = me.comm.file.authData;
+        
+        const SESSION_TIMEOUT = 6000000;
 
         me.action = (data, callback) => {
             switch(data.code) {
@@ -39,7 +40,7 @@
         me.isAuthReady = () => {
             let auth = {};
             try {
-                auth = pkg.require(fn);
+                auth = pkg.require(authDatafn);
             } catch (e) {
 
             }
@@ -48,7 +49,7 @@
         me.initPassword = (str, callback) => {
             let auth = {};
             try {
-                auth = pkg.require(fn);
+                auth = pkg.require(authDatafn);
             } catch (e) {}
             
             auth['root'] = pkg.md5(str);
@@ -61,7 +62,7 @@
         me.signin = (password, callback) => {
             let auth = {}, authToken = {};
             try {
-                auth = pkg.require(fn);
+                auth = pkg.require(authDatafn);
             } catch (e) {}
 
             try {
