@@ -8,7 +8,11 @@
             CP = new pkg.crowdProcess(),
             fn = '/var/_localAppData/authData.json',
             fnToken = '/var/_localAppData/authToken.json';
-        this.action = (data, callback) => {
+
+        var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
+        me.comm = new MCommon(req, res);
+
+        me.action = (data, callback) => {
             switch(data.code) {
                 case 'isAuthReady' :
                     callback({status:'success', isAuthReady : me.isAuthReady()});
@@ -32,7 +36,7 @@
             
             }
         };
-        this.isAuthReady = () => {
+        me.isAuthReady = () => {
             let auth = {};
             try {
                 auth = pkg.require(fn);
@@ -41,7 +45,7 @@
             }
             return (auth.root) ? true : false;
         };
-        this.initPassword = (str, callback) => {
+        me.initPassword = (str, callback) => {
             let auth = {};
             try {
                 auth = pkg.require(fn);
@@ -54,7 +58,7 @@
                 });
         };
 
-        this.signin = (password, callback) => {
+        me.signin = (password, callback) => {
             let auth = {}, authToken = {};
             try {
                 auth = pkg.require(fn);
@@ -83,7 +87,7 @@
             }
         };
 
-        this.isTokenLogin = (token, callback) => {
+        me.isTokenLogin = (token, callback) => {
             let authToken = {};
             try {
                 authToken = pkg.require(fnToken);
@@ -102,7 +106,7 @@
             }
         };
         
-        this.refreshAuthToken = (token, callback) => {
+        mes.refreshAuthToken = (token, callback) => {
             let authToken = {};
             try {
                 authToken = pkg.require(fnToken);
@@ -118,10 +122,10 @@
             }
         };
 
-        this.removeLoginToken = (token, callback) => {
+        me.removeLoginToken = (token, callback) => {
 
         };
-        this.cleanOvertime = (callback) => {
+        me.cleanOvertime = (callback) => {
 
         };
     }
