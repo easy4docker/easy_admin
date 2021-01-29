@@ -13,7 +13,7 @@
 		var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
         
-        var authTokenFn = me.comm.file.authToken,
+        var authTokenFn = me.comm.file.authToken;
 
         const SESSION_TIMEOUT = 600000;
         var _env = {};
