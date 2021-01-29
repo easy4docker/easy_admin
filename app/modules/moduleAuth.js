@@ -9,7 +9,7 @@
         me.comm = new MCommon(req, res);
 
         var fnToken = me.comm.file.authToken,
-            authDatafn = me.comm.file.authData;
+            authDataFn = me.comm.file.authData;
         
         const SESSION_TIMEOUT = 6000000;
 
@@ -40,7 +40,7 @@
         me.isAuthReady = () => {
             let auth = {};
             try {
-                auth = pkg.require(authDatafn);
+                auth = pkg.require(authDataFn);
             } catch (e) {
 
             }
@@ -49,11 +49,11 @@
         me.initPassword = (str, callback) => {
             let auth = {};
             try {
-                auth = pkg.require(authDatafn);
+                auth = pkg.require(authDataFn);
             } catch (e) {}
             
             auth['root'] = pkg.md5(str);
-            fs.writeFile(fn, JSON.stringify(auth), 
+            fs.writeFile(authDataFn, JSON.stringify(auth), 
                 (err) => {
                     callback({status:'success'});
                 });
@@ -62,7 +62,7 @@
         me.signin = (password, callback) => {
             let auth = {}, authToken = {};
             try {
-                auth = pkg.require(authDatafn);
+                auth = pkg.require(authDataFn);
             } catch (e) {}
 
             try {

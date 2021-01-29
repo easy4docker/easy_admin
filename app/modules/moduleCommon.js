@@ -16,9 +16,9 @@
         }
 
         me.file = {
-            authData    : me.inside.data + '/authData.json',
-            authToken   : me.inside.data + '/authToken.json',
-            gridStatus  : me.inside.data +  '/authToken.json'
+            authData    : me.inside.key + '/authData.json',
+            authToken   : me.inside.key + '/authToken.json',
+            gridStatus  : me.inside.key +  '/authToken.json'
         }
 
         me.sendErrorJson = (message) => {
