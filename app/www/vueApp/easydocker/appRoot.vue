@@ -103,7 +103,7 @@ module.exports = {
                 error: function (jqXHR) { 
                     me.ajaxResult = err.message;
                 },
-                dataType: 'text'
+                dataType: 'json'
             });
         },
         isLocalhost() {
