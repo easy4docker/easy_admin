@@ -21,6 +21,8 @@
             gridStatus  : me.inside.key +  '/authToken.json'
         }
 
+        me.SESSION_TIMEOUT = 600000;
+
         me.sendErrorJson = (message) => {
             res.send({status:'failure', code: '404', message : message});
         }

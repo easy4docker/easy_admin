@@ -13,7 +13,6 @@
 		var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
 
-        const SESSION_TIMEOUT = 600000;
         var _env = {};
         try {
             _env = require(data_dir + '/_env.json');
@@ -72,7 +71,7 @@
                 authToken = pkg.require(me.comm.file.authToken );
             } catch (e) {}
             for (var o in authToken) {
-                if (new Date().getTime() - authToken[o] > SESSION_TIMEOUT) {
+                if (new Date().getTime() - authToken[o] > me.comm.SESSION_TIMEOUT) {
                    delete authToken[o];
                 }
             }
