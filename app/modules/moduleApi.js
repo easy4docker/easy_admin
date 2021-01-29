@@ -10,7 +10,7 @@
             key_dir = '/var/_localAppKey',
             gridStatusFn = data_dir + '/_gridMatrix.json',
             authToken = data_dir + '/authToken.json';
-            
+
 		var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
 		me.common = new MCommon(env, pkg, req, res);
         var _env = {};
@@ -25,7 +25,8 @@
                     token, () =>   me[rest]
                 );
             } else {
-                me[rest]();
+                me.common.sendAction('', 'wrong authentication token!');
+                // me[rest]();
             }
         }
         
