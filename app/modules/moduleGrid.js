@@ -31,7 +31,6 @@
         }
 
         me.get = () => {
-            console.log('===> ! grid call get start');
             let p = req.params[0],
             mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             const METHODS = [
@@ -48,7 +47,6 @@
                    me.common.sendErrorJson('wrong path ' + p + '!');
                 }
             }
-            console.log('===> ! grid call get end');
         };
 
         me._get = () => {
@@ -78,27 +76,20 @@
         };
 
         me.post = () => {
-            console.log('===> ! grid call post start');
             const METHODS = [
                 'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'syncAppCode', 'serverMem', 'sampleCode'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.common.sendErrorJson('missing cmd!');
-                console.log('===> ! grid call end 1');
             } else {
                 try {
-                    console.log('===> ! grid call post start ' + req.body.cmd);
                     me[req.body.cmd]((data) => {
                         me.common.output(data);
-                        console.log('===> TTT 2');
-                        console.log('===> ! grid call post end ' + req.body.cmd);
                     });
                 } catch (e) {
-                    console.log('===> ! grid call post end e ' + req.body.cmd + '==>'+ e.message);
                    me.common.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
                 }
             }
-            console.log('===> ! grid call end 2');
         };
 
         me._post = () => {
@@ -160,17 +151,13 @@
             return result;
         }
         me.dataGridMatrix = () => {
-            console.log('--->AAA')
             try {
 
-            } catch (e) {
-                console.log('--->EEE-->' + e.message)
-            }
+            } catch (e) {}
             let grids = {};
             try {
                 grids = pkg.require(gridStatusFn);
             } catch (e) {}
-            console.log('--->bbb')
             return grids;
         }
 

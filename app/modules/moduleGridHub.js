@@ -27,7 +27,6 @@
             try {
                 me._post();
             } catch (e) {
-                console.log('===> !' + e.message);
                me.common.sendErrorJson('===> !' + e.message);
             }
             
@@ -39,7 +38,6 @@
             try {
                 auth = pkg.require(authfn);
             } catch (e) {
-                console.log('--auth--->' + e.message)
             }
             fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                 var setting = req.body;
@@ -54,11 +52,7 @@
                             var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                             let mGrid =  new MAGrid(env, pkg, req, res);
                             mGrid.call('post', true);
-                        } catch (e) {
-                            console.log('--niu1--->' + setting.cmd + '--' + e.message)
-                            res.send('--niu1--->' + setting.cmd + '--' + e.message);
-                        }
-                        console.log('--niu0--->')
+                        } catch (e) {}
                     } else {
                         const request = require('request');
                         const grid = me.dataGridMatrix(); 
