@@ -43,7 +43,8 @@ module.exports = {
             gridServer : null,
             svr : '',
             token : '',
-            easydockerFP : ''
+            easydockerFP : '',
+            ajaxResult : ''
         }
     },
     mounted () {

@@ -3,6 +3,7 @@
         <div class="row">
             <div class="col-12 p-0 text-center shadow border rounded">
                 <span v-if="root.isSignin()">
+                    {{root.ajaxResult}}
                     <v-form-server v-if="root.matrix('form')"></v-form-server>
                     <v-server-list v-if="root.matrix('list')"></v-server-list>
                     <v-form-grid v-if="root.matrix('gridSetup')"></v-form-grid>
