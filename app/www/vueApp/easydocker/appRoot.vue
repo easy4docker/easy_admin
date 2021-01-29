@@ -86,28 +86,21 @@ module.exports = {
         },
         test() {
             const me = this;
-            me.ajaxResult = localStorage.getItem('easydockerFP');
-            return true;
-            
-            alert('test');
-            return true;
             me.dataEngine().appPost({
-                url  : 'http://grid.shusiou.win:10000/_grid/',
+                url  : '/_api/',
                 cmd     :'getGridMatrix',
                 data    : {},
                 dataType: 'json',
-                gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
+                authToken   : authToken
             },
             function(result) {
                 if (result.status === 'success') {
-                    me.gridMatrix = result.result;
+                    me.ajaxResult = result.result;
                 } else {
-                    me.gridServer = null;
+                    me.ajaxResult = '';
                 }
-                //  me.gridServer = localStorage.getItem('easydockerFP');
             }, function(err) {
-                me.gridServer = false;
-                console.log(err);
+                me.ajaxResult = err.message;
             });
         },
         isLocalhost() {
