@@ -49,32 +49,6 @@
             }
         };
 
-        me._get = () => {
-            let p = req.params[0],
-                mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
-            if (mp) {
-                switch (mp[2])  {
-                    case 'renewToken':
-                        me.renewToken((result) => {
-                            res.send(result);
-                        });
-                        break;
-
-                    case 'serverMem':
-                        me.serverMem((result) => {
-                            res.send(result);
-                        });
-                        break;   
-                    default:
-                        res.send('wrong path ' + p);
-                        break;        
-                }
-            } else {
-                res.send('wrong path');
-            }
-            
-        };
-
         me.post = () => {
             const METHODS = [
                 'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'syncAppCode', 'serverMem', 'sampleCode'
