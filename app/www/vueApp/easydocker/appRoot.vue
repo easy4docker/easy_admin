@@ -85,10 +85,10 @@ module.exports = {
                 });
         },
         test() {
-            let v = localStorage.getItem('easydockerFP');
-            alert(v);
-            return true;
             const me = this;
+            me.ajaxResult = localStorage.getItem('easydockerFP');
+            return true;
+            
             alert('test');
             return true;
             me.dataEngine().appPost({
