@@ -12,8 +12,6 @@
 
 		var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
-        
-        var authTokenFn = me.comm.file.authToken;
 
         const SESSION_TIMEOUT = 600000;
         var _env = {};
@@ -71,7 +69,7 @@
         me.localTokenValidation = (token, success) => {
             let authToken = {};
             try {
-                authToken = pkg.require(authTokenFn );
+                authToken = pkg.require(me.comm.file.authToken );
             } catch (e) {}
             for (var o in authToken) {
                 if (new Date().getTime() - authToken[o] > SESSION_TIMEOUT) {
@@ -80,7 +78,7 @@
             }
             if (authToken[token]) {
                 authToken[token] = new Date().getTime();
-                fs.writeFile(authTokenFn, JSON.stringify(authToken), 
+                fs.writeFile(me.comm.file.authToken, JSON.stringify(authToken), 
                 (err) => {
                     success();
                 });
@@ -108,7 +106,7 @@
         }
         
         me.getToken = (cbk) => {
-            fs.readFile(authTokenFn, 'utf-8', (err, data) => {
+            fs.readFile(me.comm.file.authToken, 'utf-8', (err, data) => {
                 cbk(data);
             });
         }
