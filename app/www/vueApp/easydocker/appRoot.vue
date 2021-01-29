@@ -86,21 +86,24 @@ module.exports = {
         },
         test() {
             const me = this;
-            me.dataEngine().appPost({
-                url  : '/_api/',
-                cmd     :'getGridMatrix',
-                data    : {},
-                dataType: 'json',
-                authToken   : authToken
-            },
-            function(result) {
-                if (result.status === 'success') {
-                    me.ajaxResult = result.result;
-                } else {
-                    me.ajaxResult = '';
-                }
-            }, function(err) {
-                me.ajaxResult = err.message;
+             $.ajax({
+                type: 'POST',
+                url:  '/_api/',
+                data: {
+                    cmd     :'getGridMatrix',
+                    authToken   : localStorage.getItem('easydockerFP')
+                },
+                success: function(result) {
+                    if (result.status === 'success') {
+                        me.ajaxResult = result.result;
+                    } else {
+                        me.ajaxResult = '';
+                    }
+                },
+                error: function (jqXHR) { 
+                    me.ajaxResult = err.message;
+                },
+                dataType: 'text'
             });
         },
         isLocalhost() {
