@@ -42,7 +42,8 @@ module.exports = {
             menu   : '',
             gridServer : null,
             svr : '',
-            token : ''
+            token : '',
+            easydockerFP : ''
         }
     },
     mounted () {
@@ -50,6 +51,7 @@ module.exports = {
 
         setTimeout(function() {
             me.getGridHub();
+            me.easydockerFP = localStorage.getItem('easydockerFP');
         },50);
     },
     methods :{
@@ -82,7 +84,8 @@ module.exports = {
                 });
         },
         test() {
-            alert('test');
+            let v = localStorage.getItem('easydockerFP');
+            alert(v);
             return true;
             const me = this;
             alert('test');
