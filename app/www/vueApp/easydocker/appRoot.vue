@@ -97,7 +97,7 @@ module.exports = {
                     if (result.status === 'success') {
                         me.ajaxResult = result.result;
                     } else {
-                        me.ajaxResult = '';
+                        me.ajaxResult = '--a--';
                     }
                 },
                 error: function (jqXHR) { 
