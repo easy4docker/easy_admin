@@ -129,8 +129,6 @@
                     success();
                 } else {
                     fs.readFile(gridOldTokenFn, 'utf-8', (err, dataOld) => {
-                        res.send(data + '====' + dataOld + '===' + gridToken);
-                        return true;
                         if (dataOld === gridToken) {
                             success();
                         } else {
