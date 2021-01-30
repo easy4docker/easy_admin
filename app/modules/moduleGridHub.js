@@ -41,18 +41,11 @@
                         try {
                             var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                             let mGrid =  new MAGrid(env, pkg, req, res);
-                            const grid = mGrid.dataGridMatrix();
-                            res.send({status:'success', result : grid});
-                           // mGrid.call('post', true);
+                            mGrid.call('post', true);
                         } catch (e) {}
                     } else {
-                        /*===*/
-                        var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
-                        let mGrid =  new MAGrid(env, pkg, req, res);
-                        const grid = mGrid.dataGridMatrix(); 
-                        /*===*/
                         const request = require('request');
-                       // const grid = me.dataGridMatrix(); 
+                        const grid = me.dataGridMatrix(); 
                         var postData =  setting;
                         let url = '';
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
