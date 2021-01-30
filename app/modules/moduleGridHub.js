@@ -8,7 +8,7 @@
             app_dir = '/var/_localApp',
             data_dir = '/var/_localAppData',
             key_dir = '/var/_localAppKey',
-            gridStatusFn = data_dir + '/_gridMatrix.json',
+           // gridStatusFn = data_dir + '/_gridMatrix.json',
             gridTokenFn = key_dir + '/_gridToken';
 
         var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
@@ -16,7 +16,7 @@
 
         // const   gridTokenFn = me.comm.gridToken,
         //        gridStatusFn = me.comm.gridStatus;
-
+        const  gridStatusFn = me.comm.gridStatus;
 
         var _env = {};
         try {
