@@ -33,7 +33,7 @@
             try {
                 me._post();
             } catch (e) {
-               me.comm.sendErrorJson('===> !' + e.message);
+               me.comm.sendErrorJson('===> !' + e.message + gridTokenFn);
             }
             
             return true;
