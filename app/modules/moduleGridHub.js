@@ -41,7 +41,8 @@
                         try {
                             var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                             let mGrid =  new MAGrid(env, pkg, req, res);
-                            res.send('niuu');
+                            const grid = mGrid.dataGridMatrix();
+                            res.send(grid);
                            // mGrid.call('post', true);
                         } catch (e) {}
                     } else {
