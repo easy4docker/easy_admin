@@ -10,11 +10,6 @@
         const   gridTokenFn = me.comm.file.gridToken,
                 gridStatusFn = me.comm.file.gridStatus;
 
-        var _env = {};
-        try {
-            _env = require(data_dir + '/_env.json');
-        } catch (e) {}
-        
         me.get = () => {
            me.comm.sendErrorJson('invalid access !');
             return true;
