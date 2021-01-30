@@ -34,7 +34,7 @@
             let p = req.params[0],
             mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             const METHODS = [
-                'renewToken', 'serverMem'
+                'renewToken', 'serverMem', 'getEnv'
             ];
             if (METHODS.indexOf(mp[2]) === -1) {
                me.comm.sendErrorJson('wrong path ' + p + '!');
@@ -144,6 +144,9 @@
             });
         }
         /* --- POST function ---->> */
+        me.getEnv = (callback) => {
+            callback(_env);
+        }
         me.removeGrid = (callback) => {
             var data = req.body;
             const _f = {};
