@@ -11,6 +11,7 @@
 
         const _env = {};
         try {
+            delete require.cache[me.inside.data + '/_env.json'];
             _env = require(me.inside.data + '/_env.json');
         } catch (e) {}
 
