@@ -15,7 +15,7 @@
         } catch (e) {}
 
         me.outside = {
-            root   : _env.app_root,
+            root   : '_env.app_root',
             app    : _env.code_folder,
             data   : _env.data_folder,
             mainIP : _env.main_ip
