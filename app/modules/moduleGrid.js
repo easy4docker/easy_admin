@@ -92,7 +92,7 @@
             });
         }
         me.getEnv = (callback) => {
-            callback(_env);
+            callback(me.comm.outside);
         }
         /* --- DATA function ---->> */
 

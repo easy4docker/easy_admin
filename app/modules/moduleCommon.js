@@ -8,11 +8,17 @@
             key  : '/var/_localAppKey'
         }
 
+
+        const _env = {};
+        try {
+            _env = require(me.inside.data + '/_env.json');
+        } catch (e) {}
+
         me.outside = {
-            root : '/var/_localRoot',
-            app  : '/var/_localApp',
-            data : '/var/_localAppData',
-            key  : '/var/_localAppKey'
+            root   : _env.app_root,
+            app    : _env.code_folder,
+            data   : _env.data_folder,
+            mainIP : _env.main_ip
         }
 
         me.file = {
