@@ -1,8 +1,7 @@
 (function() {
     var obj = function(env, pkg, req, res) {
         const me = this,
-            fs = require('fs'),
-            data_dir = '/var/_localAppData';
+            fs = require('fs');
 
         var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
