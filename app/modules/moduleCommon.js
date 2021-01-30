@@ -15,7 +15,6 @@
         } catch (e) {}
 
         me.outside = {
-            env        : _env,
             root       : _env.app_root,
             dockerPath : _env.code_folder,
             data       : _env.data_folder,
