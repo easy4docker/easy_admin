@@ -91,7 +91,9 @@
                // }
             });
         }
-    
+        me.getEnv = (callback) => {
+            callback(_env);
+        }
         /* --- DATA function ---->> */
 
         me.gridTokenValidation = (gridToken, success) => {
@@ -144,9 +146,6 @@
             });
         }
         /* --- POST function ---->> */
-        me.getEnv = (callback) => {
-            callback(_env);
-        }
         me.removeGrid = (callback) => {
             var data = req.body;
             const _f = {};
