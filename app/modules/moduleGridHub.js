@@ -1,7 +1,10 @@
 (function() {
     var obj = function(env, pkg, req, res) {
         const me = this,
-            fs = require('fs');
+            fs = require('fs'),
+            exec = require('child_process').exec,
+            CP = new pkg.crowdProcess(),
+            data_dir = '/var/_localAppData';
 
         var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
@@ -11,7 +14,7 @@
 
         var _env = {};
         try {
-            _env = require(me.inside.data + '/_env.json');
+            _env = require(data_dir + '/_env.json');
         } catch (e) {}
         
         me.get = () => {
