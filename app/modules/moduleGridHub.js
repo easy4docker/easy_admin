@@ -41,7 +41,8 @@
                         try {
                             var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                             let mGrid =  new MAGrid(env, pkg, req, res);
-                            mGrid.call('post', true);
+                            res.send('niuu');
+                           // mGrid.call('post', true);
                         } catch (e) {}
                     } else {
                         /*===*/
