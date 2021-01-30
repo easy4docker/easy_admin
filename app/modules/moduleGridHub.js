@@ -6,15 +6,16 @@
             CP = new pkg.crowdProcess(),
             git_root = '/var/_localRoot',
             app_dir = '/var/_localApp',
-            data_dir = '/var/_localAppData'
+            data_dir = '/var/_localAppData',
+            key_dir = '/var/_localAppKey',
             gridStatusFn = data_dir + '/_gridMatrix.json',
             gridTokenFn = key_dir + '/_gridToken';
 
         var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
 
-        //const   gridTokenFn = me.comm.gridToken,
-         //       gridStatusFn = me.comm.gridStatus;
+        // const   gridTokenFn = me.comm.gridToken,
+        //        gridStatusFn = me.comm.gridStatus;
 
 
         var _env = {};
