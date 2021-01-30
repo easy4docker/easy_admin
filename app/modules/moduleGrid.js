@@ -15,11 +15,6 @@
                 gridStatusFn = me.comm.file.gridStatus,
                 gridServerFn = me.comm.file.gridServer;
 
-        var _env = {};
-        try {
-            _env = require(data_dir + '/_env.json');
-        } catch (e) {}
-        
         me.call = (rest, bypassGridAuth) => {
             
             if (!bypassGridAuth) {
@@ -159,7 +154,7 @@
                 });
             };
             _f['removeCron'] = (cbk) => {
-                let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
+                let shell_fn = (me.comm.outside.env === 'local')? (me.comm.outside.data_folder + '/log/ctab') : '/etc/crontab';
                 let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
                 me.setCron('remove-grid', shell_str, (err) => {
                     cbk(true);
@@ -192,14 +187,14 @@
                 });
             };
             _f['addToCron'] = (cbk) => {
-                let shell_fn = (_env.env === 'local')? (_env.data_folder + '/log/ctab') : '/etc/crontab';
+                let shell_fn = (me.comm.outside.env === 'local')? (me.comm.outside.data_folder + '/log/ctab') : '/etc/crontab';
                 let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
               
-                shell_str += "\n" + 'echo "*/2 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + _env.app_root + ' && sh _gridSync.sh ' + 
+                shell_str += "\n" + 'echo "*/2 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + me.comm.outside.app_root + ' && sh _gridSync.sh ' + 
                     data.gridServer + ' ' + data.tag + ')" >> ';
 
-                if (_env.env === 'local') {
-                    shell_str += _env.data_folder + '/log/ctab';
+                if (me.comm.outside.env === 'local') {
+                    shell_str += me.comm.outside.data_folder + '/log/ctab';
                 } else {
                     shell_str += '/etc/crontab';
                 }
