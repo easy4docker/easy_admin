@@ -3,9 +3,7 @@
         const me = this,
             fs = require('fs'),
             exec = require('child_process').exec,
-            CP = new pkg.crowdProcess(),
-            git_root = '/var/_localRoot',
-            data_dir = '/var/_localAppData';
+            CP = new pkg.crowdProcess();
 
         var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
@@ -136,7 +134,7 @@
             return grids;
         }
         me.setCron = (code, str, callback) => {
-            fs.writeFile(data_dir + '/commCron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
+            fs.writeFile(me.comm.inside.data + '/commCron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
                 callback({status:'success'});
             });
         }
@@ -212,7 +210,7 @@
         }
 
         me.syncAppCode = (cbk) => {
-            const shell_str = 'cd ' + git_root + ' && git pull';
+            const shell_str = 'cd ' + me.comm.inside.root + ' && git pull';
             exec(shell_str, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
                     cbk({status : 'success'})
