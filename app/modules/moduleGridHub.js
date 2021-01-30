@@ -14,9 +14,10 @@
         var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
 
-        const   gridTokenFn = me.comm.gridToken,
-                gridStatusFn = me.comm.gridStatus;
-       // const  gridStatusFn = me.comm.gridStatus;
+        const  gridTokenFn = key_dir + '/_gridToken';
+        // gridTokenFn = me.comm.gridToken,
+        //        gridStatusFn = me.comm.gridStatus;
+        const  gridStatusFn = me.comm.gridStatus;
 
         var _env = {};
         try {
