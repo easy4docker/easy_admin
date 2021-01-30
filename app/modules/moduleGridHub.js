@@ -38,15 +38,17 @@
                     if (setting.cmd === 'askServerToken') {
                         res.send(me.askServerToken(setting));
                     } else if (setting.cmd === 'getGridMatrix') {
-  
                         try {
                             var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                             let mGrid =  new MAGrid(env, pkg, req, res);
                             mGrid.call('post', true);
                         } catch (e) {}
                     } else {
+                        var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
+                        let mGrid =  new MAGrid(env, pkg, req, res);
+                        const grid = mGrid.dataGridMatrix(); 
                         const request = require('request');
-                        const grid = me.dataGridMatrix(); 
+                       // const grid = me.dataGridMatrix(); 
                         var postData =  setting;
                         let url = '';
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
