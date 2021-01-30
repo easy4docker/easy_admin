@@ -15,7 +15,7 @@
         } catch (e) {}
 
         me.outside = {
-            pth : me.inside.data + '/_env.json',
+            env : _env,
             root   : '_env.app_root',
             app    : _env.code_folder,
             data   : _env.data_folder,
