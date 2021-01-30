@@ -2,21 +2,11 @@
     var obj = function(env, pkg, req, res) {
         const me = this,
             fs = require('fs'),
-            exec = require('child_process').exec,
-            CP = new pkg.crowdProcess(),
-            git_root = '/var/_localRoot',
-            app_dir = '/var/_localApp',
-            data_dir = '/var/_localAppData',
-            key_dir = '/var/_localAppKey';
-           // gridStatusFn = data_dir + '/_gridMatrix.json',
-           // gridTokenFn = key_dir + '/_gridToken';
+            data_dir = '/var/_localAppData';
 
         var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
 
-        // const  gridTokenFn = key_dir + '/_gridToken';
-        // gridTokenFn = me.comm.gridToken,
-        //        gridStatusFn = me.comm.gridStatus;
         const   gridTokenFn = me.comm.file.gridToken,
                 gridStatusFn = me.comm.file.gridStatus;
 
@@ -33,7 +23,7 @@
             try {
                 me._post();
             } catch (e) {
-               me.comm.sendErrorJson('===> !' + e.message + '==--===' + gridTokenFn);
+               me.comm.sendErrorJson(e.message);
             }
             
             return true;
