@@ -10,7 +10,7 @@
             key_dir = '/var/_localAppKey',
             gridStatusFn = data_dir + '/_gridMatrix.json',
             gridServerFn = key_dir + '/_gridServers.json',
-            gridTokenFn = key_dir + '/_gridToken',
+            gridTokenFn = key_dir + '/_gridToken.data',
             gridOldTokenFn = key_dir + '/_gridOldToken';
 
         var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
