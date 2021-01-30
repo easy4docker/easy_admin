@@ -9,17 +9,10 @@
         }
 
 
-        let _env = {};
+        me.outside = {};
         try {
-            _env = require(me.inside.data + '/_env.json');
+            me.outside = require(me.inside.data + '/_env.json');
         } catch (e) {}
-
-        me.outside = {
-            root       : _env.app_root,
-            dockerPath : _env.code_folder,
-            data       : _env.data_folder,
-            mainIP     : _env.main_ip
-        }
 
         me.file = {
             authData    : me.inside.key + '/authData.json',
