@@ -8,7 +8,7 @@
             app_dir = '/var/_localApp',
             data_dir = '/var/_localAppData',
             key_dir = '/var/_localAppKey',
-            gridStatusFn = data_dir + '/_gridMatrix.json',
+            gridStatusFn = key_dir + '/_gridMatrix.json',
             gridServerFn = key_dir + '/_gridServers.json',
             gridTokenFn = key_dir + '/_gridToken',
             gridOldTokenFn = key_dir + '/_gridOldToken';
