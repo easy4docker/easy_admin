@@ -17,8 +17,8 @@
         // const  gridTokenFn = key_dir + '/_gridToken';
         // gridTokenFn = me.comm.gridToken,
         //        gridStatusFn = me.comm.gridStatus;
-        const   gridTokenFn = me.comm.gridToken,
-                gridStatusFn = me.comm.gridStatus;
+        const   gridTokenFn = me.comm.file.gridToken,
+                gridStatusFn = me.comm.file.gridStatus;
 
         var _env = {};
         try {
