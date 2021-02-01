@@ -88,7 +88,7 @@ module.exports = {
             const me = this;
              $.ajax({
                 type: 'POST',
-                url:  '/_gridHub/',
+                url:  '/_api/',
                 data: {
                     cmd     :'getGridMatrix',
                     authToken   : localStorage.getItem('easydockerFP')
