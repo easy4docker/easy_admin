@@ -27,7 +27,7 @@
             let p = req.params[0],
             mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             const METHODS = [
-                'renewToken', 'serverMem', 'getEnv'
+                'renewToken', 'serverMem', 'getEnv', 'getGridMatrix'
             ];
             if (METHODS.indexOf(mp[2]) === -1) {
                me.comm.sendErrorJson('wrong path ' + p + '!');
