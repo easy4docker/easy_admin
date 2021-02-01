@@ -207,7 +207,7 @@ module.exports = {
             
             me.root.dataEngine().gridHub({
                 server  : svr,
-                cmd     :'getGridMatrix',
+                cmd     :'getIP',
                 data    : {},
                 dataType: 'json',
                 gridToken   : token
