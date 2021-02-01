@@ -58,6 +58,7 @@
                             // mGrid.call('post', true);
                         } catch (e) {}
                     } else {
+                        setting.target = (setting.target) ? setting.target : ip0;
                         var postData =  setting;
                         let url = '';
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
