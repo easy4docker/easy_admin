@@ -21,7 +21,7 @@
             </div>
             <div class="row">
                 <div class="col-12 p-3 text-left">
-                    <div class="m-3">{{'** ' + testModule + ' **'}}</div>
+                    <!--div class="m-3">{{'** ' + testModule + ' **'}}</div-->
                     <div class="m-3">{{testData}}</div>
                 </div>
             </div>
@@ -37,7 +37,7 @@ module.exports = {
         return {
             root :  this.$parent.root,
             testModule  : '',
-            testData    : {}
+            testData    : ''
         }
     },
     mounted() {
@@ -51,13 +51,41 @@ module.exports = {
     methods : {
         setTestModule(v) {
             const me = this;
-            me.testModule = v;
-            
             if (me[v]) {
                 me[v]();
             } else {
-                me.testData = {}
+                me.testData = v;
             }
+        },
+        testGrid() {
+           const me = this;             
+            let svr = localStorage.getItem('easydockerSVR'),
+                token = localStorage.getItem('easydockerTOKEN');
+            
+            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+        
+            if (!svr || !token) {
+                return true;
+            }
+            
+            me.root.dataEngine().gridHub({
+                server  : svr,
+                cmd     :'askServerToken',
+                data    : {},
+                dataType: 'json',
+                gridToken   : token
+            },
+            function(result) {
+                if (result.status === 'success') {
+                    me.testData = result.result;
+                } else {
+                    me.testData = null;
+                }
+                me.$forceUpdate();
+            }, function(err) {
+                me.testData = null;
+                console.log(err);
+            });
         },
         testGridHub() {
             const me = this;             
