@@ -92,12 +92,14 @@ module.exports = {
             var me = this;
             me.$parent.triggerSpinner = true;
             me.gridHub({
-                server  : setting.hubServer,
-                cmd     :'askServerToken',
+                hubServer  : setting.hubServer,
+                cmd        : 'askServerToken',
                 target  : setting.target,
                 dataType: 'json',
                 gridToken   : setting.gridToken
             }, function(result) {
+                res.send(result);
+                return true;
                 $.ajax({
                     type: 'POST',
                     url: 'http://' + result.ip + ':10000/_grid/',
