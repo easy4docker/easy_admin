@@ -85,7 +85,7 @@
                 me.comm.sendAction('', 'wrong authentication token!');
             }
         }
-        /*
+        
         me.getGridMatrix = (cbk) => {
            cbk({status: 'success', result: me.dataGridMatrix()});
         }
@@ -97,7 +97,7 @@
             } catch (e) {}
             return grids;
         }
-*/
+
         me.getIP = (cbk) => {
             fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
                 cbk(data);
