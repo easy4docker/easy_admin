@@ -88,13 +88,13 @@
       
         me.getIP = (cbk) => {
             fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
-                cbk(data);
+                cbk({status: success, result : data});
             });
         }
 
         me.getToken = (cbk) => {
             fs.readFile(me.comm.file.authToken, 'utf-8', (err, data) => {
-                cbk(data);
+                cbk({status: success, result : data});
             });
         }
     }
