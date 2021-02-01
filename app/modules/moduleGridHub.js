@@ -37,13 +37,14 @@
                     /*if (setting.cmd === 'askServerToken') {
                         res.send(me.askServerToken(setting));
                     } else */
+                    /*
                     if (setting.cmd === 'getGridMatrix') {
                         try {
                             var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                             let mGrid =  new MAGrid(env, pkg, req, res);
                             mGrid.call('post', true);
                         } catch (e) {}
-                    } else {
+                    } else {*/
                         const request = require('request');
                         var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                         let mGrid =  new MAGrid(env, pkg, req, res);
@@ -64,7 +65,7 @@
                                 res.send(body);
                             } 
                         });
-                    }
+                 //   }
                }
             });
             return  true;
