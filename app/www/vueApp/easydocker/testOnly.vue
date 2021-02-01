@@ -20,7 +20,12 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 p-3 text-left">
+                <div class="col-2 p-3 text-left">
+                    <div class="m-3" v-for="(v, k) in list">
+                        <a href="JavaScript: void(0)" v-on:click="linkIPApi(k)">{{k}}</a>
+                    </div>
+                </div>
+                <div class="col-10 p-3 text-left">
                     <!--div class="m-3">{{'** ' + testModule + ' **'}}</div-->
                     <div class="m-3">{{testData}}</div>
                 </div>
@@ -35,6 +40,7 @@ module.exports = {
     data: function() {
         let me = this;
         return {
+            list : [],
             root :  this.$parent.root,
             testModule  : '',
             testData    : ''
@@ -42,6 +48,11 @@ module.exports = {
     },
     mounted() {
         var me = this;
+        setTimeout(
+            function() {
+                me.askGridMatrix();
+            }, 50
+        );
     },
     watch: {
         testModule: function() {
@@ -56,6 +67,37 @@ module.exports = {
             } else {
                 me.testData = v;
             }
+        },
+        linkIPApi(ip) {
+           const me = this;             
+            let svr = localStorage.getItem('easydockerSVR'),
+                token = localStorage.getItem('easydockerTOKEN');
+            
+            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+        
+            if (!svr || !token) {
+                return true;
+            }
+            me.root.dataEngine().gridHub({
+                server  : svr,
+                cmd     : 'getIPA',
+                target  : ip,
+                data    : {},
+                dataType: 'text',
+                gridToken   : token
+            },
+            function(result) {
+                console.log(result);
+                if (result.status === 'success') {
+                    me.testData = result;
+                } else {
+                    me.testData = result;
+                }
+                me.$forceUpdate();
+            }, function(err) {
+                me.testData = null;
+                console.log(err);
+            });
         },
         testApi() {
            const me = this;             
@@ -73,10 +115,11 @@ module.exports = {
                 cmd     : 'getIPA',
                 target  : '142.93.73.66',
                 data    : {},
-                dataType: 'json',
+                dataType: 'text',
                 gridToken   : token
             },
             function(result) {
+                console.log(result);
                 if (result.status === 'success') {
                     me.testData = result;
                 } else {
@@ -148,6 +191,35 @@ module.exports = {
             }, function(err) {
                 me.testData = null;
                 console.log(err);
+            });
+        },
+        askGridMatrix() {
+            const me = this;             
+            let svr = localStorage.getItem('easydockerSVR'),
+                token = localStorage.getItem('easydockerTOKEN');
+            
+            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+        
+            if (!svr || !token) {
+                return true;
+            }
+            
+            me.root.dataEngine().gridHub({
+                server  : svr,
+                cmd     :'getGridMatrix',
+                data    : {},
+                dataType: 'json',
+                gridToken   : token
+            },
+            function(result) {
+                if (result.status === 'success') {
+                    me.list = result.result;
+                } else {
+                    me.list = {};
+                }
+                me.$forceUpdate();
+            }, function(err) {
+                me.list = {};
             });
         }
     },
