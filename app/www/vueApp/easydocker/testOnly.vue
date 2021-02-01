@@ -52,9 +52,14 @@ module.exports = {
         setTestModule(v) {
             const me = this;
             me.testModule = v;
-            me.clallGridMatrix();
+            
+            if (me[v]) {
+                me[v]();
+            } else {
+                me.testData = {}
+            }
         },
-        clallGridMatrix() {
+        testGridHub() {
             const me = this;             
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
