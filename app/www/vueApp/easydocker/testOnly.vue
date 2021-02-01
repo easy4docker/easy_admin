@@ -80,7 +80,7 @@ module.exports = {
                 if (result.status === 'success') {
                     me.testData = result;
                 } else {
-                    me.testData = null;
+                    me.testData = result;
                 }
                 me.$forceUpdate();
             }, function(err) {
