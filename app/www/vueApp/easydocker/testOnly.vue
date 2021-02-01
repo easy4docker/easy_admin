@@ -81,7 +81,7 @@ module.exports = {
             }
             me.root.dataEngine().gridHub({
                 server  : svr,
-                cmd     : 'getIPA',
+                cmd     : 'getIP',
                 target  : ip,
                 data    : {},
                 dataType: 'text',
