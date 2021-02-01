@@ -38,6 +38,10 @@
                         </button>
                     </div>
                     <div class="col-6 p-30 m-0 text-right">
+                        <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
+                            v-on:click="clickMenu('testOnly')">
+                            <i class="fa fa-cogs" aria-hidden="true"></i> test only
+                        </button>
                         <a class="btn btn-sm btn-secondary m-1 border-danger shadow-sm" 
                             href="JavaScript:void(0)" v-on:click="root.test()">
                             * test code

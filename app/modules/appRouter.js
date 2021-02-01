@@ -93,7 +93,7 @@
 					case '_grid':
 						var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
 						let mGrid =  new MAGrid(env, pkg, req, res);
-						mGrid.call('post', true);
+						mGrid.call('post', false);
 						break; 
 
 					case '_gridHub':

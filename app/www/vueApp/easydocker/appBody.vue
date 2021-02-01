@@ -7,6 +7,7 @@
                     <v-form-server v-if="root.matrix('form')"></v-form-server>
                     <v-server-list v-if="root.matrix('list')"></v-server-list>
                     <v-form-grid v-if="root.matrix('gridSetup')"></v-form-grid>
+                    <test-only v-if="root.matrix('testOnly')"></test-only>
                 </span>
             </div>
         </div>   
@@ -26,7 +27,9 @@ module.exports = {
     methods : {
     },
     components: VUEApp.loadComponents({
-        LOAD    : {}, 
+        LOAD    : {
+            'testOnly' : '/vueApp/easydocker/testOnly.vue'
+        }, 
         TPL :{
             'vServerList' : '/vueApp/easydocker/vServerList.vue',
             'vFormServer' : '/vueApp/easydocker/vFormServer.vue',
