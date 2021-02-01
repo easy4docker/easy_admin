@@ -53,15 +53,16 @@
                 let api =  new MApi(env, pkg, req, res);
                 
                 try {
+                    /*
                     if (api[req.body.cmd]) {
                         api[req.body.cmd]((data) => {
                             me.comm.output(data);
                         });
-                    } else {
+                    } else {*/
                         me[req.body.cmd]((data) => {
                             me.comm.output(data);
                         });
-                    }
+                   // }
 
                 } catch (e) {
                    me.comm.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
