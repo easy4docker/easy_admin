@@ -68,8 +68,7 @@
                         } else {
                             url = 'http://' + setting.server + ':10000/' + channel + '/';
                         }
-                        res.send({url: url, form: postData});
-                        return true;
+          
                         request.post({url: url, form: postData}, function(err,httpResponse,body){      
                             if (setting.type === 'json') {
                                 res.send(body);
