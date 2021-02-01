@@ -49,25 +49,26 @@
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
             } else {
+                var MApi= pkg.require(env.root+ '/modules/moduleApi.js');
+                let api =  new MApi(env, pkg, req, res);
+                
                 try {
-                    me[req.body.cmd]((data) => {
-                        me.comm.output(data);
-                    });
+                    if (api[req.body.cmd]) {
+                        api[req.body.cmd]((data) => {
+                            me.comm.output('data');
+                        });
+                    } else {
+                        me[req.body.cmd]((data) => {
+                            me.comm.output(data);
+                        });
+                    }
+
                 } catch (e) {
                    me.comm.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
                 }
             }
         };
 
-        me._post = () => {
-            if (typeof me[req.body.cmd] === 'function') {
-                me[req.body.cmd]((result) => {
-                    res.send(result);
-                });
-            } else {
-                res.send({status:'failure', message : '404 wrong cmd ' + req.body.cmd + ' !'});
-            }
-        };
         /* --- GET function ---->> */
         me.renewToken = (callback) => {
             const oldToken = req.query.old;
