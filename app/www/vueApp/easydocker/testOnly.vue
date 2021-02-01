@@ -102,19 +102,19 @@ module.exports = {
         },
         testApi() {
            const me = this;             
-            let svr = localStorage.getItem('easydockerSVR'),
+            let hubServer = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
             
-            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+            hubServer = (!hubServer) ? '' :  hubServer.replace(/\_/g, '.');
         
-            if (!svr || !token) {
+            if (!hubServer || !token) {
                 return true;
             }
             
             me.root.dataEngine().gridHub({
-                server  : svr,
+                hubServer  : hubServer,
                 cmd     : 'getIPA',
-                target  : '142.93.73.66',
+               // target  : '142.93.73.66',
                 data    : {},
                 dataType: 'text',
                 gridToken   : token
