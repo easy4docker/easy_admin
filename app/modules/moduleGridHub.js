@@ -49,6 +49,9 @@
                         var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                         let mGrid =  new MAGrid(env, pkg, req, res);
                         const grid = mGrid.dataGridMatrix(); 
+                        res.send({status: 'success', result : grid}); // ===
+                        return true;
+
                         var postData =  setting;
                         let url = '';
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
