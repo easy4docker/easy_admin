@@ -50,7 +50,7 @@
                         
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
                         let url = 'http://' + setting.target + ':10000/' + channel + '/';
-                        postData.gridToken = grid[setting.target].gridToken;
+                        postData.gridToken = grid[setting.target].gridToken + '99';
             
                         request.post({url: url, form: postData}, function(err,httpResponse,body){      
                             if (setting.type === 'json') {
