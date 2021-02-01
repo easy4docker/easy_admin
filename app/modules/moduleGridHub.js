@@ -84,7 +84,7 @@
             return result;
         };
 
-        me.dataGridMatrix = () => {
+        me.dataGridMatrixBK = () => {
             let grids = {};
             try {
                 grids = pkg.require(gridStatusFn);
