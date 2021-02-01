@@ -10,6 +10,7 @@
                 </div>
                 <div class="col-7 p-3 m-0 text-right">
                     <button class="m-2 btn btn-warning" v-on:click="setTestModule('testGridHub')">testGridHub</button>
+                    <button class="m-2 btn btn-warning" v-on:click="setTestModule('testGridPost')">testGridPost</button>
                     <button class="m-2 btn btn-warning" v-on:click="setTestModule('testGrid')">testGrid</button>
                     <button class="m-2 btn btn-warning" v-on:click="setTestModule('testApi')">testApi</button>
                 </div>
@@ -164,6 +165,36 @@ module.exports = {
             });
         },
         testGridHub() {
+            const me = this;             
+            let svr = localStorage.getItem('easydockerSVR'),
+                token = localStorage.getItem('easydockerTOKEN');
+            
+            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+        
+            if (!svr || !token) {
+                return true;
+            }
+            
+            me.root.dataEngine().gridHub({
+                server  : svr,
+                cmd     :'getGridMatrix',
+                data    : {},
+                dataType: 'json',
+                gridToken   : token
+            },
+            function(result) {
+                if (result.status === 'success') {
+                    me.testData = result.result;
+                } else {
+                    me.testData = null;
+                }
+                me.$forceUpdate();
+            }, function(err) {
+                me.testData = null;
+                console.log(err);
+            });
+        },
+        testGridPost() {
             const me = this;             
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');

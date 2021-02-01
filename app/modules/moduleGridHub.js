@@ -34,9 +34,10 @@
                if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
                    me.comm.sendAction('', 'Unauthorized gridToken!');
                } else {
-                    if (setting.cmd === 'askServerToken') {
+                    /*if (setting.cmd === 'askServerToken') {
                         res.send(me.askServerToken(setting));
-                    } else if (setting.cmd === 'getGridMatrix') {
+                    } else */
+                    if (setting.cmd === 'getGridMatrix') {
                         try {
                             var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                             let mGrid =  new MAGrid(env, pkg, req, res);
