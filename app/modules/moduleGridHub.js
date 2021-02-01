@@ -43,7 +43,7 @@
 
                     setting.target = (setting.target) ? setting.target : ip0;
 
-                    if  (setting.target === ip0 && ip0 && setting.cmd === 'getGridMatrix') {
+                    if  (setting.target === ip0 && (ip0) && setting.cmd === 'getGridMatrix') {
                         mGrid.call('post', true);
                     } else {
                         var postData =  setting;
