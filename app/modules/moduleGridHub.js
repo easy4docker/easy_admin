@@ -42,23 +42,24 @@
                     const grid = mGrid.dataGridMatrix(); 
 
                     setting.target = (setting.target) ? setting.target : ip0;
-                    var postData =  setting;
-                    let url = '';
-                    var channel = (!setting.channel) ? '_grid' : setting.channel;
-                    if (setting.target && grid[setting.target]) {
-                        url = 'http://' + setting.target + ':10000/' + channel + '/';
-                        postData.gridToken = grid[setting.target].gridToken;
+
+                    if  (setting.target === ip0 && ip0 && setting.cmd === 'getGridMatrix') {
+                        mGrid.call('post', true);
                     } else {
-                        url = 'http://' + setting.server + ':10000/' + channel + '/';
+                        var postData =  setting;
+                        
+                        var channel = (!setting.channel) ? '_grid' : setting.channel;
+                        let url = 'http://' + setting.target + ':10000/' + channel + '/';
+                        postData.gridToken = grid[setting.target].gridToken;
+            
+                        request.post({url: url, form: postData}, function(err,httpResponse,body){      
+                            if (setting.type === 'json') {
+                                res.send(body);
+                            } else {
+                                res.send(body);
+                            } 
+                        });
                     }
-        
-                    request.post({url: url, form: postData}, function(err,httpResponse,body){      
-                        if (setting.type === 'json') {
-                            res.send(body);
-                        } else {
-                            res.send(body);
-                        } 
-                    });
                }
             });
             return  true;
