@@ -70,14 +70,15 @@ module.exports = {
             
             me.root.dataEngine().gridHub({
                 server  : svr,
-                cmd     :'askServerToken',
+                cmd     : 'askServerToken',
+                target  : '142.93.73.66',
                 data    : {},
                 dataType: 'json',
                 gridToken   : token
             },
             function(result) {
                 if (result.status === 'success') {
-                    me.testData = result;
+                    me.testData = result.serverToken;
                 } else {
                     me.testData = null;
                 }
