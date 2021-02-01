@@ -46,23 +46,23 @@
             const METHODS = [
                 'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'syncAppCode', 'serverMem', 'sampleCode'
             ];
-            if (METHODS.indexOf(req.body.cmd) === -1) {
+
+            var MApi= pkg.require(env.root+ '/modules/moduleApi.js');
+            let api =  new MApi(env, pkg, req, res);
+
+            if (METHODS.indexOf(req.body.cmd) === -1 && !api[req.body.cmd]) {
                me.comm.sendErrorJson('missing cmd!');
             } else {
-                var MApi= pkg.require(env.root+ '/modules/moduleApi.js');
-                let api =  new MApi(env, pkg, req, res);
-                
                 try {
-                    /*
                     if (api[req.body.cmd]) {
                         api[req.body.cmd]((data) => {
                             me.comm.output(data);
                         });
-                    } else {*/
+                    } else {
                         me[req.body.cmd]((data) => {
                             me.comm.output(data);
                         });
-                   // }
+                   }
 
                 } catch (e) {
                    me.comm.sendErrorJson('wrong cmd ' + req.body.cmd + '!');
