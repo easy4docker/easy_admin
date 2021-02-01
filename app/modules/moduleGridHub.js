@@ -68,7 +68,11 @@
         };
 
         me.askServerToken  = (setting) => {
-            const grid = me.dataGridMatrix();
+            var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
+            let mGrid =  new MAGrid(env, pkg, req, res);
+           // mGrid.call('post', true);
+            const grid = mGrid.dataGridMatrix();
+            // const grid = me.dataGridMatrix();
             var result = {}
             if (!setting.target) {
                 result = {status:'failuer', message: 'Missing setting.target!'};
