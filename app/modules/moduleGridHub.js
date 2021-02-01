@@ -38,7 +38,11 @@
                         res.send(me.askServerToken(setting));
                     }  else {
                         const request = require('request');
-                        const grid = me.dataGridMatrix(); 
+                        var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
+                        let mGrid =  new MAGrid(env, pkg, req, res);
+                       // mGrid.call('post', true);
+                        const grid = mGrid.dataGridMatrix();
+                        // const grid = me.dataGridMatrix(); 
                         var postData =  setting;
                         let url = '';
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
