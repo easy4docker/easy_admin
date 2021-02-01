@@ -46,18 +46,15 @@
                     var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                     let mGrid =  new MAGrid(env, pkg, req, res);
                     const grid = mGrid.dataGridMatrix(); 
-                    /*if (setting.cmd === 'askServerToken') {
-                        res.send(me.askServerToken(setting));
-                    } else */
-                   /* 
+                    
                     if (setting.cmd === 'getGridMatrix') {
                         try {
-                            res.send({status: 'success', result : grid});
+                            // res.send({status: 'success', result : grid});
                             // var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                             //let mGrid =  new MAGrid(env, pkg, req, res);
-                            // mGrid.call('post', true);
+                            mGrid.call('post', true);
                         } catch (e) {}
-                    } else {*/
+                    } else {
                         setting.target = (setting.target) ? setting.target : ip0;
                         var postData =  setting;
                         let url = '';
@@ -76,7 +73,7 @@
                                 res.send(body);
                             } 
                         });
-                  //}
+                    }
                }
             });
             return  true;
