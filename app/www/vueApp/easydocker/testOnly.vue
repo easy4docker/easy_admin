@@ -70,7 +70,7 @@ module.exports = {
             
             me.root.dataEngine().gridHub({
                 server  : svr,
-                cmd     : 'askServerToken',
+                cmd     : 'getIPA',
                 target  : '142.93.73.66',
                 data    : {},
                 dataType: 'json',
@@ -78,7 +78,7 @@ module.exports = {
             },
             function(result) {
                 if (result.status === 'success') {
-                    me.testData = result.serverToken;
+                    me.testData = result;
                 } else {
                     me.testData = null;
                 }

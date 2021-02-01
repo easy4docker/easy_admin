@@ -50,7 +50,7 @@
 
         me.post = () => {
             const METHODS = [
-                'getIP', 'getGridMatrix'
+                'getIP', 'getGridMatrix', 'getIPA'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
