@@ -71,16 +71,16 @@ module.exports = {
         },
         linkIPApi(ip) {
            const me = this;             
-            let svr = localStorage.getItem('easydockerSVR'),
+            let hubServer = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
             
-            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+            hubServer = (!hubServer) ? '' :  hubServer.replace(/\_/g, '.');
         
-            if (!svr || !token) {
+            if (!hubServer || !token) {
                 return true;
             }
             me.root.dataEngine().gridHub({
-                server  : svr,
+                hubServer  : hubServer,
                 cmd     : 'getIP',
                 target  : ip,
                 data    : {},
@@ -135,19 +135,19 @@ module.exports = {
 
         testGrid() {
            const me = this;             
-            let svr = localStorage.getItem('easydockerSVR'),
+            let hubServer = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
             
-            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+            hubServer = (!hubServer) ? '' :  hubServer.replace(/\_/g, '.');
         
-            if (!svr || !token) {
+            if (!hubServer || !token) {
                 return true;
             }
             
             me.root.dataEngine().gridHub({
-                server  : svr,
-                cmd     : 'askServerToken',
-                target  : '142.93.73.66',
+                hubServer  : hubServer,
+                cmd     : 'getToken',
+               // target  : '142.93.73.66',
                 data    : {},
                 dataType: 'json',
                 gridToken   : token
@@ -166,17 +166,17 @@ module.exports = {
         },
         testGridHub() {
             const me = this;             
-            let svr = localStorage.getItem('easydockerSVR'),
+            let hubServer = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
             
-            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+            hubServer = (!hubServer) ? '' :  hubServer.replace(/\_/g, '.');
         
-            if (!svr || !token) {
+            if (!hubServer || !token) {
                 return true;
             }
             
             me.root.dataEngine().gridHub({
-                server  : svr,
+                hubServer  : hubServer,
                 cmd     :'getGridMatrix',
                 data    : {},
                 dataType: 'json',
@@ -196,17 +196,17 @@ module.exports = {
         },
         testGridPost() {
             const me = this;             
-            let svr = localStorage.getItem('easydockerSVR'),
+            let hubServer = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
             
-            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+            hubServer = (!hubServer) ? '' :  hubServer.replace(/\_/g, '.');
         
-            if (!svr || !token) {
+            if (!hubServer || !token) {
                 return true;
             }
             
             me.root.dataEngine().gridHub({
-                server  : svr,
+                hubServer  : hubServer,
                 cmd     :'getIP',
                 data    : {},
                 dataType: 'json',
@@ -226,17 +226,17 @@ module.exports = {
         },
         askGridMatrix() {
             const me = this;             
-            let svr = localStorage.getItem('easydockerSVR'),
+            let hubServer = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
             
-            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+            hubServer = (!hubServer) ? '' :  hubServer.replace(/\_/g, '.');
         
-            if (!svr || !token) {
+            if (!hubServer || !token) {
                 return true;
             }
             
             me.root.dataEngine().gridHub({
-                server  : svr,
+                hubServer  : hubServer,
                 cmd     :'getGridMatrix',
                 data    : {},
                 dataType: 'json',

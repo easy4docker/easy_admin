@@ -66,7 +66,7 @@ module.exports = {
                 return true;
             }
             me.dataEngine().gridHub({
-                    server  : svr,
+                    hubServer  : svr,
                     cmd     :'getGridMatrix',
                     data    : {},
                     dataType: 'json',

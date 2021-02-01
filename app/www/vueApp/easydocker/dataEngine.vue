@@ -44,7 +44,7 @@ module.exports = {
             me.$parent.triggerSpinner = true;
             $.ajax({
                 type: 'POST',
-                url: 'http://' + setting.server + ':10000/_gridHub/',
+                url: 'http://' + setting.hubServer + ':10000/_gridHub/',
                 data: setting,
                 success: function(result) {
                     me.$parent.triggerSpinner = false;
@@ -54,31 +54,6 @@ module.exports = {
                 },
                 error: function (jqXHR) { 
                     me.$parent.triggerSpinner = false;
-                    if (typeof error === 'function') {
-                        error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
-                    }
-                },
-                dataType: (!setting.dataType) ? 'text' : setting.dataType
-            });
-        },
-        /* ------------gridPost confirmed ------------*/
-        // 
-        gridPost(setting, success, error) {
-            var me = this;
-            me.$parent.triggerSpinner = true;
-            $.ajax({
-                type: 'POST',
-                url: 'http://' + setting.server + ':10000/_gridHub/',
-                data: setting,
-                success: function(result) {
-                    me.$parent.triggerSpinner = false;
-                    if (typeof  success === 'function') {
-                        success(result);
-                    }
-                },
-                error: function (jqXHR) { 
-                    me.$parent.triggerSpinner = false; 
-                    console.log('error');
                     if (typeof error === 'function') {
                         error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
                     }
@@ -113,11 +88,11 @@ module.exports = {
         },
         /* ------------ confirmed ------------*/
         // based on grid post to target server 
-        serverPost(setting, success, error) {
+        gridPost(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
             me.gridHub({
-                server  : setting.server,
+                server  : setting.hubServer,
                 cmd     :'askServerToken',
                 target  : setting.target,
                 dataType: 'json',
