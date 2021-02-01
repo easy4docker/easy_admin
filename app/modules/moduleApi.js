@@ -33,7 +33,7 @@
             let p = req.params[0],
                 mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
             const METHODS = [
-                'getIP', 'getGridMatrix', 'getToken'
+                'getIP', 'getToken'
             ];
             if (METHODS.indexOf(mp[2]) === -1) {
                me.comm.sendErrorJson('wrong path ' + p + '!');
@@ -50,7 +50,7 @@
 
         me.post = () => {
             const METHODS = [
-                'getIP', 'getGridMatrix', 'getIPA'
+                'getIP'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -86,28 +86,12 @@
             }
         }
       
-        me.getGridMatrix = (cbk) => {
-           cbk({status: 'success', result: me.dataGridMatrix()});
-        }
-
-        me.dataGridMatrix = () => {
-            let grids = {};
-            try {
-                grids = pkg.require(gridStatusFn);
-            } catch (e) {}
-            return grids;
-        }
-        
         me.getIP = (cbk) => {
             fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
                 cbk(data);
             });
         }
-        me.getIPA = (cbk) => {
-            fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
-                cbk(data);
-            });
-        }  
+
         me.getToken = (cbk) => {
             fs.readFile(me.comm.file.authToken, 'utf-8', (err, data) => {
                 cbk(data);
