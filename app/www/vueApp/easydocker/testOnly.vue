@@ -84,15 +84,15 @@ module.exports = {
                 cmd     : 'getIP',
                 target  : ip,
                 data    : {},
-                dataType: 'text',
+                dataType: 'json',
                 gridToken   : token
             },
             function(result) {
                 console.log(result);
                 if (result.status === 'success') {
-                    me.testData = result;
+                    me.testData = result.result;
                 } else {
-                    me.testData = result;
+                    me.testData = null;
                 }
                 me.$forceUpdate();
             }, function(err) {
