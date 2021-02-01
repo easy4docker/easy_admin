@@ -55,7 +55,7 @@
                 try {
                     if (api[req.body.cmd]) {
                         api[req.body.cmd]((data) => {
-                            me.comm.output('data');
+                            me.comm.output(data);
                         });
                     } else {
                         me[req.body.cmd]((data) => {
