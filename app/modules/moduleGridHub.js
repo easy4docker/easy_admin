@@ -15,14 +15,22 @@
         };
         me.post = () => {
             try {
-                me._post();
+                fs.readFile(me.comm.inside.data+ '/_ip', 'utf-8', (err, ip0) => {
+                    me._post(ip0);
+                });
+                
             } catch (e) {
                me.comm.sendErrorJson(e.message);
             }
             
             return true;
         }
-        me._post = () => {
+        me.getIP = (cbk) => {
+            fs.readFile(me.comm.inside.data+ '/_ip', 'utf-8', (err, data) => {
+                cbk(data);
+            });
+        }
+        me._post = (ip0) => {
             const authfn =  me.comm.file.authData;
             let auth = {}, authToken = {};
             try {
@@ -34,24 +42,22 @@
                if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
                    me.comm.sendAction('', 'Unauthorized gridToken!-');
                } else {
+                    const request = require('request');
+                    var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
+                    let mGrid =  new MAGrid(env, pkg, req, res);
+                    const grid = mGrid.dataGridMatrix(); 
                     /*if (setting.cmd === 'askServerToken') {
                         res.send(me.askServerToken(setting));
                     } else */
-                    /*
+                    
                     if (setting.cmd === 'getGridMatrix') {
                         try {
-                            var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
-                            let mGrid =  new MAGrid(env, pkg, req, res);
-                            mGrid.call('post', true);
+                            res.send({status: 'success', result : grid});
+                            // var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
+                            //let mGrid =  new MAGrid(env, pkg, req, res);
+                            // mGrid.call('post', true);
                         } catch (e) {}
-                    } else {*/
-                        const request = require('request');
-                        var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
-                        let mGrid =  new MAGrid(env, pkg, req, res);
-                        const grid = mGrid.dataGridMatrix(); 
-                        res.send({status: 'success', result : grid}); // ===
-                        return true;
-
+                    } else {
                         var postData =  setting;
                         let url = '';
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
@@ -68,7 +74,7 @@
                                 res.send(body);
                             } 
                         });
-                 //   }
+                  }
                }
             });
             return  true;
