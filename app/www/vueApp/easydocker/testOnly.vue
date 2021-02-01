@@ -77,7 +77,7 @@ module.exports = {
             },
             function(result) {
                 if (result.status === 'success') {
-                    me.testData = result.result;
+                    me.testData = result;
                 } else {
                     me.testData = null;
                 }
