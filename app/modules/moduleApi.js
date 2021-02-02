@@ -97,7 +97,7 @@
             try {
                 pkg.require(me.comm.file.authToken);
             } catch (e) {}
-            return token;
+            cbk(token);
         }
         me.getServerToken = (cbk) => {
             me.getIP(
