@@ -141,35 +141,8 @@ module.exports = {
         },
 
         testGrid() {
-           const me = this;             
-            let hubServer = localStorage.getItem('easydockerSVR'),
-                token = localStorage.getItem('easydockerTOKEN');
-            
-            hubServer = (!hubServer) ? '' :  hubServer.replace(/\_/g, '.');
-        
-            if (!hubServer || !token) {
-                return true;
-            }
-            
-            me.root.dataEngine().gridHub({
-                hubServer  : hubServer,
-                cmd     : 'getToken',
-               // target  : '142.93.73.66',
-                data    : {},
-                dataType: 'json',
-                gridToken   : token
-            },
-            function(result) {
-                if (result.status === 'success') {
-                    me.testData = result.serverToken;
-                } else {
-                    me.testData = null;
-                }
-                me.$forceUpdate();
-            }, function(err) {
-                me.testData = null;
-                console.log(err);
-            });
+           const me = this;
+           alert('testGrid');
         },
         testGridHub() {
             const me = this;             
