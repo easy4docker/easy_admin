@@ -95,15 +95,15 @@
         me.getToken = (cbk) => {
             const token = {};
             try {
-                token = pkg.require(me.comm.file.authToken);
+                token = pkg.require(me.comm.file.gridToken);
             } catch (e) {}
             cbk(token);
         }
         me.getServerToken = (cbk) => {
             me.getIP(
                 (dataGetIP) => {
-                    me.getToken((dataGeetToken) => {
-                        cbk({status: 'success', ip : dataGetIP.result, token : dataGeetToken});
+                    me.getToken((dataGetToken) => {
+                        cbk({status: 'success', ip : dataGetIP.result, token : dataGetToken});
                     })
             });
         }
