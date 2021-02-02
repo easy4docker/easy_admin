@@ -102,7 +102,11 @@ module.exports = {
                     error({success: 'failure', message: 'gridHub getServerToken error'});
                 } else {
                     console.log(result);
+                    
+                    setting.gridToken = result.token;
+                    console.log(setting);
                     return true;
+                    
                     $.ajax({
                         type: 'POST',
                         url: 'http://' + result.ip + ':10000/_grid/',
