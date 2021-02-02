@@ -93,15 +93,17 @@
         }
 
         me.getToken = (cbk) => {
-            fs.readFile(me.comm.file.authToken, 'utf-8', (err, data) => {
-                cbk({status: 'success', result : data});
-            });
+            const token = {};
+            try {
+                pkg.require(me.comm.file.authToken);
+            } catch (e) {}
+            return token;
         }
         me.getServerToken = (cbk) => {
             me.getIP(
                 (dataGetIP) => {
                     me.getToken((dataGeetToken) => {
-                        cbk({status: 'success', ip : dataGetIP.result, token : dataGeetToken.result});
+                        cbk({status: 'success', ip : dataGetIP.result, token : dataGeetToken});
                     })
             });
         }
