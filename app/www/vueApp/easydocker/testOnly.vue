@@ -11,8 +11,8 @@
                 <div class="col-7 p-3 m-0 text-right">
                     <button class="m-2 btn btn-warning" v-on:click="setTestModule('testGridHub')">testGridHub</button>
                     <button class="m-2 btn btn-warning" v-on:click="setTestModule('testGridPost')">testGridPost</button>
-                    <button class="m-2 btn btn-warning" v-on:click="setTestModule('testGrid')">testGrid</button>
-                    <button class="m-2 btn btn-warning" v-on:click="setTestModule('testApi')">testApi</button>
+                    <button class="m-2 btn btn-success" v-on:click="setTestModule('testGrid')">testGrid</button>
+                    <button class="m-2 btn btn-success" v-on:click="setTestModule('testApi')">testApi</button>
                 </div>
             </div>
             <div class="row">
@@ -22,11 +22,18 @@
             </div>
             <div class="row">
                 <div class="col-2 p-3 text-left">
+                    Test through grid
                     <div class="m-3" v-for="(v, k) in list">
                         <a href="JavaScript: void(0)" v-on:click="linkIPApi(k)">{{k}}</a>
                     </div>
                 </div>
-                <div class="col-10 p-3 text-left">
+                <div class="col-2 p-3 text-left">
+                    Test through api
+                    <div class="m-3" v-for="(v, k) in list">
+                        <a href="JavaScript: void(0)" v-on:click="linkIPApi(k)">{{k}}</a>
+                    </div>
+                </div>
+                <div class="col-8 p-3 text-left">
                     <!--div class="m-3">{{'** ' + testModule + ' **'}}</div-->
                     <div class="m-3">{{testData}}</div>
                 </div>
