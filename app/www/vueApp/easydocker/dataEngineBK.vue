@@ -64,8 +64,8 @@ module.exports = {
             });
         },
 
-               /* ------------ confirmed ------------*/
-        // UI grid  hub to target  
+        /* ------------ confirmed ------------*/
+        // UI grid hub Bridge to target  
         gridBridge(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
