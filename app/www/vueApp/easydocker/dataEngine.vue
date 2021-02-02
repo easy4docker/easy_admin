@@ -98,32 +98,35 @@ module.exports = {
                 dataType: 'json',
                 gridToken   : setting.gridToken
             }, function(result) {
-                console.log(result);
-                return true;
-                $.ajax({
-                    type: 'POST',
-                    url: 'http://' + result.ip + ':10000/_grid/',
-                    data: {
-                        cmd : setting.cmd,
-                        data : setting.data
-                    },
-                    success: function(result1) {
-                        me.$parent.triggerSpinner = false;
-                        if (typeof  success === 'function') {
-                            success(result1);
-                        }
-                    },
-                    error: function (jqXHR) { 
-                        me.$parent.triggerSpinner = false; 
-                        if (typeof error === 'function') {
-                            error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
-                        }
-                    },
-                    dataType: (!setting.dataType) ? 'text' : setting.dataType
-                });
+                if (result.status !== 'success') {
+                    error({success: 'failure', message: 'gridHub askServerToken error'});
+                } else {
+                    console.log(result);
+                    return true;
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://' + result.ip + ':10000/_grid/',
+                        data: {
+                            cmd : setting.cmd,
+                            data : setting.data
+                        },
+                        success: function(result1) {
+                            me.$parent.triggerSpinner = false;
+                            if (typeof  success === 'function') {
+                                success(result1);
+                            }
+                        },
+                        error: function (jqXHR) { 
+                            me.$parent.triggerSpinner = false; 
+                            if (typeof error === 'function') {
+                                error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
+                            }
+                        },
+                        dataType: (!setting.dataType) ? 'text' : setting.dataType
+                    });
+                }
             }, function(err) {
-                console.log(err);
-                // error(err);
+                error(err);
             });
 
         },

@@ -46,7 +46,7 @@
                     if  (setting.target === ip0 && (ip0) && setting.cmd === 'getGridMatrix') {
                         mGrid.call('post', true);
                     } else if (setting.target === ip0 && (ip0) && setting.cmd === 'askServerToken') {
-                        me.comm.output({status: 'success', result:grid[setting.target].gridToken});
+                        me.comm.output({status: 'success', serverToken : (!grid[setting.target]) ? '' : grid[setting.target].gridToken});
                     } else {
                         var postData =  setting;
                         
