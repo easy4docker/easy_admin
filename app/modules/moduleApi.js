@@ -95,7 +95,7 @@
         me.getToken = (cbk) => {
             const token = {};
             try {
-                pkg.require(me.comm.file.authToken);
+                token = pkg.require(me.comm.file.authToken);
             } catch (e) {}
             cbk(token);
         }
