@@ -93,13 +93,13 @@ module.exports = {
             me.$parent.triggerSpinner = true;
             me.gridHub({
                 hubServer  : setting.hubServer,
-                cmd        : 'askServerToken',
+                cmd        : 'getServerToken',
                 target  : setting.target,
                 dataType: 'json',
                 gridToken   : setting.gridToken
             }, function(result) {
                 if (result.status !== 'success') {
-                    error({success: 'failure', message: 'gridHub askServerToken error'});
+                    error({success: 'failure', message: 'gridHub getServerToken error'});
                 } else {
                     console.log(result);
                     return true;
