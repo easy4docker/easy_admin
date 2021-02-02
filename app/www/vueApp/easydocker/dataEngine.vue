@@ -97,16 +97,16 @@ module.exports = {
                 target  : setting.target,
                 dataType: 'json',
                 gridToken   : setting.gridToken
-            }, function(result0) {
-                if (result0.status !== 'success') {
+            }, function(hubData) {
+                if (hubData.status !== 'success') {
                     error({success: 'failure', message: 'gridHub getServerToken error'});
                 } else {
-                    setting.gridToken = result0.gridToken;
+                    setting.gridToken = hubData.gridToken;
                     $.ajax({
                         type: 'POST',
-                        url: 'http://' + result0.ip + ':10000/_grid/',
+                        url: 'http://' + hubData.ip + ':10000/_grid/',
                         data: {
-                            gridToken : result0.gridToken,
+                            gridToken : hubData.gridToken,
                             cmd : setting.cmd,
                             data : setting.data
                         },
