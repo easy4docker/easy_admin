@@ -51,7 +51,7 @@
             let api =  new MApi(env, pkg, req, res);
 
             if (METHODS.indexOf(req.body.cmd) === -1 && !api[req.body.cmd]) {
-               me.comm.sendErrorJson('missing cmd!');
+               me.comm.sendErrorJson('missing cmd ' + req.body.cmd + '!');
             } else {
                 try {
                     if (api[req.body.cmd]) {
