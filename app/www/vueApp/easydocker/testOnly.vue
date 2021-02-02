@@ -205,7 +205,7 @@ module.exports = {
                 return true;
             }
             
-            me.root.dataEngine().gridHub({
+            me.root.dataEngine().gridPost({
                 hubServer  : hubServer,
                 cmd     :'getIP',
                 data    : {},

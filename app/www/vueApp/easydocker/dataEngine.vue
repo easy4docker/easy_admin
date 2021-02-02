@@ -98,7 +98,7 @@ module.exports = {
                 dataType: 'json',
                 gridToken   : setting.gridToken
             }, function(result) {
-                res.send(result);
+                console.log(result);
                 return true;
                 $.ajax({
                     type: 'POST',
@@ -122,7 +122,8 @@ module.exports = {
                     dataType: (!setting.dataType) ? 'text' : setting.dataType
                 });
             }, function(err) {
-                error(err);
+                console.log(err);
+                // error(err);
             });
 
         },
