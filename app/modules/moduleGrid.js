@@ -236,6 +236,7 @@
             }
             cbk({status: 'success', result: resp});
         }
+
         me.gridAccess = (cbk) => {
             const data = req.body.data;
             cbk({gridServer : data.gridServer, token : pkg.md5(data.password)});

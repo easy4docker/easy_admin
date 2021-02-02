@@ -43,13 +43,10 @@
 
                     setting.target = (setting.target) ? setting.target : ip0;
 
-                    if  (setting.target === ip0 && (ip0) && setting.cmd === 'getGridMatrix') {
+                    if  (setting.target === ip0 && (ip0) && (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken')) {
                         mGrid.call('post', true);
-                    } else if (setting.target === ip0 && (ip0) && setting.cmd === 'askServerToken') {
-                        me.comm.output({status: 'success', serverToken : (!grid[setting.target]) ? '' : grid[setting.target].gridToken});
                     } else {
-                        var postData =  setting;
-                        
+                        var postData =  setting; 
                         var channel = (!setting.channel) ? '_grid' : setting.channel;
                         let url = 'http://' + setting.target + ':10000/' + channel + '/';
                         postData.gridToken = grid[setting.target].gridToken;

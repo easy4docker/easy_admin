@@ -97,6 +97,15 @@
                 cbk({status: 'success', result : data});
             });
         }
+        me.getServerToken = (cbk) => {
+            me.getIP(
+                (dataGetIP) => {
+                    me.getToken((dataGeetToken) => {
+                        cbk({status: 'success', ip : dataGetIP.result, token : dataGeetToken.result});
+                    })
+            });
+        }
+
     }
     module.exports = obj;
 })()
