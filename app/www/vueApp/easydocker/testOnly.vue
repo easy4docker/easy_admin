@@ -51,7 +51,7 @@ module.exports = {
         var me = this;
         setTimeout(
             function() {
-                me.askGridMatrix();
+                me.callGridMatrix();
             }, 50
         );
     },
@@ -208,6 +208,7 @@ module.exports = {
             me.root.dataEngine().gridPost({
                 hubServer  : hubServer,
                 cmd     :'getIP',
+                // target : '165.22.37.16',
                 data    : {},
                 dataType: 'json',
                 gridToken   : token
@@ -224,7 +225,7 @@ module.exports = {
                 console.log(err);
             });
         },
-        askGridMatrix() {
+        callGridMatrix() {
             const me = this;             
             let hubServer = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
