@@ -155,6 +155,34 @@ module.exports = {
                 return (me.serverTypeFilter.indexOf(item.serverType) !== -1)
             });
         },
+
+        /*====
+        getVServerList(noSpinner, callback) {
+            this.ajaxPost({
+                cmd :'loadList'
+            }, callback, !noSpinner);
+        },
+
+        ajaxPost(data, callback, isSpinner) {
+            var me = this;
+            if (isSpinner) me.$parent.triggerSpinner = true;
+            $.ajax({
+                type: 'POST',
+                url:'/api',
+                data: me.withAuth(data),
+                success: function(result) {
+                    if (isSpinner) me.$parent.triggerSpinner = false;
+                    callback(result)
+                },
+                error: function (jqXHR, textStatus, errorThrown) { 
+                    if (isSpinner) me.$parent.triggerSpinner = false;
+                    callback('error result');
+                },
+                dataType: 'JSON'
+            });
+        },
+        ====
+        */
         getVServerList() {
             var me = this;
             me.root.dataEngine().getVServerList(

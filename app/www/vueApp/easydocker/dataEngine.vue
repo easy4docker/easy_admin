@@ -64,7 +64,7 @@ module.exports = {
             });
         },
 
-               /* ------------ confirmed ------------*/
+        /* ------------ confirmed ------------*/
         // UI grid  hub to target  
         gridPost(setting, success, error) {
             var me = this;
