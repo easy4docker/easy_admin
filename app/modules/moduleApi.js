@@ -101,7 +101,7 @@
             me.getIP(
                 (dataGetIP) => {
                     me.getToken((dataGetToken) => {
-                        cbk({status: 'success', ip : dataGetIP.result, token : dataGetToken.restlt});
+                        cbk({status: 'success', ip : dataGetIP.result, token : dataGetToken.result});
                     })
             });
         }
