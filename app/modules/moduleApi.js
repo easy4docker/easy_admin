@@ -93,11 +93,15 @@
         }
 
         me.getToken = (cbk) => {
+            fs.readFile(me.comm.file.gridToken, 'utf-8', (err, data) => {
+                cbk({status: 'success', result : data});
+            });
+            /*
             const token = {};
             try {
                 token = pkg.require(me.comm.file.gridToken);
             } catch (e) {}
-            cbk(token);
+            cbk(token);*/
         }
         me.getServerToken = (cbk) => {
             me.getIP(
