@@ -185,7 +185,7 @@ module.exports = {
                 return true;
             }
             
-            me.root.dataEngine().gridBridgePost({
+            me.root.dataEngine().gridBridge({
                 hubServer  : hubServer,
                 cmd     :'getIP',
                 // target : '165.22.37.16',
