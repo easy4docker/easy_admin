@@ -155,43 +155,16 @@ module.exports = {
                 return (me.serverTypeFilter.indexOf(item.serverType) !== -1)
             });
         },
-
-        /*====
-        getVServerList(noSpinner, callback) {
-            this.appPost({
-                cmd :'loadList'
-            }, callback, !noSpinner);
-        },
-
-        appPost(data, callback, isSpinner) {
-            var me = this;
-            if (isSpinner) me.$parent.triggerSpinner = true;
-            $.ajax({
-                type: 'POST',
-                url:'/api',
-                data: me.withAuth(data),
-                success: function(result) {
-                    if (isSpinner) me.$parent.triggerSpinner = false;
-                    callback(result)
-                },
-                error: function (jqXHR, textStatus, errorThrown) { 
-                    if (isSpinner) me.$parent.triggerSpinner = false;
-                    callback('error result');
-                },
-                dataType: 'JSON'
-            });
-        },
-        ====
-        */
+      
         getVServerList() {
-            var me = this;
-            me.root.dataEngine().getVServerList(
-                false,
-                function(result) {
+            const me = this;
+            me.root.dataEngine().appPost(
+                {cmd :'loadList'},  function(result) {
                     me.list = result.list;
                 }
             );
         },
+         
         deleteVirtualServer(record) {
             var me = this;
             me.root.popUp(me).show({
