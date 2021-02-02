@@ -66,7 +66,7 @@ module.exports = {
 
         /* ------------ confirmed ------------*/
         // UI grid  hub to target  
-        gridPost(setting, success, error) {
+        gridBridgePost(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
             me.gridHub({
