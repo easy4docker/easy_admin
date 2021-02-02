@@ -93,7 +93,7 @@ module.exports = {
          var me = this;
          let v = localStorage.getItem('easydockerFP');
          if (v) {
-            me.root.dataEngine().ajaxPost({cmd: 'auth', data : {code : 'isTokenLogin'}}, function(result) {
+            me.root.dataEngine().appPost({cmd: 'auth', data : {code : 'isTokenLogin'}}, function(result) {
                if (result.status === 'success') {
                   me.auth.isSignIn = true;
                   me.auth.token = result.token;
@@ -117,7 +117,8 @@ module.exports = {
 
       checkAuthExist() {
          var me = this;
-         me.root.dataEngine().ajaxPost({cmd: 'auth', data : {code : 'isAuthReady' }}, function(result) {
+
+         me.root.dataEngine().appPost({cmd: 'auth', data : {code : 'isAuthReady' }}, function(result) {
                if (result.status === 'success') {
                   me.auth.isAuthExist = result.isAuthReady;
                   me.root.auth = me.auth;
@@ -126,7 +127,7 @@ module.exports = {
       },
       initAdminPassword() {
          const me = this;
-         me.root.dataEngine().ajaxPost({cmd: 'auth', data : {code : 'initPassword', password: me.formInit.password }}, function(result) {
+         me.root.dataEngine().appPost({cmd: 'auth', data : {code : 'initPassword', password: me.formInit.password }}, function(result) {
                me.checkAuthExist();
          });
       },
@@ -163,7 +164,7 @@ module.exports = {
       },
       signIn() {
          var me = this;
-         me.root.dataEngine().ajaxPost({cmd: 'auth', data : {code : 'signin', password: me.formSignin.password }}, function(result) {
+         me.root.dataEngine().appPost({cmd: 'auth', data : {code : 'signin', password: me.formSignin.password }}, function(result) {
                if (result.status === 'success') {
                   localStorage.setItem('easydockerFP', result.token);
                   me.accessGrid(me.formSignin.password);

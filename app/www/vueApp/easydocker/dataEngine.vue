@@ -20,24 +20,6 @@ module.exports = {
             }
             return data;
         },
-        ajaxPost(data, callback, isSpinner) {
-            var me = this;
-            if (isSpinner) me.$parent.triggerSpinner = true;
-            $.ajax({
-                type: 'POST',
-                url:'/api',
-                data: me.withAuth(data),
-                success: function(result) {
-                    if (isSpinner) me.$parent.triggerSpinner = false;
-                    callback(result)
-                },
-                error: function (jqXHR, textStatus, errorThrown) { 
-                    if (isSpinner) me.$parent.triggerSpinner = false;
-                    callback('error result');
-                },
-                dataType: 'JSON'
-            });
-        },
         /* ------------ confirmed ------------*/
         // servier side hub to target  
 
@@ -108,37 +90,24 @@ module.exports = {
                 error(err);
             });
         },
+        /* ------------ confirmed ----??--------*/
 
-        withAuth(data) {
-            let v = localStorage.getItem('easydockerFP');
-            if (v) {
-                data.authToken = v;
-            }
-            return data;
-        },
-        * ------------ confirmed ----??--------*/
-        // 
-        appPost(setting, success, error) {
-            var me = this;
-            me.$parent.triggerSpinner = true;
+        appPost(data, callback, isSpinner) {
+            const me = this;
+            if (isSpinner) me.$parent.triggerSpinner = true;
             $.ajax({
                 type: 'POST',
-                url:  setting.url,
-                data: setting,
+                url:'/api',
+                data: me.withAuth(data),
                 success: function(result) {
-                    me.$parent.triggerSpinner = false;
-                    if (typeof  success === 'function') {
-                        success(result);
-                    }
+                    if (isSpinner) me.$parent.triggerSpinner = false;
+                    callback(result)
                 },
-                error: function (jqXHR) { 
-                    me.$parent.triggerSpinner = false; 
-                    console.log('error');
-                    if (typeof error === 'function') {
-                        error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
-                    }
+                error: function (jqXHR, textStatus, errorThrown) { 
+                    if (isSpinner) me.$parent.triggerSpinner = false;
+                    callback({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
                 },
-                dataType: (!setting.dataType) ? 'text' : setting.dataType
+                dataType: 'JSON'
             });
         }
     }

@@ -14,7 +14,7 @@ module.exports = {
         var me = this;
     },
     methods :{
-        ajaxPost(data, callback, isSpinner) {
+        appPost(data, callback, isSpinner) {
             var me = this;
             if (isSpinner) me.$parent.triggerSpinner = true;
             data.host = (!data.host) ? me.$route.query.host : data.host;

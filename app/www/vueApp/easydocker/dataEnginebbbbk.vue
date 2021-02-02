@@ -23,6 +23,8 @@ module.exports = {
         ajaxPost(data, callback, isSpinner) {
             var me = this;
             if (isSpinner) me.$parent.triggerSpinner = true;
+            console.log('---me.withAuth(data)--->');
+            console.log(me.withAuth(data));
             $.ajax({
                 type: 'POST',
                 url:'/api',

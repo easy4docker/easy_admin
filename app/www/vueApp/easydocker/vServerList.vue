@@ -158,12 +158,12 @@ module.exports = {
 
         /*====
         getVServerList(noSpinner, callback) {
-            this.ajaxPost({
+            this.appPost({
                 cmd :'loadList'
             }, callback, !noSpinner);
         },
 
-        ajaxPost(data, callback, isSpinner) {
+        appPost(data, callback, isSpinner) {
             var me = this;
             if (isSpinner) me.$parent.triggerSpinner = true;
             $.ajax({
