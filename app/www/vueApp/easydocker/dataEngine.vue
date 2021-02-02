@@ -98,27 +98,28 @@ module.exports = {
                 dataType: 'json',
                 gridToken   : setting.gridToken
             }, function(result) {
-                if (result.status !== 'success') {
+                if (result0.status !== 'success') {
                     error({success: 'failure', message: 'gridHub getServerToken error'});
                 } else {
+                    setting.gridToken = result0.gridToken;
                     $.ajax({
                         type: 'POST',
-                        url: 'http://' + result.ip + ':10000/_grid/',
+                        url: 'http://' + result0.ip + ':10000/_grid/',
                         data: {
-                            gridToken : result.token,
+                            gridToken : result0.gridToken,
                             cmd : setting.cmd,
                             data : setting.data
                         },
-                        success: function(result1) {
+                        success: function(result) {
                             me.$parent.triggerSpinner = false;
                             if (typeof  success === 'function') {
-                                success(result1);
+                                success(result);
                             }
                         },
                         error: function (jqXHR) { 
                             me.$parent.triggerSpinner = false; 
                             if (typeof error === 'function') {
-                                error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
+                                error({status : 'failure', message : 'failure request.', result : jqXHR.responseText});
                             }
                         },
                         dataType: (!setting.dataType) ? 'text' : setting.dataType
