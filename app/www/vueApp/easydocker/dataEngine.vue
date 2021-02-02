@@ -66,7 +66,7 @@ module.exports = {
 
         /* ------------ confirmed ------------*/
         // UI grid hub Bridge to target 
-        
+
         gridBridge(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
@@ -106,6 +106,39 @@ module.exports = {
                 }
             }, function(err) {
                 error(err);
+            });
+        },
+
+        withAuth(data) {
+            let v = localStorage.getItem('easydockerFP');
+            if (v) {
+                data.authToken = v;
+            }
+            return data;
+        },
+        * ------------ confirmed ----??--------*/
+        // 
+        appPost(setting, success, error) {
+            var me = this;
+            me.$parent.triggerSpinner = true;
+            $.ajax({
+                type: 'POST',
+                url:  setting.url,
+                data: setting,
+                success: function(result) {
+                    me.$parent.triggerSpinner = false;
+                    if (typeof  success === 'function') {
+                        success(result);
+                    }
+                },
+                error: function (jqXHR) { 
+                    me.$parent.triggerSpinner = false; 
+                    console.log('error');
+                    if (typeof error === 'function') {
+                        error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
+                    }
+                },
+                dataType: (!setting.dataType) ? 'text' : setting.dataType
             });
         }
     }
