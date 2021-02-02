@@ -97,7 +97,7 @@ module.exports = {
                 target  : setting.target,
                 dataType: 'json',
                 gridToken   : setting.gridToken
-            }, function(result) {
+            }, function(result0) {
                 if (result0.status !== 'success') {
                     error({success: 'failure', message: 'gridHub getServerToken error'});
                 } else {
