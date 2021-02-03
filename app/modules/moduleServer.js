@@ -415,6 +415,10 @@
             _f['addDocker'] = function(cbk) {
                 me.addDocker(data.serverName, cbk, randomCode);
             };
+
+            _f['addRemoveMe'] = function(cbk) {
+                me.addRemoveMe(data.serverName, cbk, randomCode);
+            };
             
             _f['createStartUpVServers'] = function(cbk) {
                 me.createStartUpVServers(cbk); 
@@ -508,6 +512,13 @@
 
         me.addDocker = (serverName, callback) => {
             me.setCron('addDocker-' + serverName, me.templateCMD('addDockerApp.tpl', serverName), callback);
+        }
+
+        me.addRemoveMe = (serverName, callback) => {
+            const str = me.templateCMD('removeDockerApp.tpl', serverName);
+            fs.writeFile(me.dockerDataPath(serverName) + '/REMOVE.ME', str, function (err) {
+                callback({status:'success', message: code});
+            });
         }
 
         me.removeDocker = (serverName, callback) => {
