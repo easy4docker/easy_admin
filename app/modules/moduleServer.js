@@ -234,6 +234,7 @@
 
         }
         // --- TODO---
+        
         this.gitSwitchBranch = (serverName, branch, callback) => {
             // var dirn = '/var/_localAppData/sites/' + serverName;
             var cmd = 'cd ' + me.siteCodePath(serverName) + ' && git checkout ' + branch;
@@ -246,6 +247,7 @@
                         });
             });
         }
+        
         this.updateConfigBranch = (serverName, branch, callback) => {
             let sitesCfg = me.getSitesCfg();
             if (sitesCfg[serverName]) {
