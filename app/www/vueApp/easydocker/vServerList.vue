@@ -208,11 +208,22 @@ module.exports = {
                     me.$parent.triggerSpinner = false;
                     console.log(result);
                 }, true);
-        },   
+        },
+
         startVServer(record) {
             var me = this;
-            me.root.dataEngine().startVServer(record);
-        },
+
+            me.root.dataEngine().appPost({
+                    cmd :'startVServer',
+                    serverName : record.name,
+                    serverType : record.serverType,
+                    dataType: 'JSON'
+                },function(result) {
+                    me.$parent.triggerSpinner = false;
+                    console.log(result);
+                }, true);
+        },   
+
         arrayPorts(item) {
             var me = this;
             var arr = [];
