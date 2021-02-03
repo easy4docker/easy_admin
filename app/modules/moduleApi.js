@@ -21,9 +21,13 @@
         me.call = (rest, bypassLocalAuth) => {
             if (!bypassLocalAuth) {
                 var token = (req.query.authToken) ? req.query.authToken : (req.body.authToken) ? req.body.authToken : '';
-                me.localTokenValidation(
-                    token, me[rest]
-                );
+                if (req.body.cmd !== 'auth') {
+                    me.localTokenValidation(
+                        token, me[rest]
+                    );
+                } else {
+                    me[rest]();
+                } 
             } else {
                 me.comm.sendAction('', 'wrong authentication token!');
             }
@@ -50,7 +54,8 @@
 
         me.post = () => {
             const METHODS = [
-                'getIP', 'getServerToken', 'syncAppCode'
+                'getIP', 'getServerToken', 'auth', 'loadList', 'pullCode', 'stopVServer', 
+                'startVServer', 'gitRemoteBranchs', 'gitSiteBranchs'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -64,7 +69,49 @@
                 }
             }
         };
+        me.auth = (cbk) => {
+            var MAuth= pkg.require(env.root+ '/modules/moduleAuth.js');
+            var auth = new MAuth(env, pkg, req, res);
+            var data = (!req.body.data) ? {} : req.body.data;
+            if (req.body.authToken) data.authToken = req.body.authToken;
+            auth.action(data, (data) => {
+                res.send(data);
+            });
+        }
+        me.loadList = (cbk) => {
+            var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
+            var Servers = new MServers('webserver', env, pkg);
+            Servers.postLoadList(
+                (data) => {
+                    me.refreshTokenSend(data, cbk);
+                });
+        }
 
+        me.stopVServer = me.pullCode = 
+        me.startVServer = (cbk) => {
+            var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
+            var Servers = new MServers(req.body.serverType, env, pkg);
+            Servers[req.body.cmd](req.body.serverName,
+                (data) => {
+                    me.refreshTokenSend(data, cbk);
+                });
+        }
+
+        me.gitRemoteBranchs = (cbk) => {
+			var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
+			var git = new MGit(env, pkg);
+			git.gitRemoteBranchs(req.body.data, (result) => {
+				cbk(result);
+			});
+		}
+
+        me.gitSiteBranchs = (cbk) => {
+			var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
+			var git = new MGit(env, pkg);
+			git.gitSiteBranchs(req.body.serverName, (result) => {
+				cbk(result);
+			});
+		}
 
         me.localTokenValidation = (token, success) => {
             let authToken = {};
@@ -106,14 +153,16 @@
                     })
             });
         }
-
-        me.syncAppCode = (cbk) => {
-            const shell_str = 'cd ' + me.comm.inside.root + ' && git pull';
-            exec(shell_str, {maxBuffer: 224 * 2048},
-                function(error, stdout, stderr) {
-                    cbk({status : 'success'})
-            });
-        }
+        me.refreshTokenSend = (data, cbk) => {
+			var MAuth= pkg.require(env.root+ '/modules/moduleAuth.js');
+			var auth = new MAuth(env, pkg, req, res);
+			auth.refreshAuthToken(
+				req.body.authToken,
+				() => {
+					cbk(data);
+				}
+			)
+		};
 
     }
     module.exports = obj;

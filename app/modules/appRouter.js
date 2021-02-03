@@ -122,6 +122,7 @@
 			var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
 
             switch(req.body.cmd) {
+				/*
 				case 'auth' :
 					var MAuth= pkg.require(env.root+ '/modules/moduleAuth.js');
 					var auth = new MAuth(env, pkg, req, res);
@@ -131,7 +132,7 @@
 						res.send(data);
 					});
 					break;
-
+				
 				case 'startVServer' :
 					var Servers = new MServers(req.body.serverType, env, pkg);
 					Servers.startVServer(req.body.serverName,
@@ -140,7 +141,7 @@
 						});
 
 					break;
-				
+				*/
 				case 'saveVserverValiables' :
 					var Servers = new MServers(req.body.serverType, env, pkg);
 					var data = {
@@ -174,9 +175,8 @@
 						me.refreshTokenSend(data);
 					});
 					break;
-			    
+			    /*
 				case 'pullCode' :
-				case 'stopVServer' :
 				case 'stopVServer' :
 					var Servers = new MServers(req.body.serverType, env, pkg);
 					Servers[req.body.cmd](req.body.serverName,
@@ -184,7 +184,7 @@
 							me.refreshTokenSend(data);
 						});
 					break;
-
+						
 				case 'loadList' :
 					var Servers = new MServers('webserver', env, pkg);
 					Servers.postLoadList(
@@ -192,7 +192,7 @@
 							me.refreshTokenSend(data);
 						});
 					break;
-
+				*/
 				case 'askToken' :
 					var Servers = new MServers(req.body.serverType, env, pkg);
 					Servers.askToken(req.body.serverName,
@@ -274,7 +274,7 @@
 					res.send({status:'failure', message : '404 wrong cmd!'});
             }
 		};
-
+/*
         this.gitRemoteBranchs = (callback) => {
 			var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
 			var git = new MGit(env, pkg);
@@ -283,6 +283,7 @@
 			});
 		}
 
+		
         this.gitSiteBranchs = (callback) => {
 			var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
 			var git = new MGit(env, pkg);
@@ -290,7 +291,7 @@
 				callback(result);
 			});
 		}
-		
+		*/
 		this.sendFile = (fn) => {
 			fs.stat(fn, function(err, stat) {
 				if(err == null) {

@@ -6,6 +6,8 @@ CRON_PATH=${SCR_DIR}/data/commCron
 TMP_PATH=${SCR_DIR}/data/tmp
 LOG_PATH=${SCR_DIR}/data/log
 
+SITES_PATH=${SCR_DIR}/data/sites
+
 mkdir -p ${CRON_PATH}
 mkdir -p ${TMP_PATH}
 mkdir -p ${LOG_PATH}
@@ -28,17 +30,22 @@ for f in "${CRON_PATH}"/*; do
   fi
 
   if [ -f "${f}" ]; then
+      execfn=${TMP_PATH}/SH_$(basename ${f})
+      echo ${execfn} > $markfile
+      echo "-- Ran $(basename ${f}) -- at $(date +"%m/%d %H:%M:%S")" >> ${LOG_PATH}/commCronLog.data || true
+      cp ${f} ${LOG_PATH}/$(date +"%m%d%H%M%S")_$(basename ${f}) || true
+      mv -f ${f} $execfn || true
+      echo "  -->  $(basename ${f})" || true
+      sh ${execfn} ${DOCKERCMD} | sed 's/^/ >>  /' >> ${LOG_PATH}/commCronLog.data || true
+      rm -fr ${execfn} || true
+      rm -fr ${markfile} || true
+      echo "-- done $(basename ${f}) -- at $(date +"%m/%d %H:%M:%S")\n\n" >> ${LOG_PATH}/commCronLog.data || true
+  fi
+done
 
-    execfn=${TMP_PATH}/SH_$(basename ${f})
-    echo ${execfn} > $markfile
-    echo "-- Ran $(basename ${f}) -- at $(date +"%m/%d %H:%M:%S")" >> ${LOG_PATH}/commCronLog.data || true
-    cp ${f} ${LOG_PATH}/$(date +"%m%d%H%M%S")_$(basename ${f}) || true
-    mv -f ${f} $execfn || true
-    echo "  -->  $(basename ${f})" || true
-    sh ${execfn} ${DOCKERCMD} | sed 's/^/ >>  /' >> ${LOG_PATH}/commCronLog.data || true
-    rm -fr ${execfn} || true
-    rm -fr ${markfile} || true
-    echo "-- done $(basename ${f}) -- at $(date +"%m/%d %H:%M:%S")\n\n" >> ${LOG_PATH}/commCronLog.data || true
+for f in "${SITES_PATH}"/*; do
+  if [ -f "${f}/data/commCron/REMOVE.ME" ]; then
+      mv -f ${f}/data/commCron/REMOVE.ME ${CRON_PATH}/$(date +"%H%M%S")_REMOVE.ME
   else
     exit 1
   fi

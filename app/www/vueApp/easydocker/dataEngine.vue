@@ -97,7 +97,7 @@ module.exports = {
             if (isSpinner) me.$parent.triggerSpinner = true;
             $.ajax({
                 type: 'POST',
-                url:'/api',
+                url:'/_api',
                 data: me.withAuth(data),
                 success: function(result) {
                     if (isSpinner) me.$parent.triggerSpinner = false;
