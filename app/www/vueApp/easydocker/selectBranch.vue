@@ -38,14 +38,10 @@ module.exports = {
             let me = this;
             return (me.$parent.currentServer === me.record.serverType + '-' + me.record.name) ? true : false;
         },
-        gitSiteBranchs() {
-            var me = this;
-            let param = {
-                serverName : me.record.name,
-                serverType : me.record.serverType
-            }
-            me.$parent.currentServer = me.record.serverType + '-' + me.record.name;
-            me.root.dataEngine().gitSiteBranchs(param, function(result) {
+        gitSiteBranchsBK(record) {
+            const me = this;
+            record.cmd = 'gitSiteBranchs';
+            me.root.dataEngine().appPost(record, function(result) {
                 if (result.status === 'success') {
                     me.branches = result.list.branches;
                 } else {
@@ -53,14 +49,33 @@ module.exports = {
                 }
             });
         },
-        switchBranch(branch) {
-            var me = this;
-            let param = {
+        gitSiteBranchs() {
+            const me = this;
+            const data = {
+                cmd : 'gitSiteBranchs',
                 serverName : me.record.name,
                 serverType : me.record.serverType
             }
-            me.branches = [];
-            me.root.dataEngine().switchBranch(param, branch, function(result) {
+            me.$parent.currentServer = me.record.serverType + '-' + me.record.name;
+            me.root.dataEngine().appPost(data, function(result) {
+                if (result.status === 'success') {
+                    me.branches = result.list.branches;
+                    console.log(me.branches);
+                } else {
+                    me.branches = [];
+                }
+            });
+        },
+
+        switchBranch(branch) {
+            var me = this;
+            const data = {
+                cmd :'gitSwitchBranch',
+                serverName : me.record.name,
+                serverType : me.record.serverType,
+                branch     : branch
+            }
+            me.root.dataEngine().appPost(data, function(result) {
                 me.$parent.getVServerList();
                 me.branches = [];
             });        
