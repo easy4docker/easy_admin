@@ -38,17 +38,6 @@ module.exports = {
             let me = this;
             return (me.$parent.currentServer === me.record.serverType + '-' + me.record.name) ? true : false;
         },
-        gitSiteBranchsBK(record) {
-            const me = this;
-            record.cmd = 'gitSiteBranchs';
-            me.root.dataEngine().appPost(record, function(result) {
-                if (result.status === 'success') {
-                    me.branches = result.list.branches;
-                } else {
-                    me.branches = [];
-                }
-            });
-        },
         gitSiteBranchs() {
             const me = this;
             const data = {
