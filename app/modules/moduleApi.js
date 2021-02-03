@@ -65,6 +65,7 @@
             }
         };
 
+
         me.localTokenValidation = (token, success) => {
             let authToken = {};
             try {

@@ -47,21 +47,6 @@
                 ports: {{ form.docker.ports }} Type: {{form.docker.type}}
                  <hr/>
             </div>
-            <div class="form-group" v-if=" branches !== null && !form.siteDocker">
-                <label>Docker Setting</label>
-                    <div class="dropdown">
-                        <input type="text" data-toggle="dropdown"  class="form-control dockerSetting" v-model="form.publicDocker" 
-                        aria-haspopup="true" aria-expanded="false"
-                        placeholder="Select your docker Setting" readonly />
-                        
-                        <div class="dropdown-menu dropdown-pick-docker shadow border-secondary rounded-0 border-width-1" >
-                            <div v-for="(v, k) in publicDockers" class="dropdown-item" v-bind:class="{ 'bg-even': !(k%2), 'bg-odd': (k%2) }">
-                                <a href="JavaScript:void(0)" v-on:click="selectPublicDocker(v)"><b>{{v.title}}</a></a>
-                                <p class="text-wrap p-0 m-1" v-html="v.description"></p>
-                            </div>
-                        </div>
-                    </div>
-            </div>
             <hr/>
             <button type="button" v-if="branches!==null" class="btn btn-info" v-on:click="saveVServer()">Save the virtual host</button>
             <!--button type="button" class="btn btn-warning" v-on:click="reset()">Reset fields</button-->
@@ -87,14 +72,12 @@ module.exports = {
         return {
             root :  this.$parent.root,
             errors: {},
-            publicDockers     : [],
             branches : null,
             form : {
                 serverName  : '',
                 gitHub      : '',
                 branch      : '',
                 siteDocker  : false,
-                publicDocker: '',
                 serverType  : '',
                 docker: {
                     type : '',
@@ -107,7 +90,6 @@ module.exports = {
         var me = this;
         setTimeout(
             function() {
-                me.loadPublicDockersList()
             }, 1000
         );
     },
@@ -120,7 +102,6 @@ module.exports = {
                 gitHub      : '',
                 branch      : '',
                 siteDocker  : false,
-                publicDocker: '',
                 docker: {
                         type : '',
                         ports : []
@@ -134,7 +115,6 @@ module.exports = {
             me.form.serverName = '';
             me.form.branch = '';
             me.form.siteDocker  = false;
-            me.form.publicDocker = '';
             me.form.docker = {
                     type : '',
                     ports : []
@@ -146,18 +126,15 @@ module.exports = {
             me.form.gitHub = e.target.value.replace(/^\s+|\s+$/g, '');
             me.cleanForm();
         },
-        loadPublicDockersList() {
-            var me = this;
-            me.root.dataEngine().loadPublicDockersList(true, function(data) {
-                me.publicDockers = data;
-            });
-        },
+
         gitRemoteBranchs(gitRecord) {
             var me = this;
-            me.gitValidation();
-            me.$forceUpdate();
+            me.gitUrlValidation();
             if (me.isformValid()) {
-                me.root.dataEngine().gitRemoteBranchs(gitRecord, function(result) {
+                me.root.dataEngine().appPost({
+                    cmd :'gitRemoteBranchs',
+                    data : gitRecord
+                }, function(result) {
                     if (result.status === 'success') {
                         me.branches = result.list;
                     } else {
@@ -198,24 +175,15 @@ module.exports = {
                 }
             }
         },
-
-        selectPublicDocker(v) {
-            var me = this;
-            me.form.publicDocker = v.code;
-            me.form.siteDocker = false;
-            me.form.docker = v.setting;
-            me.$forceUpdate();
-        },
         saveVServer() {
-            var me = this;
+            const me = this;
             me.formValidation();
             if (!me.isformValid()) {
                 return false;
             }
-            console.log(me.form);
-            
-            me.root.dataEngine().saveVServerForm(
-                me.form, function(result) {
+            const data = {cmd: 'addServer', data: me.form};
+            me.root.dataEngine().appPost(
+                data, function(result) {
                     if (result.status === 'success') {
                         // me.$parent.cancel();
                         // me.$parent.getVServerList();
@@ -251,7 +219,7 @@ module.exports = {
             }
             return false;
         }, 
-        gitValidation() {
+        gitUrlValidation() {
             var me = this;
             me.errors.gitHub = null;
             var regex = /^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*?)(\.git)(\/?|\#[-\d\w._]+?)$/;
@@ -268,7 +236,7 @@ module.exports = {
         formValidation() {
             var me = this;
             me.errors = {};
-            me.gitValidation();
+            me.gitUrlValidation();
 
             if (!me.form.serverName) {
                 me.errors.serverName = 'ServerName required.';

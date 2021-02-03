@@ -258,14 +258,6 @@
 						});
 					break;
 
-				case 'loadPublicDockersList' :
-					var MDockerfile= pkg.require(env.root+ '/modules/moduleDockerfile.js');
-					var dockers = new MDockerfile(env, pkg);
-					dockers.loadPublicDockersList(function(list) {
-						me.refreshTokenSend({status:'success', list : list });
-					});
-					break;
-
 				case 'addServer' :
 					var Servers = new MServers(req.body.data.serverType, env, pkg);
 					Servers.addVServer(req.body.data, (data) => {
@@ -292,14 +284,6 @@
 					res.send({status:'failure', message : '404 wrong cmd!'});
             }
 		};
-		
-		this.loadPublicDockersList = (callback) => {
-			var MDockerfile= pkg.require(env.root+ '/modules/moduleDockerfile.js');
-			var dockers = new MDockerfile(env, pkg);
-			dockers.loadPublicDockersList(function(list) {
-				callback({status:'success', list : list });
-			});
-		}
 
         this.gitRemoteBranchs = (callback) => {
 			var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
