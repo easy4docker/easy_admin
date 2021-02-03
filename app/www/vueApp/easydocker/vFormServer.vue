@@ -41,7 +41,7 @@
                     >{{ option.branch }}</option>
                 </select>
             </div>
-            <div v-if="form.docker.type">
+            <div v-if="form.docker">
             {{form.docker}}
                  <hr/>
                 ports: {{ form.docker.ports }} Type: {{form.docker.type}}
@@ -50,9 +50,9 @@
             <hr/>
             <button type="button" v-if="branches!==null" class="btn btn-info" v-on:click="saveVServer()">Save the virtual host</button>
             <!--button type="button" class="btn btn-warning" v-on:click="reset()">Reset fields</button-->
-            <!--button type="button" class="btn btn-secondary" v-on:click="cancel()">Cancel</button-->
+            <button type="button" class="btn btn-secondary" v-on:click="cancel()">Cancel</button>
             
-            <hr/>
+            <hr v-if="!isformValid()" />
             <div class="text-danger p-3"  v-if="!isformValid()">
                 <b>Please correct the following error(s):</b>
                 <ul>
@@ -144,7 +144,7 @@ module.exports = {
                     me.getInitBranch();
                     me.getSiteDocker();
                     me.$forceUpdate();
-                });
+                }, true);
             }
         },
         getInitBranch() {
@@ -185,12 +185,9 @@ module.exports = {
             me.root.dataEngine().appPost(
                 data, function(result) {
                     if (result.status === 'success') {
-                        // me.$parent.cancel();
-                        // me.$parent.getVServerList();
                         me.root.module = 'list';
                     }
-                }
-            );
+                }, true);
         },
 
         reset() {
@@ -199,12 +196,12 @@ module.exports = {
             me.errors={};
             me.branches = [];
         },
-        /*
         cancel() {
-            var me = this;
-            me.reset();
-            me.$parent.module = '';
-        },*/
+            const me = this;
+            // me.reset();
+            me.cleanForm();
+            me.root.module = 'list';
+        },
         isformValid() {
             var me = this;
             return (!Object.keys(me.errors).length) ? true : false;

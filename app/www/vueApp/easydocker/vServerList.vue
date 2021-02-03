@@ -149,6 +149,7 @@ module.exports = {
             console.log(k);
             console.log(me.serverTypeFilter);
         },
+        
         filteredResult() {
             var me = this;
             return me.list.filter(function(item) {
