@@ -15,26 +15,18 @@ module.exports = {
         }
     },
     mounted() {
-        let me = this;
+        const me = this;
         me.close = me.parent.close;
     },
     methods :{
         execDeletVirtualServer() {
-            let me = this;
-            console.log(me.$parent.cfg);
-            
-            let cfg = {
-                    cmd : 'deleteVServer',
-                    data : me.$parent.cfg.data,
-                    dataType: 'JSON'
-                }
-                caller = me.parent.caller;
-             /*   
-            me.root.dataEngine().removeVirtualServer(cfg, function() {
-                me.close();
-                caller.getVServerList();
-               
-            });*/
+            const me = this;
+            const cfg = {
+                cmd : 'deleteVServer',
+                data : me.$parent.cfg.data,
+                dataType: 'JSON'
+            };
+            caller = me.parent.caller;
 
             me.root.dataEngine().appPost(cfg,
                 function(result) {
