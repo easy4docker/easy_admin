@@ -191,9 +191,20 @@ module.exports = {
                 data : data
             });            
         },
+
+
         stopVServer(record) {
             var me = this;
-            me.root.dataEngine().stopVServer(record);
+
+            me.root.dataEngine().appPost({
+                    cmd :'stopVServer',
+                    serverName : record.name,
+                    serverType : record.serverType,
+                    dataType: 'JSON'
+                },function(result) {
+                    me.$parent.triggerSpinner = false;
+                    console.log(result);
+                }, true);
         },
 
         pullCode(record) {
