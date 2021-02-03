@@ -149,7 +149,7 @@ module.exports = {
             console.log(k);
             console.log(me.serverTypeFilter);
         },
-        
+
         filteredResult() {
             var me = this;
             return me.list.filter(function(item) {
@@ -195,10 +195,20 @@ module.exports = {
             var me = this;
             me.root.dataEngine().stopVServer(record);
         },
+
         pullCode(record) {
             var me = this;
-            me.root.dataEngine().pullCode(record);
-        },    
+
+            me.root.dataEngine().appPost({
+                    cmd :'pullCode',
+                    serverName : record.name,
+                    serverType : record.serverType,
+                    dataType: 'JSON'
+                },function(result) {
+                    me.$parent.triggerSpinner = false;
+                    console.log(result);
+                }, true);
+        },   
         startVServer(record) {
             var me = this;
             me.root.dataEngine().startVServer(record);

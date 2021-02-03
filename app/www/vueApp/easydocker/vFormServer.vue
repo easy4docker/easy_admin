@@ -128,7 +128,7 @@ module.exports = {
         },
 
         gitRemoteBranchs(gitRecord) {
-            var me = this;
+            const me = this;
             me.gitUrlValidation();
             if (me.isformValid()) {
                 me.root.dataEngine().appPost({
