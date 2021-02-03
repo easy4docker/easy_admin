@@ -7,7 +7,7 @@
                     </div>
                     <div class="col-8 p-2 m-0 text-center">
                          <span class="text-dark alert-warning">{{root.easydockerFP}}</span>
-                        <h1 class="header-title">EasyDocker Grid Admin</h1>
+                        <h1 class="header-title">EasyDocker A Grid Admin</h1>
                     </div>
                     <div class="col-2 p-0 m-0 text-right text-warning"></div>
                 </div>
@@ -88,10 +88,38 @@ module.exports = {
         },
         syncAppCode() {
             var me = this;
+            me.root.dataEngine().appPostAPI({
+                cmd : 'syncAppCode'
+            }, function(result) {
+                console.log(result);
+              //  window.location.reload();
+            }, true);
+            /*
             me.root.dataEngine().runPost('/_grid/', 'syncAppCode', {},
                 function(result) {
                 window.location.reload();
                 }, function(result) {});
+                */
+        },
+
+        // appPostAPI
+        appPost(data, callback, isSpinner) {
+            const me = this;
+            if (isSpinner) me.$parent.triggerSpinner = true;
+            $.ajax({
+                type: 'POST',
+                url:'/_api/',
+                data: me.root.withAuth(data),
+                success: function(result) {
+                    if (isSpinner) me.$parent.triggerSpinner = false;
+                    console.log(result)
+                },
+                error: function (jqXHR, textStatus, errorThrown) { 
+                    if (isSpinner) me.$parent.triggerSpinner = false;
+                    callback({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
+                },
+                dataType: 'JSON'
+            });
         }
     }
 }
