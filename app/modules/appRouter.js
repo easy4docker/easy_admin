@@ -5,8 +5,6 @@
 		var path = require('path');
 
 		this.route = (rest) => {
-			var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
-			pkg.common = new MCommon(req, res);
 			if (rest === 'get') {
 				me.get();
 			} else {
