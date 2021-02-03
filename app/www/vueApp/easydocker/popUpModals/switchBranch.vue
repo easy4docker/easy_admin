@@ -32,8 +32,9 @@ module.exports = {
     },
     methods :{
         gitSiteBranchs(record) {
-            var me = this;
-            me.root.dataEngine().gitSiteBranchs(record, function(result) {
+            const me = this;
+            record.cmd = 'gitSiteBranchs';
+            me.root.dataEngine().appPost(record, function(result) {
                 if (result.status === 'success') {
                     me.branches = result.list.branches;
                 } else {
@@ -45,17 +46,21 @@ module.exports = {
             let me = this;
             me.form.branch = event.target.value;
         },
+
         switchBranch() {
-            let me = this;
-            let caller = me.parent.caller;
-            let param = {
+            const me = this;
+            const caller = me.parent.caller;
+
+            const data = {
+                cmd :'gitSwitchBranch',
                 serverName : me.$parent.cfg.data.serverName,
-                serverType : me.$parent.cfg.data.serverType
+                serverType : me.$parent.cfg.data.serverType,
+                branch     : me.form.branch
             };
-            me.root.dataEngine().switchBranch(param, me.form.branch, function(result) { 
-                caller.getVServerList(); 
+            me.root.dataEngine().appPost(data, function(result) {
+                caller.getVServerList();
+                me.close();
             });
-            me.close();
         }
     }
 }
