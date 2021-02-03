@@ -50,7 +50,7 @@
 
         me.post = () => {
             const METHODS = [
-                'getIP', 'getServerToken'
+                'getIP', 'getServerToken', 'syncAppCode'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -104,6 +104,14 @@
                     me.getToken((dataGetToken) => {
                         cbk({status: 'success', ip : dataGetIP.result, gridToken : dataGetToken.result});
                     })
+            });
+        }
+
+        me.syncAppCode = (cbk) => {
+            const shell_str = 'cd ' + me.comm.inside.root + ' && git pull';
+            exec(shell_str, {maxBuffer: 224 * 2048},
+                function(error, stdout, stderr) {
+                    cbk({status : 'success'})
             });
         }
 
