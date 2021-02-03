@@ -55,7 +55,7 @@
         me.post = () => {
             const METHODS = [
                 'getIP', 'getServerToken', 'auth', 'loadList', 'pullCode', 'stopVServer', 
-                'startVServer', 'gitRemoteBranchs', 'gitSiteBranchs'
+                'startVServer', 'gitRemoteBranchs', 'gitSiteBranchs', 'gitSwitchBranch'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -106,12 +106,21 @@
 		}
 
         me.gitSiteBranchs = (cbk) => {
-			var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
-			var git = new MGit(env, pkg);
-			git.gitSiteBranchs(req.body.serverName, (result) => {
+            var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
+            var Servers = new MServers(req.body.serverType, env, pkg);
+			Servers.gitSiteBranchs(req.body.serverName, (result) => {
 				cbk(result);
 			});
-		}
+        }
+        
+        me.gitSwitchBranch = (cbk) => {
+            var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
+            var Servers = new MServers(req.body.serverType, env, pkg);
+			Servers.gitSwitchBranch(req.body.serverName, req.body.branch, (result) => {
+				cbk(result);
+			});
+        }
+        
 
         me.localTokenValidation = (token, success) => {
             let authToken = {};
