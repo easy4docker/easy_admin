@@ -7,7 +7,7 @@
                     </div>
                     <div class="col-8 p-2 m-0 text-center">
                          <span class="text-dark alert-warning">{{root.easydockerFP}}</span>
-                        <h1 class="header-title">EasyDocker Grid Admin</h1>
+                        <h1 class="header-title">EasyDocker Grid - Admin</h1>
                     </div>
                     <div class="col-2 p-0 m-0 text-right text-warning"></div>
                 </div>
