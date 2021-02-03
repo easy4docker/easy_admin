@@ -21,10 +21,11 @@ module.exports = {
     methods :{
         execDeletVirtualServer() {
             let me = this;
+            console.log(me.$parent.cfg);
+            
             let cfg = {
                     cmd : 'deleteVServer',
-                    serverName : me.$parent.cfg.data.serverName,
-                    serverType : me.$parent.cfg.data.serverType,
+                    data : me.$parent.cfg.data,
                     dataType: 'JSON'
                 }
                 caller = me.parent.caller;
