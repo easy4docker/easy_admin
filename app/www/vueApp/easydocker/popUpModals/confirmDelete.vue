@@ -22,15 +22,24 @@ module.exports = {
         execDeletVirtualServer() {
             let me = this;
             let cfg = {
+                    cmd : 'deleteVServer',
                     serverName : me.$parent.cfg.data.serverName,
-                    serverType : me.$parent.cfg.data.serverType
+                    serverType : me.$parent.cfg.data.serverType,
+                    dataType: 'JSON'
                 }
                 caller = me.parent.caller;
+             /*   
             me.root.dataEngine().removeVirtualServer(cfg, function() {
                 me.close();
                 caller.getVServerList();
                
-            });
+            });*/
+
+            me.root.dataEngine().appPost(cfg,
+                function(result) {
+                    me.close();
+                    caller.getVServerList();
+                }, true);
         }
     }
 }

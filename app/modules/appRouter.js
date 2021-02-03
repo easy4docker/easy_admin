@@ -272,14 +272,6 @@
 							me.refreshTokenSend(data);
 						});
 					break;
-
-					case 'deleteVServer' :
-						var Servers = new MServers(req.body.data.serverType, env, pkg);
-						Servers.deleteVServer(req.body.data.serverName,
-							(data) => {
-								me.refreshTokenSend(data);
-							});
-					break;
 				default :
 					res.send({status:'failure', message : '404 wrong cmd!'});
             }

@@ -223,7 +223,6 @@ module.exports = {
 
         startVServer(record) {
             var me = this;
-
             me.root.dataEngine().appPost({
                     cmd :'startVServer',
                     serverName : record.name,
