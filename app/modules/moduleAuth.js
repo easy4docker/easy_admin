@@ -80,6 +80,15 @@
         };
 
         me.isTokenLogin = (token, callback) => {
+            me.refreshAuthToken(token, () => {
+                pkg.readJson(fnToken,
+                    (authToken) => {
+                        callback((authToken[token])? {status: 'success', token : token} : callback({status: 'failure'}));
+                    });
+            });
+        };
+        
+        me.refreshAuthToken = (token, callback) => {
             pkg.readJson(fnToken,
                 (authToken) => {
                     let changed = false;
@@ -91,35 +100,14 @@
                     }
                     if (authToken[token]) {
                         authToken[token] = new Date().getTime();
-                        fs.writeFile(fnToken, JSON.stringify(authToken), 
-                        (err) => {
-                            callback({status: 'success', token : token});
-                        });
-                    } else {
-                        if (!changed) {
-                            callback({status: 'failure'});
-                        } else {
-                            fs.writeFile(fnToken, JSON.stringify(authToken), 
-                            (err) => {
-                                callback({status: 'failure'});
-                            });
-                        }
+                        changed = true;
                     }
-                }
-
-            );
-        };
-        
-        me.refreshAuthToken = (token, callback) => {
-            pkg.readJson(fnToken,
-                (authToken) => {
-                    if (token && authToken[token]) {
-                        authToken[token] = new Date().getTime();
-                        fs.writeFile(fnToken, JSON.stringify(authToken),  (err) => {
+                    if (!changed) {
+                        callback();
+                    } else {
+                        fs.writeFile(fnToken, JSON.stringify(authToken), (err) => {
                             callback();
                         });
-                    } else {
-                        callback();
                     }
                 }
             );
