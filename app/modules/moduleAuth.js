@@ -51,32 +51,20 @@
         };
 
         me.signin = (password, callback) => {
-            let auth = {}, authToken = {};
-            try {
-                auth = pkg.require(authDataFn);
-            } catch (e) {}
-
-            try {
-                authToken = pkg.require(fnToken);
-            } catch (e) {}
-
-            if (auth['root'] === pkg.md5(password)) {
-                let token = 'TK_' + pkg.md5(new Date().getTime());
- 
-                for (var o in authToken) {
-                    if (new Date().getTime() - authToken[o] > me.comm.SESSION_TIMEOUT) {
-                       delete authToken[o];
-                    }
+            pkg.readJson(authDataFn,  (auth) => {
+                if (auth['root'] === pkg.md5(password)) {
+                    let token = 'TK_' + pkg.md5(new Date().getTime());
+                    pkg.readJson(fnToken, (authToken) => {
+                            authToken[token] = new Date().getTime();
+                            fs.writeFile(fnToken , JSON.stringify(authToken), 
+                            (err) => {
+                                callback({status: 'success', token : token});
+                            });
+                        });
+                } else {
+                    callback({status: 'failure', message : 'Wrong password ' + password + '!'});
                 }
-                authToken[token] = new Date().getTime();
-                fs.writeFile(fnToken , JSON.stringify(authToken), 
-                (err) => {
-                    callback({status: 'success', token : token});
-                });
-                
-            } else {
-                callback({status: 'failure', message : 'Wrong password ' + password + '!'});
-            }
+            });
         };
 
         me.isTokenLogin = (token, callback) => {
