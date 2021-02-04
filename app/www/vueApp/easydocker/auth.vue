@@ -92,7 +92,6 @@ module.exports = {
       checkIsTokenLogin() {
          var me = this;
          let v = localStorage.getItem('easydockerFP');
-         console.log(v);
          if (v) {
             me.root.dataEngine().appPost({cmd: 'auth', data : {code : 'isTokenLogin'}}, function(result) {
                console.log(result);
@@ -179,10 +178,17 @@ module.exports = {
       },
       signOff() {
          const me = this;
-         localStorage.removeItem('easydockerFP');
-         me.accessGrid(null) 
-         me.checkAuthExist();
-         me.checkIsTokenLogin();
+         let token = localStorage.getItem('easydockerFP');
+         me.root.dataEngine().appPost({cmd: 'auth', data : {code : 'signOff', token: token }}, function(result) {
+               if (result.status === 'success') {
+                  localStorage.removeItem('easydockerFP');
+                  
+               }
+               me.accessGrid(null) 
+               me.checkAuthExist();
+               me.checkIsTokenLogin();
+         });
+
       }
    }
 }
