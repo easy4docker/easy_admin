@@ -94,24 +94,6 @@ module.exports = {
                 console.log(result);
               //  window.location.reload();
             }, true);
-        },
-        appPost(data, callback, isSpinner) {
-            const me = this;
-            if (isSpinner) me.$parent.triggerSpinner = true;
-            $.ajax({
-                type: 'POST',
-                url:'/_api/',
-                data: me.root.withAuth(data),
-                success: function(result) {
-                    if (isSpinner) me.$parent.triggerSpinner = false;
-                    console.log(result)
-                },
-                error: function (jqXHR, textStatus, errorThrown) { 
-                    if (isSpinner) me.$parent.triggerSpinner = false;
-                    callback({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
-                },
-                dataType: 'JSON'
-            });
         }
     }
 }
