@@ -30,7 +30,6 @@
                      <div class="col-2"></div>
                   </div>  
             </div> 
-            
          </div>
       </div>
       <div v-if="auth.isAuthExist === true && !auth.isSignIn" class="card m-1">
@@ -53,6 +52,13 @@
                      <div class="col-2"></div>
                      <div class="col-8 text-left">
                            <button type="button" class="btn btn-success btn-sm m-3" v-on:click="signIn()">Sign in</button>
+                     </div>
+                     <div class="col-2"></div>
+                  </div>
+                  <div class="row p-1">
+                     <div class="col-2"></div>
+                     <div class="col-8 text-danger">
+                           {{errorMessage}}
                      </div>
                      <div class="col-2"></div>
                   </div>  
@@ -171,7 +177,7 @@ module.exports = {
                   me.accessGrid(me.formSignin.password);
                   me.checkIsTokenLogin();
                } else {
-                  alert('Authentication failure.');
+                  me.errorMessage = 'Authentication failure.';
                }
          });
       },
