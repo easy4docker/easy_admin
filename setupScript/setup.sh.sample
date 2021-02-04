@@ -76,6 +76,12 @@ cp ${SCR_DIR}/admin/setupScript/_start.sh.sample  ${SCR_DIR}/_start.sh
 cp ${SCR_DIR}/admin/setupScript/_commCron.sh.sample  ${SCR_DIR}/_commCron.sh
 
 if [ $OSENV = "Mac" ]; then
+  IP=$(cat ${SCR_DIR}/data/_ip)
+  IPA=$(cat ${SCR_DIR}/data/_ipA)
+  if [ "${IPA}" != "${IP}" ] | [ -z "${IP}" ] | [ -z "${IPA}" ]; then
+    curl ipinfo.io/ip > ${SCR_DIR}/data/_ip
+    curl ifconfig.me > ${SCR_DIR}/data/_ipA
+  fi
   sh ${SCR_DIR}/_start.sh local
 fi
 if [ $OSENV = "Linux" ]; then
