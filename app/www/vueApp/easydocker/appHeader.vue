@@ -95,8 +95,6 @@ module.exports = {
               //  window.location.reload();
             }, true);
         },
-
-        // appPostAPI
         appPost(data, callback, isSpinner) {
             const me = this;
             if (isSpinner) me.$parent.triggerSpinner = true;

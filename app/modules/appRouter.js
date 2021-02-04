@@ -100,14 +100,15 @@
 						mGridHub.post();
 						break; 
 
-					case '_api':
+					case 'api':
 						var MApi= pkg.require(env.root+ '/modules/moduleApi.js');
 						let api =  new MApi(env, pkg, req, res);
 						api.call('post', false);
 						break; 
+						/*
 					case 'api':
 						me.postApi();
-						break; 
+						break; */
 					default:
 						res.send({status:'failure', message : '404 wrong path ' + p + '!'});
 				}		
