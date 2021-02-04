@@ -23,6 +23,7 @@ module.exports = {
     },
     mounted() {
         var me = this;
+        me.root.getLocalEnv();
     },
     methods : {
     },

@@ -50,10 +50,8 @@ module.exports = {
     },
     mounted () {
         var me = this;
-
         setTimeout(function() {
             me.getGridHub();
-            me.getLocalEnv();
             me.easydockerFP = localStorage.getItem('easydockerFP');
         },50);
     },
