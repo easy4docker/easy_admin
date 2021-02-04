@@ -1,9 +1,7 @@
 (function() {
     var obj = function(env, pkg, req, res) {
         var me = this,
-            fs = require('fs'),
-            exec = require('child_process').exec,
-            CP = new pkg.crowdProcess();
+            fs = require('fs');
 
         var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
@@ -28,6 +26,10 @@
                 case 'isTokenLogin' :
                     me.isTokenLogin(data.authToken, callback);
                     break;               
+
+                case 'signOff' :
+                    me.signOff(data.authToken, callback);
+                    break; 
 
                 default:
                     callback({status:'failure', message : '404 wrong code of auth!' + data.code});
@@ -67,6 +69,15 @@
             });
         };
 
+        me.signOff = (token, callback) => {
+            pkg.readJson(fnToken,  (authToken) => {
+                delete authToken[token];
+                fs.writeFile(fnToken , JSON.stringify(authToken), (err) => {
+                    callback({status: 'success'});
+                });
+            });
+        };
+
         me.isTokenLogin = (token, callback) => {
             me.refreshAuthToken(token, () => {
                 pkg.readJson(fnToken,
@@ -99,13 +110,6 @@
                     }
                 }
             );
-        };
-
-        me.removeLoginToken = (token, callback) => {
-
-        };
-        me.cleanOvertime = (callback) => {
-
         };
     }
     module.exports = obj;
