@@ -239,7 +239,7 @@
 							me.refreshTokenSend(data);
 						});
 					break;
-
+				/*
 				case 'gitSwitchBranch' :
 					var Servers = new MServers(req.body.serverType, env, pkg);
 					Servers.gitSwitchBranch(req.body.serverName, req.body.branch,
@@ -255,7 +255,7 @@
 							me.refreshTokenSend(data);
 						});
 					break;
-
+				
 				case 'addServer' :
 					var Servers = new MServers(req.body.data.serverType, env, pkg);
 					Servers.addVServer(req.body.data, (data) => {
@@ -270,6 +270,7 @@
 							me.refreshTokenSend(data);
 						});
 					break;
+				*/
 				default :
 					res.send({status:'failure', message : '404 wrong cmd!'});
             }
