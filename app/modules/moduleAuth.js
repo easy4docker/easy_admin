@@ -14,7 +14,7 @@
         me.action = (data, callback) => {
             switch(data.code) {
                 case 'isAuthReady' :
-                    callback({status:'success', isAuthReady : me.isAuthReady()});
+                    me.isAuthReady(callback);
                     break;
 
                 case 'initPassword' :
@@ -35,14 +35,10 @@
             
             }
         };
-        me.isAuthReady = () => {
-            let auth = {};
-            try {
-                auth = pkg.require(authDataFn);
-            } catch (e) {
-
-            }
-            return (auth.root) ? true : false;
+        me.isAuthReady = (callback) => {
+            pkg.readJson(authDataFn, (authToken) => {
+                callback({status:'success', isAuthReady :(!authToken || !Object.keys(authToken).length) ? false : true});
+            });
         };
         me.initPassword = (str, callback) => {
             let auth = {};
