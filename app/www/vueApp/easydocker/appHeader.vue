@@ -88,18 +88,12 @@ module.exports = {
         },
         syncAppCode() {
             var me = this;
-            me.root.dataEngine().appPostAPI({
+            me.root.dataEngine().appPost({
                 cmd : 'syncAppCode'
             }, function(result) {
                 console.log(result);
               //  window.location.reload();
             }, true);
-            /*
-            me.root.dataEngine().runPost('/_grid/', 'syncAppCode', {},
-                function(result) {
-                window.location.reload();
-                }, function(result) {});
-                */
         },
 
         // appPostAPI

@@ -82,7 +82,7 @@
             me.refreshAuthToken(token, () => {
                 pkg.readJson(fnToken,
                     (authToken) => {
-                        callback((authToken[token])? {status: 'success', token : token} : callback({status: 'failure'}));
+                        callback((authToken[token])? {status: 'success', token : token} : {status: 'failure'});
                     });
             });
         };

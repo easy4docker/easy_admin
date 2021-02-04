@@ -64,7 +64,7 @@ module.exports = {
                     dataType: 'json'
                 },
                 function(result) {
-                    me.localEnv = result.result;
+                  //  me.localEnv = (!result)? {} : result.result;
                 }, function(err) {
                     console.log(err);
                 });

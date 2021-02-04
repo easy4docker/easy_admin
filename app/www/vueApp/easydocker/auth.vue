@@ -100,7 +100,7 @@ module.exports = {
          let v = localStorage.getItem('easydockerFP');
          if (v) {
             me.root.dataEngine().appPost({cmd: 'auth', data : {code : 'isTokenLogin'}}, function(result) {
-               if (result.status === 'success') {
+               if ((result) && result.status === 'success') {
                   me.auth.isSignIn = true;
                   me.auth.token = result.token;
                } else {
