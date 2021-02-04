@@ -44,7 +44,8 @@ module.exports = {
             svr : '',
             token : '',
             easydockerFP : '',
-            ajaxResult : ''
+            ajaxResult : '',
+            localEnv : {}
         }
     },
     mounted () {
@@ -52,10 +53,24 @@ module.exports = {
 
         setTimeout(function() {
             me.getGridHub();
+            me.getLocalIP();
             me.easydockerFP = localStorage.getItem('easydockerFP');
         },50);
     },
     methods :{
+        getLocalIP() {
+            const me = this;
+            me.dataEngine().appPost({
+                    cmd     :'getIP',
+                    data    : {},
+                    dataType: 'json'
+                },
+                function(result) {
+                    me.localEnv = {IP : result.result}
+                }, function(err) {
+                    console.log(err);
+                });
+        },
         getGridHub() {
             const me = this;
             let svr = localStorage.getItem('easydockerSVR'),
