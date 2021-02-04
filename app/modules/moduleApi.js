@@ -57,7 +57,7 @@
 
         me.post = () => {
             const METHODS = [
-                'getIP', 'getServerToken', 'auth', 'loadList', 'pullCode', 'stopVServer', 
+                'getIP', 'getLocalEnv', 'getServerToken', 'auth', 'loadList', 'pullCode', 'stopVServer', 
                 'startVServer', 'gitRemoteBranchs', 'gitSiteBranchs', 'gitSwitchBranch',
                 'deleteVServer', 'addServer'
             ];
@@ -152,6 +152,12 @@
         me.getIP = (cbk) => {
             fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
                 cbk({status: 'success', result : data});
+            });
+        }
+
+        me.getLocalEnv = (cbk) => {
+            fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
+                cbk({status: 'success', result : {IP: data}});
             });
         }
 

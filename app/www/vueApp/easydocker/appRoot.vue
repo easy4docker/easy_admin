@@ -53,20 +53,20 @@ module.exports = {
 
         setTimeout(function() {
             me.getGridHub();
-            me.getLocalIP();
+            me.getLocalEnv();
             me.easydockerFP = localStorage.getItem('easydockerFP');
         },50);
     },
     methods :{
-        getLocalIP() {
+        getLocalEnv() {
             const me = this;
             me.dataEngine().appPost({
-                    cmd     :'getIP',
+                    cmd     :'getLocalEnv',
                     data    : {},
                     dataType: 'json'
                 },
                 function(result) {
-                    me.localEnv = {IP : result.result}
+                    me.localEnv = result.result;
                 }, function(err) {
                     console.log(err);
                 });
