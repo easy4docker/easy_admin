@@ -94,6 +94,10 @@ module.exports = {
 
         appPost(data, callback, isSpinner) {
             const me = this;
+            appPostLocal(data, callback, isSpinner);
+        },
+        appPostLocal(data, callback, isSpinner) {
+            const me = this;
             if (isSpinner) me.$parent.triggerSpinner = true;
             $.ajax({
                 type: 'POST',
