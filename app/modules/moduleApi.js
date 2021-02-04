@@ -13,6 +13,9 @@
 		var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
 
+        var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
+        var Servers = new MServers(env, pkg);
+
         var _env = {};
         try {
             _env = require(data_dir + '/_env.json');
@@ -80,8 +83,6 @@
             });
         }
         me.loadList = (cbk) => {
-            var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
-            var Servers = new MServers('webserver', env, pkg);
             Servers.postLoadList(
                 (data) => {
                     me.refreshTokenSend(data, cbk);
@@ -90,8 +91,6 @@
 
         me.stopVServer = me.pullCode = 
         me.startVServer = (cbk) => {
-            var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
-            var Servers = new MServers(req.body.serverType, env, pkg);
             Servers[req.body.cmd](req.body.serverName,
                 (data) => {
                     me.refreshTokenSend(data, cbk);
@@ -107,31 +106,23 @@
 		}
 
         me.gitSiteBranchs = (cbk) => {
-            var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
-            var Servers = new MServers(req.body.serverType, env, pkg);
 			Servers.gitSiteBranchs(req.body.serverName, (result) => {
 				cbk(result);
 			});
         }
         
         me.gitSwitchBranch = (cbk) => {
-            var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
-            var Servers = new MServers(req.body.serverType, env, pkg);
 			Servers.gitSwitchBranch(req.body.serverName, req.body.branch, (result) => {
 				cbk(result);
 			});
         }
         
         me.addServer = (cbk) => {
-            var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
-            var Servers = new MServers(req.body.data.serverType, env, pkg);
 			Servers.addVServer(req.body.data, (result) => {
 				cbk(result);
 			});
         }
         me.deleteVServer = (cbk) => {
-            var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
-            var Servers = new MServers(req.body.data.serverType, env, pkg);
 			Servers.deleteVServer(req.body.data.serverName, (result) => {
 				cbk(result);
 			});

@@ -1,5 +1,5 @@
 (function() {
-    var obj = function(serverType, env, pkg) {
+    var obj = function(env, pkg) {
         var me = this,
             fs = require('fs'),
             exec = require('child_process').exec,
