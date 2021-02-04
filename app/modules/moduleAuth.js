@@ -41,16 +41,13 @@
             });
         };
         me.initPassword = (str, callback) => {
-            let auth = {};
-            try {
-                auth = pkg.require(authDataFn);
-            } catch (e) {}
-            
-            auth['root'] = pkg.md5(str);
-            fs.writeFile(authDataFn, JSON.stringify(auth), 
-                (err) => {
-                    callback({status:'success'});
-                });
+            pkg.readJson(authDataFn, (auth) => {
+                auth['root'] = pkg.md5(str);
+                fs.writeFile(authDataFn, JSON.stringify(auth), 
+                    (err) => {
+                        callback({status:'success'});
+                    });
+            });
         };
 
         me.signin = (password, callback) => {
