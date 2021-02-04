@@ -178,11 +178,9 @@ module.exports = {
       signOff() {
          const me = this;
          me.root.dataEngine().appPost({cmd: 'auth', data : {code : 'signOff'}}, function(result) {
-               if (result.status === 'success') {
-                  localStorage.removeItem('easydockerFP');
+               if (result.status === 'success') { 
                   me.accessGrid(null) 
-                  me.checkAuthExist();
-                  me.checkIsTokenLogin();
+                  localStorage.removeItem('easydockerFP');
                   window.location.reload();
                }
          });
