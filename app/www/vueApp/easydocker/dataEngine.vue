@@ -94,7 +94,7 @@ module.exports = {
 
         appPost(data, callback, isSpinner) {
             const me = this;
-            appPostLocal(data, callback, isSpinner);
+            me.appPostLocal(data, callback, isSpinner);
         },
         appPostLocal(data, callback, isSpinner) {
             const me = this;
