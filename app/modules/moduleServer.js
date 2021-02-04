@@ -15,7 +15,7 @@
 
         // ==== 
         this.sitesPath = () => {
-            return data_dir + '/' + serverType;
+            return data_dir + '/sites';
         }
 
         this.sitePath = (serverName) => {
@@ -23,6 +23,10 @@
         }
         this.siteCodePath = (serverName) => {
             return this.sitePath(serverName) + '/code';
+        }
+
+        this.siteDataPath = (serverName) => {
+            return this.sitePath(serverName) + '/data';
         }
 
         this.siteEnvPath = (serverName) => {
@@ -34,15 +38,15 @@
         }
 
         this.siteContainer = (serverName) => {
-            return (serverType + '-' + serverName + '-container').toLowerCase();
+            return ('sites-' + serverName + '-container').toLowerCase();
         }
 
         this.getImageName = (serverName) => {
-            return (serverType + '-' + serverName + '-image').toLowerCase();
+            return ('sites-' + serverName + '-image').toLowerCase();
         }
 
         this.dockerPath = (serverName) => {
-            return _env.data_folder + '/' + serverType + '/' + serverName;
+            return _env.data_folder + '/sites/' + serverName;
         }
         this.dockerCodePath = (serverName) => {
             return this.dockerPath(serverName) + '/code';
@@ -417,6 +421,15 @@
             _f['addDocker'] = function(cbk) {
                 me.addDocker(data.serverName, cbk, randomCode);
             };
+            
+            _f['addSiteCronFolder'] = function(cbk) {
+                let cmd = 'mkdir -p ' + me.siteDataPath(data.serverName) + '/commCron/';
+                exec(cmd, {maxBuffer: 224 * 2048},
+                    function(error, stdout, stderr) {
+                        cbk(true);
+                });
+            };
+        
 
             _f['addRemoveMe'] = function(cbk) {
                 me.addRemoveMe(data.serverName, cbk, randomCode);
@@ -427,7 +440,8 @@
             };
 
             CP.serial(_f, function(result) {
-                callback(CP.data.SitesServers);
+                // callback(CP.data.SitesServers);
+                callback(result);
             }, 30000);
         }
 
@@ -516,10 +530,11 @@
             me.setCron('addDocker-' + serverName, me.templateCMD('addDockerApp.tpl', serverName), callback);
         }
 
-        me.addRemoveMe = (serverName, callback) => {
+        me.addRemoveMe = (serverName, callback, code) => {
             const str = me.templateCMD('removeDockerApp.tpl', serverName);
-            fs.writeFile(me.dockerDataPath(serverName) + '/REMOVE.ME', str, function (err) {
-                callback({status:'success', message: code});
+            const fn = me.siteDataPath(serverName) + '/REMOVE.ME';
+            fs.writeFile(fn, str, function (err) {
+                callback({status:'success'});
             });
         }
 

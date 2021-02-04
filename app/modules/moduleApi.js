@@ -55,7 +55,8 @@
         me.post = () => {
             const METHODS = [
                 'getIP', 'getServerToken', 'auth', 'loadList', 'pullCode', 'stopVServer', 
-                'startVServer', 'gitRemoteBranchs', 'gitSiteBranchs', 'gitSwitchBranch'
+                'startVServer', 'gitRemoteBranchs', 'gitSiteBranchs', 'gitSwitchBranch',
+                'deleteVServer', 'addServer'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -121,6 +122,20 @@
 			});
         }
         
+        me.addServer = (cbk) => {
+            var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
+            var Servers = new MServers(req.body.data.serverType, env, pkg);
+			Servers.addVServer(req.body.data, (result) => {
+				cbk(result);
+			});
+        }
+        me.deleteVServer = (cbk) => {
+            var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
+            var Servers = new MServers(req.body.data.serverType, env, pkg);
+			Servers.deleteVServer(req.body.data.serverName, (result) => {
+				cbk(result);
+			});
+        }
 
         me.localTokenValidation = (token, success) => {
             let authToken = {};

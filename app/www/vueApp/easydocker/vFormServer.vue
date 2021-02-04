@@ -43,9 +43,9 @@
             </div>
             <div v-if="form.docker">
             {{form.docker}}
-                 <hr/>
-                ports: {{ form.docker.ports }} Type: {{form.docker.type}}
-                 <hr/>
+                <hr/>
+            ports: {{ form.docker.ports }} Type: {{form.docker.type}}
+                <hr/>
             </div>
             <hr/>
             <button type="button" v-if="branches!==null" class="btn btn-info" v-on:click="saveVServer()">Save the virtual host</button>
