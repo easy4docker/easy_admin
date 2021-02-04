@@ -3,7 +3,7 @@
     <div class="card-body card-form-section text-left ">
         <form>
             <div class="form-group">
-                <label>Repository git URI *</label>
+                <label>Repository git URI * {{form.uuid}}</label>
                 <input type="text" class="form-control" v-model="form.gitHub" @input="changedGit" placeholder="Repository git URI">
             </div>
             <div class="form-group" v-if="branches===null">
@@ -75,6 +75,7 @@ module.exports = {
             branches : null,
             form : {
                 serverName  : '',
+                uuid : '',
                 gitHub      : '',
                 branch      : '',
                 siteDocker  : false,
@@ -159,6 +160,7 @@ module.exports = {
         onBranchSelect(event) {
             var me = this;
             me.form.branch = event.target.value;
+            me.form.uuid = me.form.branch + '_' + me.root.localEnv.IP.replace(/\./ig, '_');
             me.getSiteDocker();
         },
 
