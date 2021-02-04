@@ -110,7 +110,6 @@ module.exports = {
                me.root.auth = me.auth;
             });
          } else {
-            console.log(result);
             me.auth.isSignIn  = false;
             delete me.auth.token;
             me.root.auth = me.auth;
