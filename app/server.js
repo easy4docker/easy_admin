@@ -10,7 +10,16 @@ var env = {
     appFolder : '/var/_localApp'
 }
 var pkg = {
-    require : function(fileName, isCache) {
+    readJson : (path, cb) => {
+        var fs = require('fs');
+        fs.readFile(path, (err, data) => {
+          if (err)
+            cb({})
+          else
+            cb(JSON.parse(data))
+        })
+    },
+    require : (fileName, isCache) => {
         if (!isCache) {
             delete require.cache[fileName];
         }

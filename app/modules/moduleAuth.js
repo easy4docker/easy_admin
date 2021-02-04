@@ -87,22 +87,34 @@
         };
 
         me.isTokenLogin = (token, callback) => {
-            let authToken = {};
-            try {
-                authToken = pkg.require(fnToken);
-            } catch (e) {}
-            for (var o in authToken) {
-                if (new Date().getTime() - authToken[o] > me.comm.SESSION_TIMEOUT) {
-                   delete authToken[o];
+            pkg.readJson(fnToken,
+                (authToken) => {
+                    let changed = false;
+                    for (var o in authToken) {
+                        if ((new Date().getTime() - authToken[o]) > me.comm.SESSION_TIMEOUT) {
+                           delete authToken[o];
+                           changed = true;
+                        }
+                    }
+                    if (authToken[token]) {
+                        authToken[token] = new Date().getTime();
+                        fs.writeFile(fnToken, JSON.stringify(authToken), 
+                        (err) => {
+                            callback({status: 'success', token : token});
+                        });
+                    } else {
+                        if (!changed) {
+                            callback({status: 'failure'});
+                        } else {
+                            fs.writeFile(fnToken, JSON.stringify(authToken), 
+                            (err) => {
+                                callback({status: 'failure'});
+                            });
+                        }
+                    }
                 }
-            }
-            if (authToken[token]) {
-                authToken[token] = new Date().getTime();
-                fs.writeFile(fnToken, JSON.stringify(authToken), 
-                (err) => {
-                    callback({status: 'success', token : token});
-                });
-            }
+
+            );
         };
         
         me.refreshAuthToken = (token, callback) => {

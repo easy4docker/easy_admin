@@ -125,9 +125,14 @@ module.exports = {
         changedGit(e) {
             var me = this;
             me.form.gitHub = e.target.value.replace(/^\s+|\s+$/g, '');
+            me.setUuid();
             me.cleanForm();
         },
 
+        setUuid() {
+            const me = this;
+            me.form.uuid = me.form.branch + '_' + me.root.localEnv.IP.replace(/\./ig, '_') 
+        },
         gitRemoteBranchs(gitRecord) {
             const me = this;
             me.gitUrlValidation();
@@ -160,7 +165,7 @@ module.exports = {
         onBranchSelect(event) {
             var me = this;
             me.form.branch = event.target.value;
-            me.form.uuid = me.form.branch + '_' + me.root.localEnv.IP.replace(/\./ig, '_');
+            me.setUuid();
             me.getSiteDocker();
         },
 

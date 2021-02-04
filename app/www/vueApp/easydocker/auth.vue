@@ -92,8 +92,10 @@ module.exports = {
       checkIsTokenLogin() {
          var me = this;
          let v = localStorage.getItem('easydockerFP');
+         console.log(v);
          if (v) {
             me.root.dataEngine().appPost({cmd: 'auth', data : {code : 'isTokenLogin'}}, function(result) {
+               console.log(result);
                if (result.status === 'success') {
                   me.auth.isSignIn = true;
                   me.auth.token = result.token;
@@ -104,6 +106,7 @@ module.exports = {
                me.root.auth = me.auth;
             });
          } else {
+            console.log(result);
             me.auth.isSignIn  = false;
             delete me.auth.token;
             me.root.auth = me.auth;
