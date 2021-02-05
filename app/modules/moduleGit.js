@@ -61,7 +61,7 @@
                 }
                 let uri =  CP.data.branches.uri;
                 const tmp_dir = data_dir + '/tmp/repo/' + CP.data.repo;
-                var cmd = 'rm -fr ' + tmp_dir + ' && mkdir -p ' + tmp_dir + ' && cd ' + tmp_dir + ' && git clone ' + uri + '';
+                var cmd = 'rm -fr ' + tmp_dir + ' && mkdir -p ' + tmp_dir + ' && cd ' + tmp_dir + ' && git clone ' + uri + ' .';
                 exec(cmd, {maxBuffer: 128 * 1024},
                     function(error, stdout, stderr) {
                         if (!error) {
