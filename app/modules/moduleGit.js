@@ -17,11 +17,12 @@
         me.gitRemoteBranchs = (gitRecord, data_dir, callback) => {
             const regex = /([^/]+)\/([^/]+)\.git$/;
             const uri_a = gitRecord.gitHub.match(regex);
-            const repo = ((!uri_a) ? '' : (uri_a[1] + '_' + uri_a[2]));
+            const repo = ((!uri_a) ? false : (uri_a[1] + '_' + uri_a[2]));
             let tmp_dir = data_dir + '/tmp/repo/' + repo;
             const _f = {};
             
             _f['hashCode'] = (cbk) => {
+                if (repo) CP.exit = true;
                 cbk(pkg.md5(gitRecord.gitHub));
             }           
             _f['branches'] = (cbk) => {
@@ -54,7 +55,7 @@
            
             _f['dockerSetting'] = (cbk) => {
                 if (!CP.data.branches || CP.data.branches.status !== 'success') {
-                    cbk({});
+                    cbk(false);
                     return true;
                 } else {
                     let uri =  CP.data.branches.uri;
@@ -63,7 +64,7 @@
                         function(error, stdout, stderr) {
                             const fn = tmp_dir + '/dockerSetting/config.json';
                             pkg.readJson(fn, (setting) => {
-                                cbk(setting);
+                                cbk((!Object.keys(setting).length) ? false : setting);
                             });
                     });
                 }
@@ -84,9 +85,15 @@
             }
 
             CP.serial(_f, (dataCP) => {
-                callback((CP.data.branches.status !== 'success') ? {status : 'failure', message : CP.data.branches.message} : 
+                let result = {};
+                if (repo) {
+                    result = {status : 'failure', message : 'Wrong gitHub format'}
+                } else {
+                    result = (CP.data.branches.status !== 'success') ? {status : 'failure', message : CP.data.branches.message} : 
                     {status : 'success', hashCode: CP.data.hashCode, branches : CP.data.branches.branches, repo : repo, 
-                    dockerSetting : CP.data.dockerSetting});
+                    dockerSetting : CP.data.dockerSetting};
+                }
+                callback(result);
             }, 30000);
 
         }
