@@ -26,7 +26,7 @@
                 form.password : {{form.password}}<br/>
                 form.serverName : {{form.serverName}}<br/>
                 form.branch : {{form.branch}}<br/>
-                form.branches : {{form.branches}}<br/>
+                me.branches : {{branches}}<br/>
                 form.docker : {{form.docker}}<br/>
             <hr/> 
             <span v-if="branches.length" >
