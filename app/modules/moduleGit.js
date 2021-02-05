@@ -16,7 +16,7 @@
 
         me.gitRemoteBranchs = (gitRecord, data_dir, callback) => {
             var _f = {};
-            const tmp_dir = data_dir + '/tmp/repo';
+            
             _f['repo'] = (cbk) => {
                 const regex = /([^/]+)\/([^/]+)\.git$/;
                 var uri_a = gitRecord.gitHub.match(regex);
@@ -60,6 +60,7 @@
                     return true;
                 }
                 let uri =  CP.data.branches.uri;
+                const tmp_dir = data_dir + '/tmp/repo/' + CP.data.repo;
                 var cmd = 'rm -fr ' + tmp_dir + ' && mkdir -p ' + tmp_dir + ' && cd ' + tmp_dir + ' && git clone ' + uri + '';
                 exec(cmd, {maxBuffer: 128 * 1024},
                     function(error, stdout, stderr) {
