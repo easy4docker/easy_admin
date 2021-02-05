@@ -20,7 +20,7 @@
                     </div>    
                 </div>
             </div>
-            <button type="button" v-if="!branches.length" class="btn btn-info" v-on:click="gitRemoteBranchs(form)">Get branchs</button>
+            <button type="button" v-if="!branches.length" class="btn btn-info" v-on:click="setUpServer(form)">Get branchs</button>
             <span v-if="branches.length" >
                 <div>
                     <input type="hidden" v-model="form.userName">
@@ -112,7 +112,7 @@ module.exports = {
             me.cleanForm();
         },
 
-        gitRemoteBranchs(gitRecord) {
+        setUpServer(gitRecord) {
             const me = this;
             me.gitUrlValidation();
             if (me.isformValid()) {
