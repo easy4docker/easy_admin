@@ -99,9 +99,12 @@
                 } else if (CP.data.branches.status !== 'success') {
                     result = {status : 'failure', message : CP.data.branches.message};
                 } else {
+                    result = {status : 'failure', message : 'CP.data.branches.message'};
+                    /*
                     result = (CP.data.branches.status !== 'success') ? {status : 'failure', message : CP.data.branches.message} : 
                     {status : 'success', hashCode: CP.data.hashCode, branches : CP.data.branches.branches, repo : repo, 
                     dockerSetting : CP.data.dockerSetting};
+                    */
                 }
                 callback(result);
             }, 30000);
