@@ -32,7 +32,6 @@
                 for (var i=4; i < uri_a.length; i++) {
                     uri +=  uri_a[i];
                 }
-                
                 var cmd = 'git ls-remote ' + uri;
                 exec(cmd, {maxBuffer: 256 * 2048},
                     function(error, stdout, stderr) {
@@ -45,18 +44,17 @@
                                     branches.push(list[i].replace(regs, ''));
                                 }
                             }
-                            cbk({stutus: 'success', branches : branches});
+                            cbk((!branches.length) ? {status: 'failure', message : 'Wrong resource!'} :
+                             {status: 'success', branches : branches});
                         } else {
-                            cbk({stutus: '', failure : error.mesage});
+                            cbk({status: 'failure', message: error.message});
                         }
-    
-                        
                 });
             }
 
             CP.serial(_f, (dataCP) => {
-                callback((!CP.data.branches.status === 'success') ? {status : 'failure', message : CP.data.branches.message} : 
-                    {status : 'success', branches : CP.data.branches.branches, repo : CP.data.repo});
+                callback((CP.data.branches.status !== 'success') ? {status : 'failure', message : CP.data.branches.message} : 
+                    {status : 'success', branches : CP.data.branches.branches, repo : CP.data.repo, kk: 1});
             }, 30000);
 
         }
