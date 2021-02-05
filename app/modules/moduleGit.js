@@ -90,16 +90,10 @@
                     result = {status : 'failure', message : 'Wrong gitHub format'};
                 } else if (CP.data.branches.status !== 'success') {
                     result = {status : 'failure', message : CP.data.branches.message};
-                } else if (CP.data.branches.status !== 'success') {
-                    result = {status : 'failure', message : CP.data.branches.message};
-                } else if (CP.data.branches.status !== 'success') {
-                    result = {status : 'failure', message : CP.data.branches.message};
-                } else if (CP.data.branches.status !== 'success') {
-                    result = {status : 'failure', message : CP.data.branches.message};
-                } else if (CP.data.branches.status !== 'success') {
-                    result = {status : 'failure', message : CP.data.branches.message};
+                } else if (!CP.data.dockerSetting) {
+                    result = {status : 'failure', message : 'Missing dockerSetting on the repository'};
                 } else {
-                    result = {status : 'failure', message : 'CP.data.branches.message'};
+                    result = {status : 'failure', message : 'We are good to go'};
                     /*
                     result = (CP.data.branches.status !== 'success') ? {status : 'failure', message : CP.data.branches.message} : 
                     {status : 'success', hashCode: CP.data.hashCode, branches : CP.data.branches.branches, repo : repo, 
