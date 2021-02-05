@@ -3,7 +3,7 @@
     <div class="card-body card-form-section text-left ">
         <form>
             <div class="form-group">
-                <label>Repository git URI * == {{form.code}}</label>
+                <label>Repository git URI * == {{form.resource}}</label>
                 <input type="text" class="form-control" v-model="form.gitHub" @input="changedGit" placeholder="Repository git URI">
             </div>
             <div class="form-group" v-if="!branches.length">
@@ -78,7 +78,7 @@ module.exports = {
                 serverName  : '',
                 gitHub      : '',
                 branch      : '',
-                code        : '',
+                hashCode    : '',
                 docker: {
                     type : '',
                     ports : []
@@ -99,7 +99,7 @@ module.exports = {
             me.branches = [];
             me.form.serverName = '';
             me.form.branch = '';
-            me.code = '';
+            me.hashCode = '';
             me.form.docker = {
                     type : '',
                     ports : []
@@ -124,7 +124,7 @@ module.exports = {
                         me.branches = result.branches;
                         me.form.serverName = result.repo + '_' + me.root.localEnv.IP.replace(/\./ig, '_');
                         me.form.docker = result.dockerSetting;
-                        me.form.code = result.code;
+                        me.form.hashCode = result.hashCode;
                     } else {
                         me.branches = [];
                         me.form.serverName = '';
