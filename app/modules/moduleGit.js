@@ -22,6 +22,10 @@
                 var uri_a = gitRecord.gitHub.match(regex);
                 cbk((!uri_a) ? '' :uri_a[1]);
             }
+            
+            _f['code'] = (cbk) => {
+                cbk(pkg.md5(gitRecord.gitHub));
+            }           
             _f['branches'] = (cbk) => {
                 var regex = /^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*@|)(.*?)(\.git)(\/?|\#[-\d\w._]+?)$/;
                 var uri_a = gitRecord.gitHub.match(regex);
@@ -76,7 +80,7 @@
 
             CP.serial(_f, (dataCP) => {
                 callback((CP.data.branches.status !== 'success') ? {status : 'failure', message : CP.data.branches.message} : 
-                    {status : 'success', branches : CP.data.branches.branches, repo : CP.data.repo, tmpClone: CP.data.tmpClone,
+                    {status : 'success', code: CP.data.code, branches : CP.data.branches.branches, repo : CP.data.repo, tmpClone: CP.data.tmpClone,
                     dockerSetting : CP.data.dockerSetting});
             }, 30000);
 

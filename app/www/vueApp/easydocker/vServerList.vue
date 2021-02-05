@@ -30,7 +30,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="list-group" v-for="item in filteredResult()">
+                        <div class="list-group" v-for="item in list">filteredResult()
                         
                             <div class="list-group-item list-group-item-action flex-column align-items-start m-1 list-group-border">
                                 <div class="container-fluid m-0">
