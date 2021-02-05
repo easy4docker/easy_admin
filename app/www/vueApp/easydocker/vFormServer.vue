@@ -76,10 +76,8 @@ module.exports = {
             branches : [],
             form : {
                 serverName  : '',
-                uuid : '',
                 gitHub      : '',
                 branch      : '',
-                serverType  : '',
                 docker: {
                     type : '',
                     ports : []
