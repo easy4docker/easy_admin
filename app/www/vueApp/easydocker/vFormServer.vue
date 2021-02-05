@@ -22,12 +22,12 @@
             </div>
             <button type="button" v-if="!branches.length" class="btn btn-info" v-on:click="setUpServer(form)">Get branchs</button>
             <hr/>    
-                form.userName{{form.userName}}<br/>
-                form.password{{form.password}}<br/>
-                form.serverName{{form.serverName}}<br/>
-                form.branch{{form.branch}}<br/>
-                form.branchs{{form.branchs}}<br/>
-                {{form.docker}}<br/>
+                form.userName : {{form.userName}}<br/>
+                form.password : {{form.password}}<br/>
+                form.serverName : {{form.serverName}}<br/>
+                form.branch : {{form.branch}}<br/>
+                form.branchs : {{form.branchs}}<br/>
+                form.docker : {{form.docker}}<br/>
             <hr/> 
             <span v-if="branches.length" >
                 <div>
