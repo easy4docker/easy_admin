@@ -117,6 +117,7 @@ module.exports = {
             const me = this;
             me.gitUrlValidation();
             if (me.isformValid()) {
+                me.errors = {};
                 me.root.dataEngine().appPost({
                     cmd :'gitRemoteBranchs',
                     data : gitRecord
