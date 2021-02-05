@@ -6,7 +6,7 @@
                 <label>Repository git URI * {{form.uuid}}</label>
                 <input type="text" class="form-control" v-model="form.gitHub" @input="changedGit" placeholder="Repository git URI">
             </div>
-            <div class="form-group" v-if="branches===null">
+            <div class="form-group" v-if="!branches.length">
                 <div class="container-fluid border border-2 p-2 alert-secondary rounded">
                     <div class="row">
                         <div class="col-6">
@@ -20,45 +20,46 @@
                     </div>    
                 </div>
             </div>
-            <button type="button" v-if="branches===null" class="btn btn-info" v-on:click="gitRemoteBranchs(form)">Get branchs</button>
-            <div v-if="branches!==null" >
-                <input type="hidden" v-model="form.userName">
-                <input type="hidden"  v-model="form.password" >
-            </div>
+            <button type="button" v-if="!branches.length" class="btn btn-info" v-on:click="gitRemoteBranchs(form)">Get branchs</button>
+            <span v-if="branches.length" >
+                <div>
+                    <input type="hidden" v-model="form.userName">
+                    <input type="hidden"  v-model="form.password" >
+                </div>
 
-            <div class="form-group" v-if="branches!==null" >
-                <label>Server Name * </label>
-                <input type="text" class="form-control" maxlength="64" v-model="form.serverName" placeholder="Server Name">
-            </div>
+                <div class="form-group">
+                    <label>Server Name * </label>
+                    <input type="text" class="form-control" maxlength="64" v-model="form.serverName" placeholder="Server Name">
+                </div>
 
-            <div class="form-group" v-if="branches!==null" >
-                <label>Branche</label>
-                <select class="form-control" :required="true" @change="onBranchSelect($event)" v-model="form.branch">
-                    <option 
-                    v-for="option in branches" 
-                    v-bind:value="option"
-                    :selected="option ==  form.branch"
-                    >{{ option }}</option>
-                </select>
-            </div>
-            <div v-if="form.docker">
-            {{form.docker}}
+                <div class="form-group">
+                    <label>Branche</label>
+                    <select class="form-control" :required="true" @change="onBranchSelect($event)" v-model="form.branch">
+                        <option 
+                        v-for="option in branches" 
+                        v-bind:value="option"
+                        :selected="option ==  form.branch"
+                        >{{ option }}</option>
+                    </select>
+                </div>
+                <div v-if="form.docker">
+                {{form.docker}}
+                    <hr/>
+                ports: {{ form.docker.ports }} Type: {{form.docker.type}}
+                    <hr/>
+                </div>
                 <hr/>
-            ports: {{ form.docker.ports }} Type: {{form.docker.type}}
-                <hr/>
-            </div>
-            <hr/>
-            <button type="button" v-if="branches!==null" class="btn btn-info" v-on:click="saveVServer()">Save the virtual host</button>
-            <!--button type="button" class="btn btn-warning" v-on:click="reset()">Reset fields</button-->
-            <button type="button" class="btn btn-secondary" v-on:click="cancel()">Cancel</button>
-            
-            <hr v-if="!isformValid()" />
-            <div class="text-danger p-3"  v-if="!isformValid()">
-                <b>Please correct the following error(s):</b>
-                <ul>
-                <li v-for="(v, k) in errors">{{v}}</li>
-                </ul>
-            </div>
+                <button type="button" class="btn btn-info" v-on:click="saveVServer()">Save the virtual host</button>
+                <!--button type="button" class="btn btn-warning" v-on:click="reset()">Reset fields</button-->
+                <button type="button" class="btn btn-secondary" v-on:click="cancel()">Cancel</button>
+                <hr v-if="!isformValid()" />
+                <div class="text-danger p-3"  v-if="!isformValid()">
+                    <b>Please correct the following error(s):</b>
+                    <ul>
+                    <li v-for="(v, k) in errors">{{v}}</li>
+                    </ul>
+                </div>
+            </span>
         </form>
     </div>
 </div>
@@ -72,13 +73,12 @@ module.exports = {
         return {
             root :  this.$parent.root,
             errors: {},
-            branches : null,
+            branches : [],
             form : {
                 serverName  : '',
                 uuid : '',
                 gitHub      : '',
                 branch      : '',
-                siteDocker  : false,
                 serverType  : '',
                 docker: {
                     type : '',
@@ -95,27 +95,11 @@ module.exports = {
         );
     },
     methods : {
-        initForm() {
-            var me = this;
-            me.branches = null;
-            me.form = {
-                serverName  : '',
-                gitHub      : '',
-                branch      : '',
-                siteDocker  : false,
-                docker: {
-                        type : '',
-                        ports : []
-                }
-            };
-
-        },
         cleanForm() {
             var me = this;
-            me.branches = null;
+            me.branches = [];
             me.form.serverName = '';
             me.form.branch = '';
-            me.form.siteDocker  = false;
             me.form.docker = {
                     type : '',
                     ports : []
@@ -125,14 +109,9 @@ module.exports = {
         changedGit(e) {
             var me = this;
             me.form.gitHub = e.target.value.replace(/^\s+|\s+$/g, '');
-            me.setUuid();
             me.cleanForm();
         },
 
-        setUuid() {
-            const me = this;
-          //  me.form.uuid = me.form.branch + '_' + me.root.localEnv.IP.replace(/\./ig, '_') 
-        },
         gitRemoteBranchs(gitRecord) {
             const me = this;
             me.gitUrlValidation();
@@ -143,7 +122,7 @@ module.exports = {
                 }, function(result) {
                     if (result.status === 'success') {
                         me.branches = result.branches;
-                        me.form.uuid = result.repo + '_' + me.root.localEnv.IP.replace(/\./ig, '_') 
+                        me.form.serverName = result.repo + '_' + me.root.localEnv.IP.replace(/\./ig, '_') 
                     } else {
                         me.branches = [];
                         me.errors.gitHub = result.message;
@@ -166,7 +145,6 @@ module.exports = {
         onBranchSelect(event) {
             var me = this;
             me.form.branch = event.target.value;
-            me.setUuid();
             me.getSiteDocker();
         },
 
@@ -207,7 +185,7 @@ module.exports = {
         cancel() {
             const me = this;
             // me.reset();
-            me.cleanForm();
+            // me.cleanForm();
             me.root.module = 'list';
         },
         isformValid() {
