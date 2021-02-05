@@ -52,31 +52,35 @@
                 });
             }
            
-            _f['setting'] = (cbk) => {
+            _f['dockerSetting'] = (cbk) => {
                 if (!CP.data.branches || CP.data.branches.status !== 'success') {
                     cbk({});
                     return true;
+                } else {
+                    let uri =  CP.data.branches.uri;
+                    var cmd = 'rm -fr ' + tmp_dir + ' && mkdir -p ' + tmp_dir + ' && cd ' + tmp_dir + ' && git clone ' + uri + ' .';
+                    exec(cmd, {maxBuffer: 128 * 1024},
+                        function(error, stdout, stderr) {
+                            const fn = tmp_dir + '/dockerSetting/config.json';
+                            pkg.readJson(fn, (setting) => {
+                                cbk(setting);
+                            });
+                    });
                 }
-                let uri =  CP.data.branches.uri;
-                var cmd = 'rm -fr ' + tmp_dir + ' && mkdir -p ' + tmp_dir + ' && cd ' + tmp_dir + ' && git clone ' + uri + ' .';
-                exec(cmd, {maxBuffer: 128 * 1024},
-                    function(error, stdout, stderr) {
-                        pkg.readJson(fn, (setting) => {
-                            cbk(setting);
-                        });
-                });
+  
             }
 
             _f['removeTmpDir'] = (cbk) => {
                 if (!CP.data.branches || CP.data.branches.status !== 'success') {
                     cbk(false);
-                    return true;
+
+                } else {
+                    var cmd = 'rm -fr ' + tmp_dir;
+                    exec(cmd, {maxBuffer: 128 * 1024},
+                        function(error, stdout, stderr) {
+                            cbk(true)
+                    });
                 }
-                var cmd = 'rm -fr ' + tmp_dir;
-                exec(cmd, {maxBuffer: 128 * 1024},
-                    function(error, stdout, stderr) {
-                        cbk(true)
-                });
             }
 
             CP.serial(_f, (dataCP) => {
