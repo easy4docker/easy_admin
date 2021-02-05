@@ -22,7 +22,7 @@
             const _f = {};
             
             _f['hashCode'] = (cbk) => {
-                if (repo) CP.exit = true;
+                if (!repo) CP.exit = true;
                 cbk(pkg.md5(gitRecord.gitHub));
             }           
             _f['branches'] = (cbk) => {
@@ -86,7 +86,7 @@
 
             CP.serial(_f, (dataCP) => {
                 let result = {};
-                if (repo) {
+                if (!repo) {
                     result = {status : 'failure', message : 'Wrong gitHub format'};
                 } else if (CP.data.branches.status !== 'success') {
                     result = {status : 'failure', message : CP.data.branches.message};
