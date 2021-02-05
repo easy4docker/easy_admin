@@ -36,9 +36,9 @@
                 <select class="form-control" :required="true" @change="onBranchSelect($event)" v-model="form.branch">
                     <option 
                     v-for="option in branches" 
-                    v-bind:value="option.branch"
-                    :selected="option.branch ==  form.branch"
-                    >{{ option.branch }}</option>
+                    v-bind:value="option"
+                    :selected="option ==  form.branch"
+                    >{{ option }}</option>
                 </select>
             </div>
             <div v-if="form.docker">
@@ -142,7 +142,7 @@ module.exports = {
                     data : gitRecord
                 }, function(result) {
                     if (result.status === 'success') {
-                        me.branches = result.list;
+                        me.branches = result.branches;
                     } else {
                         me.branches = [];
                         me.errors.gitHub = result.message;
@@ -160,7 +160,7 @@ module.exports = {
                     return true;
                 }
             }
-            me.form.branch = (me.branches.length) ? me.branches[0].branch : '';
+            me.form.branch = (me.branches.length) ? me.branches[0] : '';
         },
         onBranchSelect(event) {
             var me = this;

@@ -19,6 +19,11 @@
         this.gitRemoteBranchs = (gitRecord, callback) => {
 
             var _f = {};
+            _f['repo'] = (cbk) => {
+                const regex = /([^/]+)\.git$/;
+                var uri_a = gitRecord.gitHub.match(regex);
+                cbk((!uri_a) ? '' :uri_a[1]);
+            }
             _f['branches'] = function(cbk) {
                 var regex = /^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*@|)(.*?)(\.git)(\/?|\#[-\d\w._]+?)$/;
                 var uri_a = gitRecord.gitHub.match(regex);
@@ -29,7 +34,7 @@
                 }
                 
                 var cmd = 'git ls-remote ' + uri;
-                exec(cmd, {maxBuffer: 224 * 2048},
+                exec(cmd, {maxBuffer: 256 * 2048},
                     function(error, stdout, stderr) {
                         var branches = [];
                         var list = stdout.split(/\s+/);
@@ -40,51 +45,18 @@
                                     branches.push(list[i].replace(regs, ''));
                                 }
                             }
-                            cbk({status : 'success', branches : branches });
+                            cbk({stutus: 'success', branches : branches});
                         } else {
-                            cbk({status : 'failure', message : error.message});
+                            cbk({stutus: '', failure : error.mesage});
                         }
     
                         
                 });
             }
-            _f['dockerFile'] = function(cbk) {
-                var regex = /^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*@|)(.*?)(\.git)(\/?|\#[-\d\w._]+?)$/;
-                var uri_a = gitRecord.gitHub.match(regex);
-                var uri = uri_a[1] + '://' + ((!gitRecord.userName) ? '' : 
-                    (encodeURIComponent(gitRecord.userName) + ':' + encodeURIComponent(gitRecord.password) + '@'));
-                for (var i=4; i < uri_a.length; i++) {
-                    uri +=  uri_a[i];
-                }
-                
-                var CP1 = new pkg.crowdProcess(),
-                    _f1 = {},
-                    branches = (CP.data.branches.status === 'success') ? CP.data.branches.branches : [],
-                    list = [];
 
-                
-                for (var i = 0; i < branches.length; i++) {
-                    _f1['p_' + i] = (function(i) {
-                        return function(cbk1) {
-                            var cmd = 'svn cat ' + uri + '/branches/' + branches[i] + '/dockerSetting/config.json';
-                            exec(cmd, {maxBuffer: 224 * 2048},
-                                function(error, stdout, stderr) {
-                                    var setting = [];
-                                    try {
-                                        setting = JSON.parse(stdout.replace(/\s+/, ''));
-                                    } catch (e) {}
-                                    list.push({branch : branches[i], dockerSetting : setting});
-                                    cbk1(true);
-                            });
-                        }
-                    })(i)
-                }
-                CP1.serial(_f1, (dataCP1) => {
-                    cbk(list);
-                }, 30000);
-            }
             CP.serial(_f, (dataCP) => {
-                callback({status : 'success', list : CP.data.dockerFile});
+                callback((!CP.data.branches.status === 'success') ? {status : 'failure', message : CP.data.branches.message} : 
+                    {status : 'success', branches : CP.data.branches.branches, repo : CP.data.repo});
             }, 30000);
 
         }
