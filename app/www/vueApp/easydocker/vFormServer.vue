@@ -120,7 +120,8 @@ module.exports = {
                 }, function(result) {
                     if (result.status === 'success') {
                         me.branches = result.branches;
-                        me.form.serverName = result.repo + '_' + me.root.localEnv.IP.replace(/\./ig, '_') 
+                        me.form.serverName = result.repo + '_' + me.root.localEnv.IP.replace(/\./ig, '_');
+                        me.form.docker = result.dockerSetting;
                     } else {
                         me.branches = [];
                         me.form.serverName = '';
