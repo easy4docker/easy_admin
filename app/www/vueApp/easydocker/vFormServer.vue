@@ -53,13 +53,14 @@
                 <!--button type="button" class="btn btn-warning" v-on:click="reset()">Reset fields</button-->
                 <button type="button" class="btn btn-secondary" v-on:click="cancel()">Cancel</button>
                 <hr v-if="!isformValid()" />
-                <div class="text-danger p-3"  v-if="!isformValid()">
-                    <b>Please correct the following error(s):</b>
-                    <ul>
-                    <li v-for="(v, k) in errors">{{v}}</li>
-                    </ul>
-                </div>
+
             </span>
+            <div class="text-danger p-3" v-if="isError()">
+                <b>Please correct the following error(s):</b>
+                <ul>
+                <li v-for="(v, k) in errors">{{v}}</li>
+                </ul>
+            </div>
         </form>
     </div>
 </div>
@@ -218,6 +219,10 @@ module.exports = {
                 delete me.errors.gitHub;
             }
             return (!me.errors.gitHub) ? true : false;
+        },
+        isError() {
+            const me = this;
+            return (!me.errors || !Object.keys(me.errors).length) ? false : true;
         },
         formValidation() {
             var me = this;
