@@ -99,8 +99,9 @@
 
         me.gitRemoteBranchs = (cbk) => {
 			var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
-			var git = new MGit(env, pkg);
-			git.gitRemoteBranchs(req.body.data, (result) => {
+            var git = new MGit(env, pkg);
+
+			git.gitRemoteBranchs(req.body.data, me.comm.inside.data, (result) => {
 				cbk(result);
 			});
 		}

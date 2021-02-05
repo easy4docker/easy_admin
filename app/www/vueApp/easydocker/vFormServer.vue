@@ -123,6 +123,7 @@ module.exports = {
                         me.form.serverName = result.repo + '_' + me.root.localEnv.IP.replace(/\./ig, '_') 
                     } else {
                         me.branches = [];
+                        me.form.serverName = '';
                         me.errors.gitHub = result.message;
                     }
                     me.getInitBranch();

@@ -1,13 +1,11 @@
 (function() {
-    var exec = require('child_process').exec;
     var obj = function(env, pkg) {
-        var me = this,
+        const me = this,
             fs = require('fs'),
             exec = require('child_process').exec,
             CP = new pkg.crowdProcess();
 
-        
-        this.gitSwitchBranch = (serverName, branch, callback) => {
+        me.gitSwitchBranch = (serverName, branch, callback) => {
             var dirn = '/var/_localAppData/sites/' + serverName;
             var cmd = 'cd ' + dirn + ' && git checkout ' + branch;
             exec(cmd, {maxBuffer: 224 * 2048},
@@ -16,15 +14,15 @@
             });
         }
 
-        this.gitRemoteBranchs = (gitRecord, callback) => {
-
+        me.gitRemoteBranchs = (gitRecord, data_dir, callback) => {
             var _f = {};
+            const tmp_dir = data_dir + '/tmp/repo';
             _f['repo'] = (cbk) => {
                 const regex = /([^/]+)\.git$/;
                 var uri_a = gitRecord.gitHub.match(regex);
                 cbk((!uri_a) ? '' :uri_a[1]);
             }
-            _f['branches'] = function(cbk) {
+            _f['branches'] = (cbk) => {
                 var regex = /^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*@|)(.*?)(\.git)(\/?|\#[-\d\w._]+?)$/;
                 var uri_a = gitRecord.gitHub.match(regex);
                 var uri = uri_a[1] + '://' + ((!gitRecord.userName) ? '' : 
@@ -33,8 +31,8 @@
                     uri +=  uri_a[i];
                 }
                 var cmd = 'git ls-remote ' + uri;
-                exec(cmd, {maxBuffer: 512 * 2048},
-                    function(error, stdout, stderr) {
+                exec(cmd, {maxBuffer: 128 * 1024},
+                    (error, stdout, stderr) => {
                         var branches = [];
                         var list = stdout.split(/\s+/);
                         if (!error) {
@@ -45,21 +43,46 @@
                                 }
                             }
                             cbk((!branches.length) ? {status: 'failure', message : 'Wrong resource!'} :
-                             {status: 'success', branches : branches});
+                             {status: 'success', uri:uri, branches : branches});
                         } else {
                             cbk({status: 'failure', message: error.message});
                         }
                 });
             }
+           
+            _f['tmpClone'] = (cbk) => {
+                if (!CP.data.branches || CP.data.branches.status !== 'success') {
+                    cbk(false);
+                    return true;
+                }
+                let uri =  CP.data.branches.uri;
+                var cmd = 'rm -fr ' + tmp_dir + ' && mkdir -p ' + tmp_dir + ' && cd ' + tmp_dir + ' && git clone ' + uri + '';
+                exec(cmd, {maxBuffer: 128 * 1024},
+                    function(error, stdout, stderr) {
+                        if (!error) {
+                            cbk(true);
+                        } else {
+                            cbk(false);
+                        }
+                });
+            }
+
+            _f['dockerSetting'] = (cbk) => {
+                let fn = tmp_dir + '/' + CP.data.repo + '/dockerSetting/config.json';
+                pkg.readJson(fn, (setting) => {
+                    cbk(setting);
+                });
+            }
 
             CP.serial(_f, (dataCP) => {
                 callback((CP.data.branches.status !== 'success') ? {status : 'failure', message : CP.data.branches.message} : 
-                    {status : 'success', branches : CP.data.branches.branches, repo : CP.data.repo});
+                    {status : 'success', branches : CP.data.branches.branches, repo : CP.data.repo, tmpClone: CP.data.tmpClone,
+                    dockerSetting : CP.data.dockerSetting});
             }, 30000);
 
         }
 
-        this.gitCloneToFolder = (dirn, gitRecord, callback) => {            
+        me.gitCloneToFolder = (dirn, gitRecord, callback) => {            
             var regex = /^(git|ssh|https?|git@[-\w.]+):(\/\/)?(.*@|)(.*?)(\.git)(\/?|\#[-\d\w._]+?)$/;
             var uri_a = gitRecord.gitHub.match(regex);
             var uri = uri_a[1] + '://' + ((!gitRecord.serverrName) ? '' : 
