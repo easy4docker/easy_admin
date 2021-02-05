@@ -33,7 +33,9 @@
                 for (var i=4; i < uri_a.length; i++) {
                     uri +=  uri_a[i];
                 }
-                var cmd = 'git ls-remote ' + uri;
+                var cmd = 'git version && git config --global credential.helper gnome-keyring && git ls-remote ' + uri;
+    
+                // const exec = require('child_process').exec;
                 exec(cmd, {maxBuffer: 128 * 1024},
                     (error, stdout, stderr) => {
                         var branches = [];
@@ -93,12 +95,9 @@
                 } else if (!CP.data.dockerSetting) {
                     result = {status : 'failure', message : 'Missing dockerSetting on the repository'};
                 } else {
-                    result = {status : 'failure', message : 'We are good to go'};
-                    /*
                     result = (CP.data.branches.status !== 'success') ? {status : 'failure', message : CP.data.branches.message} : 
                     {status : 'success', hashCode: CP.data.hashCode, branches : CP.data.branches.branches, repo : repo, 
                     dockerSetting : CP.data.dockerSetting};
-                    */
                 }
                 callback(result);
             }, 30000);
