@@ -35,7 +35,6 @@
                 }
                 var cmd = 'git version && git config --global credential.helper gnome-keyring && git ls-remote ' + uri;
     
-                // const exec = require('child_process').exec;
                 exec(cmd, {maxBuffer: 128 * 1024},
                     (error, stdout, stderr) => {
                         var branches = [];
