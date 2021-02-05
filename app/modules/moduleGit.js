@@ -33,7 +33,7 @@
                     uri +=  uri_a[i];
                 }
                 var cmd = 'git ls-remote ' + uri;
-                exec(cmd, {maxBuffer: 256 * 2048},
+                exec(cmd, {maxBuffer: 512 * 2048},
                     function(error, stdout, stderr) {
                         var branches = [];
                         var list = stdout.split(/\s+/);
