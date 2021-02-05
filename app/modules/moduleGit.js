@@ -87,7 +87,17 @@
             CP.serial(_f, (dataCP) => {
                 let result = {};
                 if (repo) {
-                    result = {status : 'failure', message : 'Wrong gitHub format'}
+                    result = {status : 'failure', message : 'Wrong gitHub format'};
+                } else if (CP.data.branches.status !== 'success') {
+                    result = {status : 'failure', message : CP.data.branches.message};
+                } else if (CP.data.branches.status !== 'success') {
+                    result = {status : 'failure', message : CP.data.branches.message};
+                } else if (CP.data.branches.status !== 'success') {
+                    result = {status : 'failure', message : CP.data.branches.message};
+                } else if (CP.data.branches.status !== 'success') {
+                    result = {status : 'failure', message : CP.data.branches.message};
+                } else if (CP.data.branches.status !== 'success') {
+                    result = {status : 'failure', message : CP.data.branches.message};
                 } else {
                     result = (CP.data.branches.status !== 'success') ? {status : 'failure', message : CP.data.branches.message} : 
                     {status : 'success', hashCode: CP.data.hashCode, branches : CP.data.branches.branches, repo : repo, 
