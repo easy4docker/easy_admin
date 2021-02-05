@@ -20,8 +20,7 @@
             _f['repo'] = (cbk) => {
                 const regex = /([^/]+)\/([^/]+)\.git$/;
                 var uri_a = gitRecord.gitHub.match(regex);
-                cbk(uri_a[1] + '' + uri_a[2]);
-                // cbk((!uri_a) ? '' :uri_a[1]);
+                cbk((!uri_a) ? '' : (uri_a[1] + '_' + uri_a[2]));
             }
             
             _f['hashCode'] = (cbk) => {
