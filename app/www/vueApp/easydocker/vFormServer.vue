@@ -131,7 +131,7 @@ module.exports = {
 
         setUuid() {
             const me = this;
-            me.form.uuid = me.form.branch + '_' + me.root.localEnv.IP.replace(/\./ig, '_') 
+          //  me.form.uuid = me.form.branch + '_' + me.root.localEnv.IP.replace(/\./ig, '_') 
         },
         gitRemoteBranchs(gitRecord) {
             const me = this;
@@ -143,6 +143,7 @@ module.exports = {
                 }, function(result) {
                     if (result.status === 'success') {
                         me.branches = result.branches;
+                        me.form.uuid = result.repo + '_' + me.root.localEnv.IP.replace(/\./ig, '_') 
                     } else {
                         me.branches = [];
                         me.errors.gitHub = result.message;

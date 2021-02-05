@@ -54,7 +54,7 @@
 
             CP.serial(_f, (dataCP) => {
                 callback((CP.data.branches.status !== 'success') ? {status : 'failure', message : CP.data.branches.message} : 
-                    {status : 'success', branches : CP.data.branches.branches, repo : CP.data.repo, kk: 1});
+                    {status : 'success', branches : CP.data.branches.branches, repo : CP.data.repo});
             }, 30000);
 
         }
