@@ -52,27 +52,30 @@
                 });
             }
            
-            _f['tmpClone'] = (cbk) => {
+            _f['setting'] = (cbk) => {
                 if (!CP.data.branches || CP.data.branches.status !== 'success') {
-                    cbk(false);
+                    cbk({});
                     return true;
                 }
                 let uri =  CP.data.branches.uri;
                 var cmd = 'rm -fr ' + tmp_dir + ' && mkdir -p ' + tmp_dir + ' && cd ' + tmp_dir + ' && git clone ' + uri + ' .';
                 exec(cmd, {maxBuffer: 128 * 1024},
                     function(error, stdout, stderr) {
-                        if (!error) {
-                            cbk(true);
-                        } else {
-                            cbk(false);
-                        }
+                        pkg.readJson(fn, (setting) => {
+                            cbk(setting);
+                        });
                 });
             }
 
-            _f['dockerSetting'] = (cbk) => {
-                let fn = tmp_dir + '/dockerSetting/config.json';
-                pkg.readJson(fn, (setting) => {
-                    cbk(setting);
+            _f['removeTmpDir'] = (cbk) => {
+                if (!CP.data.branches || CP.data.branches.status !== 'success') {
+                    cbk(false);
+                    return true;
+                }
+                var cmd = 'rm -fr ' + tmp_dir;
+                exec(cmd, {maxBuffer: 128 * 1024},
+                    function(error, stdout, stderr) {
+                        cbk(true)
                 });
             }
 
