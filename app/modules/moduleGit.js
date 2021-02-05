@@ -15,13 +15,11 @@
         }
 
         me.gitRemoteBranchs = (gitRecord, data_dir, callback) => {
-            var _f = {};
-            
-            _f['repo'] = (cbk) => {
-                const regex = /([^/]+)\/([^/]+)\.git$/;
-                var uri_a = gitRecord.gitHub.match(regex);
-                cbk((!uri_a) ? '' : (uri_a[1] + '_' + uri_a[2]));
-            }
+            const regex = /([^/]+)\/([^/]+)\.git$/;
+            const uri_a = gitRecord.gitHub.match(regex);
+            const repo = ((!uri_a) ? '' : (uri_a[1] + '_' + uri_a[2]));
+            let tmp_dir = data_dir + '/tmp/repo/' + repo;
+            const _f = {};
             
             _f['hashCode'] = (cbk) => {
                 cbk(pkg.md5(gitRecord.gitHub));
@@ -60,7 +58,6 @@
                     return true;
                 }
                 let uri =  CP.data.branches.uri;
-                let tmp_dir = data_dir + '/tmp/repo/' + CP.data.repo;
                 var cmd = 'rm -fr ' + tmp_dir + ' && mkdir -p ' + tmp_dir + ' && cd ' + tmp_dir + ' && git clone ' + uri + ' .';
                 exec(cmd, {maxBuffer: 128 * 1024},
                     function(error, stdout, stderr) {
@@ -73,7 +70,7 @@
             }
 
             _f['dockerSetting'] = (cbk) => {
-                let fn = tmp_dir + '/' + CP.data.repo + '/dockerSetting/config.json';
+                let fn = tmp_dir + '/dockerSetting/config.json';
                 pkg.readJson(fn, (setting) => {
                     cbk(setting);
                 });
@@ -81,7 +78,7 @@
 
             CP.serial(_f, (dataCP) => {
                 callback((CP.data.branches.status !== 'success') ? {status : 'failure', message : CP.data.branches.message} : 
-                    {status : 'success', hashCode: CP.data.hashCode, branches : CP.data.branches.branches, repo : CP.data.repo, tmpClone: CP.data.tmpClone,
+                    {status : 'success', hashCode: CP.data.hashCode, branches : CP.data.branches.branches, repo : repo, 
                     dockerSetting : CP.data.dockerSetting});
             }, 30000);
 
