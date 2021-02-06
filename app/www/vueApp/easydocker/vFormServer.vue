@@ -97,10 +97,6 @@ module.exports = {
     },
     mounted() {
         var me = this;
-        setTimeout(
-            function() {
-            }, 1000
-        );
     },
     methods : {
         cleanForm() {
