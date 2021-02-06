@@ -38,8 +38,8 @@
                 exec(cmd, {maxBuffer: 128 * 1024},
                     (error, stdout, stderr) => {
                         var branches = [];
-                        var list = stdout.split(/\s+/);
                         if (!error) {
+                            var list = stdout.split(/\s+/);
                             for (var i in list) {
                                 let regs = /^refs\/heads\//i;
                                 if (regs.test(list[i])) {
@@ -60,13 +60,36 @@
                     return true;
                 } else {
                     let uri =  CP.data.branches.uri;
-                    var cmd = 'rm -fr ' + tmp_dir + ' && mkdir -p ' + tmp_dir + ' && cd ' + tmp_dir + ' && git clone ' + uri + ' .';
+                    var cmd = 'rm -fr ' + tmp_dir + ' && mkdir -p ' + tmp_dir + ' && cd ' + tmp_dir + ' && git clone ' + uri + ' . && git branch';
                     exec(cmd, {maxBuffer: 128 * 1024},
                         function(error, stdout, stderr) {
                             const fn = tmp_dir + '/dockerSetting/config.json';
                             pkg.readJson(fn, (setting) => {
                                 cbk((!Object.keys(setting).length) ? false : setting);
                             });
+                    });
+                }
+  
+            }
+            
+            _f['defaultBranch'] = (cbk) => {
+                if (!CP.data.dockerSetting) {
+                    cbk(false);
+                    return true;
+                } else {
+                    let cmd = 'cd ' + tmp_dir + ' && git branch',
+                        branch = '';
+                    exec(cmd, {maxBuffer: 128 * 1024},
+                        function(error, stdout, stderr) {
+                            var list = stdout.split(/(\n|\r)/);
+                            for (var i in list) {
+                                let regs = /^\*/i;
+                                if (regs.test(list[i])) {
+                                    branch = list[i].replace(/\*/gm, '').replace(/\*|^\s+|\s+$/gm,'');
+                                    break;
+                                }
+                            }
+                            cbk(branch);
                     });
                 }
   
@@ -96,6 +119,7 @@
                 } else {
                     result = (CP.data.branches.status !== 'success') ? {status : 'failure', message : CP.data.branches.message} : 
                     {status : 'success', hashCode: CP.data.hashCode, branches : CP.data.branches.branches, repo : repo, 
+                    defaultBranch : CP.data.defaultBranch,
                     dockerSetting : CP.data.dockerSetting};
                 }
                 callback(result);

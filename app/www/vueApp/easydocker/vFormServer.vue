@@ -134,13 +134,14 @@ module.exports = {
                         me.branches = result.branches;
                         me.form.serverName = result.repo + '_' + me.root.localEnv.IP.replace(/\./ig, '_');
                         me.form.docker = result.dockerSetting;
+                        me.form.branch = result.defaultBranch;
                         me.form.hashCode = result.hashCode;
                     } else {
                         me.branches = [];
                         me.form.serverName = '';
                         me.errors.gitHub = result.message;
                     }
-                    me.getInitBranch();
+                    // me.getInitBranch();
                     me.getSiteDocker();
                     me.$forceUpdate();
                 }, true);
