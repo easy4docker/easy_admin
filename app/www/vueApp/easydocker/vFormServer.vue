@@ -4,9 +4,9 @@
         <form>
             <div class="form-group">
                 <label>Repository git URI * == {{form.hashCode}}</label>
-                <input type="text" class="form-control" v-model="form.gitHub" @input="changedGit" placeholder="Repository git URI">
+                <input type="text" class="form-control" v-model="form.gitHub" @input="changedGit" placeholder="A Git URI">
             </div>
-            <div class="form-group" v-if="!branches.length">
+            <div class="form-group">
                 <div class="container-fluid border border-2 p-2 alert-secondary rounded">
                     <div class="row">
                         <div class="col-6">
@@ -20,7 +20,7 @@
                     </div>    
                 </div>
             </div>
-            <button type="button" v-if="!branches.length" class="btn btn-info" v-on:click="setUpServer(form)">Get branchs</button>
+            <button type="button"  class="btn btn-info" v-on:click="setupServer(form)">Setup Server</button>
             <hr/>    
                 form.userName : {{form.userName}}<br/>
                 form.password : {{form.password}}<br/>
@@ -29,7 +29,7 @@
                 me.branches : {{branches}}<br/>
                 form.docker : {{form.docker}}<br/>
             <hr/> 
-            <span v-if="branches.length" >
+            <span v-if="false" >
                 <div>
                     <input type="hidden" v-model="form.userName">
                     <input type="hidden"  v-model="form.password">
@@ -121,13 +121,13 @@ module.exports = {
             me.cleanForm();
         },
 
-        setUpServer(gitRecord) {
+        setupServer(gitRecord) {
             const me = this;
             me.gitUrlValidation();
             if (me.isformValid()) {
                 me.errors = {};
                 me.root.dataEngine().appPost({
-                    cmd :'gitRemoteBranchs',
+                    cmd :'setupServer',
                     data : gitRecord
                 }, function(result) {
                     if (result.status === 'success') {

@@ -58,8 +58,8 @@
         me.post = () => {
             const METHODS = [
                 'getIP', 'getLocalEnv', 'getServerToken', 'auth', 'loadList', 'pullCode', 'stopVServer', 
-                'startVServer', 'gitRemoteBranchs', 'gitSiteBranchs', 'gitSwitchBranch',
-                'deleteVServer', 'addServer'
+                'startVServer', 'gitSiteBranchs', 'gitSwitchBranch',
+                'deleteVServer', 'addServer', 'setupServer'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -97,7 +97,7 @@
                 });
         }
 
-        me.gitRemoteBranchs = (cbk) => {
+        me.setupServer = (cbk) => {
 			var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
             var git = new MGit(env, pkg);
 
@@ -117,7 +117,7 @@
 				cbk(result);
 			});
         }
-        
+
         me.addServer = (cbk) => {
 			Servers.addVServer(req.body.data, (result) => {
 				cbk(result);
