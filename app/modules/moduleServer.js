@@ -355,7 +355,7 @@
             return unidx_max + 1;
         }
 
-        this.makeid = (length) => {
+        me.makeid = (length) => {
             var result           = '';
             var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             var charactersLength = characters.length;
@@ -364,22 +364,26 @@
             }
             return result;
          }
-         me.saveJsonData = (pathName, fileName, data, callback) => {
+         me.saveData = (pathName, fileName, data, callback) => {
             let cmd = 'mkdir -p ' + pathName;
             exec(cmd, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
-                fs.writeFile(pathName + '/' + fileName, JSON.stringify(data), function (err) {
+                fs.writeFile(pathName + '/' + fileName, data, function (err) {
                     callback((!err) ? {status : 'success'} : {status : 'failure', message : err.message });
                 });  
             });
         }
 
-        this.saveKeyCode = (serverName, randomCode, callback) => {
-            me.saveJsonData(me.siteEnvPath(serverName), 'key.json', {key : randomCode }, callback);
+        me.saveKeyCode = (serverName, randomCode, callback) => {
+            me.saveData(me.siteEnvPath(serverName), 'key.json', JSON.stringify({key : randomCode }), callback);
         }
 
-        this.saveInitToken = (serverName, initToken, callback) => {
-            me.saveJsonData(me.siteEnvPath(serverName), 'token.json', {initToken : initToken}, callback);
+        me.saveInitToken = (serverName, initToken, callback) => {
+            me.saveData(me.siteEnvPath(serverName), 'token.json', JSON.stringify({initToken : initToken}), callback);
+        }
+
+        me.saveVserverValiables = (data, callback) => {
+            me.saveData(me.siteEnvPath(data.serverName), 'variables.json', data.contents, callback);
         }
 
         this.getInitToken = (serverName) => {
@@ -402,17 +406,6 @@
 
             return (v.key) ? v.key : me.makeid(32); 
             
-        }
-
-        this.saveVserverValiables = (data, callback) => {
-            var fn = me.siteEnvPath(data.serverName) + '/variables.json';
-            cmd = 'mkdir -p ' + me.siteEnvPath(data.serverName);
-            exec(cmd, {maxBuffer: 224 * 2048},
-                function(error, stdout, stderr) {
-                fs.writeFile(fn, data.contents, function (err) {
-                    callback((!err) ? {status : 'success'} : {status : 'failure', message : err.message });
-                });    
-            });
         }
 
         this.getVserverValiables = (data, callback) => {
