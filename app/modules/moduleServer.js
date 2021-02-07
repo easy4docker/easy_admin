@@ -33,10 +33,6 @@
             return this.sitePath(serverName) + '/env';
         }
 
-        this.siteDockerTemplatePath = (serverName) => {
-            return me.siteCodePath(serverName) + '/dockerSetting/scriptTemplate';
-        }
-
         this.siteContainer = (serverName) => {
             return ('sites-' + serverName + '-container').toLowerCase();
         }
@@ -67,14 +63,20 @@
         }; 
 
         this.stopVServer = (serverName, callback) => {
-            me.setCron('stopVServer-' + serverName, me.templateCMD('removeDockerApp.tpl', serverName), callback);
+            me.templateContent(serverName, 'removeDockerApp.tpl', (content) => {
+                me.setCron('stopVServer-' + serverName, content, callback);
+            });
         };
 
         this.startVServer = (serverName, callback) => {
-            me.setCron('startDockerServer-' + serverName, me.templateCMD('addDockerApp.tpl', serverName), callback);
+            me.templateContent(serverName, 'addDockerApp.tpl', (content) => {
+                me.setCron('startDockerServer-' + serverName, content, callback);
+            });
         };
 
         this.createStartUpVServers = (callback) => {
+            callback({status:'success', message: 'createStartUpVServers'});
+            /*
             var v = me.getSitesCfg();
             var str = '';
             for (var o in v) {
@@ -85,7 +87,7 @@
                 setTimeout(() => {
                     callback({status:'success', message: 'createStartUpVServers'});
                 }, 500)
-            });
+            });*/
         };
 
         this.removeAllServers = (callback) => {
@@ -480,7 +482,7 @@
             };
         
             _f['addRemoveMe'] = function(cbk) {
-                me.addRemoveMe(data.serverName, cbk, randomCode);
+                me.addRemoveMe(data.serverName, cbk);
             };
             
             _f['createStartUpVServers'] = function(cbk) {
@@ -526,69 +528,77 @@
             }, 30000);
         };
 
-        this.dockerConfig = (serverName) => {
-            
-            var site_config = me.getSiteConfig(serverName);
-            var cmdPorts  = '',
+        me.dockerConfig = (serverName, callback) => {
+            me.getSites(
+                (list) => {
+                var site_config = list[serverName];
+                var cmdPorts  = '',
                 cmdCloudPort  = '';
                 mainPort = [];
 
-                
-            let ports = (!site_config || !site_config.docker || !site_config.docker.ports) ? [] : site_config.docker.ports;
-            for (var i = 0;  i < ports.length; i++) {
-                var mPort =  (10000 + parseInt(site_config.unidx * 1000) + parseInt(ports[i]));
-                mainPort.push(mPort);
-                cmdPorts += ' -p ' + mPort + ':' + ports[i] + ' ';
-            }
-            let cloudPort = (!site_config || !site_config.docker || !site_config.docker.cloudPort) ? [] : site_config.docker.cloudPort;
-            for (var i = 0;  i < cloudPort.length; i++) {
-                cmdCloudPort += ' -p ' + (30000 + parseInt(site_config.unidx * 1000) + parseInt(cloudPort[i])) + ':' + cloudPort[i] + ' ';
-            }
-            return {
-                serverName          : serverName,
-                dockerCodePath      : me.dockerCodePath(serverName),
-                dockerSettingPath   : me.dockerCodePath(serverName) + '/dockerSetting',
-                dockerDataPath      : me.dockerDataPath(serverName),
-                dockerEnvPath       : me.dockerEnvPath(serverName),
-                dockerFile          : me.dockerCodePath(serverName) + '/dockerSetting/dockerFile',
-                siteImage           : me.getImageName(serverName),
-                siteContainer       : me.siteContainer(serverName),
-                mainIP              : _env.main_ip,
-                mainPort            : mainPort.join(','),
-                cmdPorts            : cmdPorts,
-                engPorts            : cmdCloudPort,
-                sitePath            : me.sitePath(serverName),
-                siteCodePath        : me.siteCodePath(serverName),
-                keyCode             : me.getKeyCode(serverName),
-                initToken         : me.getInitToken(serverName)
-            }
-        }
+                let ports = (!site_config || !site_config.docker || !site_config.docker.ports) ? [] : site_config.docker.ports;
+                for (var i = 0;  i < ports.length; i++) {
+                    var mPort =  (10000 + parseInt(site_config.unidx * 1000) + parseInt(ports[i]));
+                    mainPort.push(mPort);
+                    cmdPorts += ' -p ' + mPort + ':' + ports[i] + ' ';
+                }
+                let cloudPort = (!site_config || !site_config.docker || !site_config.docker.cloudPort) ? [] : site_config.docker.cloudPort;
+                for (var i = 0;  i < cloudPort.length; i++) {
+                    cmdCloudPort += ' -p ' + (30000 + parseInt(site_config.unidx * 1000) + parseInt(cloudPort[i])) + ':' + cloudPort[i] + ' ';
+                }
+                callback({
+                    serverName          : serverName,
+                    dockerCodePath      : me.dockerCodePath(serverName),
+                    dockerSettingPath   : me.dockerCodePath(serverName) + '/dockerSetting',
+                    dockerDataPath      : me.dockerDataPath(serverName),
+                    dockerEnvPath       : me.dockerEnvPath(serverName),
+                    dockerFile          : me.dockerCodePath(serverName) + '/dockerSetting/dockerFile',
+                    siteImage           : me.getImageName(serverName),
+                    siteContainer       : me.siteContainer(serverName),
+                    mainIP              : _env.main_ip,
+                    mainPort            : mainPort.join(','),
+                    cmdPorts            : cmdPorts,
+                    engPorts            : cmdCloudPort,
+                    sitePath            : me.sitePath(serverName),
+                    siteCodePath        : me.siteCodePath(serverName),
+                    keyCode             : me.getKeyCode(serverName),
+                    initToken           : me.getInitToken(serverName)
+                });
+            });
+        };
 
-        me.templateCMD = (tplName, serverName) => {
-            let cmd = '';
-            try {
-                const tpl = pkg.ECT({ watch: true, cache: false, root: me.siteDockerTemplatePath(serverName) + '/', ext : '.tpl' });
-                cmd = tpl.render(tplName, me.dockerConfig(serverName));
-            } catch(e) {
-                cmd = 'echo "' + e.message + '"' + "\n";
-            }
-            return cmd;
+        me.templateContent = (serverName, tplName, callback) => {
+            me.dockerConfig(serverName, (configJson) => {
+                let cmd = '';
+                try {
+                    const tpl = pkg.ECT({ watch: true, cache: false, root: me.siteCodePath(serverName) + '/dockerSetting/scriptTemplate/', ext : '.tpl' });
+                    cmd = tpl.render(tplName, configJson);
+                } catch(e) {
+                    cmd = 'echo "' + e.message + '"' + "\n";
+                }
+                callback(cmd);
+            })
         }
 
         me.addDocker = (serverName, callback) => {
-            me.setCron('addDocker-' + serverName, me.templateCMD('addDockerApp.tpl', serverName), callback);
-        }
-
-        me.addRemoveMe = (serverName, callback, code) => {
-            const str = me.templateCMD('removeDockerApp.tpl', serverName);
-            const fn = me.siteDataPath(serverName) + '/REMOVE.ME';
-            fs.writeFile(fn, str, function (err) {
-                callback({status:'success'});
+            me.templateContent(serverName, 'addDockerApp.tpl', (content) => {
+                me.setCron('addDocker-' + serverName, content, callback);
             });
         }
 
         me.removeDocker = (serverName, callback) => {
-            me.setCron('removeDocker-' + serverName, me.templateCMD('removeDockerApp.tpl', serverName), callback);
+            me.templateContent(serverName, 'removeDockerApp.tpl', (content) => {
+                me.setCron('removeDocker-' + serverName, content, callback);
+            });
+        }
+
+        me.addRemoveMe = (serverName, callback) => {
+            me.templateContent(serverName, 'removeDockerApp.tpl', (content) => {
+                const fn = me.siteDataPath(serverName) + '/REMOVE.ME';
+                fs.writeFile(fn, content, function (err) {
+                    callback({status:'success'});
+                });
+            });
         }
     }
     module.exports = obj;
