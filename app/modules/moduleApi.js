@@ -102,7 +102,16 @@
             var git = new MGit(env, pkg);
 
 			git.gitRemoteBranchs(req.body.data, me.comm.inside.data, (result) => {
-				cbk(result);
+                if (result.status === 'success') {
+                    const data = result;
+                    delete data.status;
+                    data.gitHub = req.body.data.gitHub;
+                    Servers.addVServer(result, (result1) => {
+                        cbk(result1);
+                    });
+                } else {
+                    cbk(result);
+                }
 			});
 		}
 

@@ -393,24 +393,35 @@
 
         this.addVServer = (data, callback) => {
             var _f={};
-            
+            // "me.root.localEnv.IP.replace(/\./ig, '_')";
             var randomCode = me.getKeyCode(data.serverName);
             var initToken = me.getInitToken(data.serverName);
-            var serverName = data.serverName;
+
+            
+            _f['serverList'] = function(cbk) {
+                me.postLoadList(cbk)
+            };
+
+            _f['serverName'] = function(cbk) {
+                data.serverName = data.repo + '_' + data.hashCode;
+                
+                cbk(data.serverName)
+            };
             _f['cloneCode'] = function(cbk) {
                 var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
                 var git = new MGit(env, pkg);
-                git.gitCloneToFolder(me.siteCodePath(serverName), data, function(result) {
-                    cbk(true);
+      
+                git.gitCloneToFolder(me.siteCodePath(data.serverName), data, (result) => {
+                    cbk(result);
                 });
             };
        
             _f['saveKeyCode'] = function(cbk) {
-                me.saveKeyCode(serverName,  randomCode, cbk);
+                me.saveKeyCode(data.serverName,  randomCode, cbk);
             };
 
             _f['saveinitToken'] = function(cbk) {
-                me.saveInitToken(serverName,  initToken, cbk);
+                me.saveInitToken(data.serverName,  initToken, cbk);
             };
             
 
@@ -440,8 +451,8 @@
             };
 
             CP.serial(_f, function(result) {
-                // callback(CP.data.SitesServers);
-                callback(result);
+                callback(CP.data.SitesServers);
+               // callback(result);
             }, 30000);
         }
 
@@ -473,7 +484,8 @@
             };
 
             CP.serial(_f, function(data) {
-                me.postLoadList(callback);
+                callback(data);
+                // me.postLoadList(callback);
             }, 30000);
         };
 
