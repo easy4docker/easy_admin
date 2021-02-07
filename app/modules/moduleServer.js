@@ -191,20 +191,30 @@
         }
 
         this.saveSitesServers = (data, callback) => {
-            
-            var v = me.getSitesCfg();
-            v[data['serverName']] = {
-                gitHub      : data['gitHub'],
-                hashCode    : data['hashCode'],
-                docker      : (!data.dockerSetting) ? [] : data.dockerSetting,
-                branch      : data['branch'],
-                unidx       : me.getNewUnIdx()
-            };
-            me.saveSitesCfg(v, () => {
-                callback({status:'success', list : me.getSitesCfg()});
+            me.getSites(
+                (list) => {
+                    list[data['serverName']] = {
+                        gitHub      : data['gitHub'],
+                        hashCode    : data['hashCode'],
+                        docker      : (!data.dockerSetting) ? [] : data.dockerSetting,
+                        branch      : data['branch'],
+                        unidx       : me.getNewUnIdx()
+                    };
+                    me.saveSites(list, (list) => {
+                        callback({status:'success', list : list});
+                    });
             });
         }
-
+        me.getSites = (callback) => {
+            pkg.readJson(sitesCfgFn, (list) => {
+                callback(list);
+            });
+        }
+        me.saveSites = (list, callback) => {
+            fs.writeFile(sitesCfgFn, JSON.stringify(list),(err) => {
+                callback(list);
+            });
+        }
         this.gitSiteBranchs = (serverName, callback) => {
             var _f = {};
             _f['getBranches'] = function(cbk) {
