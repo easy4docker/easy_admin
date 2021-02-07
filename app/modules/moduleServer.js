@@ -364,35 +364,22 @@
             }
             return result;
          }
-
-        this.saveKeyCode = (serverName, randomCode, callback) => {
-            let v = {
-                key : randomCode
-            };
-            let fn = me.siteEnvPath(serverName) + '/key.json',
-                cmd = 'mkdir -p ' + me.siteEnvPath(serverName);
+         me.saveJsonData = (pathName, fileName, data, callback) => {
+            let cmd = 'mkdir -p ' + pathName;
             exec(cmd, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
-                    fs.writeFile(fn, JSON.stringify(v), function (err) {
-                        callback((!err) ? {status : 'success'} : {status : 'failure', message : err.message });
-                    });  
+                fs.writeFile(pathName + '/' + fileName, JSON.stringify(data), function (err) {
+                    callback((!err) ? {status : 'success'} : {status : 'failure', message : err.message });
+                });  
             });
+        }
 
+        this.saveKeyCode = (serverName, randomCode, callback) => {
+            me.saveJsonData(me.siteEnvPath(serverName), 'key.json', {key : randomCode }, callback);
         }
 
         this.saveInitToken = (serverName, initToken, callback) => {
-            let v = {
-                initToken : initToken
-            };
-            let fn = me.siteEnvPath(serverName) + '/token.json',
-                cmd = 'mkdir -p ' + me.siteEnvPath(serverName);
-            exec(cmd, {maxBuffer: 224 * 2048},
-                function(error, stdout, stderr) {
-                    fs.writeFile(fn, JSON.stringify(v), function (err) {
-                        callback((!err) ? {status : 'success'} : {status : 'failure', message : err.message });
-                    });  
-            });
-
+            me.saveJsonData(me.siteEnvPath(serverName), 'token.json', {initToken : initToken}, callback);
         }
 
         this.getInitToken = (serverName) => {
