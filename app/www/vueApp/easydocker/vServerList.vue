@@ -30,7 +30,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="list-group" v-for="item in list">filteredResult()=={{list.length}}
+                        <div class="list-group" v-for="item in filteredResult()">
                         
                             <div class="list-group-item list-group-item-action flex-column align-items-start m-1 list-group-border">
                                 <div class="container-fluid m-0">
@@ -40,8 +40,9 @@
                                                 <h5>{{item.name}}</h5>
                                             </div>
                                             <span class="ml-1">
-                                                Type: <span class="text-info">{{item.serverType}}</span>
+                                                Type: <span class="text-info">{{item.docker.type}}</span>
                                                 Port : <span class="text-info"> {{outerPorts(item)}}</span>
+                                                Unidx : <span class="text-info"> {{item.unidx}}</span>
                                                 <a href="JavaScript:void(0)" v-on:click="linkCloudTo(item)">
                                                     <i class="fa fa-globe fa ml-3" aria-hidden="true"></i> Web Link
                                                 </a>
@@ -150,7 +151,7 @@ module.exports = {
         filteredResult() {
             var me = this;
             return me.list.filter(function(item) {
-                return (me.serverTypeFilter.indexOf(item.serverType) !== -1)
+                return (me.serverTypeFilter.indexOf(item.docker.type) !== -1)
             });
         },
       
