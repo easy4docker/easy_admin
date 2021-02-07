@@ -315,12 +315,6 @@
             return v;
         }
 
-        this.getSiteConfig = (serverName) => {
-            var sites_list = me.getSitesCfg();
-            var site_config = sites_list[serverName];
-            return (!site_config.publicDocker) ? site_config : site_config.publicDocker;
-        }
-
         this.saveSitesCfg = (v, callback, noEtcUpdate) => {
             fs.writeFile(sitesCfgFn, JSON.stringify(v), 
                 (err) => {
@@ -386,15 +380,18 @@
             me.saveData(me.siteEnvPath(data.serverName), 'variables.json', data.contents, callback);
         }
 
+        me.asycReadJSON = (list, callback) ={
+
+        };
+
         this.getInitToken = (serverName) => {
             let fn = me.siteEnvPath(serverName) + '/token.json';
+            
             var v = {};
             try {
                 v = pkg.require(fn);
             } catch (e) {}
-
             return (v.initToken) ? v.initToken : me.makeid(64); 
-            
         }
 
         this.getKeyCode = (serverName) => {
