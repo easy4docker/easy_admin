@@ -148,7 +148,7 @@
                 callback({status:'success', list : list });
             });
         }
-
+/*
         this.askToken= (serverName, callback) => { // use this
             let fn_env = me.siteEnvPath(serverName) + '/key.json';
             let fn_token = me.siteEnvPath(serverName) + '/token.json';
@@ -200,19 +200,29 @@
             } catch(e) {}
             callback({status:'success', list : (!tokens.list) ? {} : tokens.list});
         }
+*/
+        me.adjustData = (data, callback) => {
+            me.getSites(
+                (list) => {
+                    let nidx = me.generateServerName(data.serverName, list);
+                    data.serverName = nidx;
+                    callback(data);
+            });
+        }
 
         this.saveSitesServers = (data, callback) => {
             me.getSites(
                 (list) => {
                     let nidx = me.generateServerName(data.serverName, list);
-                    list[nidx] = {
+                    data = {
                         serverName  : nidx,
                         gitHub      : data['gitHub'],
                         hashCode    : data['hashCode'],
                         docker      : (!data.dockerSetting) ? [] : data.dockerSetting,
                         branch      : data['branch'],
                         unidx       : me.getNewUnIdx(list)
-                    };
+                    }
+                    list[nidx] = data;
                     me.saveSites(list, (list) => {
                         callback({status:'success', list : list});
                     });
@@ -425,18 +435,15 @@
 
         this.addVServer = (data, callback) => {
             var _f={};
-            // "me.root.localEnv.IP.replace(/\./ig, '_')";
             var randomCode = me.getKeyCode(data.serverName);
-            var initToken = me.getInitToken(data.serverName);
-
+            var initToken = me.getInitToken(data.serverName);    
             
-            _f['serverList'] = function(cbk) {
-                me.postLoadList(cbk)
-            };
-
             _f['serverName'] = function(cbk) {
                 data.serverName = data.repo;
-                cbk(data.serverName)
+                me.adjustData(data, (adjustedData) => {
+                    data = adjustedData;
+                    cbk(data.serverName)
+                });
             };
             _f['cloneCode'] = function(cbk) {
                 var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
@@ -472,7 +479,6 @@
                 });
             };
         
-
             _f['addRemoveMe'] = function(cbk) {
                 me.addRemoveMe(data.serverName, cbk, randomCode);
             };
