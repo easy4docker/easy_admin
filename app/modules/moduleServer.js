@@ -403,9 +403,7 @@
             try {
                 v = pkg.require(fn);
             } catch (e) {}
-
             return (v.key) ? v.key : me.makeid(32); 
-            
         }
 
         this.getVserverValiables = (data, callback) => {
