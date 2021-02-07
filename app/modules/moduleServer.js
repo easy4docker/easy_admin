@@ -193,17 +193,30 @@
         this.saveSitesServers = (data, callback) => {
             me.getSites(
                 (list) => {
-                    list[data['serverName']] = {
+                    let nidx = me.generateServerName(data.serverName, list);
+                    list[nidx] = {
+                        serverName  : data.serverName,
                         gitHub      : data['gitHub'],
                         hashCode    : data['hashCode'],
                         docker      : (!data.dockerSetting) ? [] : data.dockerSetting,
                         branch      : data['branch'],
-                        unidx       : me.getNewUnIdx()
+                        unidx       : me.getNewUnIdx(list)
                     };
                     me.saveSites(list, (list) => {
                         callback({status:'success', list : list});
                     });
             });
+        }
+        me.generateServerName = (baseName, list) => {
+            let i = 0;
+            do {
+                const n = baseName + ((!i)?'':('_' + i));
+                if (!list[n]) {
+                    return n;
+                }
+                i++;
+            }
+            while (true);
         }
         me.getSites = (callback) => {
             pkg.readJson(sitesCfgFn, (list) => {
@@ -299,9 +312,8 @@
                     }
             });
         }    
-        this.getNewUnIdx = () => {
-            var unidx_max = 0,
-                sites_list = me.getSitesCfg();
+        this.getNewUnIdx = (sites_list) => {
+            var unidx_max = 0;
             for (var o in sites_list) { 
                 unidx_max = (sites_list[o].unidx > unidx_max) ? sites_list[o].unidx : unidx_max;
             }
@@ -412,8 +424,7 @@
             };
 
             _f['serverName'] = function(cbk) {
-                data.serverName = data.repo + '_' + data.hashCode;
-                
+                data.serverName = data.repo;
                 cbk(data.serverName)
             };
             _f['cloneCode'] = function(cbk) {
