@@ -26,24 +26,21 @@
                         <div class="list-group" v-if="!filteredResult().length"> 
                             <div class="list-group-item list-group-item-action flex-column align-items-start m-1">
                                 <div class="container-fluid m-0">
-                                    No result
+                                    No result=={{list.length}}
                                 </div>
                             </div>
                         </div>
-                        <div class="list-group" v-for="item in list">filteredResult()
+                        <div class="list-group" v-for="item in list">filteredResult()=={{list.length}}
                         
                             <div class="list-group-item list-group-item-action flex-column align-items-start m-1 list-group-border">
                                 <div class="container-fluid m-0">
                                     <div class="row">
-                                        <div class="col-2 p-0 m-0 text-center">
-                                            <div class="p-3 m-1 mr-3 border rounded text-center alert-info text-info">
-                                                {{item.serverType}}<br/>
-                                                <h3>{{item.name}}</h3>
+                                        <div class="col-8 p-0 m-0 text-left">
+                                            <div class="p-1 m-1 mr-2 border rounded alert-info text-info">
+                                                <h5>{{item.name}}</h5>
                                             </div>
-                                        </div>
-                                        <div class="col-7 p-0 m-0 text-left">
                                             <span class="ml-1">
-                                                Type: <span class="text-info">{{item.docker.type}}</span>
+                                                Type: <span class="text-info">{{item.serverType}}</span>
                                                 Port : <span class="text-info"> {{outerPorts(item)}}</span>
                                                 <a href="JavaScript:void(0)" v-on:click="linkCloudTo(item)">
                                                     <i class="fa fa-globe fa ml-3" aria-hidden="true"></i> Web Link
@@ -71,7 +68,7 @@
                                                 <i class="fa fa-cloud mr-2" aria-hidden="true"></i>Cloud Token Admin
                                             </a>
                                         </div>
-                                        <div class="col-1 p-0 m-0 text-left">
+                                        <div class="col-2 p-0 m-0 text-left">
                                             <a href="JavaScript:void(0)" v-on:click="deleteVirtualServer(item)">
                                                 <i class="fa fa-trash m-1 " aria-hidden="true"></i> Remove
                                             </a><br/>

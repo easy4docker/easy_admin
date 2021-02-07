@@ -119,7 +119,7 @@
                 } else {
                     result = (CP.data.branches.status !== 'success') ? {status : 'failure', message : CP.data.branches.message} : 
                     {status : 'success', hashCode: CP.data.hashCode, branches : CP.data.branches.branches, repo : repo, 
-                    defaultBranch : CP.data.defaultBranch,
+                    branch : CP.data.defaultBranch,
                     dockerSetting : CP.data.dockerSetting};
                 }
                 callback(result);

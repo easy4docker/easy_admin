@@ -195,11 +195,10 @@
             var v = me.getSitesCfg();
             v[data['serverName']] = {
                 gitHub      : data['gitHub'],
-                serverType  : data['serverType'],
+                hashCode    : data['hashCode'],
+                docker      : (!data.dockerSetting) ? [] : data.dockerSetting,
                 branch      : data['branch'],
-                publicDocker: data['publicDocker'],
-                unidx       : me.getNewUnIdx(),
-                docker      : data['docker']
+                unidx       : me.getNewUnIdx()
             };
             me.saveSitesCfg(v, () => {
                 callback({status:'success', list : me.getSitesCfg()});
