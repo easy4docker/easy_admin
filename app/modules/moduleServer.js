@@ -127,6 +127,16 @@
             me.setCron('saveEtcHosts', str, callback);
         }
         
+        this.postLoadListBB = (callback) => { // use this
+            var sites_list = me.getSitesCfg();
+            var list = [];
+            for (o in sites_list ) {
+                let v = sites_list[o];
+                v.name = o;
+                list.push(v);
+            }
+            callback({status:'success', list : list });
+        }
         this.postLoadList = (callback) => { // use this
             me.getSites((sites_list) => {
                 var list = [];
