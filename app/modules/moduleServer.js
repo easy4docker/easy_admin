@@ -206,7 +206,7 @@
                 (list) => {
                     let nidx = me.generateServerName(data.serverName, list);
                     list[nidx] = {
-                        serverName  : data.serverName,
+                        serverName  : nidx,
                         gitHub      : data['gitHub'],
                         hashCode    : data['hashCode'],
                         docker      : (!data.dockerSetting) ? [] : data.dockerSetting,
