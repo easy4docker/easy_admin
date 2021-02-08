@@ -402,7 +402,7 @@
             }, 30000);
         }
 
-        this.deleteVServer = (serverName, callback) => {
+        me.deleteVServer = (serverName, callback) => {
             const   _f = {};
 
             _f['removeDocker'] = function(cbk) {
@@ -410,11 +410,13 @@
             };
 
             _f['deleteCfg'] = function(cbk) {
-                var sites_list = me.getSitesCfg();
-                delete sites_list[serverName];
-                me.saveSitesCfg(sites_list, () => {
-                    cbk(true);
+                me.getSites((sites_list) => {
+                    delete sites_list[serverName];
+                    me.saveSitesCfg(sites_list, () => {
+                        cbk(true);
+                    });
                 });
+    
             };
 
             _f['deleteCode'] = function(cbk) {
