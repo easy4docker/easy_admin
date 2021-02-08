@@ -76,6 +76,9 @@
         this.createStartUpVServers = (callback) => {
             callback({status:'success', message: 'createStartUpVServers'});
             /*
+
+             me.getSites((sitesCfg) => {
+
             var v = me.getSitesCfg();
             var str = '';
             for (var o in v) {
@@ -106,26 +109,27 @@
         }
 
         this.saveEtcHosts = (callback) => {
-            var str='';
-            str += "#!/bin/bash\n";
-            str += 'MARKS="#--UI_EASYDOCKER_S--"' + "\n" + 'MARKE="#--UI_EASYDOCKER_E--"' + "\n";
-            str += 'NLINE=$' + "'" + '\\n' + "'\n" + 'TABL=$' + "'" + '\\t' + "'\n";
-            str += 'v=$(sed "/"$MARKS"/,/"$MARKE"/d" /etc/hosts)' + "\n";
-            
-            var sites_list = me.getSitesCfg();
-            str += 'p="';
-            str += (!sites_list || !Object.keys(sites_list).length) ? '' : '${MARKS}${NLINE}';
-
-            str += '127.0.0.1${TABL}admin.local${NLINE}';
-            str += '127.0.0.1${TABL}admin_local${NLINE}';
-
-            for (var o in sites_list) { 
-                str += '127.0.0.1${TABL}' + o + '.local${NLINE}';
-                str += '127.0.0.1${TABL}' + o + '_local${NLINE}';
-            }
-            str += (!sites_list || !Object.keys(sites_list).length) ? '"' : '${MARKE}"' + "\n";
-            str += 'echo "${v}\n${p}" > /etc/hosts' + "\n";
-            me.setCron('saveEtcHosts', str, callback);
+            me.getSites((sites_list) => {
+                var str='';
+                str += "#!/bin/bash\n";
+                str += 'MARKS="#--UI_EASYDOCKER_S--"' + "\n" + 'MARKE="#--UI_EASYDOCKER_E--"' + "\n";
+                str += 'NLINE=$' + "'" + '\\n' + "'\n" + 'TABL=$' + "'" + '\\t' + "'\n";
+                str += 'v=$(sed "/"$MARKS"/,/"$MARKE"/d" /etc/hosts)' + "\n";
+                
+                str += 'p="';
+                str += (!sites_list || !Object.keys(sites_list).length) ? '' : '${MARKS}${NLINE}';
+    
+                str += '127.0.0.1${TABL}admin.local${NLINE}';
+                str += '127.0.0.1${TABL}admin_local${NLINE}';
+    
+                for (var o in sites_list) { 
+                    str += '127.0.0.1${TABL}' + o + '.local${NLINE}';
+                    str += '127.0.0.1${TABL}' + o + '_local${NLINE}';
+                }
+                str += (!sites_list || !Object.keys(sites_list).length) ? '"' : '${MARKE}"' + "\n";
+                str += 'echo "${v}\n${p}" > /etc/hosts' + "\n";
+                me.setCron('saveEtcHosts', str, callback);
+            });
         }
         
         me.postLoadList = (callback) => { // use this
@@ -234,17 +238,6 @@
                             }, true);
                     });
             });
-        }
-        
-        this.getSitesCfg = () => {
-            var v = {}, p;
-            try {
-                var p = pkg.require(sitesCfgFn);
-                if (typeof p == 'object') {
-                    v = p;
-                }
-            } catch (e) {}
-            return v;
         }
   
         me.getNewUnIdx = (sites_list) => {
