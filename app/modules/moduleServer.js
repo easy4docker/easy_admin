@@ -198,7 +198,7 @@
                 callback(list);
             });
         }
-        this.gitSiteBranchs = (serverName, callback) => {
+        me.gitSiteBranchs = (serverName, callback) => {
             var cmd = 'cd ' + me.siteCodePath(serverName) + ' && git branch -r';
             exec(cmd, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
@@ -248,7 +248,7 @@
             return v;
         }
 
-        this.saveSitesCfg = (v, callback, noEtcUpdate) => {
+        me.saveSitesCfg = (v, callback, noEtcUpdate) => {
             fs.writeFile(sitesCfgFn, JSON.stringify(v), 
                 (err) => {
                     if (!noEtcUpdate) {
