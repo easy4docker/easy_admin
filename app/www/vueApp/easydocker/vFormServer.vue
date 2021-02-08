@@ -126,36 +126,11 @@ module.exports = {
                     cmd :'setupServer',
                     data : gitRecord
                 }, function(result) {
-                    if (result.status === 'success') {
-                        me.branches = result.branches;
-                        me.form.serverName = result.repo + '_' + me.root.localEnv.IP.replace(/\./ig, '_');
-                        me.form.docker = result.dockerSetting;
-                        me.form.branch = result.defaultBranch;
-                        me.form.hashCode = result.hashCode;
-                    } else {
-                        me.branches = [];
-                        me.form.serverName = '';
-                        me.errors.gitHub = result.message;
-                    }
-                    // me.getInitBranch();
-                    me.getSiteDocker();
+                    console.log(result);
+                    // me.root.module = 'list';
                     me.$forceUpdate();
                 }, true);
             }
-        },
-        saveVServer() {
-            const me = this;
-            me.formValidation();
-            if (!me.isformValid()) {
-                return false;
-            }
-            const data = {cmd: 'addServer', data: me.form};
-            me.root.dataEngine().appPost(
-                data, function(result) {
-                    if (result.status === 'success') {
-                        me.root.module = 'list';
-                    }
-                }, true);
         },
         getInitBranch() {
             var me = this;
