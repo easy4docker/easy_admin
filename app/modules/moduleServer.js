@@ -57,7 +57,13 @@
             var cmd = 'cd ' + this.siteCodePath(serverName) + ' && git pull';
             exec(cmd, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
-                    callback({status:'success'});
+                    if (!error) {
+                        me.startVServer(serverName, () => {
+                            callback({status:'success'});
+                        }); 
+                    } else {
+                        callback({status:'falure', message : 'unsuccess code pull'});
+                    }
             });
         }; 
 
