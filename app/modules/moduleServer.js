@@ -75,10 +75,10 @@
 
         this.createStartUpVServers = (callback) => {
             const _f = {};
+            let str = '';
             me.getSites((sites) => {
-                var str = '';
                 for (var o in sites) {
-                    _f[0] = (cbk) => {
+                    _f[o] = (cbk) => {
                         str += "## --- Start " + o + " ---\n";
                         try {
                             me.templateContent(o, 'addDockerApp.tpl', (content) => {
