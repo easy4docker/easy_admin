@@ -105,14 +105,6 @@
             });
         };
 
-        this.removeAllServers = (callback) => {
-            setTimeout(
-                () => {
-                    callback({status:'success'});
-                }, 6000
-            );
-        };
-
         this.setCron = (code, str, callback) => {
             fs.writeFile(data_dir + '/commCron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
                 setTimeout(() => {
@@ -237,7 +229,7 @@
             });
         }
 
-        me.gitSwitchBranch = (serverName, branch, callback) => {
+        me.gitSwitchBranch = (serverName, branch, callback) => {  // ??????
             var cmd = 'cd ' + me.siteCodePath(serverName) + ' && git checkout ' + branch;
             exec(cmd, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
