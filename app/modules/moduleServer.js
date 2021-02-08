@@ -239,7 +239,9 @@
                         }
                         me.saveSites(sitesCfg, 
                             ()=> {
-                                callback({status : 'success'})
+                                me.startVServer(serverName, ()=> {
+                                    callback({status : 'success'})
+                                 })
                             }, true);
                     });
             });
