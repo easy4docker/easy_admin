@@ -73,22 +73,25 @@
             });
         };
 
-        this.createStartUpVServers = (callback) => {
+        me.createStartUpVServers = (callback) => {
             const _f = {};
             let str = '';
             me.getSites((sites) => {
                 for (var o in sites) {
-                    _f[o] = (cbk) => {
-                        str += "## --- Start " + o + " ---\n";
-                        try {
-                            me.templateContent(o, 'addDockerApp.tpl', (content) => {
-                                str += content;
-                            });
-                        } catch (e) {
-                            str += 'echo "' + e.message + '"';
+                    _f[o] = ((o) => {
+                        return (cbk) => {
+                            str += "## --- Start " + o + " ---\n";
+                            try {
+                                me.templateContent(o, 'addDockerApp.tpl', (content) => {
+                                    str += content + "\n";
+                                    cbk(true);
+                                });
+                            } catch (e) {
+                                str += 'echo "' + e.message + '"' + "\n";
+                                cbk(true);
+                            }
                         }
-
-                    }
+                    })(o);
                 }
                 CP.serial(_f, function(data) {
                     fs.writeFile(data_dir + '/_startUpScript.sh', str, function (err) {
