@@ -128,17 +128,7 @@
             me.setCron('saveEtcHosts', str, callback);
         }
         
-        this.postLoadListBB = (callback) => { // use this
-            var sites_list = me.getSitesCfg();
-            var list = [];
-            for (o in sites_list ) {
-                let v = sites_list[o];
-                v.name = o;
-                list.push(v);
-            }
-            callback({status:'success', list : list });
-        }
-        this.postLoadList = (callback) => { // use this
+        me.postLoadList = (callback) => { // use this
             me.getSites((sites_list) => {
                 var list = [];
                 for (o in sites_list ) {
@@ -159,7 +149,7 @@
             });
         }
 
-        this.saveSitesServers = (data, callback) => {
+        me.saveSitesServers = (data, callback) => {
             me.getSites(
                 (list) => {
                     let nidx = me.generateServerName(data.serverName, list);
@@ -193,11 +183,20 @@
                 callback(list);
             });
         }
-        me.saveSites = (list, callback) => {
-            fs.writeFile(sitesCfgFn, JSON.stringify(list),(err) => {
-                callback(list);
+        me.saveSites = (list, callback, noEtcUpdate) => {
+            fs.writeFile(sitesCfgFn, JSON.stringify(list), (err) => {
+                if (!noEtcUpdate) {
+                    me.saveEtcHosts(
+                        () => {
+                            callback(list);
+                        }
+                    )
+                } else {
+                    callback(list);
+                }
             });
         }
+
         me.gitSiteBranchs = (serverName, callback) => {
             var cmd = 'cd ' + me.siteCodePath(serverName) + ' && git branch -r';
             exec(cmd, {maxBuffer: 224 * 2048},
@@ -229,7 +228,7 @@
                         if (sitesCfg[serverName]) {
                             sitesCfg[serverName].branch = branch;
                         }
-                        me.saveSitesCfg(sitesCfg, 
+                        me.saveSites(sitesCfg, 
                             ()=> {
                                 callback({status : 'success'})
                             }, true);
@@ -247,21 +246,7 @@
             } catch (e) {}
             return v;
         }
-
-        me.saveSitesCfg = (v, callback, noEtcUpdate) => {
-            fs.writeFile(sitesCfgFn, JSON.stringify(v), 
-                (err) => {
-                    if (!noEtcUpdate) {
-                        me.saveEtcHosts(
-                            () => {
-                                callback(err);
-                            }
-                        )
-                    } else {
-                        callback(err);
-                    }
-            });
-        }    
+  
         me.getNewUnIdx = (sites_list) => {
             var unidx_max = 0;
             for (var o in sites_list) { 
@@ -412,7 +397,7 @@
             _f['deleteCfg'] = function(cbk) {
                 me.getSites((sites_list) => {
                     delete sites_list[serverName];
-                    me.saveSitesCfg(sites_list, () => {
+                    me.saveSites(sites_list, () => {
                         cbk(true);
                     });
                 });
