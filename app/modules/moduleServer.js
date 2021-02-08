@@ -161,16 +161,16 @@
         me.saveSitesServers = (data, callback) => {
             me.getSites(
                 (list) => {
-                    let nidx = me.generateServerName(data.serverName, list);
+                    let serverName = me.generateServerName(data.serverName, list);
                     data = {
-                        serverName  : nidx,
+                        serverName  : serverName,
                         gitHub      : data['gitHub'],
                         hashCode    : data['hashCode'],
                         docker      : (!data.dockerSetting) ? [] : data.dockerSetting,
                         branch      : data['branch'],
                         unidx       : me.getNewUnIdx(list)
                     }
-                    list[nidx] = data;
+                    list[serverName] = data;
                     me.saveSites(list, (list) => {
                         callback({status:'success', list : list});
                     });
