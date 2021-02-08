@@ -3,7 +3,7 @@
     <div class="card-body card-form-section text-left ">
         <form>
             <div class="form-group">
-                <label>Repository git URI * == {{form.hashCode}}</label>
+                <label>Repository git URI</label>
                 <input type="text" class="form-control" v-model="form.gitHub" @input="changedGit" placeholder="A Git URI">
             </div>
             <div class="form-group">
