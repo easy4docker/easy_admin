@@ -17,6 +17,7 @@
         </div>
         <data-engine ref="dataEngine"></data-engine>
         <pop-up-modal ref="popUpModal"></pop-up-modal>
+        <alert-comp ref="alertComp"></alert-comp>
         <spinner></spinner>     
     </div>
 </template>
@@ -149,6 +150,7 @@ module.exports = {
     },
     components: VUEApp.loadComponents({
         LOAD    : {
+            'alertComp': '/vueApp/easydocker/popUpModals/alertComp.vue',
         }, 
         TPL :{
             'auth'      : '/vueApp/easydocker/auth.vue',
