@@ -95,7 +95,7 @@
                         }
                     })(o);
                 }
-                CP.serial(_f, function(data) {
+                CP.serial(_f, (data) => {
                     fs.writeFile(data_dir + '/_startUpScript.sh', str, function (err) {
                         setTimeout(() => {
                             callback({status:'success', message: 'createStartUpVServers'});
@@ -303,41 +303,59 @@
         me.saveVserverValiables = (data, callback) => {
             me.saveData(me.siteEnvPath(data.serverName), 'variables.json', data.contents, callback);
         }
-
-        me.asycReadCode = (list, callback) => {
-            
+        
+        me.asycKeyJson = (serverName, list, callback) => {
+            const   _f = {},
+                    result = {};
+            for(var i = 0; i < list.length; i++) {
+                _f['s_' + i] = ((i) => {
+                    return (cbk) => {
+                        me[list[i]](serverName, (data) => {
+                            result[list[i]] = data;
+                            cbk(true);
+                        })
+                    }
+                })(i);
+            }
+            CP.serial(_f, (resultData) => {
+                callback(result);
+            }, 3000);
         };
 
-        this.getInitToken = (serverName) => {
+        me.getInitToken = (serverName, callback) => {
             let fn = me.siteEnvPath(serverName) + '/token.json';
-            var v = {};
-            try {
-                v = pkg.require(fn);
-            } catch (e) {}
-            return (v.initToken) ? v.initToken : me.makeid(64); 
+            pkg.readJson(fn, (v) => {
+                callback((v.initToken) ? v.initToken : me.makeid(64));
+            });
         }
 
-        this.getKeyCode = (serverName) => {
+        me.getKeyCode = (serverName, callback) => {
             let fn = me.siteEnvPath(serverName) + '/key.json';
-            var v = {};
-            try {
-                v = pkg.require(fn);
-            } catch (e) {}
-            return (v.key) ? v.key : me.makeid(32); 
+            pkg.readJson(fn, (v) => {
+                callback((v.key) ? v.key : me.makeid(64));
+            });
         }
 
-        this.getVserverValiables = (data, callback) => {
+        me.getVserverValiables = (data, callback) => {
             var fn = me.siteEnvPath(data.serverName) + '/variables.json';
             fs.readFile(fn, 'utf-8', (err, data)=> {
                 callback((!err) ? {status : 'success', data : data} : {status : 'failure', message : err.message });
             });    
         }
 
-        this.addVServer = (data, callback) => {
+        me.addVServer = (data, callback) => {
             var _f={};
-            var randomCode = me.getKeyCode(data.serverName);
-            var initToken = me.getInitToken(data.serverName);    
+            let randomCode = '', 
+                initToken = '';    
             
+            _f['asycReadJson'] = function(cbk) {
+                me.asycKeyJson(data.serverName, ['getInitToken', 'getKeyCode'], (data) => {
+                    randomCode = data.getKeyCode;
+                    initToken  = data.getInitToken;
+                    callback(true);
+                });
+            };
+
             _f['serverName'] = function(cbk) {
                 data.serverName = data.repo;
                 me.adjustData(data, (adjustedData) => {
@@ -387,7 +405,7 @@
                 me.createStartUpVServers(cbk); 
             };
 
-            CP.serial(_f, function(result) {
+            CP.serial(_f, (result) => {
                 callback(CP.data.SitesServers);
                // callback(result);
             }, 30000);
@@ -422,7 +440,7 @@
                 me.createStartUpVServers(cbk); 
             };
 
-            CP.serial(_f, function(data) {
+            CP.serial(_f, (data) => {
                 callback(data);
                 // me.postLoadList(callback);
             }, 30000);
@@ -446,24 +464,27 @@
                 for (var i = 0;  i < cloudPort.length; i++) {
                     cmdCloudPort += ' -p ' + (30000 + parseInt(site_config.unidx * 1000) + parseInt(cloudPort[i])) + ':' + cloudPort[i] + ' ';
                 }
-                callback({
-                    serverName          : serverName,
-                    dockerCodePath      : me.dockerCodePath(serverName),
-                    dockerSettingPath   : me.dockerCodePath(serverName) + '/dockerSetting',
-                    dockerDataPath      : me.dockerDataPath(serverName),
-                    dockerEnvPath       : me.dockerEnvPath(serverName),
-                    dockerFile          : me.dockerCodePath(serverName) + '/dockerSetting/dockerFile',
-                    siteImage           : me.getImageName(serverName),
-                    siteContainer       : me.siteContainer(serverName),
-                    mainIP              : _env.main_ip,
-                    mainPort            : mainPort.join(','),
-                    cmdPorts            : cmdPorts,
-                    engPorts            : cmdCloudPort,
-                    sitePath            : me.sitePath(serverName),
-                    siteCodePath        : me.siteCodePath(serverName),
-                    keyCode             : me.getKeyCode(serverName),
-                    initToken           : me.getInitToken(serverName)
+                me.asycKeyJson(serverName, ['getInitToken', 'getKeyCode'], (data) => {
+                    callback({
+                        serverName          : serverName,
+                        dockerCodePath      : me.dockerCodePath(serverName),
+                        dockerSettingPath   : me.dockerCodePath(serverName) + '/dockerSetting',
+                        dockerDataPath      : me.dockerDataPath(serverName),
+                        dockerEnvPath       : me.dockerEnvPath(serverName),
+                        dockerFile          : me.dockerCodePath(serverName) + '/dockerSetting/dockerFile',
+                        siteImage           : me.getImageName(serverName),
+                        siteContainer       : me.siteContainer(serverName),
+                        mainIP              : _env.main_ip,
+                        mainPort            : mainPort.join(','),
+                        cmdPorts            : cmdPorts,
+                        engPorts            : cmdCloudPort,
+                        sitePath            : me.sitePath(serverName),
+                        siteCodePath        : me.siteCodePath(serverName),
+                        keyCode             : data.getKeyCode,
+                        initToken           : data.getInitToken
+                    });
                 });
+
             });
         };
 

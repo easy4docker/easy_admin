@@ -37,7 +37,7 @@
 				return true
 			}
 
-			if (mp && mp[1] === '_api') {
+			if (mp && mp[1] === 'api') {
 				var MApi= pkg.require(env.root+ '/modules/moduleApi.js');
 				let api =  new MApi(env, pkg, req, res);
 				api.call('get', false);

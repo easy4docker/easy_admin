@@ -38,7 +38,7 @@
         
         me.get = () => {
             let p = req.params[0],
-                mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|$)/);
+                mp = p.match(/\/([^\/]+)\/([^\/]+)(\/|)$/);
             const METHODS = [
                 'getIP', 'getToken'
             ];
