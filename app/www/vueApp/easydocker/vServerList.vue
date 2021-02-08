@@ -26,7 +26,7 @@
                         <div class="list-group" v-if="!filteredResult().length"> 
                             <div class="list-group-item list-group-item-action flex-column align-items-start m-1">
                                 <div class="container-fluid m-0">
-                                    No result=={{list.length}}
+                                    No result
                                 </div>
                             </div>
                         </div>
