@@ -21,14 +21,14 @@
                 </div>
             </div>
             <button type="button"  class="btn btn-info" v-on:click="setupServer(form)">Setup Server</button>
-            <hr/>    
+            <!--hr/>    
                 form.userName : {{form.userName}}<br/>
                 form.password : {{form.password}}<br/>
                 form.serverName : {{form.serverName}}<br/>
                 form.branch : {{form.branch}}<br/>
                 me.branches : {{branches}}<br/>
                 form.docker : {{form.docker}}<br/>
-            <hr/> 
+            <hr/--> 
             <div class="text-danger p-3" v-if="isError()">
                 <b>Please correct the following error(s):</b>
                 <ul>
@@ -92,8 +92,9 @@ module.exports = {
                     cmd :'setupServer',
                     data : gitRecord
                 }, function(result) {
-                    console.log(result);
-                    // me.root.module = 'list';
+                    if (result.status === 'success') {
+                        me.root.module = 'list';
+                    }
                     me.$forceUpdate();
                 }, true);
             }
