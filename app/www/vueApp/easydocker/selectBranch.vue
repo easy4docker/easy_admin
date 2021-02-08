@@ -10,7 +10,8 @@
                 <div class="row">
                     <div class="col-3 p-0 m-0 text-left" v-for="item in branches">
                         <i class="fa fa-flag-checkered" v-if="item === branch" aria-hidden="true"></i>
-                        <a href="JavaScript: void(0)" v-on:click="switchBranch(item)">{{item}}</a>
+                        <span v-if="item === branch">{{item}}</span>
+                        <a href="JavaScript: void(0)" v-on:click="switchBranch(item)" v-if="item !== branch">{{item}}</a>
                     </div>
                 </div>
             </div>
