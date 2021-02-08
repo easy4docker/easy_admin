@@ -129,8 +129,14 @@
                 const postData= {gitHub: siteCfg.gitHub, branch: req.body.branch};
                 git.gitRemoteBranchs(postData, me.comm.inside.data, (result) => {
                     if (result.status === 'success') {
-                        Servers.gitSwitchBranch(req.body.serverName, req.body.branch, (result) => {
-                            cbk(result);
+                        Servers.gitSwitchBranch(req.body.serverName, req.body.branch, (resultS) => {
+                            if (resultS.status === 'success') {
+                                Servers.startVServer(req.body.serverName, ()=> {
+                                    cbk({status : 'success'})
+                                 })
+                            } else {
+                                cbk(resultS);
+                            }
                         });
                     } else {
                         cbk(result);
