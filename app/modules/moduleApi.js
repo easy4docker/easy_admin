@@ -2,7 +2,6 @@
     var obj = function(env, pkg, req, res) {
         var me = this,
             fs = require('fs'),
-            exec = require('child_process').exec,
             CP = new pkg.crowdProcess(),
             git_root = '/var/_localRoot',
             app_dir = '/var/_localApp',
