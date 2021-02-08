@@ -352,7 +352,7 @@
                 me.asycKeyJson(data.serverName, ['getInitToken', 'getKeyCode'], (data) => {
                     randomCode = data.getKeyCode;
                     initToken  = data.getInitToken;
-                    callback(true);
+                    cbk(true);
                 });
             };
 
