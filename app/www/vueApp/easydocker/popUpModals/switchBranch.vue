@@ -8,7 +8,7 @@
             :selected="option.branch ==  form.branch"
             >{{ option }}</option>
         </select>
-        <button type="button" class="btn btn-primary m-1" v-on:click="switchBranch()">Confirm</button>
+        <!--button type="button" class="btn btn-primary m-1" v-on:click="switchBranch()">Confirm</button-->
     </span>
 </template>
 
@@ -45,6 +45,7 @@ module.exports = {
         onBranchSelect(event) {
             let me = this;
             me.form.branch = event.target.value;
+            me.switchBranch()
         },
 
         switchBranch() {
