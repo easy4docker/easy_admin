@@ -5,7 +5,7 @@
             exec = require('child_process').exec,
             CP = new pkg.crowdProcess();
 
-        me.gitSwitchBranch = (serverName, branch, callback) => {
+        me.gitSwitchBranchBK = (serverName, branch, callback) => {
             var dirn = '/var/_localAppData/sites/' + serverName;
             var cmd = 'cd ' + dirn + ' && git checkout ' + branch;
             exec(cmd, {maxBuffer: 224 * 2048},
@@ -59,8 +59,18 @@
                     cbk(false);
                     return true;
                 } else {
+                    const branches = (!CP.data.branches) ? [] : CP.data.branches.branches;
                     let uri =  CP.data.branches.uri;
-                    var cmd = 'rm -fr ' + tmp_dir + ' && mkdir -p ' + tmp_dir + ' && cd ' + tmp_dir + ' && git clone ' + uri + ' . && git branch';
+                    var cmd = 'rm -fr ' + tmp_dir + ' && mkdir -p ' + tmp_dir + ' && cd ' + tmp_dir + ' && git clone ' + uri + ' . ';
+                    
+                    if (gitRecord.branch) {
+                        if (branches.indexOf(gitRecord.branch) !== -1) {
+                           cmd += ' && git checkout ' + gitRecord.branch;
+                        } else {
+                            cbk(false);
+                            return true;
+                        }
+                    }
                     exec(cmd, {maxBuffer: 128 * 1024},
                         function(error, stdout, stderr) {
                             const fn = tmp_dir + '/dockerSetting/config.json';

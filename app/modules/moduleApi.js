@@ -122,9 +122,21 @@
         }
         
         me.gitSwitchBranch = (cbk) => {
-			Servers.gitSwitchBranch(req.body.serverName, req.body.branch, (result) => {
-				cbk(result);
-			});
+			var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
+            var git = new MGit(env, pkg);
+            Servers.getSites((list) => {
+                const siteCfg = (!list[req.body.serverName]) ? {} : list[req.body.serverName];
+                const postData= {gitHub: siteCfg.gitHub, branch: req.body.branch};
+                git.gitRemoteBranchs(postData, me.comm.inside.data, (result) => {
+                    if (result.status === 'success') {
+                        Servers.gitSwitchBranch(req.body.serverName, req.body.branch, (result) => {
+                            cbk(result);
+                        });
+                    } else {
+                        cbk(result);
+                    }
+                });
+            });
         }
 
         me.addServer = (cbk) => {
