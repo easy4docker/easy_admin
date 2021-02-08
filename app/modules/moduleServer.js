@@ -329,7 +329,7 @@
                     }
             });
         }    
-        this.getNewUnIdx = (sites_list) => {
+        me.getNewUnIdx = (sites_list) => {
             var unidx_max = 0;
             for (var o in sites_list) { 
                 unidx_max = (sites_list[o].unidx > unidx_max) ? sites_list[o].unidx : unidx_max;
@@ -380,13 +380,12 @@
             me.saveData(me.siteEnvPath(data.serverName), 'variables.json', data.contents, callback);
         }
 
-        me.asycReadJSON = (list, callback) ={
-
+        me.asycReadCode = (list, callback) => {
+            
         };
 
         this.getInitToken = (serverName) => {
             let fn = me.siteEnvPath(serverName) + '/token.json';
-            
             var v = {};
             try {
                 v = pkg.require(fn);
