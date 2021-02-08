@@ -65,9 +65,14 @@ module.exports = {
                 branch     : branch
             }
             me.root.dataEngine().appPost(data, function(result) {
-                me.$parent.getVServerList();
-                me.branches = [];
-            });        
+                if (result.status !== 'success') {
+                    me.branches = [];
+                    alert('Branch error! ' + result.message);
+                } else {
+                    me.$parent.getVServerList();
+                    me.branches = [];
+                }
+            }, true);        
         }
     }
 }

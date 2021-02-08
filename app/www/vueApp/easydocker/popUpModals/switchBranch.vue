@@ -60,7 +60,10 @@ module.exports = {
             me.root.dataEngine().appPost(data, function(result) {
                 caller.getVServerList();
                 me.close();
-            });
+                if (result.status !== 'success') {
+                    alert('Branch error! ' + result.message);
+                }
+            }, true);
         }
     }
 }
