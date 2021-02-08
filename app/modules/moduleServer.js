@@ -406,9 +406,8 @@
             };
 
             CP.serial(_f, (result) => {
-                callback(CP.data.SitesServers);
-               // callback(result);
-            }, 30000);
+               callback(result);
+            }, 60000);
         }
 
         me.deleteVServer = (serverName, callback) => {

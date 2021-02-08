@@ -29,40 +29,6 @@
                 me.branches : {{branches}}<br/>
                 form.docker : {{form.docker}}<br/>
             <hr/> 
-            <span v-if="false" >
-                <div>
-                    <input type="hidden" v-model="form.userName">
-                    <input type="hidden"  v-model="form.password">
-                </div>
-
-                <div class="form-group">
-                    <label>Server Name * </label>
-                    <input type="text" class="form-control" maxlength="64" v-model="form.serverName" placeholder="Server Name">
-                </div>
-
-                <div class="form-group">
-                    <label>Branche</label>
-                    <select class="form-control" :required="true" @change="onBranchSelect($event)" v-model="form.branch">
-                        <option 
-                        v-for="option in branches" 
-                        v-bind:value="option"
-                        :selected="option ==  form.branch"
-                        >{{ option }}</option>
-                    </select>
-                </div>
-                <div v-if="form.docker">
-                {{form.docker}}
-                    <hr/>
-                ports: {{ form.docker.ports }} Type: {{form.docker.type}}
-                    <hr/>
-                </div>
-                <hr/>
-                <button type="button" class="btn btn-info" v-on:click="saveVServer()">Save the virtual host</button>
-                <!--button type="button" class="btn btn-warning" v-on:click="reset()">Reset fields</button-->
-                <button type="button" class="btn btn-secondary" v-on:click="cancel()">Cancel</button>
-                <hr v-if="!isformValid()" />
-
-            </span>
             <div class="text-danger p-3" v-if="isError()">
                 <b>Please correct the following error(s):</b>
                 <ul>
