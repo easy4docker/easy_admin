@@ -13,6 +13,7 @@
             _env = require(data_dir + '/_env.json');
         } catch (e) {}
 
+        // ==== 
         this.sitesPath = () => {
             return data_dir + '/sites';
         }
@@ -149,7 +150,59 @@
                 callback({status:'success', list : list });
             });
         }
+/*
+        this.askToken= (serverName, callback) => { // use this
+            let fn_env = me.siteEnvPath(serverName) + '/key.json';
+            let fn_token = me.siteEnvPath(serverName) + '/token.json';
+            let env = {}, tokens = '';
+            try {
+                env = pkg.require(fn_env);
+            } catch(e) {}
+            try {
+                tokens = pkg.require(fn_token);
+            } catch(e) {}
+            callback({status:'success', tokens : tokens });
+        }
 
+        this.addAToken= (serverName, callback) => { 
+            let fn_token = me.siteEnvPath(serverName) + '/token.json';
+            let tokens = {list : {}};
+            try {
+                tokens = pkg.require(fn_token);
+            } catch(e) {};
+            if (!tokens.list) tokens.list = {};
+            tokens.list[me.makeid(64)] = new Date();
+            fs.writeFile(fn_token, JSON.stringify(tokens), 
+            (err) => {
+                callback({status:'success', list : tokens.list});
+            });
+            
+        }
+
+        this.deleteToken= (serverName, token, callback) => { 
+            let fn_token = me.siteEnvPath(serverName) + '/token.json';
+            let tokens = {list : {}};
+            try {
+                tokens = pkg.require(fn_token);
+            } catch(e) {};
+            if (!tokens.list) tokens.list = {};
+            delete tokens.list[token];
+            fs.writeFile(fn_token, JSON.stringify(tokens), 
+            (err) => {
+                callback({status:'success', list : tokens.list});
+            });
+            
+        }
+
+        this.getAllTokens= (serverName, callback) => { 
+            let fn_token = me.siteEnvPath(serverName) + '/token.json';
+            let tokens = {};
+            try {
+                tokens = pkg.require(fn_token);
+            } catch(e) {}
+            callback({status:'success', list : (!tokens.list) ? {} : tokens.list});
+        }
+*/
         me.adjustData = (data, callback) => {
             me.getSites(
                 (list) => {
@@ -199,44 +252,58 @@
             });
         }
         this.gitSiteBranchs = (serverName, callback) => {
-            var cmd = 'cd ' + me.siteCodePath(serverName) + ' && git branch -r';
-            exec(cmd, {maxBuffer: 224 * 2048},
-                function(error, stdout, stderr) {
-                    var branches = [];
-                    var list = stdout.split(/\s+/);
-                    if (!error) {
-                        for (var i in list) {
-                            let regs = /^origin\/([a-z0-9\-\_]+)$/i;
-                            if (regs.test(list[i])) {
-                                var item = list[i].replace(/^origin\//i, '');
-                                if (item !== 'HEAD' && branches.indexOf(item) === -1) {
-                                    branches.push(item);
+            var _f = {};
+            _f['getBranches'] = function(cbk) {
+                var cmd = 'cd ' + me.siteCodePath(serverName) + ' && git branch -r';
+                exec(cmd, {maxBuffer: 224 * 2048},
+                    function(error, stdout, stderr) {
+                        var branches = [];
+                        var list = stdout.split(/\s+/);
+                        if (!error) {
+                            for (var i in list) {
+                                let regs = /^origin\/([a-z0-9\-\_]+)$/i;
+                                if (regs.test(list[i])) {
+                                    var item = list[i].replace(/^origin\//i, '');
+                                    if (item !== 'HEAD' && branches.indexOf(item) === -1) {
+                                        branches.push(item);
+                                    }
                                 }
                             }
+                            cbk({status : 'success', branches : branches });
+                        } else {
+                            cbk({status : 'failure', message : error.message});
                         }
-                        callback({status : 'success', list : branches });
-                    } else {
-                        callback({status : 'failure', message : error.message});
-                    }
-            });
-        }
+    
+                        
+                });
+            }
+            CP.serial(_f, (dataCP) => {
+                callback({status : 'success', list : CP.data.getBranches});
+            }, 30000);
 
-        me.gitSwitchBranch = (serverName, branch, callback) => {
+        }
+        // --- TODO---
+        
+        this.gitSwitchBranch = (serverName, branch, callback) => {
+            // var dirn = '/var/_localAppData/sites/' + serverName;
             var cmd = 'cd ' + me.siteCodePath(serverName) + ' && git checkout ' + branch;
             exec(cmd, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
-                    me.getSites((sitesCfg) => {
-                        if (sitesCfg[serverName]) {
-                            sitesCfg[serverName].branch = branch;
-                        }
-                        me.saveSitesCfg(sitesCfg, 
-                            ()=> {
-                                callback({status : 'success'})
-                            }, true);
-                    });
+                    // callback({status : 'successB', cfg : me.getSitesCfg()});
+                    me.updateConfigBranch(serverName, branch, 
+                        ()=> {
+                            callback({status : 'successB'})
+                        });
             });
         }
         
+        this.updateConfigBranch = (serverName, branch, callback) => {
+            let sitesCfg = me.getSitesCfg();
+            if (sitesCfg[serverName]) {
+                sitesCfg[serverName].branch = branch;
+            }
+            me.saveSitesCfg(sitesCfg, callback, true);
+        }
         this.getSitesCfg = () => {
             var v = {}, p;
             try {

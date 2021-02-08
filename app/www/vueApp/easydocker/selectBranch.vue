@@ -48,7 +48,7 @@ module.exports = {
             me.$parent.currentServer = me.record.serverType + '-' + me.record.name;
             me.root.dataEngine().appPost(data, function(result) {
                 if (result.status === 'success') {
-                    me.branches = result.list.branches;
+                    me.branches = result.list;
                     console.log(me.branches);
                 } else {
                     me.branches = [];

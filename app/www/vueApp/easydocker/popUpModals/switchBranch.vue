@@ -36,7 +36,7 @@ module.exports = {
             record.cmd = 'gitSiteBranchs';
             me.root.dataEngine().appPost(record, function(result) {
                 if (result.status === 'success') {
-                    me.branches = result.list.branches;
+                    me.branches = result.list;
                 } else {
                     me.branches = [];
                 }
