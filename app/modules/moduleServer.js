@@ -84,12 +84,12 @@
                             try {
                                 me.templateContent(o, 'addDockerApp.tpl', (content) => {
                                     str += content;
-                                    str +="\n";
+                                    str +="\n\n";
                                     cbk(true);
                                 });
                             } catch (e) {
                                 str += 'echo "' + e.message + '"';
-                                str +="\n";
+                                str +="\n\n";
                                 cbk(true);
                             }
                         }
