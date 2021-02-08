@@ -74,22 +74,30 @@
         };
 
         this.createStartUpVServers = (callback) => {
-            callback({status:'success', message: 'createStartUpVServers'});
-            /*
+            const _f = {};
+            me.getSites((sites) => {
+                var str = '';
+                for (var o in sites) {
+                    _f[0] = (cbk) => {
+                        str += "## --- Start " + o + " ---\n";
+                        try {
+                            me.templateContent(o, 'addDockerApp.tpl', (content) => {
+                                str += content;
+                            });
+                        } catch (e) {
+                            str += 'echo "' + e.message + '"';
+                        }
 
-             me.getSites((sitesCfg) => {
-
-            var v = me.getSitesCfg();
-            var str = '';
-            for (var o in v) {
-                str += "## --- Start " + o + " ---\n";
-                str += me.templateCMD('addDockerApp.tpl', o);
-            }
-            fs.writeFile(data_dir + '/_startUpScript.sh', str, function (err) {
-                setTimeout(() => {
-                    callback({status:'success', message: 'createStartUpVServers'});
-                }, 500)
-            });*/
+                    }
+                }
+                CP.serial(_f, function(data) {
+                    fs.writeFile(data_dir + '/_startUpScript.sh', str, function (err) {
+                        setTimeout(() => {
+                            callback({status:'success', message: 'createStartUpVServers'});
+                        }, 500)
+                    });
+                }, 6000);
+            });
         };
 
         this.removeAllServers = (callback) => {
