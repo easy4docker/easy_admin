@@ -144,8 +144,6 @@ module.exports = {
                 }
                 me.serverTypeFilter = list;
             }
-            console.log(k);
-            console.log(me.serverTypeFilter);
         },
 
         filteredResult() {
@@ -201,7 +199,6 @@ module.exports = {
                     dataType: 'JSON'
                 },function(result) {
                     me.$parent.triggerSpinner = false;
-                    console.log(result);
                 }, true);
         },
 
@@ -215,7 +212,6 @@ module.exports = {
                     dataType: 'JSON'
                 },function(result) {
                     me.$parent.triggerSpinner = false;
-                    console.log(result);
                 }, true);
         },
 
@@ -228,7 +224,6 @@ module.exports = {
                     dataType: 'JSON'
                 },function(result) {
                     me.$parent.triggerSpinner = false;
-                    console.log(result);
                 }, true);
         },   
 
