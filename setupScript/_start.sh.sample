@@ -41,6 +41,8 @@ docker run -d -p ${ADMIN_PORT}:80 --restart=always \
 
 echo "{\"main_ip\": \"${MAIN_IP}\", \"env\": \"$1\", \"app_root\": \"${SCR_DIR}\", \"code_folder\": \"$PWD\", \"data_folder\": \"$DATA_DIR\"}" > "$DATA_DIR"/_env.json
 
+sh ${SCR_DIR}/_startUpScript.sh
+
 #--- Main common cron loop ---
 stsCron=1
 until [ $stsCron = 0 ]
