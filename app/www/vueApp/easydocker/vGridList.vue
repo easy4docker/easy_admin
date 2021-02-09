@@ -43,7 +43,8 @@ module.exports = {
     },
     mounted() {
         var me = this;
-        me.gridAdminServer = localStorage.getItem('easydockerSVR').replace(/\_/g, '.');
+        var SVR = localStorage.getItem('easydockerSVR');
+        me.gridAdminServer = ((SVR) ? SVR : '').replace(/\_/g, '.');
     },
     watch: {
     },
@@ -54,6 +55,7 @@ module.exports = {
         removeGrid() {
             const me = this;
             localStorage.removeItem('easydockerSVR');
+            me.gridAdminServer = '';
             localStorage.removeItem('easydockerTOKEN');
             me.root.gridMatrix = false;
         },
