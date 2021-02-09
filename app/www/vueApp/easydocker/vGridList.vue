@@ -44,13 +44,13 @@ module.exports = {
     methods : {
         isShowRemoveGrid() {
             const me = this;
-            return (!localStorage.getItem('easydockerSVR') || !localStorage.getItem('easydockerTOKEN')) ? false : true
+            return (me.root.gridMatrix !== false) ? true : false;
         },
         removeGrid() {
             const me = this;
             localStorage.removeItem('easydockerSVR');
             localStorage.removeItem('easydockerTOKEN');
-            window.location.reload();
+            me.root.gridMatrix = false;
         },
         addGridMonitor() {
             const me = this;

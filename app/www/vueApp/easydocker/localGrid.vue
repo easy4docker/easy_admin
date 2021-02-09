@@ -49,10 +49,10 @@ module.exports = {
             gridToken   : '49ba83ae33879460f8cbcd491ef1d1a5'
          },
          function(result) {
-            console.log(result);
             localStorage.setItem('easydockerSVR', result.gridServer.replace(/\./g, '_'));
             localStorage.setItem('easydockerTOKEN', result.token);
-            window.location.reload();
+            // me.$forceUpdate();
+            // window.location.reload();
          }, function(err) {
             me.gridServer = false;
             console.log(err);
@@ -60,9 +60,10 @@ module.exports = {
       },
       removeGrid() {
          const me = this;
+         alert(8);
          localStorage.removeItem('easydockerSVR');
          localStorage.removeItem('easydockerTOKEN');
-         window.location.reload();
+         // window.location.reload();
       }
    }
 }

@@ -58,7 +58,8 @@
             const METHODS = [
                 'getIP', 'getLocalEnv', 'getServerToken', 'auth', 'loadList', 'pullCode', 'stopVServer', 
                 'startVServer', 'gitSiteBranchs', 'gitSwitchBranch',
-                'deleteVServer', 'addServer', 'setupServer'
+                'deleteVServer', 'addServer', 'setupServer',
+                'localGridAccessSetup'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -113,6 +114,11 @@
                 }
 			});
 		}
+
+        me.localGridAccessSetup = (cbk) => {
+            const data = req.body.data;
+            cbk({status: 'success', gridServer : data.gridServer, token : pkg.md5(data.password)});
+        }
 
         me.gitSiteBranchs = (cbk) => {
 			Servers.gitSiteBranchs(req.body.serverName, (result) => {

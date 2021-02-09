@@ -79,6 +79,7 @@
 			)
 		};
 		me.post = () => {
+
 			let p = req.params[0],
 				mp = p.match(/\/([^\/]+)(\/|$)/);
 			if (mp) {
@@ -93,7 +94,6 @@
 						let mGrid =  new MAGrid(env, pkg, req, res);
 						mGrid.call('post', false);
 						break; 
-
 					case '_gridHub':
 						var MAGridHub= pkg.require(env.root+ '/modules/moduleGridHub.js');
 						let mGridHub =  new MAGridHub(env, pkg, req, res);

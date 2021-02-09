@@ -37,7 +37,8 @@ module.exports = {
                 },
                 formStarted : false
             },
-            gridMatrix: {},
+            gridMatrix: false,
+
             triggerSpinner : false,
             module : 'list',
             menu   : '',

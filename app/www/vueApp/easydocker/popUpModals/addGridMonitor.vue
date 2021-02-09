@@ -15,7 +15,6 @@
                </div>
                <button type="button" class="btn btn-info" :disabled="isDisabled()" v-on:click="accessGrid()" v-if="!isGrid()">Access the Grid</button>
                <button type="button" class="btn btn-secondary" v-on:click="parent.close()" v-if="!isGrid()">Close</button>
-               <button type="button" class="btn btn-danger" v-on:click="removeGrid()" v-if="isGrid()">Remove the Grid</button>
                <div class="local-grid-error">{{error}}</div>
          </form>
       </div>
@@ -52,27 +51,23 @@ module.exports = {
             const me = this;
             me.root.dataEngine().appPost({
                 url  : '/_grid/',
-                cmd     :'gridAccess',
+                cmd     :'localGridAccessSetup',
                 data    : me.form,
                 dataType: 'json'
             },
             function(result) {
+                console.log('--result-2->');
+                console.log(result);
                 localStorage.setItem('easydockerSVR', result.gridServer.replace(/\./g, '_'));
                 localStorage.setItem('easydockerTOKEN', result.token);
-                me.parent.close();
-                me.root.getGridMatrix();
+                  me.parent.close();
+                  me.root.gridMatrix = {};
+                // me.root.getGridMatrix();
                 // window.location.reload();
             }, function(err) {
                 me.gridServer = false;
                 console.log(err);
             });
-        },
-        removeGrid() {
-            const me = this;
-            localStorage.removeItem('easydockerSVR');
-            localStorage.removeItem('easydockerTOKEN');
-            me.root.getGridMatrix();
-            // window.location.reload();
         }
    }
 }
