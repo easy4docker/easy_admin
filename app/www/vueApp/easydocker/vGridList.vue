@@ -16,7 +16,7 @@
             </div>
         </span>
         <hr v-if="root.isLocalhost() && Object.keys(root.gridMatrix).length"/>
-        <button type="button" class="btn btn-sm btn-warning" v-on:click="removeGrid()" v-if="root.isLocalhost() && isShowRemoveGrid()">
+        <button type="button" class="btn btn-sm btn-warning" v-on:click="removeGrid()" v-if="root.isLocalhost() && showRemoveGrid()">
             Remove Grid Monitor
         </button>
         <button type="button" class="btn btn-sm btn-success" v-if="root.isLocalhost() &&  !showRemoveGrid()"
