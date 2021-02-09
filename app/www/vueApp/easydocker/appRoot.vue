@@ -102,10 +102,12 @@ module.exports = {
             const me = this;
             me.root.popUp(me).show({
                 insideModule: 'auth',
-                insideModuleUrl: '/vueApp/easydocker/auth.vue'
+                insideModuleUrl: '/vueApp/easydocker/auth.vue',
+                noDefaultCancel: true
             });
-            return true;
-            
+        },
+        testBK() {
+            const me = this;
              $.ajax({
                 type: 'POST',
                 url:  '/_api/',
