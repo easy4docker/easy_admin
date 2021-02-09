@@ -175,6 +175,9 @@ module.exports = {
                   localStorage.setItem('easydockerFP', result.token);
                   me.accessGrid(me.formSignin.password);
                   me.checkIsTokenLogin();
+                  if (typeof me.$parent.close === 'function') {
+                     me.$parent.close();
+                  }
                } else {
                   me.errorMessage = 'Authentication failure.';
                }
@@ -194,31 +197,4 @@ module.exports = {
 }
 </script>
 <style>
-/*---- overlay and spinner ---*/
-.overlay_auth_frame {
-   position:fixed;
-   width   : 100%;
-   height  : 100%;
-   top:0; left:0;
-   min-height : 36em;
-}
-.overlay_auth_cover {
-    position:fixed;
-    top:0; left:0;
-    background:rgba(255,255,255,1);
-    z-index:8001;
-    width:100%;
-    height:100%;
-    /* display:none; */
-}
-.overlay_auth_body {
-   position:relative;
-   width    : 80%;
-   z-index:8009;
-   left:10%;
-   right:10%;
-   top : 10%;
-   min-height : 36em;
-}
-
 </style>
