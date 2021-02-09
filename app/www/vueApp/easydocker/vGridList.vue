@@ -1,6 +1,6 @@
 <template>
     <div class="text-left p-2 alert-secondary border rounded grids-list-section">
-        <div class="text-center">Grid Servers</div>
+        <div class="text-center">Grids on {{gridAdminServer}}</div>
         <hr v-if="(root.gridMatrix) &&  Object.keys(root.gridMatrix).length"/>
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3">
@@ -36,11 +36,14 @@ module.exports = {
     data: function() {
         let me = this;
         return {
-            root :  this.$parent.root
+            root :  this.$parent.root,
+            gridAdminServer : '',
+
         }
     },
     mounted() {
         var me = this;
+        me.gridAdminServer = localStorage.getItem('easydockerSVR').replace(/\_/g, '.');
     },
     watch: {
     },
