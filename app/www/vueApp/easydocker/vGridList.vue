@@ -1,6 +1,6 @@
 <template>
     <div class="text-left p-2 alert-secondary border rounded grids-list-section">
-        <div class="text-center">Grids on {{gridAdminServer}}</div>
+        <div class="text-center">Grids on {{root.gridAdminServer}}</div>
         <hr v-if="(root.gridMatrix) &&  Object.keys(root.gridMatrix).length"/>
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3">
@@ -36,15 +36,14 @@ module.exports = {
     data: function() {
         let me = this;
         return {
-            root :  this.$parent.root,
-            gridAdminServer : '',
+            root :  this.$parent.root
 
         }
     },
     mounted() {
         var me = this;
         var SVR = localStorage.getItem('easydockerSVR');
-        me.gridAdminServer = ((SVR) ? SVR : '').replace(/\_/g, '.');
+        me.root.gridAdminServer = ((SVR) ? SVR : '').replace(/\_/g, '.');
     },
     watch: {
     },
@@ -55,7 +54,7 @@ module.exports = {
         removeGrid() {
             const me = this;
             localStorage.removeItem('easydockerSVR');
-            me.gridAdminServer = '';
+            me.root.gridAdminServer = '';
             localStorage.removeItem('easydockerTOKEN');
             me.root.gridMatrix = false;
         },

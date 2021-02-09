@@ -38,7 +38,7 @@ module.exports = {
                 formStarted : false
             },
             gridMatrix: false,
-
+            gridAdminServer : '',
             triggerSpinner : false,
             module : 'list',
             menu   : '',

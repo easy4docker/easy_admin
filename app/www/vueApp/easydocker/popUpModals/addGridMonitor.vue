@@ -56,15 +56,15 @@ module.exports = {
                 dataType: 'json'
             },
             function(result) {
-                console.log('--result-2->');
-                console.log(result);
-                localStorage.setItem('easydockerSVR', result.gridServer.replace(/\./g, '_'));
-                localStorage.setItem('easydockerTOKEN', result.token);
-                me.gridAdminServer = result.gridServer;
-                  me.parent.close();
-                  me.root.gridMatrix = {};
-                // me.root.getGridMatrix();
-                // window.location.reload();
+               console.log('--result-2->');
+               console.log(result);
+               localStorage.setItem('easydockerSVR', result.gridServer.replace(/\./g, '_'));
+               localStorage.setItem('easydockerTOKEN', result.token);
+               me.root.gridAdminServer = result.gridServer;
+               me.parent.close();
+               me.root.gridMatrix = {};
+               // me.root.getGridMatrix();
+               // window.location.reload();
             }, function(err) {
                 me.gridServer = false;
                 console.log(err);
