@@ -19,7 +19,7 @@
         <button type="button" class="btn btn-sm btn-warning" v-on:click="removeGrid()" v-if="root.isLocalhost() && isShowRemoveGrid()">
             Remove Grid Monitor
         </button>
-        <button type="button" class="btn btn-sm btn-success" v-if="root.isLocalhost() &&  !isShowRemoveGrid()"
+        <button type="button" class="btn btn-sm btn-success" v-if="root.isLocalhost() &&  !showRemoveGrid()"
             v-on:click="addGridMonitor()">
             Add Grid Monitor
         </button>
@@ -42,9 +42,8 @@ module.exports = {
     watch: {
     },
     methods : {
-        isShowRemoveGrid() {
-            const me = this;
-            return (me.root.gridMatrix !== false) ? true : false;
+        showRemoveGrid() {
+            return (this.root.gridMatrix !== false) ? true : false;
         },
         removeGrid() {
             const me = this;
