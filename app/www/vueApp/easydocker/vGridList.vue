@@ -1,7 +1,7 @@
 <template>
     <div class="text-left p-2 alert-secondary border rounded grids-list-section">
         <div class="text-center">Grid Servers</div>
-        <hr/>
+        <hr v-if="root.gridMatrix"/>
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3">
                 <input type="checkbox"><span class="pl-2"><a href="javaScript:void(0)" v-on:click="test(k, {s:k})">{{ k }}</a> 
@@ -15,15 +15,18 @@
 
             </div>
         </span>
-        <hr v-if="root.isLocalhost() && Object.keys(root.gridMatrix).length"/>
-        <button type="button" class="btn btn-sm btn-warning" v-on:click="removeGrid()" v-if="root.isLocalhost() && showRemoveGrid()">
-            Remove Grid Monitor
-        </button>
-        <button type="button" class="btn btn-sm btn-success" v-if="root.isLocalhost() &&  !showRemoveGrid()"
-            v-on:click="addGridMonitor()">
-            Add Grid Monitor
-        </button>
-        <hr v-if="root.isLocalhost()"/>
+        <span v-if="root.isLocalhost()">
+            <hr/>
+            <button type="button" class="btn btn-sm btn-warning" v-on:click="removeGrid()" v-if="root.isLocalhost() && showRemoveGrid()">
+                Remove Grid Monitor
+            </button>
+            <button type="button" class="btn btn-sm btn-success" v-if="root.isLocalhost() &&  !showRemoveGrid()"
+                v-on:click="addGridMonitor()">
+                Add Grid Monitor
+            </button>
+            <hr/>
+        </span>
+        
     </div>
 </template>
  
