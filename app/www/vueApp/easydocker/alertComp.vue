@@ -1,12 +1,9 @@
 <template>
-    <div id="confirm_modal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog-centered modal-dialog" role="document">
-            <div class="modal-content shadow">
-                <div class="modal-body">
-                    <span v-bind:is="loadModule()"></span>
-                    <button type="button" class="btn btn-secondary m-1" data-dismiss="modal" v-if="!cfg.noDefaultCancel" v-on:click="close()">Cancel</button>
-                </div>
-            </div>
+    <div id="alert_modal" class="modal fade" tabindex="-1" role="dialog"  v-on:click="close()">
+        <div class="modal-dialog border  m-0 rounded mx-auto shadow" 
+            v-bind:class="(config.status === 'success') ? 'border-success alert-success' : 'border-danger alert-danger'">
+             {{config.message}}
+             <a href="JavaScript:void(0)" class="close" aria-label="close" title="close">×</a>
         </div>
     </div>
 </template>
@@ -16,35 +13,30 @@ module.exports = {
     props: [],
     data: function() {
         return {
-            caller : null,
-            cfg : {},
-            root :  this.$parent.root
+            root   :  this.$parent.root,
+            config : {
+                status  : '',
+                message : ''
+            }
         }
     },
     mounted() {
-        var me = this;
+        var me = this;   
     },
-   methods :{
-        show(param) {
+    methods :{
+        show(config) {
             var me = this;
-            me.cfg = param;
-            if (me.cfg.insideModuleUrl) {
-                const v = {};
-                v[me.cfg.insideModule] = me.cfg.insideModuleUrl;
-                VUEApp.dynamicLoadComponent(v);
-            }
-            $('#confirm_modal').modal({backdrop: false, show: true});
-        },
-        loadModule() {
-            let me = this;
-            return me.cfg.insideModule;
+            me.config = config;
+            $('#alert_modal').modal({backdrop: false, show: true});
         },
         close() {
             var me = this;
-            me.cfg = {};
-            me.caller = null;
-            $('#confirm_modal').modal('hide');
-       }
+            me.config = {
+                status  : '',
+                message : ''
+            };
+            $('#alert_modal').modal('hide');
+        }
    },
    components: VUEApp.loadComponents({
         LOAD    : {}, 
@@ -54,10 +46,12 @@ module.exports = {
 </script>
  
 <style>
-.modal-dialog {
-    min-width: 68%;
+#alert_modal .modal-dialog {
+    top: 0.8rem;
+    padding: 0.8rem;
+    max-width: 92% !important;
 }
-#confirm_modal {
-    background-color: rgba(50, 50, 50, 0.6);
+#alert_modal {
+    background-color: transparent;
 }
 </style>

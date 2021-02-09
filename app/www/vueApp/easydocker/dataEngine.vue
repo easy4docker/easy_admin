@@ -6,6 +6,7 @@ module.exports = {
     props: [],
     data: function() {
         return {
+            root :  this.$parent.root,
             caller : null
         }
     },
@@ -90,7 +91,6 @@ module.exports = {
                 error(err);
             });
         },
-        /* ------------ confirmed ----??--------*/
 
         appPost(data, callback, isSpinner) {
             const me = this;
@@ -105,7 +105,10 @@ module.exports = {
                 data: me.withAuth(data),
                 success: function(result) {
                     if (isSpinner) me.$parent.triggerSpinner = false;
-                    callback(result)
+                    callback(result);
+                    // if (result.status !== 'success') {
+                    //    me.root.alertComp().show(result);
+                    // }
                 },
                 error: function (jqXHR, textStatus, errorThrown) { 
                     if (isSpinner) me.$parent.triggerSpinner = false;

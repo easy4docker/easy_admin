@@ -67,7 +67,8 @@ module.exports = {
             me.root.dataEngine().appPost(data, function(result) {
                 if (result.status !== 'success') {
                     me.branches = [];
-                    alert('Branch error! ' + result.message);
+                    result.message += ' The request can not go through!';
+                    me.root.alertComp().show(result);
                 } else {
                     me.$parent.getVServerList();
                     me.branches = [];

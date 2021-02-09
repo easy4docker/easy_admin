@@ -143,6 +143,9 @@ module.exports = {
             if (caller) this.$refs.popUpModal.caller = caller;
             return this.$refs.popUpModal
         },
+        alertComp() {
+            return this.$refs.alertComp;
+        },
         matrix(v) {
             var me = this;
             return (me.module === v) ? true : false;
@@ -150,7 +153,7 @@ module.exports = {
     },
     components: VUEApp.loadComponents({
         LOAD    : {
-            'alertComp': '/vueApp/easydocker/popUpModals/alertComp.vue',
+            'alertComp': '/vueApp/easydocker/alertComp.vue',
         }, 
         TPL :{
             'auth'      : '/vueApp/easydocker/auth.vue',

@@ -62,7 +62,8 @@ module.exports = {
                 caller.getVServerList();
                 me.close();
                 if (result.status !== 'success') {
-                    alert('Branch error! ' + result.message);
+                    result.message += ' The request can not go through!';
+                    me.root.alertComp().show(result);
                 }
             }, true);
         }
