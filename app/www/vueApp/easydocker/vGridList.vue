@@ -1,6 +1,6 @@
 <template>
     <div class="text-left p-2 alert-secondary border rounded grids-list-section">
-        <div class="text-center">Grids on {{root.gridAdminServer}}</div>
+        <div class="text-center">Grids<span v-if="root.gridAdminServer"> on {{root.gridAdminServer}}</span></div>
         <hr v-if="(root.gridMatrix) &&  Object.keys(root.gridMatrix).length"/>
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3">
