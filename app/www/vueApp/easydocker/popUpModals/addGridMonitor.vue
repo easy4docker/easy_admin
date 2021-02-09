@@ -60,6 +60,7 @@ module.exports = {
                 console.log(result);
                 localStorage.setItem('easydockerSVR', result.gridServer.replace(/\./g, '_'));
                 localStorage.setItem('easydockerTOKEN', result.token);
+                me.gridAdminServer = result.gridServer;
                   me.parent.close();
                   me.root.gridMatrix = {};
                 // me.root.getGridMatrix();
