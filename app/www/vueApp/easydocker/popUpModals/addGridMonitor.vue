@@ -15,7 +15,7 @@
             </div>
             <button type="button" class="btn btn-info" :disabled="isDisabled()" v-on:click="accessGrid()" v-if="!isGrid() || true">Access the Grid</button>
             <button type="button" class="btn btn-secondary" v-on:click="parent.close()" v-if="!isGrid()">Close</button>
-            <div class="local-grid-error">=={{error}}==</div>
+            <div class="local-grid-error">{{error}}</div>
          </form>
       </div>
    </div>
@@ -56,32 +56,35 @@ module.exports = {
                dataType: 'json'
          },
          function(result) {
-            me.root.dataEngine().gridHub({
-                  hubServer  : me.form.gridServer,
-                  cmd     :'getGridMatrix',
-                  data    : {},
-                  dataType: 'json',
-                  gridToken   : result.token
-               },
-               function(resultHub) {
-                  console.log(resultHub);
-                  if (resultHub.status === 'success') {
-                     localStorage.setItem('easydockerSVR', result.gridServer.replace(/\./g, '_'));
-                     localStorage.setItem('easydockerTOKEN', result.token);
-                     me.root.gridAdminServer = result.gridServer;
-                     me.root.gridMatrix = resultHub.result;
-                     me.parent.close();
-                  } else {
+            if (resultHub.status === 'success') {
+               me.root.dataEngine().gridHub({
+                     hubServer  : me.form.gridServer,
+                     cmd     :'getGridMatrix',
+                     dataType: 'json',
+                     gridToken   : result.token
+                  },
+                  function(resultHub) {
+                     console.log(resultHub);
+                     if (resultHub.status === 'success') {
+                        localStorage.setItem('easydockerSVR', result.gridServer.replace(/\./g, '_'));
+                        localStorage.setItem('easydockerTOKEN', result.token);
+                        me.root.gridAdminServer = result.gridServer;
+                        me.root.gridMatrix = resultHub.result;
+                        me.parent.close();
+                     } else {
+                        me.root.gridAdminServer = '';
+                        me.error = resultHub.message;
+                     }
+                     me.$forceUpdate();
+                  }, function(err) {
                      me.root.gridAdminServer = '';
-                     me.error = resultHub.message;
-                  }
-                  me.$forceUpdate();
-               }, function(err) {
-                  me.root.gridAdminServer = '';
-                  me.error = err.message;
-               });
+                     me.error = err.message;
+                  });
+            } else {
+               me.error = result.message;
+            }
          }, function(err) {
-               me.error = err.message;
+               me.error = me.form.gridServer + '=>' + err.message;
          });
       }
    }
