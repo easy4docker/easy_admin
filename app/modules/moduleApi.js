@@ -1,11 +1,13 @@
 (function() {
     var obj = function(env, pkg, req, res) {
         var me = this,
-            fs = require('fs'),
-            data_dir = '/var/_localAppData';
+            fs = require('fs');
 
 		var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
+
+        const data_dir = me.comm.inside.data;
+
 
         var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
         var Servers = new MServers(env, pkg);
