@@ -7,27 +7,19 @@
 			let spaDir = env.appFolder + '/www/js/package/';
 			let cfgFn = spaDir + p.replace(dirPatt, '');
 			let fileAttr = me.getConfigAttr(cfgFn);
-			let cfg = {};
-			try {
-				cfg = pkg.require(fileAttr.fileName);
-			} catch (e) {}
-			me.sendHeader(fileAttr.type);
 
-			if (fileAttr.type.indexOf(['vue']) !== -1) {
-				me.packVueFile(cfg);
-				return true;
-			}
-
-			if (fileAttr.type.indexOf(['js']) !== -1) {
-				me.packJsFile(cfg);
-				return true;
-			}
-
-			if (fileAttr.type.indexOf(['css']) !== -1) {
-				me.packCssFile(cfg);
-				return true;
-			} 
-			me.packJsFile(cfg);
+			pkg.readJson(gridStatusFn, (cfg) => {
+				me.sendHeader(fileAttr.type);
+				if (fileAttr.type.indexOf(['vue']) !== -1) {
+					me.packVueFile(cfg);
+				} else if (fileAttr.type.indexOf(['js']) !== -1) {
+					me.packJsFile(cfg);
+				} else if (fileAttr.type.indexOf(['css']) !== -1) {
+					me.packCssFile(cfg);
+				} else {
+					me.packJsFile(cfg);
+				}
+            });
 		};
 
 		this.packCssFile = function(cfg) {
