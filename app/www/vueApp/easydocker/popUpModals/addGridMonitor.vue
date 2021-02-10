@@ -2,20 +2,20 @@
    <div class="card m-1 local-grid-section">
       <div class="card-body text-left ">
          <form>
-                <div class="form-group pl-2">
-                  <b>Add Grid Monitor</b>
-               </div>
-               <div class="form-group p-2">
-                  <label>Grid Hub Server:</label>
-                  <input type="text" class="form-control" v-model="form.gridServer"  placeholder="xxx.xxx.xxx">
-               </div>
-               <div class="form-group p-2">
-                  <label>Password:</label>
-                  <input type="password" class="form-control" v-model="form.password"  placeholder="">
-               </div>
-               <button type="button" class="btn btn-info" :disabled="isDisabled()" v-on:click="accessGrid()" v-if="!isGrid() || true">Access the Grid</button>
-               <button type="button" class="btn btn-secondary" v-on:click="parent.close()" v-if="!isGrid()">Close</button>
-               <div class="local-grid-error">{{error}}</div>
+            <div class="form-group pl-2">
+               <b>Add Grid Monitor</b>
+            </div>
+            <div class="form-group p-2">
+               <label>Grid Hub Server:</label>
+               <input type="text" class="form-control" v-model="form.gridServer"  placeholder="xxx.xxx.xxx">
+            </div>
+            <div class="form-group p-2">
+               <label>Password:</label>
+               <input type="password" class="form-control" v-model="form.password"  placeholder="">
+            </div>
+            <button type="button" class="btn btn-info" :disabled="isDisabled()" v-on:click="accessGrid()" v-if="!isGrid() || true">Access the Grid</button>
+            <button type="button" class="btn btn-secondary" v-on:click="parent.close()" v-if="!isGrid()">Close</button>
+            <div class="local-grid-error">=={{error}}==</div>
          </form>
       </div>
    </div>
@@ -73,6 +73,7 @@ module.exports = {
                      me.parent.close();
                   } else {
                      me.root.gridAdminServer = '';
+                     me.error = resultHub.message;
                   }
                   me.$forceUpdate();
                }, function(err) {
