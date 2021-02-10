@@ -80,36 +80,33 @@
 
         me.isTokenLogin = (token, callback) => {
             me.refreshAuthToken(token, () => {
-                pkg.readJson(fnToken,
-                    (authToken) => {
-                        callback((authToken[token])? {status: 'success', token : token} : {status: 'failure'});
-                    });
+                pkg.readJson(fnToken, (authToken) => {
+                    callback((authToken[token])? {status: 'success', token : token} : {status: 'failure'});
+                });
             });
         };
         
         me.refreshAuthToken = (token, callback) => {
-            pkg.readJson(fnToken,
-                (authToken) => {
-                    let changed = false;
-                    for (var o in authToken) {
-                        if ((new Date().getTime() - authToken[o]) > me.comm.SESSION_TIMEOUT) {
-                           delete authToken[o];
-                           changed = true;
-                        }
-                    }
-                    if (authToken[token]) {
-                        authToken[token] = new Date().getTime();
+            pkg.readJson(fnToken,(authToken) => {
+                let changed = false;
+                for (var o in authToken) {
+                    if ((new Date().getTime() - authToken[o]) > me.comm.SESSION_TIMEOUT) {
+                        delete authToken[o];
                         changed = true;
                     }
-                    if (!changed) {
-                        callback();
-                    } else {
-                        fs.writeFile(fnToken, JSON.stringify(authToken), (err) => {
-                            callback();
-                        });
-                    }
                 }
-            );
+                if (authToken[token]) {
+                    authToken[token] = new Date().getTime();
+                    changed = true;
+                }
+                if (!changed) {
+                    callback();
+                } else {
+                    fs.writeFile(fnToken, JSON.stringify(authToken), (err) => {
+                        callback();
+                    });
+                }
+            });
         };
     }
     module.exports = obj;
