@@ -140,40 +140,11 @@ module.exports = {
       submit() {
          this.signIn();
       },
-      accessGrid(code) {
-         const me = this;
-         let hostname = window.location.hostname,
-             token = code;
-         if  (hostname === 'localhost') {
-            return true;
-         }
-         if (code) {
-            me.root.dataEngine().appPost({
-               url  : '/_grid/',
-               cmd     :'gridAccess',
-               data    : {
-                  gridServer  : hostname,
-                  password    : code
-               },
-               dataType: 'json'
-            },
-            function(result) {
-               localStorage.setItem('easydockerSVR', result.gridServer.replace(/\./g, '_'));
-               localStorage.setItem('easydockerTOKEN', result.token);
-               window.location.reload();
-            }, function(err) {}); 
-         } else {
-               localStorage.removeItem('easydockerSVR');
-               localStorage.removeItem('easydockerTOKEN');
-            }  
-
-      },
       signIn() {
          var me = this;
          me.root.dataEngine().appPost({cmd: 'auth', data : {code : 'signin', password: me.formSignin.password }}, function(result) {
                if (result.status === 'success') {
                   localStorage.setItem('easydockerFP', result.token);
-                  me.accessGrid(me.formSignin.password);
                   me.checkIsTokenLogin();
                   if (typeof me.$parent.close === 'function') {
                      me.$parent.close();
@@ -187,7 +158,6 @@ module.exports = {
          const me = this;
          me.root.dataEngine().appPost({cmd: 'auth', data : {code : 'signOff'}}, function(result) {
                if (result.status === 'success') { 
-                  me.accessGrid(null) 
                   localStorage.removeItem('easydockerFP');
                   window.location.reload();
                }
