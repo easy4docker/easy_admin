@@ -75,7 +75,6 @@ module.exports = {
             const me = this;
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
-             
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
             if (!svr || !token) {
                 return true;
@@ -85,7 +84,7 @@ module.exports = {
                     cmd     :'getGridMatrix',
                     data    : {},
                     dataType: 'json',
-                    gridToken   : token
+                    gridToken   : token+1
                 },
                 function(result) {
                     if (result.status === 'success') {

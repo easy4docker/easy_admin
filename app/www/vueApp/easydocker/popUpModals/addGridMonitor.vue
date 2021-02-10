@@ -13,7 +13,7 @@
                   <label>Password:</label>
                   <input type="password" class="form-control" v-model="form.password"  placeholder="">
                </div>
-               <button type="button" class="btn btn-info" :disabled="isDisabled()" v-on:click="accessGrid()" v-if="!isGrid()">Access the Grid</button>
+               <button type="button" class="btn btn-info" :disabled="isDisabled()" v-on:click="accessGrid()" v-if="!isGrid() || true">Access the Grid</button>
                <button type="button" class="btn btn-secondary" v-on:click="parent.close()" v-if="!isGrid()">Close</button>
                <div class="local-grid-error">{{error}}</div>
          </form>
@@ -40,36 +40,50 @@ module.exports = {
         me.form.gridServer = (!localStorage.getItem('easydockerSVR')) ? '' : localStorage.getItem('easydockerSVR').replace(/\_/g, '.');
    },
    methods : {
-        isDisabled() {
-            const me = this;
-            return (!me.form.gridServer || !me.form.password) ? true : false;
-        },
-        isGrid() {
-            return (!localStorage.getItem('easydockerSVR') || !localStorage.getItem('easydockerTOKEN')) ? false : true
-        },
-        accessGrid() {
-            const me = this;
-            me.root.dataEngine().appPost({
-                url  : '/_grid/',
-                cmd     :'localGridAccessSetup',
-                data    : me.form,
-                dataType: 'json'
-            },
-            function(result) {
-               console.log('--result-2->');
-               console.log(result);
-               localStorage.setItem('easydockerSVR', result.gridServer.replace(/\./g, '_'));
-               localStorage.setItem('easydockerTOKEN', result.token);
-               me.root.gridAdminServer = result.gridServer;
-               me.parent.close();
-               me.root.gridMatrix = {};
-               // me.root.getGridMatrix();
-               // window.location.reload();
-            }, function(err) {
-                me.gridServer = false;
-                console.log(err);
-            });
-        }
+      isDisabled() {
+         const me = this;
+         return (!me.form.gridServer || !me.form.password) ? true : false;
+      },
+      isGrid() {
+         return (!localStorage.getItem('easydockerSVR') || !localStorage.getItem('easydockerTOKEN')) ? false : true
+      },
+      accessGrid() {
+         const me = this;
+         me.root.dataEngine().appPost({
+               url  : '/_grid/',
+               cmd     :'localGridAccessSetup',
+               data    : me.form,
+               dataType: 'json'
+         },
+         function(result) {
+            me.root.dataEngine().gridHub({
+                  hubServer  : me.form.gridServer,
+                  cmd     :'getGridMatrix',
+                  data    : {},
+                  dataType: 'json',
+                  gridToken   : result.token
+               },
+               function(result) {
+                  console.log(resultHub);
+                  if (resultHub.status === 'success') {
+                     localStorage.setItem('easydockerSVR', result.gridServer.replace(/\./g, '_'));
+                     localStorage.setItem('easydockerTOKEN', result.token);
+                     me.root.gridAdminServer = result.gridServer;
+                     me.root.gridMatrix = resultHub.result;
+                     me.parent.close();
+                  } else {
+                     me.root.gridAdminServer = '';
+                  }
+                  me.$forceUpdate();
+               }, function(err) {
+                  me.root.gridAdminServer = '';
+                  console.log(err);
+               });
+         }, function(err) {
+               me.gridServer = false;
+               console.log(err);
+         });
+      }
    }
 }
 </script>

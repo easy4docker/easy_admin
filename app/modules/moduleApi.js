@@ -116,6 +116,9 @@
 		}
 
         me.localGridAccessSetup = (cbk) => {
+            var MGhub = pkg.require(env.root+ '/modules/moduleGridHub.js');
+            var ghub = new MGhub(env, pkg);
+
             const data = req.body.data;
             cbk({status: 'success', gridServer : data.gridServer, token : pkg.md5(data.password)});
         }
