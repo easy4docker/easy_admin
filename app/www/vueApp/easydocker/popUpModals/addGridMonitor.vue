@@ -63,7 +63,7 @@ module.exports = {
                   dataType: 'json',
                   gridToken   : result.token
                },
-               function(result) {
+               function(resultHub) {
                   console.log(resultHub);
                   if (resultHub.status === 'success') {
                      localStorage.setItem('easydockerSVR', result.gridServer.replace(/\./g, '_'));
@@ -77,11 +77,10 @@ module.exports = {
                   me.$forceUpdate();
                }, function(err) {
                   me.root.gridAdminServer = '';
-                  console.log(err);
+                  me.error = err.message;
                });
          }, function(err) {
-               me.gridServer = false;
-               console.log(err);
+               me.error = err.message;
          });
       }
    }
