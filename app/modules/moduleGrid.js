@@ -44,7 +44,7 @@
 
         me.post = () => {
             const METHODS = [
-                'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'syncAppCode', 'serverMem', 'sampleCode'
+                'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'syncAppCode', 'serverMem', 'sampleCode'
             ];
 
             var MApi= pkg.require(env.root+ '/modules/moduleApi.js');
@@ -235,6 +235,11 @@
 
             }
             cbk({status: 'success', result: resp});
+        }
+
+        me.gridAccess = (cbk) => {
+            const data = req.body.data;
+            cbk({gridServer : data.gridServer, token : pkg.md5(data.password)});
         }
 
         me.serverMem = (cbk) => {
