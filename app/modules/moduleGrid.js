@@ -117,23 +117,16 @@
             }
             return result;
         }
-        me.dataGridMatrix = () => {
-            try {
-
-            } catch (e) {}
-            let grids = {};
-            try {
-                grids = pkg.require(gridStatusFn);
-            } catch (e) {}
-            return grids;
+        me.dataGridMatrix = (cbk) => {
+            pkg.readJson(gridStatusFn, (grids) => {
+                cbk(grids);
+            });
         }
 
-        me.dataGrids = () => {
-            let grids = {};
-            try {
-                grids = pkg.require(gridServerFn);
-            } catch (e) {}
-            return grids;
+        me.dataGrids = (cbk) => {
+            pkg.readJson(gridServerFn, (grids) => {
+                cbk(grids);
+            });
         }
         me.setCron = (code, str, callback) => {
             fs.writeFile(me.comm.inside.data + '/commCron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
@@ -143,72 +136,80 @@
         /* --- POST function ---->> */
         me.removeGrid = (callback) => {
             var data = req.body;
-            const _f = {};
-            let gridServer = me.dataGrids();
-            _f['removeGrid'] = (cbk) => {
-                if (data.gridServer) {
-                    delete gridServer[data.gridServer];
-                }
-                fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
-                    cbk(true);
-                });
-            };
-            _f['removeCron'] = (cbk) => {
-                let shell_fn = (me.comm.outside.env === 'local')? (me.comm.outside.data_folder + '/log/ctab') : '/etc/crontab';
-                let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
-                me.setCron('remove-grid', shell_str, (err) => {
-                    cbk(true);
-                });
-            }
             
-            CP.serial(_f, (data) => {
-                me.getGrids(callback);
-            }, 3000)
+            me.dataGrids(
+                (gridServer) => {
+                    const _f = {};
+                    _f['removeGrid'] = (cbk) => {
+                        if (data.gridServer) {
+                            delete gridServer[data.gridServer];
+                        }
+                        fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
+                            cbk(true);
+                        });
+                    };
+                    _f['removeCron'] = (cbk) => {
+                        let shell_fn = (me.comm.outside.env === 'local')? (me.comm.outside.data_folder + '/log/ctab') : '/etc/crontab';
+                        let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
+                        me.setCron('remove-grid', shell_str, (err) => {
+                            cbk(true);
+                        });
+                    }
+                    
+                    CP.serial(_f, (data) => {
+                        me.getGrids(callback);
+                    }, 3000)
+                }
+            );
         }
 
         me.addGrid = (callback) => {
             var data = req.body;
-            const _f = {};
-
-            let gridServer = me.dataGrids();
-            if (data.gridServer) {
-                gridServer[data.gridServer] = data.tag;
-            }
-
-            _f['saveGrids'] = (cbk) => {
-                fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
-                    cbk(true);
-                });
-            };
-
-            _f['gridTokenFn'] = (cbk) => {
-                fs.writeFile(gridTokenFn, me.makeid(32), (err) => {
-                    cbk(true);
-                });
-            };
-            _f['addToCron'] = (cbk) => {
-                let shell_fn = (me.comm.outside.env === 'local')? (me.comm.outside.data_folder + '/log/ctab') : '/etc/crontab';
-                let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
-              
-                shell_str += "\n" + 'echo "*/2 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + me.comm.outside.app_root + ' && sh _gridSync.sh ' + 
-                    data.gridServer + ' ' + data.tag + ')" >> ';
-
-                if (me.comm.outside.env === 'local') {
-                    shell_str += me.comm.outside.data_folder + '/log/ctab';
-                } else {
-                    shell_str += '/etc/crontab';
+            me.dataGrids(
+                (gridServer) => {
+                const _f = {};
+                if (data.gridServer) {
+                    gridServer[data.gridServer] = data.tag;
                 }
-                me.setCron('gridSync', shell_str, (err) => {
-                    cbk(true);
-                });
-            }
-            CP.serial(_f, (data) => {
-                me.getGrids(callback);
-            }, 3000)
+    
+                _f['saveGrids'] = (cbk) => {
+                    fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
+                        cbk(true);
+                    });
+                };
+    
+                _f['gridTokenFn'] = (cbk) => {
+                    fs.writeFile(gridTokenFn, me.makeid(32), (err) => {
+                        cbk(true);
+                    });
+                };
+                _f['addToCron'] = (cbk) => {
+                    let shell_fn = (me.comm.outside.env === 'local')? (me.comm.outside.data_folder + '/log/ctab') : '/etc/crontab';
+                    let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
+                  
+                    shell_str += "\n" + 'echo "*/2 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + me.comm.outside.app_root + ' && sh _gridSync.sh ' + 
+                        data.gridServer + ' ' + data.tag + ')" >> ';
+    
+                    if (me.comm.outside.env === 'local') {
+                        shell_str += me.comm.outside.data_folder + '/log/ctab';
+                    } else {
+                        shell_str += '/etc/crontab';
+                    }
+                    me.setCron('gridSync', shell_str, (err) => {
+                        cbk(true);
+                    });
+                }
+                CP.serial(_f, (data) => {
+                    me.getGrids(callback);
+                }, 3000)
+            })
         }
 
         me.getGrids = (cbk) => {
-            cbk({status: "success", result: me.dataGrids()});
+            me.dataGrids(
+                (gridServer) => {
+                    cbk({status: "success", result:gridServer});
+            });
         }
 
         me.syncAppCode = (cbk) => {
@@ -258,56 +259,57 @@
 
         me.statusUpdate = (callback) =>{
            
-            let grids = me.dataGridMatrix();
-            let data = req.query;
-            if (!data || !data.ip || !data.gridToken ) {
-                callback(false);
-                return true;
-            } else {
-                const _f = {};
-                _f['newToken'] = (cbk) => {
-                    const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.gridToken;
-                    exec(cmdStr, {maxBuffer: 224 * 2048},
-                        (error, stdout, stderr) => {
-                            var v = (!stdout) ? '' : stdout.replace(/\s+/, '');
-                            if ((error) || !v) {
-                                cbk(false);
-                              //  CP.exit = true;
-                            } else {
-                                cbk(v);
-                            }
-                    });
-                }
-                
-                _f['memStatus'] = (cbk) => {
-                    var ret = {};
-                    if (req.body.data) {
-                        req.body.data.split(/\n/g).forEach(function(line){
-                            line = line.split(':');
-                    
-                            // Ignore invalid lines, if any
-                            if (line.length < 2) {
-                                return;
-                            }
-                            // Remove parseInt call to make all values strings
-                            var k = line[0].replace(/(\{|\})/,'');
-                            ret[k] = parseInt(line[1].trim(), 10);
+            me.dataGridMatrix((grids) => {
+                let data = req.query;
+                if (!data || !data.ip || !data.gridToken ) {
+                    callback(false);
+                    return true;
+                } else {
+                    const _f = {};
+                    _f['newToken'] = (cbk) => {
+                        const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.gridToken;
+                        exec(cmdStr, {maxBuffer: 224 * 2048},
+                            (error, stdout, stderr) => {
+                                var v = (!stdout) ? '' : stdout.replace(/\s+/, '');
+                                if ((error) || !v) {
+                                    cbk(false);
+                                    //  CP.exit = true;
+                                } else {
+                                    cbk(v);
+                                }
                         });
                     }
-                    cbk(ret);
-                }
-                _f['saveGridStatus'] = (cbk) => {
-                    grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag,
-                    mem : CP.data.memStatus};
-                    fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
-                        cbk(true);
-                    });
-                }
-                
-                CP.serial(_f, (data1) => {
-                   callback(true);
-                }, 3000)
-            } 
+                    
+                    _f['memStatus'] = (cbk) => {
+                        var ret = {};
+                        if (req.body.data) {
+                            req.body.data.split(/\n/g).forEach(function(line){
+                                line = line.split(':');
+                        
+                                // Ignore invalid lines, if any
+                                if (line.length < 2) {
+                                    return;
+                                }
+                                // Remove parseInt call to make all values strings
+                                var k = line[0].replace(/(\{|\})/,'');
+                                ret[k] = parseInt(line[1].trim(), 10);
+                            });
+                        }
+                        cbk(ret);
+                    }
+                    _f['saveGridStatus'] = (cbk) => {
+                        grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag,
+                        mem : CP.data.memStatus};
+                        fs.writeFile(gridStatusFn, JSON.stringify(grids), (err) => {
+                            cbk(true);
+                        });
+                    }
+                    
+                    CP.serial(_f, (data1) => {
+                        callback(true);
+                    }, 3000)
+                } 
+            });
         }
     }
     module.exports = obj;
