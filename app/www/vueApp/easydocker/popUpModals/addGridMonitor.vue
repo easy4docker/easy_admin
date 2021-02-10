@@ -78,13 +78,13 @@ module.exports = {
                      me.$forceUpdate();
                   }, function(err) {
                      me.root.gridAdminServer = '';
-                     me.error = err.message;
+                     me.error = me.form.gridServer + '->' + err.message;
                   });
             } else {
                me.error = me.form.gridServer + '->' + result.message;
             }
          }, function(err) {
-               me.error = err.message;
+               me.error = me.form.gridServer + '->' + err.message;
          });
       }
    }
