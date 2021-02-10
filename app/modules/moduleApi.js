@@ -162,24 +162,22 @@
         }
 
         me.localTokenValidation = (token, success) => {
-            let authToken = {};
-            try {
-                authToken = pkg.require(me.comm.file.authToken );
-            } catch (e) {}
-            for (var o in authToken) {
-                if (new Date().getTime() - authToken[o] > me.comm.SESSION_TIMEOUT) {
-                   delete authToken[o];
+            pkg.readJson(me.comm.file.authToken, (authToken) => {
+                for (var o in authToken) {
+                    if (new Date().getTime() - authToken[o] > me.comm.SESSION_TIMEOUT) {
+                       delete authToken[o];
+                    }
                 }
-            }
-            if (authToken[token]) {
-                authToken[token] = new Date().getTime();
-                fs.writeFile(me.comm.file.authToken, JSON.stringify(authToken), 
-                (err) => {
-                    success();
-                });
-            } else {
-                me.comm.sendAction('', 'wrong authentication token!');
-            }
+                if (authToken[token]) {
+                    authToken[token] = new Date().getTime();
+                    fs.writeFile(me.comm.file.authToken, JSON.stringify(authToken), 
+                    (err) => {
+                        success();
+                    });
+                } else {
+                    me.comm.sendAction('', 'wrong authentication token!');
+                }
+            });
         }
       
         me.getIP = (cbk) => {
