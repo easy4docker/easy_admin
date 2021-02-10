@@ -224,17 +224,14 @@
         }
 
         me.getGridMatrix = (cbk) => {
-            let grids = {}, resp = {};
-            try {
-                grids = pkg.require(gridStatusFn);
-            } catch (e) {
-            }
-
-            for (let key in grids) {
-                resp[key] = grids[key].mem;
-
-            }
-            cbk({status: 'success', result: resp});
+            pkg.readJson(gridStatusFn, (grids) => {
+                let resp = {}
+                for (let key in grids) {
+                    resp[key] = grids[key].mem;
+    
+                }
+                cbk({status: 'success', result: resp});
+            });
         }
 
         me.gridAccess = (cbk) => {
