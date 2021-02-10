@@ -73,18 +73,18 @@ module.exports = {
                         me.parent.close();
                      } else {
                         me.root.gridAdminServer = '';
-                        me.error = resultHub.message;
+                        me.error = resultHub.message + ' to ' + me.form.gridServer;
                      }
                      me.$forceUpdate();
                   }, function(err) {
                      me.root.gridAdminServer = '';
-                     me.error = me.form.gridServer + '->' + err.message;
+                     me.error = err.message + ' to ' + me.form.gridServer;
                   });
             } else {
-               me.error = me.form.gridServer + '->' + result.message;
+               me.error = err.message + ' to ' + me.form.gridServer;
             }
          }, function(err) {
-               me.error = me.form.gridServer + '->' + err.message;
+               me.error = err.message + ' to ' + me.form.gridServer;
          });
       }
    }
