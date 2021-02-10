@@ -74,12 +74,10 @@ module.exports = {
                         me.root.gridMatrix = resultHub.result;
                         me.parent.close();
                      } else {
-                        me.root.gridAdminServer = '';
                         me.error = resultHub.message + ' to ' + me.form.gridServer;
                      }
                      me.$forceUpdate();
                   }, function(err) {
-                     me.root.gridAdminServer = '';
                      me.error = err.message + ' to ' + me.form.gridServer;
                   });
             } else {
