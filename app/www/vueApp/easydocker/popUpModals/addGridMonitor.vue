@@ -66,7 +66,6 @@ module.exports = {
                      gridToken   : result.token
                   },
                   function(resultHub) {
-                     console.log(resultHub);
                      if (resultHub.status === 'success') {
                         localStorage.setItem('easydockerSVR', result.gridServer.replace(/\./g, '_'));
                         localStorage.setItem('easydockerTOKEN', result.token);
