@@ -81,10 +81,10 @@ module.exports = {
                      me.error = err.message;
                   });
             } else {
-               me.error = result.message;
+               me.error = me.form.gridServer + '->' + result.message;
             }
          }, function(err) {
-               me.error = me.form.gridServer + '=>' + err.message;
+               me.error = err.message;
          });
       }
    }
