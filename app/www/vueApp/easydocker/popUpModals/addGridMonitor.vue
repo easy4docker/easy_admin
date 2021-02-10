@@ -56,7 +56,7 @@ module.exports = {
                dataType: 'json'
          },
          function(result) {
-            if (resultHub.status === 'success') {
+            if (result.status === 'success') {
                me.root.dataEngine().gridHub({
                      hubServer  : me.form.gridServer,
                      cmd     :'getGridMatrix',
