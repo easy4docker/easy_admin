@@ -84,7 +84,7 @@ module.exports = {
                     cmd     :'getGridMatrix',
                     data    : {},
                     dataType: 'json',
-                    gridToken   : token+1
+                    gridToken   : token
                 },
                 function(result) {
                     if (result.status === 'success') {
