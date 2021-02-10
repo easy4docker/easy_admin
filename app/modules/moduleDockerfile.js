@@ -15,16 +15,11 @@
                            if (files[i] === 'admin_dockerfile') {
                                cbk(true);
                            } else {
-                                me.getDescription(files[i],
-                                    function(err, data) {
+                                me.getDescription(files[i], (err, data) => {
                                     if (!err) {
-                                        let setting = {};
-                                        try {
-                                            setting = pkg.require(baseDir + '/' + files[i] + '/config.json');
-                                        } catch (e) {
-
-                                        }
-                                        list.push({code : files[i], title: data.title, description : data.description, setting : setting});
+                                        pkg.readJson(baseDir + '/' + files[i] + '/config.json', (setting) => {
+                                            list.push({code : files[i], title: data.title, description : data.description, setting : setting});
+                                        });
                                     }
                                     cbk(true);
                                 });
