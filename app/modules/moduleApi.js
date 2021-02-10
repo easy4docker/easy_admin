@@ -2,12 +2,7 @@
     var obj = function(env, pkg, req, res) {
         var me = this,
             fs = require('fs'),
-            CP = new pkg.crowdProcess(),
-            git_root = '/var/_localRoot',
-            app_dir = '/var/_localApp',
-            data_dir = '/var/_localAppData',
-            key_dir = '/var/_localAppKey',
-            gridStatusFn = data_dir + '/_gridMatrix.json';
+            data_dir = '/var/_localAppData';
 
 		var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
