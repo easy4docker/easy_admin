@@ -13,9 +13,11 @@
                <label>Password:</label>
                <input type="password" class="form-control" v-model="form.password"  placeholder="">
             </div>
-            <button type="button" class="btn btn-info" :disabled="isDisabled()" v-on:click="accessGrid()" v-if="!isGrid() || true">Access the Grid</button>
-            <button type="button" class="btn btn-secondary" v-on:click="parent.close()" v-if="!isGrid()">Close</button>
-            <div class="local-grid-error">{{error}}</div>
+            <div class="form-group p-2">
+               <button type="button" class="btn btn-info" :disabled="isDisabled()" v-on:click="accessGrid()" v-if="!isGrid() || true">Access the Grid</button>
+               <button type="button" class="btn btn-secondary" v-on:click="parent.close()" v-if="!isGrid()">Close</button>
+               <div class="local-grid-error p-2">{{error}}</div>
+            </div>
          </form>
       </div>
    </div>
