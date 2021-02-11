@@ -92,16 +92,20 @@ module.exports = {
         addGrid() {
             const me = this;
             var postData = me.form;
+            appPos.url = '/_grid/';
             postData.cmd = 'addGrid';
             alert(111);
-            me.root.dataEngine().runPost('/_grid/', postData,
+            me.root.dataEngine().runPost(postData,
                 function(result) {
+                    console.log(result);
                     me.getGrids();
                 },true);
         },
         removeGrid(v) {
             var me = this;
-            me.root.dataEngine().runPost('/_grid/', 'removeGrid', {gridServer : v},
+            appPos.url = '/_grid/';
+            postData.cmd = 'removeGrid';
+            me.root.dataEngine().runPost({gridServer : v},
                 function(result) {
                     me.getGrids();
                 }, function(result) {});
