@@ -94,7 +94,7 @@ module.exports = {
             var postData = me.form;
             postData.cmd = 'addGrid';
             alert(111);
-            me.root.dataEngine().runPost('/_grid/', 'addGrid', postData,
+            me.root.dataEngine().runPost('/_grid/', postData,
                 function(result) {
                     me.getGrids();
                 },true);
