@@ -32,10 +32,6 @@
                    if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
                        me.comm.sendAction('', 'Unauthorized gridToken!');
                    } else {
-                        res.send(setting);
-                        return true;
-                        //=======
-
                         const request = require('request');
                         var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                         let mGrid =  new MAGrid(env, pkg, req, res);
@@ -45,6 +41,11 @@
                             if  (setting.target === ip0 && (ip0) && (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken')) {
                                 mGrid.call('post', true);
                             } else {
+
+                                res.send('--setting--2--');
+                                return true;
+                                //=======
+
                                 var postData =  setting; 
                                 var channel = (!setting.channel) ? '_grid' : setting.channel;
                                 let url = 'http://' + setting.target + ':10000/' + channel + '/';
