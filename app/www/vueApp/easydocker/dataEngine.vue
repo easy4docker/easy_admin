@@ -94,35 +94,10 @@ module.exports = {
 
         appPost(data, callback, isSpinner) {
             const me = this;
-            me.appPostLocal(data, callback, isSpinner);
-        },
-        appPostLocal(data, callback, isSpinner) {
-            const me = this;
             if (isSpinner) me.$parent.triggerSpinner = true;
             $.ajax({
                 type: 'POST',
-                url:'/api',
-                data: me.withAuth(data),
-                success: function(result) {
-                    if (isSpinner) me.$parent.triggerSpinner = false;
-                    callback(result);
-                    // if (result.status !== 'success') {
-                    //    me.root.alertComp().show(result);
-                    // }
-                },
-                error: function (jqXHR, textStatus, errorThrown) { 
-                    if (isSpinner) me.$parent.triggerSpinner = false;
-                    callback({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
-                },
-                dataType: 'JSON'
-            });
-        },
-        runPost(url, data, callback, isSpinner) {
-            const me = this;
-            if (isSpinner) me.$parent.triggerSpinner = true;
-            $.ajax({
-                type: 'POST',
-                url:url,
+                url: (data.url) ? data.url : '/api',
                 data: me.withAuth(data),
                 success: function(result) {
                     if (isSpinner) me.$parent.triggerSpinner = false;
