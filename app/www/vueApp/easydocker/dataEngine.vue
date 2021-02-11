@@ -94,10 +94,14 @@ module.exports = {
 
         appPost(data, callback, isSpinner) {
             const me = this;
+            me.appPostLocal(data, callback, isSpinner);
+        },
+        appPostLocal(data, callback, isSpinner) {
+            const me = this;
             if (isSpinner) me.$parent.triggerSpinner = true;
             $.ajax({
                 type: 'POST',
-                url: (!data.url) ?  '/api' : data.url,
+                url: (data.url) ? data.url : '/api',
                 data: me.withAuth(data),
                 success: function(result) {
                     if (isSpinner) me.$parent.triggerSpinner = false;
