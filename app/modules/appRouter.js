@@ -4,7 +4,7 @@
 		var fs = require('fs');
 		var path = require('path');
 
-		this.route = (rest) => {
+		me.route = (rest) => {
 			if (rest === 'get') {
 				me.get();
 			} else {
@@ -12,7 +12,7 @@
 			}
 		}
 
-		this.get = () => {
+		me.get = () => {
 			let p = req.params[0],
 				mp = p.match(/\/([^\/]+)(\/|$)/);
 
@@ -114,7 +114,7 @@
 			}
 		};
 
-		this.sendFile = (fn) => {
+		me.sendFile = (fn) => {
 			fs.stat(fn, function(err, stat) {
 				if(err == null) {
 					res.sendFile(fn);

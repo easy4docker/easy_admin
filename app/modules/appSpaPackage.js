@@ -3,7 +3,7 @@
         var fs = require('fs'),
             me = this,
 			dirPatt = /\/spa\-package\//;
-		this.call = function(p) {
+		me.call = function(p) {
 			let spaDir = env.appFolder + '/www/js/package/';
 			let cfgFn = spaDir + p.replace(dirPatt, '');
 			let fileAttr = me.getConfigAttr(cfgFn);
@@ -22,7 +22,7 @@
             });
 		};
 
-		this.packCssFile = function(cfg) {
+		me.packCssFile = function(cfg) {
 			var codeStr = '';
 			var _f = {},
 				appDir = env.appFolder + '/www';
@@ -53,7 +53,7 @@
 			}, 6000);
 		}
 
-		this.packVueFile = function(cfg) {
+		me.packVueFile = function(cfg) {
 			var codeStr = 'if (!_TPL) var _TPL = {};' + "\n";
 			codeStr += 'if (!_TPL.vue) _TPL.vue = {};' + "\n";
 			var _f = {},
@@ -109,7 +109,7 @@
 			}, 6000);
 		}
 
-		this.packJsFile = function(cfg) {
+		me.packJsFile = function(cfg) {
 			var codeStr = 'if (!_TPL) var _TPL = {};' + "\n";
 			codeStr += 'if (!_TPL.js) _TPL.js= {};' + "\n";
 			var _f = {},
@@ -157,7 +157,7 @@
 					res.send(codeStr);
 			}, 6000);
 		}
-		this.getConfigAttr = (fn) => {
+		me.getConfigAttr = (fn) => {
 			let patt = /(\.min|)\.(vue|js|css|jsx)$/i;
 			let v = fn.match(patt);
 			return (!v)? {} : {
@@ -166,7 +166,7 @@
 				'fileName'	: (!v[2]) ? fn : (fn.replace(patt, '.') + v[2] + '.json')
 			};
 		};
-		this.sendHeader = (filetype) => {
+		me.sendHeader = (filetype) => {
 			var me = this;
 			res.header("Access-Control-Allow-Origin", "*");
 			res.header("Access-Control-Allow-Headers", "X-Requested-With");
