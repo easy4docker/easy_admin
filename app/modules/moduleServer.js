@@ -1,5 +1,5 @@
 (function() {
-    var obj = function(env, pkg) {
+    var obj = function(env, pkg, req, res) {
         var me = this,
             fs = require('fs'),
             exec = require('child_process').exec,
@@ -10,7 +10,7 @@
     
         const   data_dir = me.comm.inside.data,
                 sitesCfgFn = data_dir + '/_servers_cfg.json';
-                
+
         var _env = {};
         try {
             _env = require(data_dir + '/_env.json');

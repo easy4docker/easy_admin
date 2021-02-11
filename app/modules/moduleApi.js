@@ -10,7 +10,7 @@
 
 
         var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
-        var Servers = new MServers(env, pkg);
+        var Servers = new MServers(env, pkg, req, res);
 
         var _env = {};
         try {
