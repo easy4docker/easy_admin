@@ -6,8 +6,7 @@
         var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
 
-        const   gridTokenFn = me.comm.file.gridToken,
-                gridStatusFn = me.comm.file.gridStatus;
+        const   gridTokenFn = me.comm.file.gridToken;
 
         me.get = () => {
            me.comm.sendErrorJson('invalid access !');
