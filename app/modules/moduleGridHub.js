@@ -32,7 +32,7 @@
                    if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
                        me.comm.sendAction('', 'Unauthorized gridToken!');
                    } else {
-                        res.send('setting-->');
+                        res.send(setting);
                         return true;
                         //=======
 
