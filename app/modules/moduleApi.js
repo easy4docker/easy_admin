@@ -56,7 +56,7 @@
                 'getIP', 'getLocalEnv', 'getServerToken', 'auth', 'loadList', 'pullCode', 'stopVServer', 
                 'startVServer', 'gitSiteBranchs', 'gitSwitchBranch',
                 'deleteVServer', 'addServer', 'setupServer',
-                'localGridAccessSetup'
+                'localGridAccessSetup', 'syncAppCode'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -92,6 +92,14 @@
                 (data) => {
                     me.refreshTokenSend(data, cbk);
                 });
+        }
+
+        me.syncAppCode = (cbk) => {
+            const shell_str = 'cd ' + me.comm.inside.root + ' && git pull';
+            exec(shell_str, {maxBuffer: 224 * 2048},
+                function(error, stdout, stderr) {
+                    cbk({status : 'success'})
+            });
         }
 
         me.setupServer = (cbk) => {
