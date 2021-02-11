@@ -5,9 +5,12 @@
             exec = require('child_process').exec,
             CP = new pkg.crowdProcess();
 
-        var sitesCfgFn = '/var/_localAppData/_servers_cfg.json';
-        var data_dir = '/var/_localAppData';
-
+        var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
+        me.comm = new MCommon(req, res);
+    
+        const   data_dir = me.comm.inside.data,
+                sitesCfgFn = data_dir + '/_servers_cfg.json';
+                
         var _env = {};
         try {
             _env = require(data_dir + '/_env.json');
