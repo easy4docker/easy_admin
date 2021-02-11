@@ -37,11 +37,13 @@
                         let mGrid =  new MAGrid(env, pkg, req, res);
                         mGrid.dataGridMatrix((grid) =>{
                             setting.target = (setting.target) ? setting.target : ip0;
-                            if (!setting.target) {
-                                res.send({status: 'failuer', message : 'Missing target!'});
-                            } else if  (setting.target === ip0 && (ip0) && (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken')) {
+                            if  (setting.target === ip0 && (ip0) && (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken')) {
                                 mGrid.call('post', true);
                             } else {
+
+                          
+                                //=======
+
                                 var postData =  setting; 
                                 var channel = (!setting.channel) ? '_grid' : setting.channel;
                                 let url = 'http://' + setting.target + ':10000/' + channel + '/';
