@@ -40,23 +40,23 @@
                             if  (setting.target === ip0 && (ip0) && (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken')) {
                                 mGrid.call('post', true);
                             } else {
-
-                          
-                                //=======
-
                                 var postData =  setting; 
                                 var channel = (!setting.channel) ? '_grid' : setting.channel;
                                 let url = 'http://' + setting.target + ':10000/' + channel + '/';
 
-                                postData.gridToken = grid[setting.target].gridToken;
-                                res.send(url+'--kkk1');
-                                return true;
-                                request.post({url: url, form: postData}, function(err,httpResponse,body){      
-                                    if (setting.type === 'json') {
-                                        res.send(body);
+                                postData.gridToken = (grid[setting.target]) ? grid[setting.target].gridToken : '';
+
+                                request.post({url: url, form: postData}, function(err,httpResponse,body){    
+                                    if (err) {
+                                        res.send({status : 'failure', message : err.message});
                                     } else {
-                                        res.send(body);
-                                    } 
+                                        if (setting.type === 'json') {
+                                            res.send(body);
+                                        } else {
+                                            res.send(body);
+                                        } 
+                                    }
+
                                 });
                             }
                         });
