@@ -42,13 +42,14 @@
                                 mGrid.call('post', true);
                             } else {
 
-                                res.send(setting);
-                                return true;
+                          
                                 //=======
 
                                 var postData =  setting; 
                                 var channel = (!setting.channel) ? '_grid' : setting.channel;
                                 let url = 'http://' + setting.target + ':10000/' + channel + '/';
+                                res.send(url);
+                                return true;
                                 postData.gridToken = grid[setting.target].gridToken;
                     
                                 request.post({url: url, form: postData}, function(err,httpResponse,body){      
