@@ -42,7 +42,7 @@
                                 mGrid.call('post', true);
                             } else {
 
-                                res.send('--setting--2--');
+                                res.send(setting);
                                 return true;
                                 //=======
 
