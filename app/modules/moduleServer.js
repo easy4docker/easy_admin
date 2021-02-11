@@ -16,48 +16,48 @@
             _env = require(data_dir + '/_env.json');
         } catch (e) {}
 
-        this.sitesPath = () => {
+        me.sitesPath = () => {
             return data_dir + '/sites';
         }
 
-        this.sitePath = (serverName) => {
-            return this.sitesPath() + '/' + serverName;
+        me.sitePath = (serverName) => {
+            return me.sitesPath() + '/' + serverName;
         }
-        this.siteCodePath = (serverName) => {
-            return this.sitePath(serverName) + '/code';
-        }
-
-        this.siteDataPath = (serverName) => {
-            return this.sitePath(serverName) + '/data';
+        me.siteCodePath = (serverName) => {
+            return me.sitePath(serverName) + '/code';
         }
 
-        this.siteEnvPath = (serverName) => {
-            return this.sitePath(serverName) + '/env';
+        me.siteDataPath = (serverName) => {
+            return me.sitePath(serverName) + '/data';
         }
 
-        this.siteContainer = (serverName) => {
+        me.siteEnvPath = (serverName) => {
+            return me.sitePath(serverName) + '/env';
+        }
+
+        me.siteContainer = (serverName) => {
             return ('sites-' + serverName + '-container').toLowerCase();
         }
 
-        this.getImageName = (serverName) => {
+        me.getImageName = (serverName) => {
             return ('sites-' + serverName + '-image').toLowerCase();
         }
 
-        this.dockerPath = (serverName) => {
+        me.dockerPath = (serverName) => {
             return _env.data_folder + '/sites/' + serverName;
         }
-        this.dockerCodePath = (serverName) => {
-            return this.dockerPath(serverName) + '/code';
+        me.dockerCodePath = (serverName) => {
+            return me.dockerPath(serverName) + '/code';
         }
-        this.dockerDataPath = (serverName) => {
-            return this.dockerPath(serverName) + '/data';
+        me.dockerDataPath = (serverName) => {
+            return me.dockerPath(serverName) + '/data';
         }
-        this.dockerEnvPath = (serverName) => {
-            return this.dockerPath(serverName) + '/env';
+        me.dockerEnvPath = (serverName) => {
+            return me.dockerPath(serverName) + '/env';
         }
 
-        this.pullCode = (serverName, callback) => {
-            var cmd = 'cd ' + this.siteCodePath(serverName) + ' && git pull';
+        me.pullCode = (serverName, callback) => {
+            var cmd = 'cd ' + me.siteCodePath(serverName) + ' && git pull';
             exec(cmd, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
                     if (!error) {
@@ -70,13 +70,13 @@
             });
         }; 
 
-        this.stopVServer = (serverName, callback) => {
+        me.stopVServer = (serverName, callback) => {
             me.templateContent(serverName, 'removeDockerApp.tpl', (content) => {
                 me.setCron('stopVServer-' + serverName, content, callback);
             });
         };
 
-        this.startVServer = (serverName, callback) => {
+        me.startVServer = (serverName, callback) => {
             me.templateContent(serverName, 'addDockerApp.tpl', (content) => {
                 me.setCron('startDockerServer-' + serverName, content, callback);
             });
@@ -114,7 +114,7 @@
             });
         };
 
-        this.setCron = (code, str, callback) => {
+        me.setCron = (code, str, callback) => {
             fs.writeFile(data_dir + '/commCron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
                 setTimeout(() => {
                     callback({status:'success', message: code});
@@ -122,7 +122,7 @@
             });
         }
 
-        this.saveEtcHosts = (callback) => {
+        me.saveEtcHosts = (callback) => {
             me.getSites((sites_list) => {
                 var str='';
                 str += "#!/bin/bash\n";
