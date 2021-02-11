@@ -91,11 +91,13 @@ module.exports = {
     methods : {
         addGrid() {
             const me = this;
+            var postData = me.form;
+            postData.cmd = 'addGrid';
             alert(111);
-            me.root.dataEngine().runPost('/_grid/', 'addGrid', me.form,
+            me.root.dataEngine().runPost('/_grid/', 'addGrid', postData,
                 function(result) {
                     me.getGrids();
-                }, function(result) {});
+                },true);
         },
         removeGrid(v) {
             var me = this;
