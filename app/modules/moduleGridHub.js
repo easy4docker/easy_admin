@@ -28,6 +28,9 @@
             pkg.readJson(authfn, (auth) => {
                 fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                     var setting = req.body;
+                    res.send(setting);
+                    return true;
+                    //=======
                    if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
                        me.comm.sendAction('', 'Unauthorized gridToken!');
                    } else {
