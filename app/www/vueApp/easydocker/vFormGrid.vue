@@ -35,7 +35,7 @@
                         </div>
                         <div class="col-2 p-2 pl-3">
                             <button type="button" class="btn btn-info m-0" v-on:click="addGrid()" :disabled = "isSaveDisabled()">
-                                <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i> Save1
                             </button>
                         </div>
                      </div>
@@ -91,6 +91,7 @@ module.exports = {
     methods : {
         addGrid() {
             const me = this;
+            alert(111);
             me.root.dataEngine().runPost('/_grid/', 'addGrid', me.form,
                 function(result) {
                     me.getGrids();
