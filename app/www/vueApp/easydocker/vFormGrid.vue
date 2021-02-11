@@ -95,7 +95,7 @@ module.exports = {
             appPos.url = '/_grid/';
             postData.cmd = 'addGrid';
             alert(111);
-            me.root.dataEngine().runPost(postData,
+            me.root.dataEngine().appPost(postData,
                 function(result) {
                     console.log(result);
                     me.getGrids();
@@ -105,7 +105,7 @@ module.exports = {
             var me = this;
             appPos.url = '/_grid/';
             postData.cmd = 'removeGrid';
-            me.root.dataEngine().runPost({gridServer : v},
+            me.root.dataEngine().appPost({gridServer : v},
                 function(result) {
                     me.getGrids();
                 }, function(result) {});
