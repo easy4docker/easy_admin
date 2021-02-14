@@ -35,7 +35,7 @@
                         </div>
                         <div class="col-2 p-2 pl-3">
                             <button type="button" class="btn btn-info m-0" v-on:click="addGrid()" :disabled = "isSaveDisabled()">
-                                <i class="fa fa-floppy-o" aria-hidden="true"></i> Save1
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
                             </button>
                         </div>
                      </div>
@@ -95,6 +95,7 @@ module.exports = {
             appPos.url = '/_grid/';
             postData.cmd = 'addGrid';
             alert(111);
+            return true;
             me.root.dataEngine().appPost(postData,
                 function(result) {
                     console.log(result);
@@ -116,8 +117,8 @@ module.exports = {
         },
         getGrids() {
             var me = this,
-                data = {cmd: 'getGrids'};
-            me.root.dataEngine().runPost('/_grid/', 'getGrids', {},
+                data = {url: '/_grid/', cmd: 'getGrids'};
+            me.root.dataEngine().appPostLocal({},
                 function(result) {
                     me.grids = result.result;
                 }, function(result) {});
