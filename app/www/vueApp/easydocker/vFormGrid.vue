@@ -120,6 +120,7 @@ module.exports = {
                 data = {url: '/_grid/', cmd: 'getGrids'};
             me.root.dataEngine().appPostLocal({},
                 function(result) {
+                    console.log(result);
                     me.grids = result.result;
                 }, function(result) {});
         },
