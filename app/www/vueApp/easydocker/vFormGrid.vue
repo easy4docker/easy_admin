@@ -92,7 +92,7 @@ module.exports = {
         addGrid() {
             const me = this;
             var postData = me.form;
-            appPos.url = '/_grid/';
+            postData.url = '/_grid/';
             postData.cmd = 'addGrid';
             alert(111);
             return true;
@@ -118,7 +118,7 @@ module.exports = {
         getGrids() {
             var me = this,
                 data = {url: '/_grid/', cmd: 'getGrids'};
-            me.root.dataEngine().appPostLocal({},
+            me.root.dataEngine().appPostLocal(data,
                 function(result) {
                     console.log(result);
                     me.grids = result.result;
