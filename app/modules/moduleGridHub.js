@@ -30,7 +30,7 @@
                     var setting = req.body;
 
                    if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
-                       me.comm.sendAction('', 'Unauthorized gridToken-!' + auth.root + '-->' + setting.gridToken + '==>' + md5(setting.gridToken + '**>' +  auth.root) );
+                       me.comm.sendAction('', 'Unauthorized gridToken-!' + auth.root + '-->' + setting.gridToken + '==>' + md5(setting.gridToken) + '**>' +  auth.root);
                    } else {
                         const request = require('request');
                         var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
