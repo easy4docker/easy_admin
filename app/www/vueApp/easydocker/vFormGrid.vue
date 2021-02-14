@@ -117,7 +117,7 @@ module.exports = {
         },
         getGrids() {
             var me = this,
-                data = {url: '/_grid/', cmd: 'getGrids'};
+                data = {url: '/api/', cmd: 'getGrids'};
             me.root.dataEngine().appPostLocal(data,
                 function(result) {
                     console.log(result);
