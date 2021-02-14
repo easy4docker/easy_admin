@@ -51,7 +51,6 @@ module.exports = {
       },
       accessGrid() {
          const me = this;
-                     alert('addGridMonitor()1');
          me.root.dataEngine().appPost({
                url  : '/api/',
                cmd     :'localGridAccessSetup',
@@ -59,7 +58,6 @@ module.exports = {
                dataType: 'json'
          },
          function(result) {
- 
             if (result.status === 'success') {
                me.root.dataEngine().gridHub({
                      hubServer  : me.form.gridServer,
@@ -68,8 +66,6 @@ module.exports = {
                      gridToken   : result.token
                   },
                   function(resultHub) {
-                                console.log(resultHub);
-                                 return true;
                      if (resultHub.status === 'success') {
                         localStorage.setItem('easydockerSVR', result.gridServer.replace(/\./g, '_'));
                         localStorage.setItem('easydockerTOKEN', result.token);
