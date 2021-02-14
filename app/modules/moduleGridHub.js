@@ -30,14 +30,14 @@
                     var setting = req.body;
 
                    if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
-                       me.comm.sendAction('', 'Unauthorized gridToken-!' + auth.root + '-->' + setting.gridToken);
+                       me.comm.sendAction('', 'Unauthorized gridToken!');
                    } else {
                         const request = require('request');
                         var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                         let mGrid =  new MAGrid(env, pkg, req, res);
                         mGrid.dataGridMatrix((grid) =>{
                             setting.target = (setting.target) ? setting.target : ip0;
-                            if  (setting.target === ip0 && (ip0) && (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken')) {
+                            if  (setting.target === ip0 && (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken')) {
                                 mGrid.call('post', true);
                             } else {
                                 var postData =  setting; 
