@@ -119,15 +119,14 @@
                 }
 			});
 		}
-
+        /*----- Grid related --- */
         me.localGridAccessSetup = (cbk) => {
             const data = req.body.data;
             cbk({status: 'success', gridServer : data.gridServer, token : pkg.md5(data.password)});
         }
 
         me.getGrids = (cbk) => {
-            me.dataGrids(
-                (gridServer) => {
+            me.dataGrids((gridServer) => {
                     cbk({status: "success", result:gridServer});
             });
         }
@@ -137,6 +136,7 @@
                 cbk(grids);
             });
         }
+        /*----- Grid related --- */
 
         me.gitSiteBranchs = (cbk) => {
 			Servers.gitSiteBranchs(req.body.serverName, (result) => {
