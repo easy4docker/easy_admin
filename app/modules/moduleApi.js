@@ -126,7 +126,9 @@
         }
 
         me.getGrids = (cbk) => {
-            me.dataGrids((gridServer) => {
+            var MGirid = pkg.require(env.root+ '/modules/moduleGrid.js');
+            var grid = new MGit(env, pkg, req, res);
+            grid.dataGrids((gridServer) => {
                     cbk({status: "success", result:gridServer});
             });
         }
