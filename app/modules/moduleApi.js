@@ -6,8 +6,8 @@
 		var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
 
-        const data_dir = me.comm.inside.data;
-
+        const   data_dir = me.comm.inside.data,
+                gridServerFn = me.comm.file.gridServer;
 
         var MServers = pkg.require(env.root+ '/modules/moduleServer.js');
         var Servers = new MServers(env, pkg, req, res);
@@ -123,6 +123,19 @@
         me.localGridAccessSetup = (cbk) => {
             const data = req.body.data;
             cbk({status: 'success', gridServer : data.gridServer, token : pkg.md5(data.password)});
+        }
+
+        me.getGrids = (cbk) => {
+            me.dataGrids(
+                (gridServer) => {
+                    cbk({status: "success", result:gridServer});
+            });
+        }
+
+        me.dataGrids = (cbk) => {
+            pkg.readJson(gridServerFn, (grids) => {
+                cbk(grids);
+            });
         }
 
         me.gitSiteBranchs = (cbk) => {
