@@ -134,12 +134,6 @@
                     cbk({status: "success", result:gridServer});
             });*/
         }
-
-        me.dataGrids = (cbk) => {
-            pkg.readJson(gridServerFn, (grids) => {
-                cbk(grids);
-            });
-        }
         /*----- Grid related --- */
 
         me.gitSiteBranchs = (cbk) => {
