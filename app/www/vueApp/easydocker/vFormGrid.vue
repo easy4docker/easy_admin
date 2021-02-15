@@ -45,8 +45,7 @@
                 <div class="container p-2">
                     <div class="row" v-for="(v, k) in grids">
                         <div class="col-1 p-2">
-                           <!--a href="JavaScript:void(0)" v-on:click="removeGrid(k);">==</a-->
-                           <i class="fa fa-trash-o" v-on:click="removeGrid(k);"></i>
+                           <a href="JavaScript:void(0)" v-on:click="removeGrid(k);"><i class="fa fa-trash-o"></i></a>
                         </div>
                         <div class="col-1 p-2">
                            {{v}}
@@ -103,7 +102,8 @@ module.exports = {
         },
         removeGrid(v) {
             var me = this;
-            appPos.url = '/api/';
+            var postData = me.form;
+            appPost.url = '/api/';
             postData.cmd = 'removeGrid';
             alert(v);
             me.root.dataEngine().appPost({gridServer : v},
