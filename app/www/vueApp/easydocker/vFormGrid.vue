@@ -45,7 +45,8 @@
                 <div class="container p-2">
                     <div class="row" v-for="(v, k) in grids">
                         <div class="col-1 p-2">
-                           <a href="#" v-on:click="removeGrid(k);"><i class="fa fa-trash-o"></i>==</a>
+                           <!--a href="JavaScript:void(0)" v-on:click="removeGrid(k);">==</a-->
+                           <i class="fa fa-trash-o" v-on:click="removeGrid(k);"></i>
                         </div>
                         <div class="col-1 p-2">
                            {{v}}
