@@ -56,7 +56,7 @@
                 'getIP', 'getLocalEnv', 'getServerToken', 'auth', 'loadList', 'pullCode', 'stopVServer', 
                 'startVServer', 'gitSiteBranchs', 'gitSwitchBranch',
                 'deleteVServer', 'addServer', 'setupServer',
-                'localGridAccessSetup', 'syncAppCode'
+                'localGridAccessSetup', 'getGrids', 'syncAppCode'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
