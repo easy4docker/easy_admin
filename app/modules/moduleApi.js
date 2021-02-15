@@ -125,7 +125,7 @@
             cbk({status: 'success', gridServer : data.gridServer, token : pkg.md5(data.password)});
         }
 
-        me.getGrids = (cbk) => {
+        me.addGrid = me.getGrids = (cbk) => {
             var MGirid = pkg.require(env.root+ '/modules/moduleGrid.js');
             var grid = new MGirid(env, pkg, req, res);
             grid[req.body.cmd](cbk);
