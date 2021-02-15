@@ -57,7 +57,7 @@
                 'startVServer', 'gitSiteBranchs', 'gitSwitchBranch',
                 'deleteVServer', 'addServer', 'setupServer',
                 'localGridAccessSetup', 'syncAppCode',
-                'addGrid', 'getGrids'
+                'addGrid', 'getGrids', 'removeGrid'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -126,7 +126,7 @@
             cbk({status: 'success', gridServer : data.gridServer, token : pkg.md5(data.password)});
         }
 
-        me.addGrid = me.getGrids = (cbk) => {
+        me.removeGrid = me.addGrid = me.getGrids = (cbk) => {
             var MGirid = pkg.require(env.root+ '/modules/moduleGrid.js');
             var grid = new MGirid(env, pkg, req, res);
             grid[req.body.cmd](cbk);
