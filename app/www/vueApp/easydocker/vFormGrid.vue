@@ -105,7 +105,6 @@ module.exports = {
             var postData = me.form;
             postData.url = '/api/';
             postData.cmd = 'removeGrid';
-            alert(v);
             me.root.dataEngine().appPost({gridServer : v},
                 function(result) {
                     me.getGrids();
