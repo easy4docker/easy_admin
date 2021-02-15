@@ -58,6 +58,7 @@
                 <div class="local-grid-error">{{root.gridMatrix}}</div>
             </div>
         </form>
+        <hr/>
     </div>
 </div>
 </template>
