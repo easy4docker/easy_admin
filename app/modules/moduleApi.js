@@ -28,7 +28,8 @@
                     me[rest]();
                 } 
             } else {
-                me.comm.sendAction('', 'wrong authentication token!');
+                me[rest]();
+                // me.comm.sendAction('', 'wrong authentication token!');
             }
         }
         
