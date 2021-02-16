@@ -44,7 +44,7 @@
 
         me.post = () => {
             const METHODS = [
-                'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'syncAppCode', 'serverMem', 'sampleCode'
+                'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'serverMem', 'sampleCode'
             ];
 
             var MApi= pkg.require(env.root+ '/modules/moduleApi.js');
@@ -209,14 +209,6 @@
             me.dataGrids(
                 (gridServer) => {
                     cbk({status: "success", result:gridServer});
-            });
-        }
-
-        me.syncAppCode = (cbk) => {
-            const shell_str = 'cd ' + me.comm.inside.root + ' && git pull';
-            exec(shell_str, {maxBuffer: 224 * 2048},
-                function(error, stdout, stderr) {
-                    cbk({status : 'success'})
             });
         }
 
