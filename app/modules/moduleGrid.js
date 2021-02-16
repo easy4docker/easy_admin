@@ -285,7 +285,6 @@
                         if (req.body.data) {
                             req.body.data.split(/\n/g).forEach(function(line){
                                 line = line.split(':');
-                        
                                 // Ignore invalid lines, if any
                                 if (line.length < 2) {
                                     return;
