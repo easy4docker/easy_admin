@@ -12,9 +12,9 @@ var env = {
     dataFolder : '/var/_localAppData',
     appFolder : '/var/_localApp'
 }
-
-// var accessLogStream = fs.createWriteStream(path.join(env.dataFolder, 'access.log'), {flags: 'a'})
-// app.use(morgan('combined', {stream: accessLogStream}))
+var fs = require('fs');
+var accessLogStream = fs.createWriteStream(path.join(env.dataFolder, 'access.log'), {flags: 'a'})
+app.use(morgan('combined', {stream: accessLogStream}))
 
 var pkg = {
     readJson : (path, cb) => {
