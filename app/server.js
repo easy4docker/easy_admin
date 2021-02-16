@@ -38,6 +38,13 @@ var pkg = {
 }
 app.engine('ect', pkg.ECT({ watch: true, cache: false, root: __dirname + '/views', ext : '.ect' }).render);
 
+app.use(function(err, req, res, next) {
+    // Do logging and user-friendly error message display
+    //console.error(err);
+    // Assuming that template engine is plugged in
+    res.send('500.html');
+});
+
 app.use(bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies   
   extended: true
