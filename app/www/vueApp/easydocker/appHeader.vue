@@ -92,7 +92,7 @@ module.exports = {
                 cmd : 'syncAppCode'
             }, function(result) {
                 console.log(result);
-              //  window.location.reload();
+                window.location.reload();
             }, true);
         }
     }
