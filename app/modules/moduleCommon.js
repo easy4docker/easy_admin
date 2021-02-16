@@ -29,12 +29,7 @@
             res.send({status:'failure', code: '404', message : message});
         }
         me.output = (data) => {
-            try {
-                res.send(data);
-            } catch(e) {
-                console.log('2222');
-            }
-            
+            res.send(data);
         }
         me.sendAction = (code, message) => {
             res.send({status:'failure', action: code, message : message});

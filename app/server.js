@@ -18,14 +18,15 @@ app.use(morgan('combined', {stream: accessLogStream}))
 var pkg = {
     readJson : (path, cb) => {
         fs.readFile(path, (err, data) => {
-          if (err)
-            cb({})
-          else
-            var jdata = {};
-            try {
-                jdata = JSON.parse(data);
-            } catch (e) {}
-            cb(jdata);
+            if (err) {
+                cb({})
+            } else {
+                var jdata = {};
+                try {
+                    jdata = JSON.parse(data);
+                } catch (e) {}
+                cb(jdata);
+            }
         })
     },
     require : (fileName, isCache) => {
