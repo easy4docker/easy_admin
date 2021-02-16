@@ -21,7 +21,7 @@ var pkg = {
     },
     require : (fileName, isCache) => {
         if (!isCache) {
-            // delete require.cache[fileName];
+            delete require.cache[fileName];
         }
         return require(fileName);
     },
