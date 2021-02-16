@@ -1,7 +1,8 @@
 (function() {
     var obj = function(env, pkg, req, res) {
         var me = this,
-            fs = require('fs');
+            fs = require('fs'),
+            exec = require('child_process').exec;
 
 		var MCommon= pkg.require(env.root+ '/modules/moduleCommon.js');
         me.comm = new MCommon(req, res);
@@ -95,7 +96,7 @@
                     me.refreshTokenSend(data, cbk);
                 });
         }
-        me.syncAppCodeBK = (cbk) => {
+        me.syncAppCode = (cbk) => {
             const shell_str = 'cd ' + me.comm.inside.app + ' && git pull';
             exec(shell_str, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
@@ -104,7 +105,7 @@
         }
 
 
-        me.syncAppCode = (cbk) => {
+        me.syncAppCodeBK = (cbk) => {
             const shell_str = 'cd ' + me.comm.inside.root + ' && git pull';
             exec(shell_str, {maxBuffer: 224 * 2048},
                 function(error, stdout, stderr) {
