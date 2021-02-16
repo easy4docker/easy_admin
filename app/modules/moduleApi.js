@@ -96,9 +96,11 @@
                 });
         }
         me.syncAppCode = (cbk) => {
-            const shell_str = 'cd ' + me.comm.inside.root + ' && git pull';
-                    cbk({status : 'success', shell_str:shell_str})
-            
+            const shell_str = 'cd ' + me.comm.inside.app + ' && git pull';
+            exec(shell_str, {maxBuffer: 224 * 2048},
+                function(error, stdout, stderr) {
+                    cbk({status : 'successAa'})
+            });    
         }
 
 
