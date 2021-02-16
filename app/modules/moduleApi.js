@@ -77,7 +77,7 @@
             var data = (!req.body.data) ? {} : req.body.data;
             if (req.body.authToken) data.authToken = req.body.authToken;
             auth.action(data, (data) => {
-                res.send(data);
+                cbk(data);
             });
         }
         me.loadList = (cbk) => {
