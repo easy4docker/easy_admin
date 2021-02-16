@@ -21,7 +21,7 @@ var pkg = {
           if (err)
             cb({})
           else
-            let jdata = {};
+            var jdata = {};
             try {
                 jdata = JSON.parse(data);
             } catch (e) {}
