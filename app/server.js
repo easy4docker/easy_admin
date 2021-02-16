@@ -21,7 +21,11 @@ var pkg = {
           if (err)
             cb({})
           else
-            cb(JSON.parse(data))
+            let jdata = {};
+            try {
+                jdata = JSON.parse(data);
+            } catch (e) {}
+            cb(jdata);
         })
     },
     require : (fileName, isCache) => {
