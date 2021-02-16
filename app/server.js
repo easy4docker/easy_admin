@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
-var morgan = require('morgan');
+// var morgan = require('morgan');
 var fs = require('fs');
 
 const port = 80;
@@ -12,8 +12,8 @@ var env = {
     appFolder : '/var/_localApp'
 }
 
-var accessLogStream = fs.createWriteStream(path.join(env.dataFolder, 'access.log'), {flags: 'a'})
-app.use(morgan('combined', {stream: accessLogStream}))
+// var accessLogStream = fs.createWriteStream(path.join(env.dataFolder, 'access.log'), {flags: 'a'})
+// app.use(morgan('combined', {stream: accessLogStream}))
 
 var pkg = {
     readJson : (path, cb) => {
@@ -40,14 +40,7 @@ var pkg = {
     ECT : require('ect')
 }
 app.engine('ect', pkg.ECT({ watch: true, cache: false, root: __dirname + '/views', ext : '.ect' }).render);
-/*
-use(function(err, req, res, next) {
-    // Do logging and user-friendly error message display
-    //console.error(err);
-    // Assuming that template engine is plugged in
-    res.send('500.html');
-});
-*/
+
 app.use(bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies   
   extended: true
