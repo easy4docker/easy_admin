@@ -201,8 +201,8 @@
 
         me.getLocalEnv = (cbk) => {
             fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
-                cbk({status: 'success'});
-                // cbk({status: 'success', result : {IP: data}});
+                // cbk({status: 'success'});
+                cbk({status: 'success', result : {IP: data}});
             });
         }
 
