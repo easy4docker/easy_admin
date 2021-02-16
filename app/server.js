@@ -3,8 +3,7 @@ const app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
 var morgan = require('morgan');
-
-
+var fs = require('fs');
 
 const port = 80;
 var env = {
@@ -12,13 +11,12 @@ var env = {
     dataFolder : '/var/_localAppData',
     appFolder : '/var/_localApp'
 }
-var fs = require('fs');
+
 var accessLogStream = fs.createWriteStream(path.join(env.dataFolder, 'access.log'), {flags: 'a'})
 app.use(morgan('combined', {stream: accessLogStream}))
 
 var pkg = {
     readJson : (path, cb) => {
-        var fs = require('fs');
         fs.readFile(path, (err, data) => {
           if (err)
             cb({})
