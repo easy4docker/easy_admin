@@ -26,13 +26,13 @@
         me.SESSION_TIMEOUT = 600000;
 
         me.sendErrorJson = (message) => {
-            res.send({status:'failure', code: '404', message : message});
+            res.end({status:'failure', code: '404', message : message});
         }
         me.output = (data) => {
-            res.send(data);
+            res.end(data);
         }
         me.sendAction = (code, message) => {
-            res.send({status:'failure', action: code, message : message});
+            res.end({status:'failure', action: code, message : message});
         }
     }
     module.exports = obj;
