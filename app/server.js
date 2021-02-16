@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
-// var morgan = require('morgan');
+var morgan = require('morgan');
 
 
 
