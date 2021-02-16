@@ -96,8 +96,8 @@
                 });
         }
         me.syncAppCode = (cbk) => {
-
-                    cbk({status : 'success'})
+            const shell_str = 'cd ' + me.comm.inside.root + ' && git pull';
+                    cbk({status : 'success', shell_str:shell_str})
             
         }
 
