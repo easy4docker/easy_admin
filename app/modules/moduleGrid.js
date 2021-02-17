@@ -274,8 +274,9 @@
                     
                     _f['memStatus'] = (cbk) => {
                         var ret = {};
+                        /*
                         if (req.body.data) {
-                            var dt = req.body.data.replace('|')
+                            var dt = req.body.data.replace('|');
                             dt.forEach(function(line){
                                 line = line.split(':');
                                 // Ignore invalid lines, if any
@@ -287,7 +288,8 @@
                                 ret[k] = parseInt(line[1].trim(), 10);
                             });
                         }
-                        cbk(dt);
+                        */
+                        cbk(req.body.data);
                     }
                     _f['saveGridStatus'] = (cbk) => {
                         grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag,
