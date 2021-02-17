@@ -24,17 +24,13 @@
             return true;
         }
         me.validationPost = (ip0) => {
-            const authfn =  me.comm.file.authData;
+            const authfn =  me.comm.file.authToken;
             
             pkg.readJson(me.comm.file.authToken, (auth) => {
-               
-            // pkg.readJson(authfn, (auth) => {
-               // res.send(auth);
-                
                 fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                     var setting = req.body;
                    if (!setting || !setting.gridToken || (setting.gridToken != gridToken && !auth[setting.gridToken])) {
-                       me.comm.sendAction('', 'Unauthorized gridToken!--' + setting.gridToken + '-->' + gridToken);
+                       me.comm.sendAction('', 'Unauthorized gridToken!');
                    } else {
                         const request = require('request');
                         var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
