@@ -30,7 +30,7 @@ module.exports = {
             $.ajax({
                 type: 'POST',
                 url: (setting.hubServer) ? 'http://' + setting.hubServer + ':10000/_gridHub/' : '/_gridHub/',
-                data: me.withAuth(setting),
+                data: setting,
                 success: function(result) {
                     me.$parent.triggerSpinner = false;
                     if (typeof  success === 'function') {
