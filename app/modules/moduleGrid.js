@@ -289,7 +289,7 @@
                             });
                         }
                         
-                        // cbk(dt);
+                        cbk(ret);
                     }
                     _f['saveGridStatus'] = (cbk) => {
                         grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag,
