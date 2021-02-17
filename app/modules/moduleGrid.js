@@ -253,9 +253,7 @@
             me.dataGridMatrix((grids) => {
 
                 let data = req.body;
-                res.send(data);
-                return true;
-                if (!data || !data.ip || !data.gridToken ) {
+                if (!data || !data.ip || !data.gridToken1 ) {
                     callback(false);
                     return true;
                 } else {
