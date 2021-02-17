@@ -29,8 +29,6 @@
             pkg.readJson(authfn, (auth) => {
                 fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                     var setting = req.body;
-                    me.comm.sendAction('', 'Unauthorized gridToken!->' + auth.root + '==' + setting.gridToken);
-                    return true;
                    if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
                        me.comm.sendAction('', 'Unauthorized gridToken!->' + auth.root + '==' + setting.gridToken);
                    } else {
@@ -38,6 +36,8 @@
                         var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                         let mGrid =  new MAGrid(env, pkg, req, res);
                         mGrid.dataGridMatrix((grid) =>{
+                            res.send(grid);
+                            return true;
                             setting.target = (setting.target) ? setting.target : ip0;
                             if  (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken') {
                                 mGrid.call('post', true);
