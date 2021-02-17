@@ -72,7 +72,7 @@ module.exports = {
                     console.log(err);
                 });
         },
-        getGridMatrixBK() {
+        getGridMatrix() {
             const me = this;
             if (!me.isLocalhost()) {
                 me.dataEngine().appPost({
@@ -90,33 +90,6 @@ module.exports = {
                     me.gridMatrix  = false;
                 });
             }
-
-        },
-        getGridMatrix() {
-            const me = this;
-            if (me.isLocalhost()) {
-                return true;
-            }
-            // hubServer  : svr,
-            me.dataEngine().gridHub({
-                    
-                    cmd     :'getGridMatrix',
-                    data    : {},
-                    dataType: 'json',
-                    gridToken   : localStorage.getItem('easydockerFP')
-                },
-                function(result) {
-                    if (result.status === 'success') {
-                        me.gridMatrix = result.result;
-                    } else {
-                        me.gridServer = null;
-                    }
-                    me.$forceUpdate();
-                }, function(err) {
-                    me.gridServer = null;
-                    console.log(err);
-                });
-                
 
         },
         getGridHub() {
