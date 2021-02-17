@@ -43,7 +43,7 @@
 
         me.post = () => {
             const METHODS = [
-                'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'serverMem', 'sampleCode'
+                'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'serverMem'
             ];
 
             var MApi= pkg.require(env.root+ '/modules/moduleApi.js');
@@ -211,16 +211,11 @@
             });
         }
 
-        me.sampleCode = (cbk) => {
-            cbk({ij:'sampleCode3'})
-        }
-
         me.getGridMatrix = (cbk) => {
             pkg.readJson(gridStatusFn, (grids) => {
                 let resp = {}
                 for (let key in grids) {
                     resp[key] = grids[key].mem;
-                    resp[key] = grids[key];
                 }
                 cbk({status: 'success', result: resp});
             });
