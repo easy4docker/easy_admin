@@ -58,7 +58,7 @@
                 'getIP', 'getLocalEnv', 'getServerToken', 'auth', 'loadList', 'pullCode', 'stopVServer', 
                 'startVServer', 'gitSiteBranchs', 'gitSwitchBranch',
                 'deleteVServer', 'addServer', 'setupServer',
-                'localGridAccessSetup', 'syncAppCode',
+                'localGridAccessSetup', 'syncAppCode', 'getGridMatrix',
                 'addGrid', 'getGrids', 'removeGrid'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
@@ -128,7 +128,7 @@
             cbk({status: 'success', gridServer : data.gridServer, token : pkg.md5(data.password)});
         }
 
-        me.removeGrid = me.addGrid = me.getGrids = (cbk) => {
+        me.removeGrid = me.addGrid = me.getGrids = me.getGridMatrix = (cbk) => {
             var MGirid = pkg.require(env.root+ '/modules/moduleGrid.js');
             var grid = new MGirid(env, pkg, req, res);
             grid[req.body.cmd](cbk);
