@@ -102,7 +102,6 @@ module.exports = {
             if (!svr || !token) {
                 return true;
             }
-            console.log(svr);
             me.dataEngine().gridPost({
                     hubServer  : svr,
                     cmd     :'getGridMatrix',
