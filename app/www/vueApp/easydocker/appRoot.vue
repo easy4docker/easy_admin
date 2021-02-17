@@ -55,6 +55,7 @@ module.exports = {
         setTimeout(function() {
             me.getGridHub();
             me.easydockerFP = localStorage.getItem('easydockerFP');
+            me.getGridMatrix();
         },50);
     },
     methods :{
@@ -71,6 +72,26 @@ module.exports = {
                     console.log(err);
                 });
         },
+        getGridMatrix() {
+            const me = this;
+            me.dataEngine().appPost({
+                    cmd     :'getGridMatrix',
+                    data    : {},
+                    dataType: 'json',
+                    gridToken   : token
+                },
+                function(result) {
+                    if (result.status === 'success') {
+                        me.gridMatrix = result.result;
+                    } else {
+                        me.gridServer = null;
+                    }
+                    me.$forceUpdate();
+                }, function(err) {
+                    me.gridServer = null;
+                    console.log(err);
+                });
+        },
         getGridHub() {
             const me = this;
             let svr = localStorage.getItem('easydockerSVR'),
@@ -81,7 +102,7 @@ module.exports = {
             }
             me.dataEngine().gridHub({
                     hubServer  : svr,
-                    cmd     :'getGridMatrix',
+                    cmd     :'',
                     data    : {},
                     dataType: 'json',
                     gridToken   : token
