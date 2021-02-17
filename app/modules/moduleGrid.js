@@ -110,7 +110,6 @@
                     success();
                 }
             });
-
         }
 
         me.makeid = (length) => {
