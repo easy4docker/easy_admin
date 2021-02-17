@@ -277,7 +277,6 @@
                         
                         if (req.body.data) {
                             dt = req.body.data.split('|');
-                            /*
                             dt.forEach(function(line){
                                 line = line.split(':');
                                 // Ignore invalid lines, if any
@@ -287,10 +286,10 @@
                                 // Remove parseInt call to make all values strings
                                 var k = line[0].replace(/(\{|\})/,'');
                                 ret[k] = parseInt(line[1].trim(), 10);
-                            });*/
+                            });
                         }
                         
-                        cbk(dt);
+                        // cbk(dt);
                     }
                     _f['saveGridStatus'] = (cbk) => {
                         grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag,
