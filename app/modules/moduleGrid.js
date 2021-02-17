@@ -14,7 +14,7 @@
                 gridServerFn = me.comm.file.gridServer;
 
         me.call = (rest, bypassGridAuth) => {
-            if (req.body.cmd === 'statusUpdate' || !bypassGridAuth) {
+            if (req.body.cmd === 'statusUpdate' || bypassGridAuth) {
                 me[rest]();
             } else {
                 var gridToken = (req.query.gridToken) ? req.query.gridToken : (req.body.gridToken) ? req.body.gridToken : '';
