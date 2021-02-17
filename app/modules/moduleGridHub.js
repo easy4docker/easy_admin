@@ -16,8 +16,6 @@
 
             try {
                 fs.readFile(me.comm.inside.data+ '/_ip', 'utf-8', (err, ip0) => {
-                    res.send(ip0);
-                    return true;
                     me.validationPost(ip0);
                 });
                 
@@ -31,6 +29,8 @@
             pkg.readJson(authfn, (auth) => {
                 fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                     var setting = req.body;
+                    res.send(setting);
+                    return true;
                    if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
                        me.comm.sendAction('', 'Unauthorized gridToken!->' + auth.root + '==' + setting.gridToken);
                    } else {
