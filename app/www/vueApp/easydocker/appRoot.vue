@@ -75,21 +75,22 @@ module.exports = {
         getGridMatrix() {
             const me = this;
             if (me.isLocalhost()) {
-                me.dataEngine().appPost({
-                    cmd     :'getGridMatrix',
-                    data    : {},
-                    dataType: 'json'
-                },
-                function(result) {
-                    if (result.status === 'success') {
-                        me.gridMatrix = result.result;
-                    } else {
-                        me.gridMatrix  = false;
-                    }
-                }, function(err) {
-                    me.gridMatrix  = false;
-                });
+                return true;
             }
+            me.dataEngine().appPost({
+                cmd     :'getGridMatrix',
+                data    : {},
+                dataType: 'json'
+            },
+            function(result) {
+                if (result.status === 'success') {
+                    me.gridMatrix = result.result;
+                } else {
+                    me.gridMatrix  = false;
+                }
+            }, function(err) {
+                me.gridMatrix  = false;
+            });
         },
         getGridPost() {
             const me = this;
