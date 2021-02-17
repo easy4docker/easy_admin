@@ -140,7 +140,6 @@ module.exports = {
                 },
                 function(result) {
                     if (result.status === 'success') {
-                        alert(111);
                         me.gridMatrix = result.result;
                     } else {
                         me.gridServer = null;
