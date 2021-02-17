@@ -24,14 +24,7 @@
             return true;
         }
         me.validationPost = (ip0) => {
-/*
-             const authfn =  me.comm.file.authToken;
-            pkg.readJson(authfn, (auth) => {
-*/
             const authfn =  me.comm.file.authData;
-            
-            // pkg.readJson(me.comm.file.authToken, (auth) => {
-               
             pkg.readJson(authfn, (auth) => {
                 fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                     var setting = req.body;
