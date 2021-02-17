@@ -26,10 +26,11 @@
         me.validationPost = (ip0) => {
             const authfn =  me.comm.file.authData;
             
-            pkg.readJson(fnToken, (auth) => {
+           // pkg.readJson(fnToken, (auth) => {
+               
+            pkg.readJson(authfn, (auth) => {
                 res.send(auth);
                 return true;
-            // pkg.readJson(authfn, (auth) => {
                 fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                     var setting = req.body;
                    if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
