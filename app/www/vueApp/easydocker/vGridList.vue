@@ -72,6 +72,7 @@ module.exports = {
         test(k, dt) {
             const me = this;
             //me.root.gridMatrix[k];
+            console.log(me.root.gridMatrix[k]);
             alert(me.root.gridMatrix[k].gridToken);
         },
         testBK(k, dt) {

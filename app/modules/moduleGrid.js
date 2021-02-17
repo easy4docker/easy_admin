@@ -220,7 +220,7 @@
                 let resp = {}
                 for (let key in grids) {
                     resp[key] = grids[key].mem;
-    
+                    resp[key] = grids[key];
                 }
                 cbk({status: 'success', result: resp});
             });
