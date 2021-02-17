@@ -252,8 +252,6 @@
 
             me.dataGridMatrix((grids) => {
                 let data = req.body;
-                res.send(data);
-                return true;
                 if (!data || !data.ip || !data.gridToken ) {
                     callback({status: 'failure', result: 'Missing gridToken, ip or wrong data!'});
                     return true;
