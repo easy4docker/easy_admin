@@ -13,10 +13,11 @@
             return true;
         };
         me.post = () => {
-            res.send(me.comm.inside.data+ '/_ip');
-            return true;
+
             try {
                 fs.readFile(me.comm.inside.data+ '/_ip', 'utf-8', (err, ip0) => {
+                    res.send(ip0);
+                    return true;
                     me.validationPost(ip0);
                 });
                 
