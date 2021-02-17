@@ -46,31 +46,6 @@ module.exports = {
                 dataType: (!setting.dataType) ? 'text' : setting.dataType
             });
         },
-
-
-        gridPost(setting, success, error) {
-            var me = this;
-            me.$parent.triggerSpinner = true;
-            $.ajax({
-                type: 'POST',
-                url: (setting.hubServer) ? 'http://' + setting.hubServer + ':10000/_grid/' : '/_grid/',
-                data: setting,
-                success: function(result) {
-                    me.$parent.triggerSpinner = false;
-                    if (typeof  success === 'function') {
-                        success(result);
-                    }
-                },
-                error: function (jqXHR) { 
-                    me.$parent.triggerSpinner = false;
-                    if (typeof error === 'function') {
-                        error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
-                    }
-                },
-                dataType: (!setting.dataType) ? 'text' : setting.dataType
-            });
-        },
-
         /* ------------ confirmed ------------*/
         // UI grid hub Bridge to target 
 
