@@ -44,6 +44,8 @@
         };
 
         me.post = () => {
+            res.send(req.body);
+            return true;
             const METHODS = [
                 'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'serverMem', 'sampleCode'
             ];
