@@ -38,11 +38,13 @@ module.exports = {
                 formStarted : false
             },
             gridMatrix: false,
+            gridServers: {
+
+            },
             gridAdminServer : '',
             triggerSpinner : false,
             module : 'list',
             menu   : '',
-            gridServer : null,
             token : '',
             easydockerFP : '',
             localEnv : {}
@@ -111,14 +113,9 @@ module.exports = {
                 function(result) {
                     if (result.status === 'success') {
                         me.gridMatrix = result.result;
-                    } else {
-                        me.gridServer = null;
                     }
                     me.$forceUpdate();
-                }, function(err) {
-                    me.gridServer = null;
-                    console.log(err);
-                });
+                }, function(err) {});
         },
         isLocalhost() {
             return (window.location.hostname === 'localhost') ? true : false;
