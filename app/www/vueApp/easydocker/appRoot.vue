@@ -38,7 +38,7 @@ module.exports = {
                 formStarted : false
             },
             gridMatrix: false,
-            gridServers: {
+            gridSvrs: {
 
             },
             gridAdminServer : '',
