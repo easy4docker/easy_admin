@@ -91,20 +91,26 @@
         /* --- DATA function ---->> */
 
         me.gridTokenValidation = (gridToken, success) => {
-            fs.readFile(gridTokenFn, 'utf-8', (err, data) => {
-
-                if (data === gridToken) {
-                    success();
-                } else {
-                    fs.readFile(gridOldTokenFn, 'utf-8', (err, dataOld) => {
-                        if (dataOld === gridToken) {
+            pkg.readJson(me.comm.file.authData, (auth) => {
+                if (!gridToken || auth.root !== gridToken) {
+                    fs.readFile(gridTokenFn, 'utf-8', (err, data) => {
+                        if (data === gridToken) {
                             success();
                         } else {
-                           me.comm.sendAction('', 'wrong authentication gridToken!');;
+                            fs.readFile(gridOldTokenFn, 'utf-8', (err, dataOld) => {
+                                if (dataOld === gridToken) {
+                                    success();
+                                } else {
+                                   me.comm.sendAction('', 'wrong authentication gridToken!');;
+                                }
+                            });
                         }
-                    });
+                    })    
+                } else {
+                    success();
                 }
-            })
+            });
+
         }
 
         me.makeid = (length) => {
