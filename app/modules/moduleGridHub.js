@@ -35,7 +35,6 @@
                         var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
                         let mGrid =  new MAGrid(env, pkg, req, res);
                         mGrid.dataGridMatrix((grid) =>{
-                          
                             setting.target = (setting.target) ? setting.target : ip0;
                             if  (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken') {
                                 mGrid.call('post', true);

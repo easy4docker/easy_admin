@@ -53,10 +53,10 @@ module.exports = {
     mounted () {
         var me = this;
         setTimeout(function() {
-            me.getGridPost();
+            me.getGridHub();
             me.easydockerFP = localStorage.getItem('easydockerFP');
             me.getGridMatrix();
-        },500);
+        },50);
     },
     methods :{
         getLocalEnv() {
@@ -74,25 +74,25 @@ module.exports = {
         },
         getGridMatrix() {
             const me = this;
-            if (me.isLocalhost()) {
-                return true;
-            }
-            me.dataEngine().appPost({
-                cmd     :'getGridMatrix',
-                data    : {},
-                dataType: 'json'
-            },
-            function(result) {
-                if (result.status === 'success') {
-                    me.gridMatrix = result.result;
-                } else {
+            if (!me.isLocalhost()) {
+                me.dataEngine().appPost({
+                    cmd     :'getGridMatrix',
+                    data    : {},
+                    dataType: 'json'
+                },
+                function(result) {
+                    if (result.status === 'success') {
+                        me.gridMatrix = result.result;
+                    } else {
+                        me.gridMatrix  = false;
+                    }
+                }, function(err) {
                     me.gridMatrix  = false;
-                }
-            }, function(err) {
-                me.gridMatrix  = false;
-            });
+                });
+            }
+
         },
-        getGridPost() {
+        getGridHub() {
             const me = this;
             if (!me.isLocalhost()) {
                 return true;
@@ -103,7 +103,8 @@ module.exports = {
             if (!svr || !token) {
                 return true;
             }
-            me.dataEngine().gridPost({
+            console.log(svr);
+            me.dataEngine().gridHub({
                     hubServer  : svr,
                     cmd     :'getGridMatrix',
                     data    : {},
