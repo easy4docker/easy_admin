@@ -276,7 +276,7 @@
                         var ret = {};
                         if (req.body.data) {
                             var dt = req.body.data.replace('|')
-                            req.body.data.split(/\n/g).forEach(function(line){
+                            dt.forEach(function(line){
                                 line = line.split(':');
                                 // Ignore invalid lines, if any
                                 if (line.length < 2) {
