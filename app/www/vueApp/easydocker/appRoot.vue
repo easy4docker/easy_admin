@@ -43,10 +43,8 @@ module.exports = {
             module : 'list',
             menu   : '',
             gridServer : null,
-            svr : '',
             token : '',
             easydockerFP : '',
-            ajaxResult : '',
             localEnv : {}
         }
     },

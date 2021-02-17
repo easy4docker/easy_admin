@@ -71,8 +71,6 @@ module.exports = {
         }
     },
     mounted() {
-        let v = localStorage.getItem('easydockerFP');
-        this.root.token = v;
     },
     methods :{
         isDisabled(v) {
