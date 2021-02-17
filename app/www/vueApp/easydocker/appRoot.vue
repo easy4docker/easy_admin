@@ -55,7 +55,7 @@ module.exports = {
         setTimeout(function() {
             me.getGridHub();
             me.easydockerFP = localStorage.getItem('easydockerFP');
-            // me.getGridMatrix();
+            me.getGridMatrix();
         },50);
     },
     methods :{
@@ -94,6 +94,9 @@ module.exports = {
         },
         getGridHub() {
             const me = this;
+            if (!me.isLocalhost()) {
+                return true;
+            }
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
