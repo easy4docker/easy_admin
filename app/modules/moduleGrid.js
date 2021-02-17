@@ -276,7 +276,7 @@
                         var ret = {}, dt = {};
                         
                         if (req.body.data) {
-                            dt = req.body.data.replace('|');
+                            dt = req.body.data.split('|');
                             /*
                             dt.forEach(function(line){
                                 line = line.split(':');
