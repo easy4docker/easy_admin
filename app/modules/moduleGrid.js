@@ -287,7 +287,7 @@
                                 ret[k] = parseInt(line[1].trim(), 10);
                             });
                         }
-                        cbk(ret);
+                        cbk(dt);
                     }
                     _f['saveGridStatus'] = (cbk) => {
                         grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag,
