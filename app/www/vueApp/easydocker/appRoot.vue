@@ -74,23 +74,19 @@ module.exports = {
         },
         getGridMatrix() {
             const me = this;
-            alert(12);
             me.dataEngine().appPost({
                     cmd     :'getGridMatrix',
                     data    : {},
                     dataType: 'json'
                 },
                 function(result) {
-                    console.log(result);
                     if (result.status === 'success') {
                         me.gridMatrix = result.result;
                     } else {
-                        me.gridServer = null;
+                        me.gridMatrix  = false;
                     }
-                    me.$forceUpdate();
                 }, function(err) {
-                    me.gridServer = null;
-                    console.log(err);
+                    me.gridMatrix  = false;
                 });
         },
         getGridHub() {
