@@ -39,7 +39,7 @@
                             setting.target = (setting.target) ? setting.target : ip0;
                             if  (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken') {
                                 res.send(setting);
-                                mGrid.call('post', true);
+                                // mGrid.call('post', true);
                             } else {
                                 var postData =  setting; 
                                 var channel = (!setting.channel) ? '_grid' : setting.channel;
