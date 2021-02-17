@@ -18,13 +18,7 @@
                 me[rest]();
             } else {
                 var gridToken = (req.query.gridToken) ? req.query.gridToken : (req.body.gridToken) ? req.body.gridToken : '';
-                pkg.readJson(me.comm.file.authData, (auth) => {
-                    if (!gridToken || auth.root !== gridToken) {
-                        me.comm.sendAction('', 'Unauthorized gridToken!');
-                    } else {
-                        me.gridTokenValidation(gridToken, me[rest]);
-                    }
-                });
+                me.gridTokenValidation(gridToken, me[rest]);
             }
         }
 
@@ -98,6 +92,7 @@
 
         me.gridTokenValidation = (gridToken, success) => {
             fs.readFile(gridTokenFn, 'utf-8', (err, data) => {
+
                 if (data === gridToken) {
                     success();
                 } else {
