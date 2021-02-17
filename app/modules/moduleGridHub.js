@@ -26,9 +26,9 @@
         me.validationPost = (ip0) => {
             const authfn =  me.comm.file.authData;
             
-           // pkg.readJson(fnToken, (auth) => {
+            pkg.readJson(me.comm.file.authToken, (auth) => {
                
-            pkg.readJson(authfn, (auth) => {
+            // pkg.readJson(authfn, (auth) => {
                 res.send(auth);
                 return true;
                 fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
