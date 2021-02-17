@@ -254,7 +254,7 @@
 
                 let data = req.body;
                 if (!data || !data.ip || !data.gridToken1 ) {
-                    callback(false);
+                    callback({status: 'failure', result: 'Missing gridToken, ip or wrong data!'});
                     return true;
                 } else {
                     const _f = {};
