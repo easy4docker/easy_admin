@@ -51,7 +51,7 @@
                   <div class="row p-1">
                      <div class="col-2"></div>
                      <div class="col-8 text-left">
-                           <button type="button" class="btn btn-success btn-sm m-3" v-on:click="signIn()">Sign in</button>
+                           <button type="button" class="btn btn-success btn-sm mt-3 ml-1" v-on:click="signIn()">Sign in</button>
                      </div>
                      <div class="col-2"></div>
                   </div>
