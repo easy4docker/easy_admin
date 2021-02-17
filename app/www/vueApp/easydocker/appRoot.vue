@@ -90,7 +90,6 @@ module.exports = {
                     me.gridMatrix  = false;
                 });
             }
-
         },
         getGridHub() {
             const me = this;
