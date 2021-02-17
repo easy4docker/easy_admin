@@ -24,12 +24,36 @@ module.exports = {
         /* ------------ confirmed ------------*/
         // servier side hub to target  
 
-        gridHub(setting, success, error) {
+        gridHubBK(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
             $.ajax({
                 type: 'POST',
                 url: (setting.hubServer) ? 'http://' + setting.hubServer + ':10000/_gridHub/' : '/_gridHub/',
+                data: setting,
+                success: function(result) {
+                    me.$parent.triggerSpinner = false;
+                    if (typeof  success === 'function') {
+                        success(result);
+                    }
+                },
+                error: function (jqXHR) { 
+                    me.$parent.triggerSpinner = false;
+                    if (typeof error === 'function') {
+                        error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
+                    }
+                },
+                dataType: (!setting.dataType) ? 'text' : setting.dataType
+            });
+        },
+
+
+        gridHub(setting, success, error) {
+            var me = this;
+            me.$parent.triggerSpinner = true;
+            $.ajax({
+                type: 'POST',
+                url: (setting.hubServer) ? 'http://' + setting.hubServer + ':10000/_grid/' : '/_grid/',
                 data: setting,
                 success: function(result) {
                     me.$parent.triggerSpinner = false;
