@@ -18,7 +18,13 @@
                 me[rest]();
             } else {
                 var gridToken = (req.query.gridToken) ? req.query.gridToken : (req.body.gridToken) ? req.body.gridToken : '';
-                me.gridTokenValidation(gridToken, me[rest]);
+                pkg.readJson(me.comm.file.authData, (auth) => {
+                    if (!gridToken || auth.root !== gridToken) {
+                        me.comm.sendAction('', 'Unauthorized gridToken!');
+                    } else {
+                        me.gridTokenValidation(gridToken, me[rest]);
+                    }
+                });
             }
         }
 
@@ -91,25 +97,19 @@
         /* --- DATA function ---->> */
 
         me.gridTokenValidation = (gridToken, success) => {
-            pkg.readJson(me.comm.file.authData, (auth) => {
-                if (!gridToken || auth.root !== gridToken) {
-                    fs.readFile(gridTokenFn, 'utf-8', (err, data) => {
-                        if (data === gridToken) {
+            fs.readFile(gridTokenFn, 'utf-8', (err, data) => {
+                if (data === gridToken) {
+                    success();
+                } else {
+                    fs.readFile(gridOldTokenFn, 'utf-8', (err, dataOld) => {
+                        if (dataOld === gridToken) {
                             success();
                         } else {
-                            fs.readFile(gridOldTokenFn, 'utf-8', (err, dataOld) => {
-                                if (dataOld === gridToken) {
-                                    success();
-                                } else {
-                                   me.comm.sendAction('', 'wrong authentication gridToken!');;
-                                }
-                            });
+                           me.comm.sendAction('', 'wrong authentication gridToken!');;
                         }
-                    })    
-                } else {
-                    success();
+                    });
                 }
-            });
+            })
         }
 
         me.makeid = (length) => {
