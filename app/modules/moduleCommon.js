@@ -23,7 +23,7 @@
             gridOldToken: me.inside.key + '/_gridOldToken'
         }
 
-        me.SESSION_TIMEOUT = 600000;
+        me.SESSION_TIMEOUT = 60000000;
 
         me.sendErrorJson = (message) => {
             res.send({status:'failure', code: '404', message : message});

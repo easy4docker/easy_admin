@@ -39,21 +39,21 @@
                     </span>
                 </div>
                 <div class="col-2 p-3 text-left">
-                    Test through gridHub
+                    Test through gridHub -- {{Object.keys(root.gridMatrix).length}}
                     <hr v-if="(root.gridMatrix) &&  Object.keys(root.gridMatrix).length"/>
-                        <span v-for="(v, k) in root.gridMatrix">
-                            <div class="pr-3">
-                                <a href="javaScript:void(0)" v-on:click="test(k, {s:k})">{{ k }}</a> 
-                                <div class="text-info pl-3">
-                                    <div class="progress bg-secondary ml-3">
-                                        <div class="progress-bar bg-success" v-bind:style="{width: (Math.ceil((v.MemAvailable / v.MemTotal)  * 100) + '%')}" >
-                                        {{Math.round(v.MemAvailable  * 0.001)}}M
-                                        </div>
+                    <span v-for="(v, k) in root.gridMatrix">
+                        <div class="pr-3">
+                            <a href="javaScript:void(0)" v-on:click="test(k, {s:k})">{{ k }}</a> 
+                            <div class="text-info">--
+                                <div class="progress bg-secondary ml-0">
+                                    <div class="progress-bar bg-success" v-bind:style="{width: (Math.ceil((v.MemAvailable / v.MemTotal)  * 100) + '%')}" >
+                                    {{Math.round(v.MemAvailable  * 0.001)}}M
                                     </div>
                                 </div>
-
                             </div>
-                        </span>
+
+                        </div>
+                    </span>
                 </div>
                 <div class="col-8 p-3 text-left">
                     <!--div class="m-3">{{'** ' + testModule + ' **'}}</div-->
