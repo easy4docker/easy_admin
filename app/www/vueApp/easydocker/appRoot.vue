@@ -55,7 +55,7 @@ module.exports = {
         setTimeout(function() {
             me.getGridHub();
             me.easydockerFP = localStorage.getItem('easydockerFP');
-            me.getGridMatrix();
+            // me.getGridMatrix();
         },50);
     },
     methods :{
@@ -102,7 +102,7 @@ module.exports = {
             }
             me.dataEngine().gridHub({
                     hubServer  : svr,
-                    cmd     :'',
+                    cmd     :'getGridMatrix',
                     data    : {},
                     dataType: 'json',
                     gridToken   : token
@@ -118,36 +118,6 @@ module.exports = {
                     me.gridServer = null;
                     console.log(err);
                 });
-        },
-        test() {
-            const me = this;
-            me.root.popUp(me).show({
-                insideModule: 'auth',
-                insideModuleUrl: '/vueApp/easydocker/auth.vue',
-                noDefaultCancel: true
-            });
-        },
-        testBK() {
-            const me = this;
-             $.ajax({
-                type: 'POST',
-                url:  '/_api/',
-                data: {
-                    cmd     :'getGridMatrix',
-                    authToken   : localStorage.getItem('easydockerFP')
-                },
-                success: function(result) {
-                    if (result.status === 'success') {
-                        me.ajaxResult = result.result;
-                    } else {
-                        me.ajaxResult = '';
-                    }
-                },
-                error: function (jqXHR) { 
-                    me.ajaxResult = err.message;
-                },
-                dataType: 'json'
-            });
         },
         isLocalhost() {
             return (window.location.hostname === 'localhost') ? true : false;
