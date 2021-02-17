@@ -74,8 +74,7 @@ module.exports = {
         },
         getGridMatrix() {
             const me = this;
-            alert(me.isLocalhost());
-            if (!me.isLocalhost()) {
+            if (me.isLocalhost()) {
                 me.dataEngine().appPost({
                     cmd     :'getGridMatrix',
                     data    : {},
