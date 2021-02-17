@@ -250,7 +250,8 @@
         }
 
         me.statusUpdate = (callback) =>{
-           
+            res.send(req.body);
+            return true;
             me.dataGridMatrix((grids) => {
                 let data = req.query;
                 if (!data || !data.ip || !data.gridToken ) {

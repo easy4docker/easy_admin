@@ -11,7 +11,11 @@ if [ "${IPA}" != "${IP}" ] | [ -z "${IP}" ] | [ -z "${IPA}" ]; then
     echo "ASK OUTSIDE" 
     curl ipinfo.io/ip > ${SCR_DIR}/data/_ip
     curl ifconfig.me > ${SCR_DIR}/data/_ipA
-    IP=$(cat ${SCR_DIR}/data/_ip)
+    if [ -z "${IPA}" ]; then
+        IP=$(cat ${SCR_DIR}/data/_ip)
+    else
+        IP=$(cat ${SCR_DIR}/data/_ipA)
+    fi
 fi
 
-curl -d "cmd=statusUpdate&ip=${IP}&server=${GRID_SERVER}&gridToken=${TOKEN}&tag=$2&data={$(cat /proc/meminfo)}"  -X POST ${GRID_SERVER}:10000/_grid/
+curl -d "\"cmd=statusUpdate&ip=${IP}&server=${GRID_SERVER}&gridToken=${TOKEN}&data={$(cat /proc/meminfo | tr '\n' '|')}\""  -X POST ${GRID_SERVER}:10000/_grid/
