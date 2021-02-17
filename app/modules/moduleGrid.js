@@ -260,6 +260,9 @@
                     const _f = {};
                     _f['newToken'] = (cbk) => {
                         const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.gridToken;
+                        cbk(cmdStr);
+                        CP.exit = true;
+                        return true;
                         exec(cmdStr, {maxBuffer: 224 * 2048},
                             (error, stdout, stderr) => {
                                 var v = (!stdout) ? '' : stdout.replace(/\s+/, '');
@@ -275,6 +278,7 @@
                     _f['memStatus'] = (cbk) => {
                         var ret = {};
                         if (req.body.data) {
+                            var dt = req.body.data.replace(|)
                             req.body.data.split(/\n/g).forEach(function(line){
                                 line = line.split(':');
                                 // Ignore invalid lines, if any
@@ -296,8 +300,8 @@
                         });
                     }
                     
-                    CP.serial(_f, (data1) => {
-                        callback(true);
+                    CP.serial(_f, (dataCP) => {
+                        callback(dataCP);
                     }, 3000)
                 } 
             });
