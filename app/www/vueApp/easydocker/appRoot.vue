@@ -97,13 +97,13 @@ module.exports = {
             if (me.isLocalhost()) {
                 return true;
             }
-            /*
+            
             me.dataEngine().gridHub({
                     hubServer  : svr,
                     cmd     :'getGridMatrix',
                     data    : {},
                     dataType: 'json',
-                    gridToken   : localStorage.getItem('easydockerFP');
+                    gridToken   : localStorage.getItem('easydockerFP')
                 },
                 function(result) {
                     if (result.status === 'success') {
@@ -116,7 +116,7 @@ module.exports = {
                     me.gridServer = null;
                     console.log(err);
                 });
-                */
+                
 
         },
         getGridHub() {
