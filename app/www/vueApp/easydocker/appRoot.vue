@@ -78,10 +78,10 @@ module.exports = {
             me.dataEngine().appPost({
                     cmd     :'getGridMatrix',
                     data    : {},
-                    dataType: 'json',
-                    gridToken   : token
+                    dataType: 'json'
                 },
                 function(result) {
+                    console.log(result);
                     if (result.status === 'success') {
                         me.gridMatrix = result.result;
                     } else {
