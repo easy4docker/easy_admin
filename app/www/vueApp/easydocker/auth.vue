@@ -57,7 +57,7 @@
                   </div>
                   <div class="row p-1">
                      <div class="col-2"></div>
-                     <div class="col-8 text-danger">
+                     <div class="col-8 text-danger text-left">
                            {{errorMessage}}
                      </div>
                      <div class="col-2"></div>
