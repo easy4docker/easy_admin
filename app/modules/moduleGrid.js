@@ -71,13 +71,13 @@
 
         /* --- GET function ---->> */
         me.renewToken = (callback) => {
-            const oldToken = req.query.old;
+            const oldToken = req.query.gridToken;
             fs.readFile(gridTokenFn, 'utf-8', (err, gridoldToken) => {
-               // if (gridToken !== oldToken) {
+               // if (gridToken !== gridoldToken) {
                //     callback('===');
                // } else {
                     const newToken = me.makeid(32);
-                    fs.writeFile(gridOldTokenFn, gridoldToken, (err) => {
+                    fs.writeFile(gridOldTokenFn, oldToken, (err) => {
                         fs.writeFile(gridTokenFn, newToken, (err) => {
                             callback((err) ? '' : newToken);
                         });
@@ -259,7 +259,7 @@
                 } else {
                     const _f = {};
                     _f['newToken'] = (cbk) => {
-                        const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?old=' + data.gridToken;
+                        const cmdStr = 'curl http://' + data.ip + ':10000/_grid/renewToken/?gridToken=' + data.gridToken;
                         exec(cmdStr, {maxBuffer: 224 * 2048},
                             (error, stdout, stderr) => {
                                 var v = (!stdout) ? '' : stdout.replace(/\s+/, '');
