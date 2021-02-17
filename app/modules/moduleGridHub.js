@@ -29,7 +29,7 @@
                 fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
                     var setting = req.body;
                    if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
-                       me.comm.sendAction('', 'Unauthorized gridToken!-');
+                       me.comm.sendAction('', 'Unauthorized gridToken!');
                    } else {
                         const request = require('request');
                         var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
@@ -38,6 +38,7 @@
                           
                             setting.target = (setting.target) ? setting.target : ip0;
                             if  (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken') {
+                                res.send(setting);
                                 mGrid.call('post', true);
                             } else {
                                 var postData =  setting; 
