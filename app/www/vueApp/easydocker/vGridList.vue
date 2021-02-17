@@ -15,7 +15,7 @@
 
             </div>
         </span>
-        <div class="text-center" v-if="root.isLocalhost()">
+        <div class="text-center" v-if="root.isLocalhost() || true">
             <hr/>
             <button type="button" class="btn btn-sm btn-warning" v-on:click="removeGrid()" v-if="showRemoveGrid()">
                 Remove Grid Monitor
