@@ -53,7 +53,7 @@ module.exports = {
     mounted () {
         var me = this;
         setTimeout(function() {
-            me.getGridHub();
+            me.getGridPost();
             me.easydockerFP = localStorage.getItem('easydockerFP');
             me.getGridMatrix();
         },50);
@@ -91,7 +91,7 @@ module.exports = {
                 });
             }
         },
-        getGridHub() {
+        getGridPost() {
             const me = this;
             if (!me.isLocalhost()) {
                 return true;
@@ -103,7 +103,7 @@ module.exports = {
                 return true;
             }
             console.log(svr);
-            me.dataEngine().gridHub({
+            me.dataEngine().gridPost({
                     hubServer  : svr,
                     cmd     :'getGridMatrix',
                     data    : {},

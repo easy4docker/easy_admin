@@ -24,7 +24,7 @@ module.exports = {
         /* ------------ confirmed ------------*/
         // servier side hub to target  
 
-        gridHubBK(setting, success, error) {
+        gridHub(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
             $.ajax({
@@ -48,7 +48,7 @@ module.exports = {
         },
 
 
-        gridHub(setting, success, error) {
+        gridPost(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
             $.ajax({
@@ -117,10 +117,6 @@ module.exports = {
         },
 
         appPost(data, callback, isSpinner) {
-            const me = this;
-            me.appPostLocal(data, callback, isSpinner);
-        },
-        appPostLocal(data, callback, isSpinner) {
             const me = this;
             if (isSpinner) me.$parent.triggerSpinner = true;
             $.ajax({
