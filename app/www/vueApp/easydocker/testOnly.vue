@@ -22,7 +22,7 @@
             </div>
             <div class="row">
                 <div class="col-2 p-3 text-left">
-                    Test through grid -- {{Object.keys(root.gridMatrix).length}}
+                    Through grid -- {{Object.keys(root.gridMatrix).length}}
                     <hr v-if="(root.gridMatrix) &&  Object.keys(root.gridMatrix).length"/>
                     <span v-for="(v, k) in root.gridMatrix">
                         <div class="pr-3">
@@ -39,7 +39,7 @@
                     </span>
                 </div>
                 <div class="col-2 p-3 text-left">
-                    Test through gridHub -- {{Object.keys(root.gridMatrix).length}}
+                    Through gridHub -- {{Object.keys(root.gridMatrix).length}}
                     <hr v-if="(root.gridMatrix) &&  Object.keys(root.gridMatrix).length"/>
                     <span v-for="(v, k) in root.gridMatrix">
                         <div class="pr-3">
