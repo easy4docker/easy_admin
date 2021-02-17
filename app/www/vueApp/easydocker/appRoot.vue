@@ -56,7 +56,7 @@ module.exports = {
             me.getGridPost();
             me.easydockerFP = localStorage.getItem('easydockerFP');
             me.getGridMatrix();
-        },50);
+        },500);
     },
     methods :{
         getLocalEnv() {
