@@ -97,6 +97,7 @@ module.exports = {
             if (me.isLocalhost()) {
                 return true;
             }
+            /*
             me.dataEngine().gridHub({
                     hubServer  : svr,
                     cmd     :'getGridMatrix',
@@ -115,6 +116,7 @@ module.exports = {
                     me.gridServer = null;
                     console.log(err);
                 });
+                */
 
         },
         getGridHub() {
