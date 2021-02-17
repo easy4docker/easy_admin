@@ -97,9 +97,9 @@ module.exports = {
             if (me.isLocalhost()) {
                 return true;
             }
-            
+            // hubServer  : svr,
             me.dataEngine().gridHub({
-                    // hubServer  : svr,
+                    
                     cmd     :'getGridMatrix',
                     data    : {},
                     dataType: 'json',
