@@ -95,8 +95,6 @@
 						mGrid.call('post', false);
 						break; 
 					case '_gridHub':
-						res.send(mp[1]);
-						break;
 						var MAGridHub= pkg.require(env.root+ '/modules/moduleGridHub.js');
 						let mGridHub =  new MAGridHub(env, pkg, req, res);
 						mGridHub.post();
