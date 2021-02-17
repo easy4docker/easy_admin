@@ -74,7 +74,8 @@ module.exports = {
         },
         getGridMatrix() {
             const me = this;
-            me.dataEngine().appPost({
+            if (!me.isLocalhost()) {
+                me.dataEngine().appPost({
                     cmd     :'getGridMatrix',
                     data    : {},
                     dataType: 'json'
@@ -88,6 +89,8 @@ module.exports = {
                 }, function(err) {
                     me.gridMatrix  = false;
                 });
+            }
+
         },
         getGridHub() {
             const me = this;
