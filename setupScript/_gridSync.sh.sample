@@ -18,4 +18,4 @@ if [ "${IPA}" != "${IP}" ] | [ -z "${IP}" ] | [ -z "${IPA}" ]; then
     fi
 fi
 
-curl -d "\"cmd=statusUpdate&ip=${IP}&server=${GRID_SERVER}&gridToken=${TOKEN}&data={$(cat /proc/meminfo | tr '\n' '|')}\""  -X POST ${GRID_SERVER}:10000/_grid/
+curl -d "cmd=statusUpdate&ip=${IP}&server=${GRID_SERVER}&gridToken=${TOKEN}&data={$(cat /proc/meminfo | tr '\n' '|')}"  -X POST ${GRID_SERVER}:10000/_grid/
