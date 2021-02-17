@@ -23,15 +23,37 @@
             <div class="row">
                 <div class="col-2 p-3 text-left">
                     Test through grid
-                    <div class="m-3" v-for="(v, k) in list">
-                        <a href="JavaScript: void(0)" v-on:click="linkIPApi(k)">{{k}}</a>
-                    </div>
+                    <hr v-if="(root.gridMatrix) &&  Object.keys(root.gridMatrix).length"/>
+                    <span v-for="(v, k) in root.gridMatrix">
+                        <div class="pr-3">
+                            <input type="checkbox"><span class="pl-2"><a href="javaScript:void(0)" v-on:click="test(k, {s:k})">{{ k }}</a> 
+                            <div class="text-right text-info pl-3">
+                                <div class="progress bg-secondary ml-3">
+                                    <div class="progress-bar bg-success" v-bind:style="{width: (Math.ceil((v.MemAvailable / v.MemTotal)  * 100) + '%')}" >
+                                    {{Math.round(v.MemAvailable  * 0.001)}}M
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </span>
                 </div>
                 <div class="col-2 p-3 text-left">
-                    Test through api
-                    <div class="m-3" v-for="(v, k) in list">
-                        <a href="JavaScript: void(0)" v-on:click="linkIPApi(k)">{{k}}</a>
-                    </div>
+                    Test through gridHub
+                    <hr v-if="(root.gridMatrix) &&  Object.keys(root.gridMatrix).length"/>
+                        <span v-for="(v, k) in root.gridMatrix">
+                            <div class="pr-3">
+                                <input type="checkbox"><span class="pl-2"><a href="javaScript:void(0)" v-on:click="test(k, {s:k})">{{ k }}</a> 
+                                <div class="text-right text-info pl-3">
+                                    <div class="progress bg-secondary ml-3">
+                                        <div class="progress-bar bg-success" v-bind:style="{width: (Math.ceil((v.MemAvailable / v.MemTotal)  * 100) + '%')}" >
+                                        {{Math.round(v.MemAvailable  * 0.001)}}M
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </span>
                 </div>
                 <div class="col-8 p-3 text-left">
                     <!--div class="m-3">{{'** ' + testModule + ' **'}}</div-->
@@ -58,8 +80,7 @@ module.exports = {
         var me = this;
         setTimeout(
             function() {
-                me.callGridMatrix();
-            }, 50
+            }, 100
         );
     },
     watch: {
@@ -75,164 +96,6 @@ module.exports = {
             } else {
                 me.testData = v;
             }
-        },
-        linkIPApi(ip) {
-           const me = this;             
-            let hubServer = localStorage.getItem('easydockerSVR'),
-                token = localStorage.getItem('easydockerTOKEN');
-            
-            hubServer = (!hubServer) ? '' :  hubServer.replace(/\_/g, '.');
-        
-            if (!hubServer || !token) {
-                return true;
-            }
-            me.root.dataEngine().gridHub({
-                hubServer  : hubServer,
-                cmd     : 'getIP',
-                target  : ip,
-                data    : {},
-                dataType: 'json',
-                gridToken   : token
-            },
-            function(result) {
-                console.log(result);
-                if (result.status === 'success') {
-                    me.testData = result.result;
-                } else {
-                    me.testData = null;
-                }
-                me.$forceUpdate();
-            }, function(err) {
-                me.testData = null;
-                console.log(err);
-            });
-        },
-        testApi() {
-           const me = this;             
-            let hubServer = localStorage.getItem('easydockerSVR'),
-                token = localStorage.getItem('easydockerTOKEN');
-            
-            hubServer = (!hubServer) ? '' :  hubServer.replace(/\_/g, '.');
-        
-            if (!hubServer || !token) {
-                return true;
-            }
-            
-            me.root.dataEngine().gridHub({
-                hubServer  : hubServer,
-                cmd     : 'getIPA',
-               // target  : '142.93.73.66',
-                data    : {},
-                dataType: 'text',
-                gridToken   : token
-            },
-            function(result) {
-                console.log(result);
-                if (result.status === 'success') {
-                    me.testData = result;
-                } else {
-                    me.testData = result;
-                }
-                me.$forceUpdate();
-            }, function(err) {
-                me.testData = null;
-                console.log(err);
-            });
-        },
-
-        testGrid() {
-           const me = this;
-           alert('testGrid');
-        },
-        testGridHub() {
-            const me = this;             
-            let hubServer = localStorage.getItem('easydockerSVR'),
-                token = localStorage.getItem('easydockerTOKEN');
-            
-            hubServer = (!hubServer) ? '' :  hubServer.replace(/\_/g, '.');
-        
-            if (!hubServer || !token) {
-                return true;
-            }
-            
-            me.root.dataEngine().gridHub({
-                hubServer  : hubServer,
-                cmd     :'getGridMatrix',
-                data    : {},
-                dataType: 'json',
-                gridToken   : token
-            },
-            function(result) {
-                if (result.status === 'success') {
-                    me.testData = result.result;
-                } else {
-                    me.testData = null;
-                }
-                me.$forceUpdate();
-            }, function(err) {
-                me.testData = null;
-                console.log(err);
-            });
-        },
-        testGridPost() {
-            const me = this;             
-            let hubServer = localStorage.getItem('easydockerSVR'),
-                token = localStorage.getItem('easydockerTOKEN');
-            
-            hubServer = (!hubServer) ? '' :  hubServer.replace(/\_/g, '.');
-        
-            if (!hubServer || !token) {
-                return true;
-            }
-            
-            me.root.dataEngine().gridBridge({
-                hubServer  : hubServer,
-                cmd     :'getIP',
-                // target : '165.22.37.16',
-                data    : {},
-                dataType: 'json',
-                gridToken   : token
-            },
-            function(result) {
-                if (result.status === 'success') {
-                    me.testData = result.result;
-                } else {
-                    me.testData = null;
-                }
-                me.$forceUpdate();
-            }, function(err) {
-                me.testData = null;
-                console.log(err);
-            });
-        },
-        callGridMatrix() {
-            const me = this;             
-            let hubServer = localStorage.getItem('easydockerSVR'),
-                token = localStorage.getItem('easydockerTOKEN');
-            
-            hubServer = (!hubServer) ? '' :  hubServer.replace(/\_/g, '.');
-        
-            if (!hubServer || !token) {
-                return true;
-            }
-            
-            me.root.dataEngine().gridHub({
-                hubServer  : hubServer,
-                cmd     :'getGridMatrix',
-                data    : {},
-                dataType: 'json',
-                gridToken   : token
-            },
-            function(result) {
-                if (result.status === 'success') {
-                    me.list = result.result;
-                } else {
-                    me.list = {};
-                }
-                me.$forceUpdate();
-            }, function(err) {
-                me.list = {};
-            });
         }
     },
     components: VUEApp.loadComponents({
