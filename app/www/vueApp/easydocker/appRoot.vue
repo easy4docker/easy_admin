@@ -1,6 +1,5 @@
 <template>
     <div class="container-fluid m-0 mt-2 mb-3" >
-    {{gridSvrs}}
         <div class="row">
             <div class="col-1 p-0"></div>
             <div class="col-10 p-0 card text-center shadow border rounded">
@@ -40,7 +39,7 @@ module.exports = {
             },
             gridMatrix: false,
             gridSvrs: {},
-            gridSvrsTM : 0,
+  
             gridAdminServer : '',
             triggerSpinner : false,
             module : 'list',

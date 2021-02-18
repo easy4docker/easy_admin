@@ -6,13 +6,12 @@
                     <div class="col-2 p-0 m-0 text-left">
                     </div>
                     <div class="col-8 p-2 m-0 text-center">
-                         <span class="text-dark alert-warning">{{root.easydockerFP}} {{root.localEnv.IP}} - {{root.gridSvrs}}--
-                         
-                         -- {{Object.keys(root.gridSvrs).length}}</span>
-                        <h1 class="header-title">EasyDocker Grid Admin 1.0</h1>
-                        <div v-for="(v, k) in root.gridSvrs">
+                        <span class="text-dark alert-warning">{{root.easydockerFP}} {{root.localEnv.IP}}
+                        <span v-for="(v, k) in root.gridSvrs">
                             {{k}}
-                        </div>
+                        </span>
+                         -- {{Object.keys(root.gridSvrs).length}}</span>
+                        </span>
                     </div>
                     <div class="col-2 p-0 m-0 text-right text-warning"></div>
                 </div>
