@@ -76,7 +76,7 @@ module.exports = {
             var me = this;
             me.form.userName = '';
             me.form.password = '';
-            me.errors = {};
+            
             me.form.targetHost = 'local';
         },
         changedGit(e) {
@@ -88,7 +88,6 @@ module.exports = {
             const me = this;
             me.gitUrlValidation();
             if (me.isformValid()) {
-                me.errors = {};
                 if (postData.targetHost === 'local') {
                     me.root.dataEngine().appPost({
                         cmd :'setupServer',
@@ -100,20 +99,15 @@ module.exports = {
                         me.$forceUpdate();
                     }, true);
                 } else {
-                    
                     me.postThroughGridHub(postData);
                 }
 
-            }
+            } 
+            me.$forceUpdate();
         },
 
         postThroughGridHub(postData) {
             const me = this;
-            alert(postData.targetHost);
-            return true;
-            if (!me.isLocalhost()) {
-                return true;
-            }
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
