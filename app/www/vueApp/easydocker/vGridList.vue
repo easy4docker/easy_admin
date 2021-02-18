@@ -4,9 +4,9 @@
         <hr v-if="(root.gridMatrix) &&  Object.keys(root.gridMatrix).length"/>
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3">
-                <input type="checkbox"><span class="pl-2"><a href="javaScript:void(0)" v-on:click="root.setGridSvr(k)">{{ k }}</a></span> 
-                <div class="text-right text-info pl-3">
-                    <div class="progress bg-secondary ml-3">
+                <input type="checkbox" v-model="checked(k)" v-on:click="root.setGridSvr(k)"><span class="pl-2">{{ k }}</span> 
+                <div class="text-right text-info pl-1">
+                    <div class="progress bg-secondary ml-3 m-1">
                         <div class="progress-bar bg-success" v-bind:style="{width: (Math.ceil((v.MemAvailable / v.MemTotal)  * 100) + '%')}" >
                         {{Math.round(v.MemAvailable  * 0.001)}}M
                         </div>
@@ -26,7 +26,7 @@
             </button>
             <hr/>
         </div>
-        
+        <span style="display:none">{{root.TM}}</span>
     </div>
 </template>
  
@@ -37,7 +37,6 @@ module.exports = {
         let me = this;
         return {
             root :  this.$parent.root
-
         }
     },
     mounted() {
@@ -48,6 +47,10 @@ module.exports = {
     watch: {
     },
     methods : {
+        checked(v) {
+            var me = this;
+            return (me.root.gridSvrs[v]) ? true : false;
+        },
         showRemoveGrid() {
             return (this.root.gridMatrix !== false) ? true : false;
         },
