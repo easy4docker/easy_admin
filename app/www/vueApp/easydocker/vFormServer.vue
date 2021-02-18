@@ -20,15 +20,22 @@
                     </div>    
                 </div>
             </div>
+
+            <div class="form-group">
+                <label>Target Host</label>
+                <select class="form-control" :required="true" @change="onTargetHostSelect($event)" v-model="form.targetHost">
+                    <option value="local" :selected="form.targetHost === 'local'" >Local</option>
+                    <option 
+                        v-for="(v, k) in root.gridMatrix" 
+                        v-bind:value="k"
+                        :selected="k ==  form.target"
+                        >{{ k }}
+                    </option>
+                </select>
+                <!--button type="button" class="btn btn-primary m-1" v-on:click="switchBranch()">Confirm</button-->
+            </div>
+
             <button type="button"  class="btn btn-info" v-on:click="setupServer(form)">Setup Server</button>
-            <!--hr/>    
-                form.userName : {{form.userName}}<br/>
-                form.password : {{form.password}}<br/>
-                form.serverName : {{form.serverName}}<br/>
-                form.branch : {{form.branch}}<br/>
-                me.branches : {{branches}}<br/>
-                form.docker : {{form.docker}}<br/>
-            <hr/--> 
             <div class="text-danger p-3" v-if="isError()">
                 <b>Please correct the following error(s):</b>
                 <ul>
@@ -54,6 +61,7 @@ module.exports = {
                 gitHub      : '',
                 branch      : '',
                 hashCode    : '',
+                targetHost  : 'local',
                 docker: {
                     type : '',
                     ports : []
@@ -65,6 +73,9 @@ module.exports = {
         var me = this;
     },
     methods : {
+        onTargetHostSelect(event) {
+
+        },
         cleanForm() {
             var me = this;
             me.branches = [];
