@@ -22,8 +22,8 @@
                         <grid-list></grid-list>
                     </div>
                     <div class="col-10 p-0 m-0 text-left">
-                        <div class="m-3">
-                            <span v-for="(v, k) in root.gridSvrs">
+                        <div class="p-1">
+                            <span class="m-3" v-for="(v, k) in root.gridSvrs">
                                 {{k}}
                             </span>
                         </div>
