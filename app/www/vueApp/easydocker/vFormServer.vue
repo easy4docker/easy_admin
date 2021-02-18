@@ -28,7 +28,7 @@
                     <option 
                         v-for="(v, k) in root.gridMatrix" 
                         v-bind:value="k"
-                        :selected="k ==  form.target"
+                        :selected="k ==  form.targetHost"
                         >{{ k }}
                     </option>
                 </select>
@@ -55,17 +55,11 @@ module.exports = {
         return {
             root :  this.$parent.root,
             errors: {},
-            branches : [],
             form : {
-                serverName  : '',
                 gitHub      : '',
-                branch      : '',
-                hashCode    : '',
-                targetHost  : 'local',
-                docker: {
-                    type : '',
-                    ports : []
-                },
+                userName    : '',
+                password    : '',
+                targetHost  : 'local'
             }
         }
     },
@@ -78,31 +72,24 @@ module.exports = {
         },
         cleanForm() {
             var me = this;
-            me.branches = [];
-            me.form.serverName = '';
-            me.form.branch = '';
-            me.hashCode = '';
-            me.form.docker = {
-                    type : '',
-                    ports : []
-                };
-
+            me.form.userName = '';
+            me.form.password = '';
+            me.form.targetHost = 'local';
         },
         changedGit(e) {
             var me = this;
             me.form.gitHub = e.target.value.replace(/^\s+|\s+$/g, '');
             me.cleanForm();
         },
-
-        setupServer(gitRecord) {
+        setupServer(postData) {
             const me = this;
             me.gitUrlValidation();
             if (me.isformValid()) {
                 me.errors = {};
-                if (gitRecord.targetHost === 'local') {
+                if (postData.targetHost === 'local') {
                     me.root.dataEngine().appPost({
                         cmd :'setupServer',
-                        data : gitRecord
+                        data : postData
                     }, function(result) {
                         if (result.status === 'success') {
                             me.root.module = 'list';
@@ -110,52 +97,39 @@ module.exports = {
                         me.$forceUpdate();
                     }, true);
                 } else {
-                    alert(gitRecord.targetHost);
+                    
+                    me.postThroughGridHub(postData);
                 }
 
             }
         },
-        getInitBranch() {
-            var me = this;
-            for (var i = 0; i < me.branches.length; i++) {
-                if (me.form.branch === me.branches[i].branch) {
-                    return true;
-                }
-            }
-            me.form.branch = (me.branches.length) ? me.branches[0] : '';
-        },
-        onBranchSelectBK(event) {
-            var me = this;
-            me.form.branch = event.target.value;
-            me.getSiteDocker();
-        },
 
-        getSiteDockerBK() {
-            var me = this;
-            if (me.branches) {
-                for (var i = 0; i < me.branches.length; i++) {
-                    if (me.form.branch === me.branches[i].branch && me.branches[i].dockerSetting.type) {
-                        me.form.siteDocker = true;
-                        me.form.docker = me.branches[i].dockerSetting;
-                        me.form.serverType = me.form.docker.type;
-                        me.$forceUpdate();
-                    }
-                }
-            }
-        },
-        saveVServerBK() {
+        postThroughGridHub(postData) {
             const me = this;
-            me.formValidation();
-            if (!me.isformValid()) {
-                return false;
+            alert(postData.targetHost);
+            return true;
+            if (!me.isLocalhost()) {
+                return true;
             }
-            const data = {cmd: 'addServer', data: me.form};
-            me.root.dataEngine().appPost(
-                data, function(result) {
+            let svr = localStorage.getItem('easydockerSVR'),
+                token = localStorage.getItem('easydockerTOKEN');
+            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+            if (!svr || !token) {
+                return true;
+            }
+            me.dataEngine().gridHub({
+                    hubServer  : svr,
+                    cmd     :'getGridMatrix',
+                    data    : {},
+                    dataType: 'json',
+                    gridToken   : token
+                },
+                function(result) {
                     if (result.status === 'success') {
-                        me.root.module = 'list';
+                        me.gridMatrix = result.result;
                     }
-                }, true);
+                    me.$forceUpdate();
+                }, function(err) {});
         },
 
         reset() {
@@ -167,23 +141,13 @@ module.exports = {
         cancel() {
             const me = this;
             // me.reset();
-            // me.cleanForm();
+            me.cleanForm();
             me.root.module = 'list';
         },
         isformValid() {
             var me = this;
             return (!Object.keys(me.errors).length) ? true : false;
         },
-        isServerNameExist(name) {
-            var me = this, list = me.root.commonData.list
-            for (e in list) {
-                console.log(e);
-                if (list[e].serverName == name) {
-                    return true;
-                }
-            }
-            return false;
-        }, 
         gitUrlValidation() {
             var me = this;
             me.errors.gitHub = null;
@@ -201,24 +165,6 @@ module.exports = {
         isError() {
             const me = this;
             return (!me.errors || !Object.keys(me.errors).length) ? false : true;
-        },
-        formValidation() {
-            var me = this;
-            me.errors = {};
-            me.gitUrlValidation();
-
-            if (!me.form.serverName) {
-                me.errors.serverName = 'ServerName required.';
-            }
-
-            if (me.isServerNameExist(me.form.serverName)) {
-                me.errors.serverName = 'ServerName required.';
-            }
-
-            if (!me.form.docker.type) {
-                me.errors.dockerSetting = 'Docker Setting Required.';
-            }
-            
         }
     }
 }
