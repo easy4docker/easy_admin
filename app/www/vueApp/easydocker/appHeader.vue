@@ -6,12 +6,6 @@
                     <div class="col-2 p-0 m-0 text-left">
                     </div>
                     <div class="col-8 p-2 m-0 text-center">
-                        <span class="text-dark alert-warning">{{root.easydockerFP}} {{root.localEnv.IP}}
-                        <span v-for="(v, k) in root.gridSvrs">
-                            {{k}}
-                        </span>
-                         -- {{Object.keys(root.gridSvrs).length}}</span>
-                        </span>
                     </div>
                     <div class="col-2 p-0 m-0 text-right text-warning"></div>
                 </div>
