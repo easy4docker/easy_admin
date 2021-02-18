@@ -99,15 +99,20 @@ module.exports = {
             me.gitUrlValidation();
             if (me.isformValid()) {
                 me.errors = {};
-                me.root.dataEngine().appPost({
-                    cmd :'setupServer',
-                    data : gitRecord
-                }, function(result) {
-                    if (result.status === 'success') {
-                        me.root.module = 'list';
-                    }
-                    me.$forceUpdate();
-                }, true);
+                if (gitRecord.targetHost === 'local') {
+                    me.root.dataEngine().appPost({
+                        cmd :'setupServer',
+                        data : gitRecord
+                    }, function(result) {
+                        if (result.status === 'success') {
+                            me.root.module = 'list';
+                        }
+                        me.$forceUpdate();
+                    }, true);
+                } else {
+                    alert(gitRecord.targetHost);
+                }
+
             }
         },
         getInitBranch() {
@@ -119,13 +124,13 @@ module.exports = {
             }
             me.form.branch = (me.branches.length) ? me.branches[0] : '';
         },
-        onBranchSelect(event) {
+        onBranchSelectBK(event) {
             var me = this;
             me.form.branch = event.target.value;
             me.getSiteDocker();
         },
 
-        getSiteDocker() {
+        getSiteDockerBK() {
             var me = this;
             if (me.branches) {
                 for (var i = 0; i < me.branches.length; i++) {
