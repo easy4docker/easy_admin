@@ -38,9 +38,7 @@ module.exports = {
                 formStarted : false
             },
             gridMatrix: false,
-            gridSvrs: {
-
-            },
+            gridSvrs: {tm:0, svrs: {}},
             gridAdminServer : '',
             triggerSpinner : false,
             module : 'list',
@@ -59,6 +57,15 @@ module.exports = {
         },100);
     },
     methods :{
+        setGridSvr(v) {
+            const me = this;
+            me.gridSvrs.tm = new Date().getTime();
+            if (me.gridSvrs.svrs[v]) {
+                delete me.gridSvrs.svrs[v];
+            } else {
+                 me.gridSvrs.svrs[v] = me.gridSvrs.tm;
+            }
+        },
         getLocalEnv() {
             const me = this;
             me.dataEngine().appPost({

@@ -43,7 +43,7 @@
                     <hr v-if="(root.gridMatrix) &&  Object.keys(root.gridMatrix).length"/>
                     <span v-for="(v, k) in root.gridMatrix">
                         <div class="pr-3">
-                            <a href="javaScript:void(0)" v-on:click="test(k, {s:k})">{{ k }}</a> 
+                            <a href="javaScript:void(0)" v-on:click="root.setGridSvr(k)">{{ k }}</a> 
                             <div class="text-info">--
                                 <div class="progress bg-secondary ml-0">
                                     <div class="progress-bar bg-success" v-bind:style="{width: (Math.ceil((v.MemAvailable / v.MemTotal)  * 100) + '%')}" >
