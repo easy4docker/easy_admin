@@ -22,7 +22,7 @@
                         <grid-list></grid-list>
                     </div>
                     <div class="col-10 p-0 m-0 text-left">
-                        <div class="p-1">
+                        <div class="p-1" v-if="Object.keys(root.gridSvrs).length">
                             <span class="m-3" v-for="(v, k) in root.gridSvrs">
                                 {{k}}
                             </span>
@@ -35,7 +35,6 @@
                             </div>
                         </div>
                         <div class="list-group" v-for="item in filteredResult()">
-                        
                             <div class="list-group-item list-group-item-action flex-column align-items-start m-1 list-group-border">
                                 <div class="container-fluid m-0">
                                     <div class="row">
