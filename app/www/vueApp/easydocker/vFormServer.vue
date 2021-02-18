@@ -36,6 +36,8 @@
             </div>
 
             <button type="button"  class="btn btn-info" v-on:click="setupServer(form)">Setup Server</button>
+            <button type="button"  class="btn btn-secondary" v-on:click="reset()">Reset</button>
+            <button type="button"  class="btn btn-warning" v-on:click="cancel()">Cancel</button>
             <div class="text-danger p-3" v-if="isError()">
                 <b>Please correct the following error(s):</b>
                 <ul>
@@ -74,6 +76,7 @@ module.exports = {
             var me = this;
             me.form.userName = '';
             me.form.password = '';
+            me.errors = {};
             me.form.targetHost = 'local';
         },
         changedGit(e) {
@@ -134,15 +137,11 @@ module.exports = {
 
         reset() {
             var me = this;
-            me.form = {};
-            me.errors={};
-            me.branches = [];
+            me.form.gitHub = '';
+            me.cleanForm();
         },
         cancel() {
-            const me = this;
-            // me.reset();
-            me.cleanForm();
-            me.root.module = 'list';
+            this.root.module = 'list';
         },
         isformValid() {
             var me = this;
