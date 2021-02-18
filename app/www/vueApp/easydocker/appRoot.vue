@@ -56,7 +56,7 @@ module.exports = {
             me.getGridHub();
             me.easydockerFP = localStorage.getItem('easydockerFP');
             me.getGridMatrix();
-        },100);
+        },200);
     },
     methods :{
         setGridSvr(v) {
@@ -84,22 +84,23 @@ module.exports = {
         },
         getGridMatrix() {
             const me = this;
-            if (!me.isLocalhost()) {
-                me.dataEngine().appPost({
-                    cmd     :'getGridMatrix',
-                    data    : {},
-                    dataType: 'json'
-                },
-                function(result) {
-                    if (result.status === 'success') {
-                        me.gridMatrix = result.result;
-                    } else {
-                        me.gridMatrix  = false;
-                    }
-                }, function(err) {
-                    me.gridMatrix  = false;
-                });
+            if (me.isLocalhost()) {
+                return true;
             }
+            me.dataEngine().appPost({
+                cmd     :'getGridMatrix',
+                data    : {},
+                dataType: 'json'
+            },
+            function(result) {
+                if (result.status === 'success') {
+                    me.gridMatrix = result.result;
+                } else {
+                    me.gridMatrix  = false;
+                }
+            }, function(err) {
+                me.gridMatrix  = false;
+            });
 
         },
         getGridHub() {
