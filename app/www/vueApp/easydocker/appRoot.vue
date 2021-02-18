@@ -1,5 +1,6 @@
 <template>
     <div class="container-fluid m-0 mt-2 mb-3" >
+    {{gridSvrs}}
         <div class="row">
             <div class="col-1 p-0"></div>
             <div class="col-10 p-0 card text-center shadow border rounded">
@@ -38,14 +39,16 @@ module.exports = {
                 formStarted : false
             },
             gridMatrix: false,
-            gridSvrs: {tm:0, svrs: {}},
+            gridSvrs: {},
+            gridSvrsTM : 0,
             gridAdminServer : '',
             triggerSpinner : false,
             module : 'list',
             menu   : '',
             token : '',
             easydockerFP : '',
-            localEnv : {}
+            localEnv : {},
+            TM : 0
         }
     },
     mounted () {
@@ -59,12 +62,13 @@ module.exports = {
     methods :{
         setGridSvr(v) {
             const me = this;
-            me.gridSvrs.tm = new Date().getTime();
-            if (me.gridSvrs.svrs[v]) {
-                delete me.gridSvrs.svrs[v];
+            if (me.gridSvrs[v]) {
+                delete me.gridSvrs[v];
             } else {
-                 me.gridSvrs.svrs[v] = me.gridSvrs.tm;
+                me.gridSvrs[v] = 1;
             }
+            me.root.TM = new Date().getTime();
+            me.$forceUpdate();
         },
         getLocalEnv() {
             const me = this;

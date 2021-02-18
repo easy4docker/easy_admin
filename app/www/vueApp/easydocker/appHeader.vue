@@ -6,11 +6,12 @@
                     <div class="col-2 p-0 m-0 text-left">
                     </div>
                     <div class="col-8 p-2 m-0 text-center">
-                         <span class="text-dark alert-warning">{{root.easydockerFP}} {{root.localEnv.IP}} - {{root.gridSvrs.svrs}}
-                         -- {{Object.keys(root.gridSvrs.svrs).length}}</span>
+                         <span class="text-dark alert-warning">{{root.easydockerFP}} {{root.localEnv.IP}} - {{root.gridSvrs}}--
+                         
+                         -- {{Object.keys(root.gridSvrs).length}}</span>
                         <h1 class="header-title">EasyDocker Grid Admin 1.0</h1>
-                        <div v-if="root.gridSvrs.tm" v-for="(v, k) in root.gridSvrs.svrs">
-                            {{k}}==
+                        <div v-for="(v, k) in root.gridSvrs">
+                            {{k}}
                         </div>
                     </div>
                     <div class="col-2 p-0 m-0 text-right text-warning"></div>
@@ -47,7 +48,7 @@
                             <i class="fa fa-cogs" aria-hidden="true"></i> test only
                         </button>
                         <a class="btn btn-sm btn-secondary m-1 border-danger shadow-sm" 
-                            href="JavaScript:void(0)" v-on:click="root.test()">
+                            href="JavaScript:void(0)" v-on:click="test()">
                             * test code
                         </a>
                         <a class="btn btn-sm btn-warning m-1 border-danger shadow-sm" 
@@ -61,7 +62,8 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
+        <span style="display:none">{{root.TM}}</span>
     </div> 
 </template>
  
@@ -74,11 +76,15 @@ module.exports = {
         }
     },
     mounted() {
+        this.gridSvrs = this.root.gridSvrs;
     },
     watch : {
 
     },
     methods :{
+        test() {
+            this.$parent.$forceUpdate();
+        },
         isDisabled(v) {
             return (this.$parent.module === v);
         },

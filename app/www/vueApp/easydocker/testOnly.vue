@@ -54,6 +54,12 @@
 
                         </div>
                     </span>
+                    <hr/>
+                    <span v-for="(v, k) in root.gridSvrs">
+                        <div class="pr-3">
+                            =={{ k }}==
+                        </div>
+                    </span>
                 </div>
                 <div class="col-8 p-3 text-left">
                     <!--div class="m-3">{{'** ' + testModule + ' **'}}</div-->
@@ -61,6 +67,7 @@
                 </div>
             </div>
         </div> 
+        <span style="display:none">{{root.TM}}</span>
     </div>
 </template>
  
@@ -73,13 +80,15 @@ module.exports = {
             list : [],
             root :  this.$parent.root,
             testModule  : '',
-            testData    : ''
+            testData    : '',
+            gridSvrs: {}
         }
     },
     mounted() {
         var me = this;
         setTimeout(
             function() {
+                me.gridSvrs = me.root.gridSvrs;
             }, 100
         );
     },
