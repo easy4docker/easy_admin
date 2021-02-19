@@ -45,8 +45,7 @@
                                 var postData =  setting; 
                                 var channel = (!setting.channel) ? '_grid' : setting.channel;
                                 let url = 'http://' + setting.target + ':10000/' + channel + '/';
-                                res.send(url);
-                                return true;
+
                                 if (setting.target) {
                                     postData.gridToken = (grid[setting.target]) ? grid[setting.target].gridToken : '';
                                 } 
