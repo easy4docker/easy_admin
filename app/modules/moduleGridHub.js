@@ -72,12 +72,12 @@
                         if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
                             me.comm.sendAction('', 'Unauthorized gridToken!');
                         } else {
-                            me.execGridPost(setting, ip0);
+                            me.execGridPost(setting.data, ip0);
                         }
                     });
                 });
             } else {
-                me.execGridPost(setting, ip0);
+                me.execGridPost(setting.data, ip0);
             }
         };
         me.validationPostBK = (ip0) => {
