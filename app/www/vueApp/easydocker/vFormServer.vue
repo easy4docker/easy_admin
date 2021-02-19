@@ -138,6 +138,13 @@ module.exports = {
                     me.$forceUpdate();
                 }, function(err) {});
             } else {
+                me.root.dataEngine().appPost({
+                    cmd     :'getServerToken',
+                    dataType: 'json'
+                },
+                function(result) {
+                    console.log(result);
+                }, function(err) {});
                 console.log(me.root.dataEngine().withAuth(postData));
             }
 
