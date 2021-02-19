@@ -89,7 +89,6 @@ module.exports = {
             const me = this;
             me.gitUrlValidation();
 
-
             if (me.isformValid()) {
                 if (postData.targetHost === 'local') {
                     me.root.dataEngine().appPost({
@@ -111,7 +110,6 @@ module.exports = {
         },
 
         postThroughGridHub(postData) {
-
             const   me = this,
                     svr = '',
                     token = '';

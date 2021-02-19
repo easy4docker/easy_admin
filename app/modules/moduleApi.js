@@ -59,7 +59,7 @@
                 'startVServer', 'gitSiteBranchs', 'gitSwitchBranch',
                 'deleteVServer', 'addServer', 'setupServer',
                 'localGridAccessSetup', 'syncAppCode', 'getGridMatrix',
-                'addGrid', 'getGrids', 'removeGrid'
+                'addGrid', 'getGrids', 'removeGrid', 'gridHub'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -231,7 +231,9 @@
 				}
 			)
 		};
-
+        me.gridHub = (cbk) => {
+            cbk('gridHub');
+        }
     }
     module.exports = obj;
 })()
