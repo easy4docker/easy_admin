@@ -32,7 +32,7 @@
                 setting.target = (setting.target) ? setting.target : ip0;
                 if  (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken') {    
                     mGrid[setting.cmd]((result) =>{
-                        me.comm.out(result);
+                        me.comm.output(result);
                     });
                 } else {
                     var postData =  setting; 
