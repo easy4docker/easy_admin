@@ -71,40 +71,6 @@ module.exports = {
                 },
                 noDefaultCancel : true
             });
-        },
-        test(k, dt) {
-            const me = this;
-            //me.root.gridMatrix[k];
-            console.log(me.root.gridMatrix[k]);
-            alert(me.root.gridMatrix[k].gridToken);
-        },
-        testBK(k, dt) {
-            const me = this;
-            let svr = localStorage.getItem('easydockerSVR'),
-                token = localStorage.getItem('easydockerTOKEN');
-                
-            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
-            if (!svr || !token) {
-                return true;
-            }
-            me.root.dataEngine().serverPost({
-                server  : svr,
-                cmd     :'sampleCode',
-                data    : {},
-                target  : k,
-                dataType: 'json',
-                gridToken   : token
-            },
-            function(result) {
-                if (result.status === 'success') {
-                    console.log(result);
-                } else {
-                    console.log(result);
-                }
-                me.$forceUpdate();
-            }, function(err) {
-                console.log(err);
-            });
         }
     },
     components: VUEApp.loadComponents({

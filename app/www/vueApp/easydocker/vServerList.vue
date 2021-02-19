@@ -166,16 +166,44 @@ module.exports = {
                         cbk(result.list);
                     }, false);
             }
-            _f['ip'] = function(cbk) {
-                me.root.dataEngine().appPost(
-                    {cmd :'loadList'},  function(result) {
-                        cbk(result.list);
-                    }, false);
+            _f['remote'] = function(cbk) {
+                me.getGridHub(cbk);
             }
             cp.parallel(_f, function(result){
                 console.log(result);
-                me.list = cp.data.local;
+                me.list = cp.data.remote;
             }, 6000);
+        },
+        getGridHub(cbk) {
+            const me = this;
+            let svr = localStorage.getItem('easydockerSVR'),
+                token = localStorage.getItem('easydockerTOKEN');
+            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+            if (!svr || !token) {
+                console.log(1111);
+                cbk(false);
+            }
+            me.root.dataEngine().gridHub({
+                    hubServer  : svr,
+                    data : {
+                        cmd     :'loadList',
+                        data    : {},
+                        target  : '165.22.37.16',
+                        dataType: 'json'
+                    },
+                    gridToken   : token
+                },
+                function(result) {
+                    cbk(result.list);
+                    /*
+                    if (result.status === 'success') {
+                        cbk(result.result);
+                    }*/
+                    // me.$forceUpdate();
+                }, function(err) {
+                    console.log(2222);
+                    cbk(false);
+                });
         },
 
         getVServerList() {
