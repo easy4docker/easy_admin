@@ -37,7 +37,7 @@
 
 
                         mGrid.dataGridMatrix((grid) =>{
-                            me.comm.output(grid);
+                            me.comm.output(grid[ip0]);
                             return true;
                             setting.target = (setting.target) ? setting.target : ip0;
                             if  (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken') {
