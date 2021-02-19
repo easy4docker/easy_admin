@@ -117,7 +117,9 @@ module.exports = {
                 token = localStorage.getItem('easydockerTOKEN');
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
             if (!svr || !token) {
+                alert('no local');
                 return true;
+
             }
             me.root.dataEngine().gridHub({
                     hubServer  : svr,
