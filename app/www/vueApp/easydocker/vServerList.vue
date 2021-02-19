@@ -119,7 +119,7 @@ module.exports = {
         me.serverTypeFilter = Object.keys(me.serverTypes);
         setTimeout(
             function() {
-                me.getVServerList();
+                // me.getVServerList();
                 me.getServerList()
             }, 50
         );
@@ -160,12 +160,21 @@ module.exports = {
             const me = this;
             const cp = new crowdProcess();
             const _f = {}
-            _f['a1'] = function(cbk) {
-                cbk(true);
+            _f['local'] = function(cbk) {
+                me.root.dataEngine().appPost(
+                    {cmd :'loadList'},  function(result) {
+                        cbk(result.list);
+                    }, false);
             }
-            console.log(crowdProcess);
-            cp.serial(_f, function(result){
+            _f['ip'] = function(cbk) {
+                me.root.dataEngine().appPost(
+                    {cmd :'loadList'},  function(result) {
+                        cbk(result.list);
+                    }, false);
+            }
+            cp.parallel(_f, function(result){
                 console.log(result);
+                me.list = cp.data.local;
             }, 6000);
         },
 
@@ -206,7 +215,6 @@ module.exports = {
 
         stopVServer(record) {
             var me = this;
-
             me.root.dataEngine().appPost({
                     cmd :'stopVServer',
                     serverName : record.name,
