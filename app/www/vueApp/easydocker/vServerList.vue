@@ -129,11 +129,15 @@ module.exports = {
         serverTypeFilter: function(val) {
           var me = this;
         },
-        TM:function(val) {
-            console.log('gridSvr=>' + val);
+        gridSvr : function(val) {
+          var me = this;
+          me.getServerList();
         }
     },
     methods : {
+        aftergridSvrChange(v) {
+            this.gridSvr = v;
+        },
         isFilterChecked(k) {
             var me = this;
             return (me.serverTypeFilter.indexOf(k) !== -1);
@@ -187,24 +191,30 @@ module.exports = {
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
             if (!svr || !token) {
                 cbk(false);
+                return true;
             }
-            me.root.dataEngine().gridHub({
-                    hubServer  : svr,
-                    data : {
-                        cmd     :'loadList',
-                        data    : {},
-                        target  : (l[0]) ? l[0] : '165.22.37.16',
-                        dataType: 'json'
+           if (!me.gridSvr) {
+                me.root.dataEngine().appPost(
+                        {cmd :'loadList'},  function(result) {
+                            cbk(result.list);
+                        }, false);
+           } else {
+                me.root.dataEngine().gridHub({
+                        hubServer  : svr,
+                        data : {
+                            cmd     :'loadList',
+                            data    : {},
+                            target  : me.gridSvr,
+                            dataType: 'json'
+                        },
+                        gridToken   : token
                     },
-                    gridToken   : token
-                },
-                function(result) {
-                    cbk(result.list);
-                    // me.$forceUpdate();
-                }, function(err) {
-                    console.log(2222);
-                    cbk(false);
-                });
+                    function(result) {
+                        cbk(result.list);
+                    }, function(err) {
+                        cbk(false);
+                    });
+           }
         },
 
         getVServerList() {
