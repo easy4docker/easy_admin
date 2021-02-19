@@ -140,7 +140,12 @@ module.exports = {
             } else {
                 me.root.dataEngine().appPost({
                     cmd     :'gridHub',
-                    data    : postData,
+                    data    : {
+                        cmd : 'setupServer',
+                        target : postData.targetHost,
+                        data : postData,
+                        dataType: 'json'
+                    },
                     dataType: 'json'
                 },
                 function(result) {

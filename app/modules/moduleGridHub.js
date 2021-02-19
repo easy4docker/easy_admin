@@ -29,8 +29,6 @@
             let mGrid =  new MAGrid(env, pkg, req, res);
 
             mGrid.dataGridMatrix((grid) =>{
-                res.send(setting);
-                return true;
                 setting.target = (setting.target) ? setting.target : ip0;
                 if  (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken') {
                     mGrid.call('post', true);
