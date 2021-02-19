@@ -124,10 +124,13 @@ module.exports = {
                 }
                 me.root.dataEngine().gridHub({
                     hubServer  : svr,
-                    cmd     :'setupServer',
-                    data    : postData,
+                    data :{
+                        cmd     :'setupServer',
+                        data    : postData,
+                        dataType: 'json',
+                        target  : postData.targetHost          
+                    },
                     dataType: 'json',
-                    target  : postData.targetHost,
                     gridToken   : token
                 },
                 function(result) {
