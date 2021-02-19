@@ -159,10 +159,7 @@ module.exports = {
                         me.$forceUpdate();
                     }, function(err) {});
                 }, function(err) {});
-                // console.log(me.root.dataEngine().withAuth(postData));
             }
-
-
         },
 
         reset() {
