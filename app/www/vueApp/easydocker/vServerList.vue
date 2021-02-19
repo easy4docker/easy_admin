@@ -120,6 +120,7 @@ module.exports = {
         setTimeout(
             function() {
                 me.getVServerList();
+                me.getServerList()
             }, 50
         );
     },
@@ -155,6 +156,19 @@ module.exports = {
             });
         },
       
+        getServerList() {
+            const me = this;
+            const cp = new crowdProcess();
+            const _f = {}
+            _f['a1'] = function(cbk) {
+                cbk(true);
+            }
+            console.log(crowdProcess);
+            cp.serial(_f, function(result){
+                console.log(result);
+            }, 6000);
+        },
+
         getVServerList() {
             const me = this;
             me.root.dataEngine().appPost(
@@ -189,7 +203,6 @@ module.exports = {
                 data : data
             });            
         },
-
 
         stopVServer(record) {
             var me = this;
