@@ -12,10 +12,10 @@
            me.comm.sendErrorJson('invalid access !');
             return true;
         };
-        me.post = () => {
+        me.post = (bypassAuth) => {
             try {
                 fs.readFile(me.comm.inside.data+ '/_ip', 'utf-8', (err, ip0) => {
-                    me.validationPost(ip0);
+                    me.validationPost(ip0, bypassAuth);
                 });
                 
             } catch (e) {
@@ -28,8 +28,9 @@
             var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
             let mGrid =  new MAGrid(env, pkg, req, res);
 
-
             mGrid.dataGridMatrix((grid) =>{
+                res.send(grid);
+                return true;
                 setting.target = (setting.target) ? setting.target : ip0;
                 if  (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken') {
                     mGrid.call('post', true);
@@ -61,19 +62,23 @@
             });
             return  true;
         };
-        me.validationPost = (ip0) => {
-            const authfn =  me.comm.file.authData;
-            pkg.readJson(authfn, (auth) => {
-                fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
-                    var setting = req.body;
-                    if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
-                        me.comm.sendAction('', 'Unauthorized gridToken!');
-                    } else {
-                        me.execGridPost(setting, ip0);
-                    }
+        me.validationPost = (ip0, bypassAuth) => {
+            var setting = req.body;
+            if (!bypassAuth) {
+                const authfn =  me.comm.file.authData;
+                
+                pkg.readJson(authfn, (auth) => {
+                    fs.readFile(gridTokenFn, 'utf-8', (err, gridToken) => {
+                        if (!setting || !setting.gridToken || (setting.gridToken != gridToken && auth.root !== setting.gridToken)) {
+                            me.comm.sendAction('', 'Unauthorized gridToken!');
+                        } else {
+                            me.execGridPost(setting, ip0);
+                        }
+                    });
                 });
-            });
-            return  true;
+            } else {
+                me.execGridPost(setting, ip0);
+            }
         };
         me.validationPostBK = (ip0) => {
             const authfn =  me.comm.file.authData;

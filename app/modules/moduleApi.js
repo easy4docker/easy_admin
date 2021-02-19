@@ -232,7 +232,9 @@
 			)
 		};
         me.gridHub = (cbk) => {
-            cbk('gridHub');
+            var MGridHub= pkg.require(env.root+ '/modules/moduleGridHub.js');
+			var mhub = new MGridHub(env, pkg, req, res);
+            mhub.post(true);
         }
     }
     module.exports = obj;
