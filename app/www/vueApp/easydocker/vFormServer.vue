@@ -85,8 +85,11 @@ module.exports = {
             me.cleanForm();
         },
         setupServer(postData) {
+
             const me = this;
             me.gitUrlValidation();
+
+
             if (me.isformValid()) {
                 if (postData.targetHost === 'local') {
                     me.root.dataEngine().appPost({
@@ -100,6 +103,7 @@ module.exports = {
                     }, true);
                 } else {
                     me.postThroughGridHub(postData);
+                    
                 }
 
             } 
@@ -114,16 +118,17 @@ module.exports = {
             if (!svr || !token) {
                 return true;
             }
-            me.dataEngine().gridHub({
+            me.root.dataEngine().gridHub({
                     hubServer  : svr,
-                    cmd     :'getGridMatrix',
-                    data    : {},
+                    cmd     :'setupServer',
+                    data    : postData,
                     dataType: 'json',
+                    target  : postData.targetHost,
                     gridToken   : token
                 },
                 function(result) {
                     if (result.status === 'success') {
-                        me.gridMatrix = result.result;
+                        me.root.module = 'list';
                     }
                     me.$forceUpdate();
                 }, function(err) {});
