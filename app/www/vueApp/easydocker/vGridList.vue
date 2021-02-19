@@ -4,7 +4,7 @@
         <hr v-if="(root.gridMatrix) &&  Object.keys(root.gridMatrix).length"/>
         <span v-for="(v, k) in root.gridMatrix">
             <div class="pr-3">
-                <input type="checkbox" v-model="checked(k)" v-on:click="root.setGridSvr(k)"><span class="pl-2">{{ k }}</span> 
+                <input type="checkbox" :checked="root.gridSvrs[k]" v-model="root.gridSvrs[k]" v-on:change="getGridSvr()"><span class="pl-2">{{ k }}</span> 
                 <div class="text-right text-info pl-1">
                     <div class="progress bg-secondary ml-3 m-1">
                         <div class="progress-bar bg-success" v-bind:style="{width: (Math.ceil((v.MemAvailable / v.MemTotal)  * 100) + '%')}" >
@@ -26,7 +26,6 @@
             </button>
             <hr/>
         </div>
-        <span style="display:none">{{root.TM}}</span>
     </div>
 </template>
  
@@ -45,11 +44,17 @@ module.exports = {
         me.root.gridAdminServer = ((SVR) ? SVR : '').replace(/\_/g, '.');
     },
     watch: {
+
     },
     methods : {
-        checked(v) {
-            var me = this;
-            return (me.root.gridSvrs[v]) ? true : false;
+        getGridSvr() {
+            const me = this;
+            for (let k in me.root.gridSvrs) {
+                if (me.root.gridSvrs[k] === false) {
+                    delete me.root.gridSvrs[k];
+                }
+            }
+            // alert(v);
         },
         showRemoveGrid() {
             return (this.root.gridMatrix !== false) ? true : false;

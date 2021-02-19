@@ -6,6 +6,10 @@
                     <div class="col-2 p-0 m-0 text-left">
                     </div>
                     <div class="col-8 p-2 m-0 text-center">
+                            <span class="m-3" v-for="(v, k) in root.gridSvrs">
+                                {{k}}
+                            </span>
+                            {{root.gridSvrs}}
                     </div>
                     <div class="col-2 p-0 m-0 text-right text-warning"></div>
                 </div>
@@ -56,7 +60,6 @@
                 </div>
             </div>
         </div>
-        <span style="display:none">{{root.TM}}</span>
     </div> 
 </template>
  

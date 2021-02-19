@@ -26,6 +26,7 @@
                             <span class="m-3" v-for="(v, k) in root.gridSvrs">
                                 {{k}}
                             </span>
+                            {{root.gridSvrs}}
                         </div>
                         <div class="list-group" v-if="!filteredResult().length"> 
                             <div class="list-group-item list-group-item-action flex-column align-items-start m-1">
@@ -91,7 +92,6 @@
                 </div>
             </div>
         </div>
-        <span style="display:none">{{root.TM}}</span>
     </div>
 </template>
  
@@ -111,7 +111,8 @@ module.exports = {
             serverTypeFilter : [],
             root :  this.$parent.root,
             currentServer : '',
-            gridMatrix: {}
+            gridMatrix: {},
+            gridSvr: ''
         }
     },
     mounted() {
@@ -127,6 +128,9 @@ module.exports = {
     watch: {
         serverTypeFilter: function(val) {
           var me = this;
+        },
+        TM:function(val) {
+            console.log('gridSvr=>' + val);
         }
     },
     methods : {
@@ -171,16 +175,17 @@ module.exports = {
             }
             cp.parallel(_f, function(result){
                 console.log(result);
-                me.list = cp.data.remote;
+                me.list = (cp.data.remote) ? cp.data.remote : [];
             }, 6000);
         },
         getGridHub(cbk) {
             const me = this;
+            var l = Object.keys(me.root.gridSvrs);
+
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
             if (!svr || !token) {
-                console.log(1111);
                 cbk(false);
             }
             me.root.dataEngine().gridHub({
@@ -188,17 +193,13 @@ module.exports = {
                     data : {
                         cmd     :'loadList',
                         data    : {},
-                        target  : '165.22.37.16',
+                        target  : (l[0]) ? l[0] : '165.22.37.16',
                         dataType: 'json'
                     },
                     gridToken   : token
                 },
                 function(result) {
                     cbk(result.list);
-                    /*
-                    if (result.status === 'success') {
-                        cbk(result.result);
-                    }*/
                     // me.$forceUpdate();
                 }, function(err) {
                     console.log(2222);

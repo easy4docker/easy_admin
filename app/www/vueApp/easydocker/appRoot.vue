@@ -46,8 +46,7 @@ module.exports = {
             menu   : '',
             token : '',
             easydockerFP : '',
-            localEnv : {},
-            TM : 0
+            localEnv : {}
         }
     },
     mounted () {
@@ -59,16 +58,6 @@ module.exports = {
         },200);
     },
     methods :{
-        setGridSvr(v) {
-            const me = this;
-            if (me.gridSvrs[v]) {
-                delete me.gridSvrs[v];
-            } else {
-                me.gridSvrs[v] = 1;
-            }
-            me.root.TM = new Date().getTime();
-            me.$forceUpdate();
-        },
         getLocalEnv() {
             const me = this;
             me.dataEngine().appPost({
