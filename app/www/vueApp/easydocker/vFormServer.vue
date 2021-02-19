@@ -149,25 +149,11 @@ module.exports = {
                     dataType: 'json'
                 },
                 function(result) {
-                    console.log(result);
-                    /*
-                    me.root.dataEngine().gridHub({
-                        hubServer  : result.ip,
-                        cmd     :'setupServer',
-                        data    : postData,
-                        dataType: 'json',
-                        target  : postData.targetHost,
-                        gridToken   : result.gridToken
-                    },
-                    function(result) {
-                        console.log(result);
-                        if (result.status === 'success') {
-                            me.root.module = 'list';
-                        }
-                        me.$forceUpdate();
-                    }, function(err) {});
-                    */
-                }, function(err) {});
+                    if (result.status === 'success') {
+                        me.root.module = 'list';
+                    }
+                    me.$forceUpdate();
+                }, true);
             }
         },
 
