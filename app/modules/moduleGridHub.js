@@ -41,7 +41,7 @@
                             if  (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken') {
                                 mGrid.call('post', true);
                             } else {
-                                res.send(postData);
+                                res.send(setting);
                                 return true;
                                 var postData =  setting; 
                                 var channel = (!setting.channel) ? '_grid' : setting.channel;
