@@ -130,7 +130,6 @@ module.exports = {
                         dataType: 'json',
                         target  : postData.targetHost          
                     },
-                    dataType: 'json',
                     gridToken   : token
                 },
                 function(result) {

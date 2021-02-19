@@ -121,7 +121,6 @@ module.exports = {
                         data    : {},
                         dataType: 'json'
                     },
-                    dataType: 'json',
                     gridToken   : token
                 },
                 function(result) {

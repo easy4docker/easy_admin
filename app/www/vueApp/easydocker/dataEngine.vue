@@ -43,7 +43,7 @@ module.exports = {
                         error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
                     }
                 },
-                dataType: (!setting.dataType) ? 'text' : setting.dataType
+                dataType: (!setting.dataType) ? 'json' : setting.dataType
             });
         },
         /* ------------ confirmed ------------*/
@@ -83,7 +83,7 @@ module.exports = {
                                 error({status : 'failure', message : 'failure request.', result : jqXHR.responseText});
                             }
                         },
-                        dataType: (!setting.dataType) ? 'text' : setting.dataType
+                        dataType: (!setting.dataType) ? 'json' : setting.dataType
                     });
                 }
             }, function(err) {
