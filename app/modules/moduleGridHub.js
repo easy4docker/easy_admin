@@ -38,7 +38,7 @@
 
                         mGrid.dataGridMatrix((grid) =>{
 
-                            setting.target = (setting.target) ? setting.target : ip0;
+                            // setting.target = (setting.target) ? setting.target : ip0;
                             me.comm.output(setting);
                             return true;
                             return true;
