@@ -49,11 +49,7 @@
                             if (err) {
                                 res.send({status : 'failure', message : err.message});
                             } else {
-                                if (setting.type === 'json') {
-                                    res.send(body);
-                                } else {
-                                    res.send(body);
-                                } 
+                                res.send(body);
                             }
                         });
                     }
