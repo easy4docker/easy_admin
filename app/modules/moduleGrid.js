@@ -43,7 +43,8 @@
 
         me.post = () => {
             const METHODS = [
-                'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'serverMem'
+                'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'serverMem',
+                'setupServer'
             ];
 
             var MApi= pkg.require(env.root+ '/modules/moduleApi.js');
