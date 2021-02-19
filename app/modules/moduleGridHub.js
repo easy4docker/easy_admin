@@ -30,7 +30,8 @@
 
             mGrid.dataGridMatrix((grid) =>{
                 setting.target = (setting.target) ? setting.target : ip0;
-                if  (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken') {
+                if  (false) {
+                    // if  (setting.cmd === 'getGridMatrix' || setting.cmd === 'getServerToken') {    
                     mGrid.call('post', true);
                 } else {
                     var postData =  setting; 
