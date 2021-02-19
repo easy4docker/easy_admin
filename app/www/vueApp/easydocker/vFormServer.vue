@@ -111,6 +111,7 @@ module.exports = {
         },
 
         postThroughGridHub(postData) {
+            alert('postThroughGridHub');
             const me = this;
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
@@ -127,6 +128,7 @@ module.exports = {
                     gridToken   : token
                 },
                 function(result) {
+                    console.log(result);
                     if (result.status === 'success') {
                         me.root.module = 'list';
                     }
