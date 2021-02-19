@@ -110,11 +110,13 @@ module.exports = {
         },
 
         postThroughGridHub(postData) {
-            const   me = this,
-                    svr = '',
-                    token = '';
+
+            const   me = this;
+            let svr = '',
+                token = '';
             if (me.isLocalhost()) {
-                svr = localStorage.getItem('easydockerSVR'),
+
+                svr = localStorage.getItem('easydockerSVR');
                 token = localStorage.getItem('easydockerTOKEN');
                 svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
                 if (!svr || !token) {
@@ -137,10 +139,13 @@ module.exports = {
                 }, function(err) {});
             } else {
                 me.root.dataEngine().appPost({
-                    cmd     :'getServerToken',
+                    cmd     :'gridHub',
+                    data    : postData,
                     dataType: 'json'
                 },
                 function(result) {
+                    console.log(result);
+                    /*
                     me.root.dataEngine().gridHub({
                         hubServer  : result.ip,
                         cmd     :'setupServer',
@@ -156,6 +161,7 @@ module.exports = {
                         }
                         me.$forceUpdate();
                     }, function(err) {});
+                    */
                 }, function(err) {});
             }
         },
