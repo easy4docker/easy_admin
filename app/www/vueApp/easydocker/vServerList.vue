@@ -237,15 +237,12 @@ module.exports = {
                 cbk(false);
                 return true;
             }
-            me.root.dataEngine().gridHub({
-                    hubServer  : svr,
-                    data : {
-                        cmd     :'loadList',
-                        data    : {},
-                        target  : target,
-                        dataType: 'json'
-                    },
-                    gridToken   : token
+            me.root.dataEngine().gridHub(
+                {
+                    cmd     :'loadList',
+                    data    : {},
+                    target  : target,
+                    dataType: 'json'
                 },
                 function(result) {
                     cbk(result.list);

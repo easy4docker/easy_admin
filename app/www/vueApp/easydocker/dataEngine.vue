@@ -62,10 +62,14 @@ module.exports = {
                         success(result.list);
                     }, false);
             } else {
+                setting.gridToken = token;
                 $.ajax({
-                    type: 'POST',
-                    url: 'http://' + svr + ':10000/_gridHub/',
-                    data: setting,
+                    type        : 'POST',
+                    url         : 'http://' + svr + ':10000/_gridHub/',
+                    data        : {
+                        data :setting,
+                        gridToken   : token
+                    },
                     success: function(result) {
                         me.$parent.triggerSpinner = false;
                         if (typeof  success === 'function') {

@@ -97,27 +97,16 @@ module.exports = {
             if (!me.isLocalhost()) {
                 return true;
             }
-            let svr = localStorage.getItem('easydockerSVR'),
-                token = localStorage.getItem('easydockerTOKEN');
-            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
-            if (!svr || !token) {
-                return true;
-            }
             me.dataEngine().gridHub({
-                    hubServer  : svr,
-                    data : {
-                        cmd     :'getGridMatrix',
-                        data    : {},
-                        dataType: 'json'
-                    },
-                    gridToken   : token
-                },
-                function(result) {
-                    if (result.status === 'success') {
-                        me.gridMatrix = result.result;
-                    }
-                    me.$forceUpdate();
-                }, function(err) {});
+                cmd     :'getGridMatrix',
+                data    : {}
+            },
+            function(result) {
+                if (result.status === 'success') {
+                    me.gridMatrix = result.result;
+                }
+                me.$forceUpdate();
+            }, function(err) {});
         },
         isLocalhost() {
             return (window.location.hostname === 'localhost') ? true : false;
