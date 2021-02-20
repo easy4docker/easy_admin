@@ -53,12 +53,15 @@ module.exports = {
                 token = localStorage.getItem('easydockerTOKEN');
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
             if (!svr || !token) {
-                error({statu : 'failure', message : 'failure request.'});
-                return true;
+                me.appPost(
+                    setting,  
+                    function(result) {
+                        cbk(result.list);
+                    }, false);
             } else {
                 $.ajax({
                     type: 'POST',
-                    url: (setting.hubServer) ? 'http://' + setting.hubServer + ':10000/_gridHub/' : '/_gridHub/',
+                    url: 'http://' + svr + ':10000/_gridHub/',
                     data: setting,
                     success: function(result) {
                         me.$parent.triggerSpinner = false;
@@ -78,48 +81,6 @@ module.exports = {
         },
         /* ------------ confirmed ------------*/
         // UI grid hub Bridge to target 
-
-        gridBridge(setting, success, error) {
-            var me = this;
-            me.$parent.triggerSpinner = true;
-            me.gridHub({
-                hubServer  : setting.hubServer,
-                cmd        : 'getServerToken',
-                target  : setting.target,
-                dataType: 'json',
-                gridToken   : setting.gridToken
-            }, function(hubData) {
-                if (hubData.status !== 'success') {
-                    error({success: 'failure', message: 'gridHub getServerToken error'});
-                } else {
-                    setting.gridToken = hubData.gridToken;
-                    $.ajax({
-                        type: 'POST',
-                        url: 'http://' + hubData.ip + ':10000/_grid/',
-                        data: {
-                            gridToken : hubData.gridToken,
-                            cmd : setting.cmd,
-                            data : setting.data
-                        },
-                        success: function(result) {
-                            me.$parent.triggerSpinner = false;
-                            if (typeof  success === 'function') {
-                                success(result);
-                            }
-                        },
-                        error: function (jqXHR) { 
-                            me.$parent.triggerSpinner = false; 
-                            if (typeof error === 'function') {
-                                error({status : 'failure', message : 'failure request.', result : jqXHR.responseText});
-                            }
-                        },
-                        dataType: (!setting.dataType) ? 'json' : setting.dataType
-                    });
-                }
-            }, function(err) {
-                error(err);
-            });
-        },
 
         appPost(data, callback, isSpinner) {
             const me = this;
