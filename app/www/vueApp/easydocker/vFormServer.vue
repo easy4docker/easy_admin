@@ -101,64 +101,22 @@ module.exports = {
                         me.$forceUpdate();
                     }, true);
                 } else {
-                    me.postThroughGridHub(postData);
-                    
+                    me.root.dataEngine().gridHub({
+                        cmd : 'setupServer',
+                        target : postData.targetHost,
+                        data : postData
+                    },
+                    function(result) {
+                        if (result.status === 'success') {
+                            me.root.module = 'list';
+                        }
+                        me.$forceUpdate();
+                    }, true)
                 }
 
             } 
             me.$forceUpdate();
         },
-
-        postThroughGridHub(postData) {
-
-            const   me = this;
-            let svr = '',
-                token = '';
-            if (me.isLocalhost()) {
-
-                svr = localStorage.getItem('easydockerSVR');
-                token = localStorage.getItem('easydockerTOKEN');
-                svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
-                if (!svr || !token) {
-                    return true;
-                }
-                me.root.dataEngine().gridHub({
-                    hubServer  : svr,
-                    data :{
-                        cmd     :'setupServer',
-                        data    : postData,
-                        dataType: 'json',
-                        target  : postData.targetHost          
-                    },
-                    gridToken   : token
-                },
-                function(result) {
-                    console.log(result);
-                    if (result.status === 'success') {
-                        me.root.module = 'list';
-                    }
-                    me.$forceUpdate();
-                }, function(err) {});
-            } else {
-                me.root.dataEngine().appPost({
-                    cmd     :'gridHub',
-                    data    : {
-                        cmd : 'setupServer',
-                        target : postData.targetHost,
-                        data : postData,
-                        dataType: 'json'
-                    },
-                    dataType: 'json'
-                },
-                function(result) {
-                    if (result.status === 'success') {
-                        me.root.module = 'list';
-                    }
-                    me.$forceUpdate();
-                }, true);
-            }
-        },
-
         reset() {
             var me = this;
             me.form.gitHub = '';
