@@ -64,7 +64,7 @@
                                                 <docker-adupter v-bind:item="item"></docker-adupter>
                                             </div>
                                             <div class="col-2 p-0 m-0 text-left">
-                                                <a class="m-1" href="JavaScript:void(0)" v-on:click="pullCode(item)">
+                                                <a class="m-1" href="JavaScript:void(0)" v-on:click="pullCode(k, item)">
                                                     <i class="fa fa-github" aria-hidden="true"></i> Pull code
                                                 </a><br/>
                                                 <a class="m-1" href="JavaScript:void(0)" v-on:click="switchBranch(item)">
@@ -267,17 +267,28 @@ module.exports = {
                 }, true);
         },
 
-        pullCode(record) {
+        pullCode(host, record) {
             var me = this;
-            
-            me.root.dataEngine().appPost({
-                    cmd :'pullCode',
-                    serverName : record.name,
-                    serverType : record.serverType,
-                    dataType: 'JSON'
-                },function(result) {
-                    me.$parent.triggerSpinner = false;
-                }, true);
+            if (host === 'local') {
+                me.root.dataEngine().appPost({
+                        cmd :'pullCode',
+                        serverName : record.name,
+                        serverType : record.serverType,
+                        dataType: 'JSON'
+                    },function(result) {
+                        me.$parent.triggerSpinner = false;
+                    }, true);
+            } else {
+                me.root.dataEngine().gridHub({
+                        cmd :'pullCode',
+                        serverName : record.name,
+                        serverType : record.serverType,
+                        target : host,
+                        dataType: 'JSON'
+                    },function(result) {
+                        me.$parent.triggerSpinner = false;
+                    }, true);
+            }
         },
 
         startVServer(record) {
