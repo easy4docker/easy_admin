@@ -81,7 +81,7 @@ module.exports = {
                 if (result.status === 'success') {
                     me.gridMatrix = result.result;
                 }
-                // me.$forceUpdate();
+                me.$forceUpdate();
             }, true);
 
         },
