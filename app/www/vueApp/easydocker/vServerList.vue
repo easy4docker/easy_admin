@@ -33,9 +33,11 @@
                         <div class="list-group" v-for="(v, k) in list">
 
                             <div class="list-group-item list-group-item-action flex-column align-items-start m-1 list-group-border">
-                                {{k}} ({{v.length}}) 
-                                <i class="fa fa-arrow-circle-right fa-2x pull-right" v-if = "k !== currentGridHost" v-on:click = "switchGridHost(k)"></i>
-                                <i class="fa fa-arrow-circle-up fa-2x pull-right" v-if = "k === currentGridHost" v-on:click = "switchGridHost('')"></i>
+                                <div class="host-title-list" v-on:click = "switchGridHost(k)">
+                                    {{k}} ({{v.length}}) 
+                                    <i class="fa fa-arrow-circle-right fa-2x pull-right" v-if = "k !== currentGridHost"></i>
+                                    <i class="fa fa-arrow-circle-up fa-2x pull-right" v-if = "k === currentGridHost"></i>
+                                </div>
 
                                 <span v-for="item in v"  v-if="k === currentGridHost">
                                     <hr/>
@@ -137,7 +139,7 @@ module.exports = {
     methods : {
         switchGridHost(v) {
             const me = this;
-            me.currentGridHost = v;
+            me.currentGridHost = (me.currentGridHost === v) ? '' : v;
             me.$forceUpdate();
         },
         aftergridSvrChange() {
@@ -460,4 +462,5 @@ module.exports = {
 }
 .list-group-border { background-color: #efefef }
 .grids-list-section { min-height:30rem}
+.host-title-list { cursor: pointer}
 </style>
