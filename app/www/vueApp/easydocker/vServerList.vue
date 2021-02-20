@@ -81,7 +81,7 @@
                                                 <a href="JavaScript:void(0)" v-on:click="deleteVirtualServer(item)">
                                                     <i class="fa fa-trash m-1 " aria-hidden="true"></i> Remove
                                                 </a><br/>
-                                                <a href="JavaScript:void(0)" v-on:click="startVServer(item)"  title="Reboot Server">
+                                                <a href="JavaScript:void(0)" v-on:click="startVServer(host, item)"  title="Reboot Server">
                                                     <i class="fa fa-refresh m-1" aria-hidden="true"></i> Reboot
                                                 </a><br/>
                                                 <a href="JavaScript:void(0)" v-on:click="stopVServer(k, item)">
@@ -281,12 +281,13 @@ module.exports = {
                 }, true);
         },
 
-        startVServer(record) {
+        startVServer(host, record) {
             var me = this;
-            me.root.dataEngine().appPost({
+            me.root.dataEngine()[(host === 'local') ? 'appPost' : 'gridHub']({
                     cmd :'startVServer',
                     serverName : record.name,
                     serverType : record.serverType,
+                    target : host,
                     dataType: 'JSON'
                 },function(result) {
                     me.$parent.triggerSpinner = false;
