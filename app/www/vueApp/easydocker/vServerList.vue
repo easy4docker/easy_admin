@@ -224,6 +224,7 @@ module.exports = {
 
         getGridHub(target, cbk) {
             const me = this;
+            console.log('===>>>' + target);
             var l = Object.keys(me.root.gridSvrs);
 
             let svr = localStorage.getItem('easydockerSVR'),
@@ -233,7 +234,6 @@ module.exports = {
                 cbk(false);
                 return true;
             }
-            console.log(target + '==>');
             me.root.dataEngine().gridHub({
                     cmd     :'loadList',
                     data    : {},
