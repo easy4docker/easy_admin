@@ -59,7 +59,7 @@ module.exports = {
                         data    : setting,
                     },
                     function(result) {
-                        success(result.list);
+                        success(result);
                         me.$parent.triggerSpinner = false;
                     }, false);
             } else {
