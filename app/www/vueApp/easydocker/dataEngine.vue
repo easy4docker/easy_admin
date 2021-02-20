@@ -60,6 +60,7 @@ module.exports = {
                     },
                     function(result) {
                         success(result.list);
+                        me.$parent.triggerSpinner = false;
                     }, false);
             } else {
                 setting.gridToken = token;

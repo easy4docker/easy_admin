@@ -97,20 +97,16 @@ module.exports = {
             if (me.isLocalhost()) {
                 return true;
             }
-            me.dataEngine().appPost({
+            me.dataEngine().gridHub({
                 cmd     :'getGridMatrix',
-                data    : {},
-                dataType: 'json'
+                data    : {}
             },
             function(result) {
                 if (result.status === 'success') {
                     me.gridMatrix = result.result;
-                } else {
-                    me.gridMatrix  = false;
                 }
-            }, function(err) {
-                me.gridMatrix  = false;
-            });
+                me.$forceUpdate();
+            }, function(err) {});
 
         },
         getGridHub() {
