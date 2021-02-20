@@ -195,7 +195,6 @@ module.exports = {
                 for (k in me.root.gridSvrs) {
                     me.list[k] = cp.data[k];
                 }
-                console.log(me.list);
             }, 6000);
             
             
