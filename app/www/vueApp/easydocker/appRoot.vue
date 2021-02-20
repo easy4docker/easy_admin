@@ -78,11 +78,10 @@ module.exports = {
                 dataType: 'json'
             },
             function(result) {
-                console.log(result);
                 if (result.status === 'success') {
                     me.gridMatrix = result.result;
                 }
-                me.$forceUpdate();
+                // me.$forceUpdate();
             }, true);
 
         },

@@ -43,7 +43,6 @@ module.exports = {
                     }, triggerSpinner);
             } else {
                 me.$parent.triggerSpinner = (!triggerSpinner) ? false : true;
-                setting.gridToken = token;
                 $.ajax({
                     type        : 'POST',
                     url         : 'http://' + svr + ':10000/_gridHub/',
