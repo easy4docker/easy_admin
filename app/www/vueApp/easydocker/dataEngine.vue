@@ -25,10 +25,8 @@ module.exports = {
             return (window.location.hostname === 'localhost') ? true : false;
         },
         /* ------------ confirmed ------------*/
-        gridHub(setting, success, error, triggerSpinner) {
+        gridHub(setting, callback, triggerSpinner) {
             var me = this;
-            me.$parent.triggerSpinner = (!triggerSpinner) ? false : true;
-            
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
@@ -40,10 +38,11 @@ module.exports = {
                     },
                     function(result) {
                         me.$parent.triggerSpinner = false;
-                        success(result);
+                         callback(result);
                         
-                    }, false);
+                    }, triggerSpinner);
             } else {
+                me.$parent.triggerSpinner = (!triggerSpinner) ? false : true;
                 setting.gridToken = token;
                 $.ajax({
                     type        : 'POST',
@@ -54,14 +53,14 @@ module.exports = {
                     },
                     success: function(result) {
                         me.$parent.triggerSpinner = false;
-                        if (typeof  success === 'function') {
-                            success(result);
+                        if (typeof  callback === 'function') {
+                             callback(result);
                         }
                     },
                     error: function (jqXHR) { 
                         me.$parent.triggerSpinner = false;
-                        if (typeof error === 'function') {
-                            error({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
+                        if (typeof  callback === 'function') {
+                             callback({statu : 'failure', message : 'failure request.', result : jqXHR.responseText});
                         }
                     },
                     dataType: (!setting.dataType) ? 'json' : setting.dataType

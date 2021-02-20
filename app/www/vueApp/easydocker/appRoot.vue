@@ -52,7 +52,6 @@ module.exports = {
     mounted () {
         var me = this;
         setTimeout(function() {
-            me.getGridHub();
             me.easydockerFP = localStorage.getItem('easydockerFP');
             me.getGridMatrix();
         },200);
@@ -71,60 +70,21 @@ module.exports = {
                     console.log(err);
                 });
         },
-        getGridMatrixBK() {
+        getGridMatrix() {
             const me = this;
-            if (me.isLocalhost()) {
-                return true;
-            }
-            me.dataEngine().appPost({
+            me.dataEngine().gridHub({
                 cmd     :'getGridMatrix',
                 data    : {},
                 dataType: 'json'
             },
             function(result) {
-                
-                if (result.status === 'success') {
-                    me.gridMatrix = result.result;
-                } else {
-                    me.gridMatrix  = false;
-                }
-            }, function(err) {
-                me.gridMatrix  = false;
-            });
-
-        },
-        getGridMatrix() {
-            const me = this;
-            if (me.isLocalhost()) {
-                return true;
-            }
-            me.dataEngine().gridHub({
-                cmd     :'getGridMatrix',
-                data    : {}
-            },
-            function(result) {
+                console.log(result);
                 if (result.status === 'success') {
                     me.gridMatrix = result.result;
                 }
                 me.$forceUpdate();
-            }, function(err) {});
+            }, true);
 
-        },
-        getGridHub() {
-            const me = this;
-            if (!me.isLocalhost()) {
-                return true;
-            }
-            me.dataEngine().gridHub({
-                cmd     :'getGridMatrix',
-                data    : {}
-            },
-            function(result) {
-                if (result.status === 'success') {
-                    me.gridMatrix = result.result;
-                }
-                me.$forceUpdate();
-            }, function(err) {});
         },
         isLocalhost() {
             return (window.location.hostname === 'localhost') ? true : false;
