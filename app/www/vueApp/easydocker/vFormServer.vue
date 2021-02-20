@@ -115,7 +115,7 @@ module.exports = {
                 }
 
             } 
-            me.$forceUpdate();
+            //me.$forceUpdate();
         },
         reset() {
             var me = this;
