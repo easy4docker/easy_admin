@@ -45,7 +45,7 @@
                                         <div class="row">
                                             <div class="col-8 p-0 m-0 text-left">
                                                 <div class="p-1 m-1 mr-2 border rounded alert-info text-info">
-                                                    <h5>{{item.name}}</h5>
+                                                    <h5>{{k}}:{{item.name}}</h5>
                                                 </div>
                                                 <span class="ml-1">
                                                     Type: <span class="text-info">{{(!item.docker) ? '' : item.docker.type}}</span>
