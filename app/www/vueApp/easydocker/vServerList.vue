@@ -211,13 +211,9 @@ module.exports = {
                 return true;
             }
             me.root.dataEngine().gridHub({
-                hubServer  : svr,
-                data : {
-                    cmd     :'getGridMatrix',
-                    data    : {},
-                    dataType: 'json'
-                },
-                gridToken   : token
+                cmd     :'getGridMatrix',
+                data    : {},
+                dataType: 'json'
             },
             function(resultData) {
                 cbk(resultData.result);
@@ -245,6 +241,7 @@ module.exports = {
                     dataType: 'json'
                 },
                 function(result) {
+                    console.log(result);
                     cbk(result.list);
                 }, function(err) {
                     cbk(false);
