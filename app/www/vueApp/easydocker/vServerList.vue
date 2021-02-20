@@ -126,7 +126,6 @@ module.exports = {
         me.serverTypeFilter = Object.keys(me.serverTypes);
         setTimeout(
             function() {
-                // me.getVServerList();
                 me.getServerList()
             }, 50
         );
@@ -203,13 +202,6 @@ module.exports = {
         },
         getGridMatrix(cbk) {
             const me = this;
-            let svr = localStorage.getItem('easydockerSVR'),
-                token = localStorage.getItem('easydockerTOKEN');
-            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
-            if (!svr || !token) {
-                cbk(false);
-                return true;
-            }
             me.root.dataEngine().gridHub({
                 cmd     :'getGridMatrix',
                 data    : {},
@@ -224,16 +216,6 @@ module.exports = {
 
         getGridHub(target, cbk) {
             const me = this;
-            console.log('===>>>' + target);
-            var l = Object.keys(me.root.gridSvrs);
-            /*
-            let svr = localStorage.getItem('easydockerSVR'),
-                token = localStorage.getItem('easydockerTOKEN');
-            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
-            if (!svr || !token || !target) {
-                cbk(false);
-                return true;
-            }*/
             me.root.dataEngine().gridHub({
                     cmd     :'loadList',
                     data    : {},
@@ -241,22 +223,11 @@ module.exports = {
                     dataType: 'json'
                 },
                 function(result) {
-                    
-                    console.log(result);
                     cbk(result.list);
                 }, function(err) {
                     cbk(false);
                 });
            
-        },
-
-        getVServerList() {
-            const me = this;
-            me.root.dataEngine().appPost(
-                {cmd :'loadList'},  function(result) {
-                    me.list = result.list;
-                }
-            );
         },
          
         deleteVirtualServer(record) {
