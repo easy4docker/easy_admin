@@ -25,9 +25,9 @@ module.exports = {
             return (window.location.hostname === 'localhost') ? true : false;
         },
         /* ------------ confirmed ------------*/
-        gridHub(setting, success, error) {
+        gridHub(setting, success, error, triggerSpinner) {
             var me = this;
-            me.$parent.triggerSpinner = true;
+            me.$parent.triggerSpinner = (!triggerSpinner) ? false : true;
             
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
@@ -39,8 +39,9 @@ module.exports = {
                         data    : setting,
                     },
                     function(result) {
-                        success(result);
                         me.$parent.triggerSpinner = false;
+                        success(result);
+                        
                     }, false);
             } else {
                 setting.gridToken = token;
