@@ -52,9 +52,11 @@ module.exports = {
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+
             if (!svr || !token) {
                 me.appPost(
-                    setting,  
+                    cmd     :'gridHub',
+                    data    : setting,
                     function(result) {
                         cbk(result.list);
                     }, false);
