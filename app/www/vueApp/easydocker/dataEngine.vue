@@ -45,6 +45,7 @@ module.exports = {
                 dataType: (!setting.dataType) ? 'json' : setting.dataType
             });
         },
+        /*
         gridHubBK(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
@@ -80,7 +81,7 @@ module.exports = {
                     dataType: (!setting.dataType) ? 'json' : setting.dataType
                 });
             }
-        },
+        },*/
         /* ------------ confirmed ------------*/
         // UI grid hub Bridge to target 
 
