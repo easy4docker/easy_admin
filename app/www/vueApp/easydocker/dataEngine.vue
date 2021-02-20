@@ -23,7 +23,7 @@ module.exports = {
         },
         /* ------------ confirmed ------------*/
         // servier side hub to target  
-        gridHubBK(setting, success, error) {
+        gridHub(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
             $.ajax({
@@ -45,7 +45,7 @@ module.exports = {
                 dataType: (!setting.dataType) ? 'json' : setting.dataType
             });
         },
-        gridHub(setting, success, error) {
+        gridHubBK(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
             
