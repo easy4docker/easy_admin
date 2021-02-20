@@ -233,6 +233,7 @@ module.exports = {
                 cbk(false);
                 return true;
             }
+            console.log(target + '==>');
             me.root.dataEngine().gridHub({
                     cmd     :'loadList',
                     data    : {},
@@ -240,7 +241,7 @@ module.exports = {
                     dataType: 'json'
                 },
                 function(result) {
-                    console.log(target + '==>');
+                    
                     console.log(result);
                     cbk(result.list);
                 }, function(err) {
