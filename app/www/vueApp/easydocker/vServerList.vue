@@ -269,26 +269,15 @@ module.exports = {
 
         pullCode(host, record) {
             var me = this;
-            if (host === 'local') {
-                me.root.dataEngine().appPost({
-                        cmd :'pullCode',
-                        serverName : record.name,
-                        serverType : record.serverType,
-                        dataType: 'JSON'
-                    },function(result) {
-                        me.$parent.triggerSpinner = false;
-                    }, true);
-            } else {
-                me.root.dataEngine().gridHub({
-                        cmd :'pullCode',
-                        serverName : record.name,
-                        serverType : record.serverType,
-                        target : host,
-                        dataType: 'JSON'
-                    },function(result) {
-                        me.$parent.triggerSpinner = false;
-                    }, true);
-            }
+            me.root.dataEngine()[(host === 'local') ? 'appPost' : 'gridHub']({
+                    cmd :'pullCode',
+                    serverName : record.name,
+                    serverType : record.serverType,
+                    target : host,
+                    dataType: 'JSON'
+                },function(result) {
+                    me.$parent.triggerSpinner = false;
+                }, true);
         },
 
         startVServer(record) {
