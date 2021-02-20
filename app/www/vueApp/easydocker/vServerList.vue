@@ -226,14 +226,14 @@ module.exports = {
             const me = this;
             console.log('===>>>' + target);
             var l = Object.keys(me.root.gridSvrs);
-
+            /*
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
             if (!svr || !token || !target) {
                 cbk(false);
                 return true;
-            }
+            }*/
             me.root.dataEngine().gridHub({
                     cmd     :'loadList',
                     data    : {},
