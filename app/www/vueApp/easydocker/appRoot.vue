@@ -103,7 +103,6 @@ module.exports = {
                 data    : {}
             },
             function(result) {
-                console.log(result);
                 if (result.status === 'success') {
                     me.gridMatrix = result.result;
                 }
