@@ -23,7 +23,7 @@ module.exports = {
         },
         /* ------------ confirmed ------------*/
         // servier side hub to target  
-        gridHub(setting, success, error) {
+        gridHubBK(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
             $.ajax({
@@ -45,21 +45,21 @@ module.exports = {
                 dataType: (!setting.dataType) ? 'json' : setting.dataType
             });
         },
-        /*
-        gridHubBK(setting, success, error) {
+        gridHub(setting, success, error) {
             var me = this;
             me.$parent.triggerSpinner = true;
             
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
-
+            
             if (!svr || !token) {
-                me.appPost(
-                    cmd     :'gridHub',
-                    data    : setting,
+                me.appPost({
+                        cmd     : 'gridHub',
+                        data    : setting,
+                    },
                     function(result) {
-                        cbk(result.list);
+                        success(result.list);
                     }, false);
             } else {
                 $.ajax({
@@ -81,7 +81,7 @@ module.exports = {
                     dataType: (!setting.dataType) ? 'json' : setting.dataType
                 });
             }
-        },*/
+        },
         /* ------------ confirmed ------------*/
         // UI grid hub Bridge to target 
 
