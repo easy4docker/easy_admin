@@ -24,7 +24,6 @@ module.exports = {
         isLocalhost() {
             return (window.location.hostname === 'localhost') ? true : false;
         },
-        /* ------------ confirmed ------------*/
         gridHub(setting, callback, triggerSpinner) {
             var me = this;
             let svr = localStorage.getItem('easydockerSVR'),
@@ -66,9 +65,6 @@ module.exports = {
                 });
             }
         },
-        /* ------------ confirmed ------------*/
-        // UI grid hub Bridge to target 
-
         appPost(data, callback, isSpinner) {
             const me = this;
             if (isSpinner) me.$parent.triggerSpinner = true;
@@ -79,9 +75,6 @@ module.exports = {
                 success: function(result) {
                     if (isSpinner) me.$parent.triggerSpinner = false;
                     callback(result);
-                    // if (result.status !== 'success') {
-                    //    me.root.alertComp().show(result);
-                    // }
                 },
                 error: function (jqXHR, textStatus, errorThrown) { 
                     if (isSpinner) me.$parent.triggerSpinner = false;
