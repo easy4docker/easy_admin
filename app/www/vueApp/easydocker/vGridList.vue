@@ -49,17 +49,12 @@ module.exports = {
     methods : {
         getGridSvr() {
             const me = this;
-            let firstOne = '';
             for (let k in me.root.gridSvrs) {
                 if (me.root.gridSvrs[k] === false) {
                     delete me.root.gridSvrs[k];
-                } else {
-                   if (!firstOne) {
-                        firstOne = k;
-                   }
                 }
             }
-            (typeof me.$parent.aftergridSvrChange === 'function') ? me.$parent.aftergridSvrChange(firstOne) : '';
+            (typeof me.$parent.aftergridSvrChange === 'function') ? me.$parent.aftergridSvrChange() : '';
         },
         showRemoveGrid() {
             return (this.root.gridMatrix !== false) ? true : false;

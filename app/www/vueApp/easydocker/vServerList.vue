@@ -22,70 +22,74 @@
                         <grid-list></grid-list>
                     </div>
                     <div class="col-10 p-0 m-0 text-left">
-                        <div class="p-1" v-if="Object.keys(root.gridSvrs).length">
-                            <span class="m-3" v-for="(v, k) in root.gridSvrs">
-                                {{k}}
-                            </span>
-                            {{root.gridSvrs}}
-                        </div>
-                        <div class="list-group" v-if="!filteredResult().length"> 
+                        <div class="list-group" v-if="false"> 
+                        !filteredResult().length
                             <div class="list-group-item list-group-item-action flex-column align-items-start m-1">
                                 <div class="container-fluid m-0">
                                     No result
                                 </div>
                             </div>
                         </div>
-                        <div class="list-group" v-for="item in filteredResult()">
+                        <div class="list-group" v-for="(v, k) in list">
+
                             <div class="list-group-item list-group-item-action flex-column align-items-start m-1 list-group-border">
-                                <div class="container-fluid m-0">
-                                    <div class="row">
-                                        <div class="col-8 p-0 m-0 text-left">
-                                            <div class="p-1 m-1 mr-2 border rounded alert-info text-info">
-                                                <h5>{{item.name}}</h5>
+                                {{k}} ({{v.length}}) 
+                                <i class="fa fa-arrow-circle-right fa-2x pull-right" v-if = "k !== currentGridHost" v-on:click = "switchGridHost(k)"></i>
+                                <i class="fa fa-arrow-circle-up fa-2x pull-right" v-if = "k === currentGridHost" v-on:click = "switchGridHost('')"></i>
+
+                                <span v-for="item in v"  v-if="k === currentGridHost">
+                                    <hr/>
+                                    <div class="container-fluid m-0" >
+                                        <div class="row">
+                                            <div class="col-8 p-0 m-0 text-left">
+                                                <div class="p-1 m-1 mr-2 border rounded alert-info text-info">
+                                                    <h5>{{item.name}}</h5>
+                                                </div>
+                                                <span class="ml-1">
+                                                    Type: <span class="text-info">{{(!item.docker) ? '' : item.docker.type}}</span>
+                                                    Port : <span class="text-info"> {{outerPorts(item)}}</span>
+                                                    Unidx : <span class="text-info"> {{item.unidx}}</span>
+                                                    <a href="JavaScript:void(0)" v-on:click="linkCloudTo(item)">
+                                                        <i class="fa fa-globe fa ml-3" aria-hidden="true"></i> Web Link
+                                                    </a>
+                                                </span><br/>
+                                                <span class="ml-1">
+                                                    gitHub : <span class="text-info"> {{item.gitHub}}</span>
+                                                </span>
+                                                <span class="ml-1">
+                                                    <select-branch v-bind:record="item" v-bind:branch="item.branch"></select-branch>
+                                                </span><br/>
+                                                <docker-adupter v-bind:item="item"></docker-adupter>
                                             </div>
-                                            <span class="ml-1">
-                                                Type: <span class="text-info">{{item.docker.type}}</span>
-                                                Port : <span class="text-info"> {{outerPorts(item)}}</span>
-                                                Unidx : <span class="text-info"> {{item.unidx}}</span>
-                                                <a href="JavaScript:void(0)" v-on:click="linkCloudTo(item)">
-                                                    <i class="fa fa-globe fa ml-3" aria-hidden="true"></i> Web Link
+                                            <div class="col-2 p-0 m-0 text-left">
+                                                <a class="m-1" href="JavaScript:void(0)" v-on:click="pullCode(item)">
+                                                    <i class="fa fa-github" aria-hidden="true"></i> Pull code
+                                                </a><br/>
+                                                <a class="m-1" href="JavaScript:void(0)" v-on:click="switchBranch(item)">
+                                                    <i class="fa fa-github" aria-hidden="true"></i> Switch branch
+                                                </a><br/>
+                                                <a class="m-1" href="JavaScript:void(0)" v-on:click="popupEditor(item)">
+                                                    <i class="fa fa-file-code-o mr-2" aria-hidden="true"></i>Edit Site Variabls
+                                                </a><br/>
+                                                <a class="m-1" v-if="isCloudTool(item)" href="JavaScript:void(0)" v-on:click="popupCloudTool(item)">
+                                                    <i class="fa fa-cloud mr-2" aria-hidden="true"></i>Cloud Token Admin
                                                 </a>
-                                            </span><br/>
-                                            <span class="ml-1">
-                                                gitHub : <span class="text-info"> {{item.gitHub}}</span>
-                                            </span>
-                                            <span class="ml-1">
-                                                <select-branch v-bind:record="item" v-bind:branch="item.branch"></select-branch>
-                                            </span><br/>
-                                            <docker-adupter v-bind:item="item"></docker-adupter>
+                                            </div>
+                                            <div class="col-2 p-0 m-0 text-left">
+                                                <a href="JavaScript:void(0)" v-on:click="deleteVirtualServer(item)">
+                                                    <i class="fa fa-trash m-1 " aria-hidden="true"></i> Remove
+                                                </a><br/>
+                                                <a href="JavaScript:void(0)" v-on:click="startVServer(item)"  title="Reboot Server">
+                                                    <i class="fa fa-refresh m-1" aria-hidden="true"></i> Reboot
+                                                </a><br/>
+                                                <a href="JavaScript:void(0)" v-on:click="stopVServer(item)">
+                                                    <i class="fa fa-stop-circle m-1" aria-hidden="true"></i> Stop
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div class="col-2 p-0 m-0 text-left">
-                                            <a class="m-1" href="JavaScript:void(0)" v-on:click="pullCode(item)">
-                                                <i class="fa fa-github" aria-hidden="true"></i> Pull code
-                                            </a><br/>
-                                            <a class="m-1" href="JavaScript:void(0)" v-on:click="switchBranch(item)">
-                                                <i class="fa fa-github" aria-hidden="true"></i> Switch branch
-                                            </a><br/>
-                                            <a class="m-1" href="JavaScript:void(0)" v-on:click="popupEditor(item)">
-                                                <i class="fa fa-file-code-o mr-2" aria-hidden="true"></i>Edit Site Variabls
-                                            </a><br/>
-                                            <a class="m-1" v-if="isCloudTool(item)" href="JavaScript:void(0)" v-on:click="popupCloudTool(item)">
-                                                <i class="fa fa-cloud mr-2" aria-hidden="true"></i>Cloud Token Admin
-                                            </a>
-                                        </div>
-                                        <div class="col-2 p-0 m-0 text-left">
-                                            <a href="JavaScript:void(0)" v-on:click="deleteVirtualServer(item)">
-                                                <i class="fa fa-trash m-1 " aria-hidden="true"></i> Remove
-                                            </a><br/>
-                                            <a href="JavaScript:void(0)" v-on:click="startVServer(item)"  title="Reboot Server">
-                                                <i class="fa fa-refresh m-1" aria-hidden="true"></i> Reboot
-                                            </a><br/>
-                                            <a href="JavaScript:void(0)" v-on:click="stopVServer(item)">
-                                                <i class="fa fa-stop-circle m-1" aria-hidden="true"></i> Stop
-                                            </a>
-                                        </div>
+
                                     </div>
-                                </div>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -112,7 +116,7 @@ module.exports = {
             root :  this.$parent.root,
             currentServer : '',
             gridMatrix: {},
-            gridSvr: ''
+            currentGridHost: ''
         }
     },
     mounted() {
@@ -128,15 +132,16 @@ module.exports = {
     watch: {
         serverTypeFilter: function(val) {
           var me = this;
-        },
-        gridSvr : function(val) {
-          var me = this;
-          me.getServerList();
         }
     },
     methods : {
-        aftergridSvrChange(v) {
-            this.gridSvr = v;
+        switchGridHost(v) {
+            const me = this;
+            me.currentGridHost = v;
+            me.$forceUpdate();
+        },
+        aftergridSvrChange() {
+            this.getServerList();
         },
         isFilterChecked(k) {
             var me = this;
@@ -159,6 +164,7 @@ module.exports = {
 
         filteredResult() {
             var me = this;
+            return [];
             return me.list.filter(function(item) {
                 return (me.serverTypeFilter.indexOf(item.docker.type) !== -1)
             });
@@ -167,6 +173,7 @@ module.exports = {
         getServerList() {
             const me = this;
             const cp = new crowdProcess();
+
             const _f = {}
             _f['local'] = function(cbk) {
                 me.root.dataEngine().appPost(
@@ -174,18 +181,26 @@ module.exports = {
                         cbk(result.list);
                     }, false);
             }
-            _f['remote'] = function(cbk) {
-                me.getGridHub(cbk);
-            }
-            cp.parallel(_f, function(result){
-                console.log(result);
-                me.list = (cp.data.remote) ? cp.data.remote : [];
-            }, 6000);
-        },
-        getGridHub(cbk) {
-            const me = this;
-            var l = Object.keys(me.root.gridSvrs);
 
+            for (k in me.root.gridSvrs) {
+                _f[k] = (function(k) {
+                    return function(cbk) {
+                        me.getGridHub(k, cbk);
+                    }})(k)
+            }
+            
+            cp.parallel(_f, function(result){
+                me.list = {local : cp.data.local};
+                for (k in me.root.gridSvrs) {
+                    me.list[k] = cp.data[k];
+                }
+                console.log(me.list);
+            }, 6000);
+            
+            
+        },
+        getGridMatrix(cbk) {
+            const me = this;
             let svr = localStorage.getItem('easydockerSVR'),
                 token = localStorage.getItem('easydockerTOKEN');
             svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
@@ -193,28 +208,49 @@ module.exports = {
                 cbk(false);
                 return true;
             }
-           if (!me.gridSvr) {
-                me.root.dataEngine().appPost(
-                        {cmd :'loadList'},  function(result) {
-                            cbk(result.list);
-                        }, false);
-           } else {
-                me.root.dataEngine().gridHub({
-                        hubServer  : svr,
-                        data : {
-                            cmd     :'loadList',
-                            data    : {},
-                            target  : me.gridSvr,
-                            dataType: 'json'
-                        },
-                        gridToken   : token
+            me.root.dataEngine().gridHub({
+                hubServer  : svr,
+                data : {
+                    cmd     :'getGridMatrix',
+                    data    : {},
+                    dataType: 'json'
+                },
+                gridToken   : token
+            },
+            function(resultData) {
+                cbk(resultData.result);
+            }, function(err) {
+                cbk(false);
+            });
+        },
+
+        getGridHub(target, cbk) {
+            const me = this;
+            var l = Object.keys(me.root.gridSvrs);
+
+            let svr = localStorage.getItem('easydockerSVR'),
+                token = localStorage.getItem('easydockerTOKEN');
+            svr = (!svr) ? '' :  svr.replace(/\_/g, '.');
+            if (!svr || !token || !target) {
+                cbk(false);
+                return true;
+            }
+            me.root.dataEngine().gridHub({
+                    hubServer  : svr,
+                    data : {
+                        cmd     :'loadList',
+                        data    : {},
+                        target  : target,
+                        dataType: 'json'
                     },
-                    function(result) {
-                        cbk(result.list);
-                    }, function(err) {
-                        cbk(false);
-                    });
-           }
+                    gridToken   : token
+                },
+                function(result) {
+                    cbk(result.list);
+                }, function(err) {
+                    cbk(false);
+                });
+           
         },
 
         getVServerList() {
