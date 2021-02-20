@@ -71,7 +71,7 @@ module.exports = {
                     console.log(err);
                 });
         },
-        getGridMatrix() {
+        getGridMatrixBK() {
             const me = this;
             if (me.isLocalhost()) {
                 return true;
@@ -90,6 +90,23 @@ module.exports = {
             }, function(err) {
                 me.gridMatrix  = false;
             });
+
+        },
+        getGridMatrix() {
+            const me = this;
+            if (me.isLocalhost()) {
+                return true;
+            }
+            me.dataEngine().gridHub({
+                cmd     :'getGridMatrix',
+                data    : {}
+            },
+            function(result) {
+                if (result.status === 'success') {
+                    me.gridMatrix = result.result;
+                }
+                me.$forceUpdate();
+            }, function(err) {});
 
         },
         getGridHub() {
