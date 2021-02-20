@@ -84,7 +84,7 @@
                                                 <a href="JavaScript:void(0)" v-on:click="startVServer(item)"  title="Reboot Server">
                                                     <i class="fa fa-refresh m-1" aria-hidden="true"></i> Reboot
                                                 </a><br/>
-                                                <a href="JavaScript:void(0)" v-on:click="stopVServer(item)">
+                                                <a href="JavaScript:void(0)" v-on:click="stopVServer(k, item)">
                                                     <i class="fa fa-stop-circle m-1" aria-hidden="true"></i> Stop
                                                 </a>
                                             </div>
@@ -255,12 +255,13 @@ module.exports = {
             });            
         },
 
-        stopVServer(record) {
+        stopVServer(host, record) {
             var me = this;
-            me.root.dataEngine().appPost({
+            me.root.dataEngine()[(host === 'local') ? 'appPost' : 'gridHub']({
                     cmd :'stopVServer',
                     serverName : record.name,
                     serverType : record.serverType,
+                    target : host,
                     dataType: 'JSON'
                 },function(result) {
                     me.$parent.triggerSpinner = false;
