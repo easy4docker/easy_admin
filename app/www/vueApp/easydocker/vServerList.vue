@@ -233,14 +233,14 @@ module.exports = {
                 cbk(false);
                 return true;
             }
-            me.root.dataEngine().gridHub(
-                {
+            me.root.dataEngine().gridHub({
                     cmd     :'loadList',
                     data    : {},
                     target  : target,
                     dataType: 'json'
                 },
                 function(result) {
+                    console.log(target + '==>');
                     console.log(result);
                     cbk(result.list);
                 }, function(err) {
