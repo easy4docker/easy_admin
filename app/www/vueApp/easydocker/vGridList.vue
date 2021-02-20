@@ -57,7 +57,7 @@ module.exports = {
             (typeof me.$parent.aftergridSvrChange === 'function') ? me.$parent.aftergridSvrChange() : '';
         },
         showRemoveGrid() {
-            return (this.root.gridMatrix !== false) ? true : false;
+            return (!Object.keys(this.root.gridMatrix).length || this.root.gridMatrix === false) ? false : true;
         },
         removeGrid() {
             const me = this;
@@ -65,6 +65,7 @@ module.exports = {
             me.root.gridAdminServer = '';
             localStorage.removeItem('easydockerTOKEN');
             me.root.gridMatrix = false;
+            me.$forceUpdate();
         },
         addGridMonitor() {
             const me = this;

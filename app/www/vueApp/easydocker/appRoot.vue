@@ -80,6 +80,8 @@ module.exports = {
             function(result) {
                 if (result.status === 'success') {
                     me.gridMatrix = result.result;
+                } else {
+                    me.gridMatrix = false;
                 }
                 me.$forceUpdate();
             }, true);
