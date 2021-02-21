@@ -234,8 +234,8 @@ module.exports = {
             me.root.popUp(me).show({
                 insideModule: 'confirmDelete',
                 insideModuleUrl: '/vueApp/easydocker/popUpModals/confirmDelete.vue',
+                target     : host,
                 data : {
-                    target     : host,
                     serverName : record.name,
                     serverType : record.serverType
                 }

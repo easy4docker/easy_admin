@@ -23,15 +23,15 @@ module.exports = {
             const me = this;
             const cfg = {
                 cmd : 'deleteVServer',
-                data : me.$parent.cfg.data,
+                data : me.parent.cfg.data,
                 dataType: 'JSON'
             };
+            const host = me.parent.cfg.target;
             caller = me.parent.caller;
-
-            me.root.dataEngine().appPost(cfg,
+            me.root.dataEngine()[(host === 'local') ? 'appPost' : 'gridHub'](cfg,
                 function(result) {
                     me.close();
-                    caller.getVServerList();
+                    caller.getServerList();
                 }, true);
         }
     }
