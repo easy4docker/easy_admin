@@ -62,8 +62,8 @@ module.exports = {
                 target  : host,
             };
             me.root.dataEngine()[(host === 'local') ? 'appPost' : 'gridHub'](data, function(result) {
-                me.close();
                 caller.getServerList();
+                me.close();
                 if (result.status !== 'success') {
                     result.message += ' The request can not go through!';
                     me.root.alertComp().show(result);

@@ -59,7 +59,7 @@
                                                     gitHub : <span class="text-info"> {{item.gitHub}}</span>
                                                 </span>
                                                 <span class="ml-1">
-                                                    <select-branch v-bind:record="item" v-bind:branch="item.branch"></select-branch>
+                                                    <select-branch v-bind:record="item" v-bind:branch="item.branch" v-bind:host="k"></select-branch>
                                                 </span><br/>
                                                 <docker-adupter v-bind:item="item"></docker-adupter>
                                             </div>

@@ -21,11 +21,12 @@
 
 <script>
 module.exports = {
-    props: ['record', 'branch'],
+    props: ['record', 'branch', 'host'],
     data: function() {
         return {
             branches :  [],
             root     :  this.$parent.root,
+            parent   :  this.$parent,
             form     : {
                 branch : this.branch
             }
@@ -44,10 +45,12 @@ module.exports = {
             const data = {
                 cmd : 'gitSiteBranchs',
                 serverName : me.record.name,
-                serverType : me.record.serverType
+                serverType : me.record.serverType,
+                target : me.host
             }
             me.$parent.currentServer = me.record.serverType + '-' + me.record.name;
-            me.root.dataEngine().appPost(data, function(result) {
+            me.root.dataEngine()[(me.host === 'local') ? 'appPost' : 'gridHub'](data, function(result) {
+            // me.root.dataEngine().appPost(data, function(result) {
                 if (result.status === 'success') {
                     me.branches = result.list;
                 } else {
@@ -62,15 +65,17 @@ module.exports = {
                 cmd :'gitSwitchBranch',
                 serverName : me.record.name,
                 serverType : me.record.serverType,
-                branch     : branch
+                branch     : branch,
+                target : me.host
             }
-            me.root.dataEngine().appPost(data, function(result) {
+            me.root.dataEngine()[(me.host === 'local') ? 'appPost' : 'gridHub'](data, function(result) {
+            // me.root.dataEngine().appPost(data, function(result) {
                 if (result.status !== 'success') {
                     me.branches = [];
                     result.message += ' The request can not go through!';
                     me.root.alertComp().show(result);
                 } else {
-                    me.$parent.getVServerList();
+                    me.parent.getServerList();
                     me.branches = [];
                 }
             }, true);        
