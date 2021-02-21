@@ -50,7 +50,6 @@ module.exports = {
             }
             me.$parent.currentServer = me.record.serverType + '-' + me.record.name;
             me.root.dataEngine()[(me.host === 'local') ? 'appPost' : 'gridHub'](data, function(result) {
-            // me.root.dataEngine().appPost(data, function(result) {
                 if (result.status === 'success') {
                     me.branches = result.list;
                 } else {

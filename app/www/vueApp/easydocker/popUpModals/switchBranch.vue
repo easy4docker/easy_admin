@@ -33,8 +33,10 @@ module.exports = {
     methods :{
         gitSiteBranchs(record) {
             const me = this;
+            const host = me.parent.cfg.target;
             record.cmd = 'gitSiteBranchs';
-            me.root.dataEngine().appPost(record, function(result) {
+            record.target = host;
+            me.root.dataEngine()[(host === 'local') ? 'appPost' : 'gridHub'](record, function(result) {
                 if (result.status === 'success') {
                     me.branches = result.list;
                 } else {
