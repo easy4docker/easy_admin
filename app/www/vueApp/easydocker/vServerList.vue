@@ -78,7 +78,7 @@
                                                 </a>
                                             </div>
                                             <div class="col-2 p-0 m-0 text-left">
-                                                <a href="JavaScript:void(0)" v-on:click="deleteVirtualServer(item)">
+                                                <a href="JavaScript:void(0)" v-on:click="deleteVirtualServer(k, item)">
                                                     <i class="fa fa-trash m-1 " aria-hidden="true"></i> Remove
                                                 </a><br/>
                                                 <a href="JavaScript:void(0)" v-on:click="startVServer(k, item)"  title="Reboot Server">
@@ -229,12 +229,13 @@ module.exports = {
            
         },
          
-        deleteVirtualServer(record) {
+        deleteVirtualServer(host, record) {
             var me = this;
             me.root.popUp(me).show({
                 insideModule: 'confirmDelete',
                 insideModuleUrl: '/vueApp/easydocker/popUpModals/confirmDelete.vue',
                 data : {
+                    target     : host,
                     serverName : record.name,
                     serverType : record.serverType
                 }
