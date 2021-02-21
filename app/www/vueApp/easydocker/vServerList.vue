@@ -14,7 +14,6 @@
                 </div>
             </div>
         </div>
-       
         <div class="card-body card-list-section border-0 pt-0">
             <div class="container-fluid p-1 pb-0" >
                 <div class="row">
@@ -22,24 +21,27 @@
                         <grid-list></grid-list>
                     </div>
                     <div class="col-10 p-0 m-0 text-left">
-                        <div class="list-group" v-if="false"> 
-                        !filteredResult().length
-                            <div class="list-group-item list-group-item-action flex-column align-items-start m-1">
-                                <div class="container-fluid m-0">
-                                    No result
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="list-group" v-for="(v, k) in list">
-
                             <div class="list-group-item list-group-item-action flex-column align-items-start m-1 list-group-border">
-                                <div class="host-title-list" v-on:click = "switchGridHost(k)">
+                                <div>
                                     {{k}} ({{v.length}}) 
-                                    <i class="fa fa-arrow-circle-right fa-2x pull-right" v-if = "k !== currentGridHost"></i>
-                                    <i class="fa fa-arrow-circle-up fa-2x pull-right" v-if = "k === currentGridHost"></i>
-                                </div>
+                                    <a href="JavaScript: void(0)" v-if="k !== 'local'">
+                                        <i class="fa fa-refresh ml-3" aria-hidden="true"  v-on:click = "rebootHost(k)"></i>
+                                    </a>
 
-                                <span v-for="item in v"  v-if="k === currentGridHost">
+                                    <a href="JavaScript: void(0)" class="pull-right host-detail-icon"  v-on:click = "switchGridHost(k)">
+                                        <i class="fa fa-arrow-circle-right fa-2x " v-if = "k !== currentGridHost"></i>
+                                        <i class="fa fa-arrow-circle-up fa-2x pull-right" v-if = "k === currentGridHost"></i>
+                                    </a>
+                                </div>
+                                <span v-if="!filteredResult(k).length && k !== currentGridHost">
+                                    <hr/>
+                                    <div class="container-fluid m-0">
+                                        No result on {{k}}
+                                    </div>
+                                </span>
+                                <span v-for="item in filteredResult(k)"  v-if="k === currentGridHost">
                                     <hr/>
                                     <div class="container-fluid m-0" >
                                         <div class="row">
@@ -163,10 +165,14 @@ module.exports = {
             }
         },
 
-        filteredResult() {
+        rebootHost(host) {
             var me = this;
-            return [];
-            return me.list.filter(function(item) {
+            alert(host);
+        },
+
+        filteredResult(k) {
+            var me = this;
+            return me.list[k].filter(function(item) {
                 return (me.serverTypeFilter.indexOf(item.docker.type) !== -1)
             });
         },
@@ -418,5 +424,5 @@ module.exports = {
 }
 .list-group-border { background-color: #efefef }
 .grids-list-section { min-height:30rem}
-.host-title-list { cursor: pointer}
+.host-detail-ico { cursor: pointer}
 </style>

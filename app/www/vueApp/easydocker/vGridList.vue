@@ -72,9 +72,7 @@ module.exports = {
             me.root.popUp(me).show({
                 insideModule: 'addGridMonitor',
                 insideModuleUrl: '/vueApp/easydocker/popUpModals/addGridMonitor.vue',
-                data : {
-
-                },
+                data : {},
                 noDefaultCancel : true
             });
         }
