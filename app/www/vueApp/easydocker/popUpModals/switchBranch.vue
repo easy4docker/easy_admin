@@ -51,16 +51,19 @@ module.exports = {
         switchBranch() {
             const me = this;
             const caller = me.parent.caller;
+            const host = me.parent.cfg.target;
 
             const data = {
                 cmd :'gitSwitchBranch',
+                
                 serverName : me.$parent.cfg.data.serverName,
                 serverType : me.$parent.cfg.data.serverType,
-                branch     : me.form.branch
+                branch     : me.form.branch,
+                target  : host,
             };
-            me.root.dataEngine().appPost(data, function(result) {
-                caller.getVServerList();
+            me.root.dataEngine()[(host === 'local') ? 'appPost' : 'gridHub'](data, function(result) {
                 me.close();
+                caller.getServerList();
                 if (result.status !== 'success') {
                     result.message += ' The request can not go through!';
                     me.root.alertComp().show(result);

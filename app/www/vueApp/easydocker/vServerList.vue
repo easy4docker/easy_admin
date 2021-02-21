@@ -67,7 +67,7 @@
                                                 <a class="m-1" href="JavaScript:void(0)" v-on:click="pullCode(k, item)">
                                                     <i class="fa fa-github" aria-hidden="true"></i> Pull code
                                                 </a><br/>
-                                                <a class="m-1" href="JavaScript:void(0)" v-on:click="switchBranch(item)">
+                                                <a class="m-1" href="JavaScript:void(0)" v-on:click="switchBranch(k, item)">
                                                     <i class="fa fa-github" aria-hidden="true"></i> Switch branch
                                                 </a><br/>
                                                 <a class="m-1" href="JavaScript:void(0)" v-on:click="popupEditor(item)">
@@ -241,7 +241,7 @@ module.exports = {
                 }
             });
         },
-        switchBranch(record) {
+        switchBranch(host, record) {
             let me = this,
                 data = {
                     serverType  : record.serverType,
@@ -250,9 +250,10 @@ module.exports = {
                 };
 
             me.root.popUp(me).show({
-                insideModule: 'switchBranch',
-                insideModuleUrl: '/vueApp/easydocker/popUpModals/switchBranch.vue',
-                data : data
+                insideModule    : 'switchBranch',
+                insideModuleUrl : '/vueApp/easydocker/popUpModals/switchBranch.vue',
+                target          : host,
+                data            : data
             });            
         },
 
