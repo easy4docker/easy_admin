@@ -146,7 +146,7 @@ module.exports = {
             me.currentGridHost = (me.currentGridHost === v) ? '' : v;
             me.$forceUpdate();
         },
-        aftergridSvrChange() {
+        afterGridSvrChange() {
             this.getServerList();
         },
         isFilterChecked(k) {

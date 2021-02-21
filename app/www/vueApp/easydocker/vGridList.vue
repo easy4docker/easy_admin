@@ -42,6 +42,7 @@ module.exports = {
         var me = this;
         var SVR = localStorage.getItem('easydockerSVR');
         me.root.gridAdminServer = ((SVR) ? SVR : '').replace(/\_/g, '.');
+
     },
     watch: {
 
@@ -54,7 +55,7 @@ module.exports = {
                     delete me.root.gridSvrs[k];
                 }
             }
-            (typeof me.$parent.aftergridSvrChange === 'function') ? me.$parent.aftergridSvrChange() : '';
+            (typeof me.$parent.afterGridSvrChange === 'function') ? me.$parent.afterGridSvrChange() : '';
         },
         showRemoveGrid() {
             return (!Object.keys(this.root.gridMatrix).length || this.root.gridMatrix === false) ? false : true;
