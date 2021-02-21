@@ -199,19 +199,6 @@ module.exports = {
             
             
         },
-        getGridMatrix(cbk) {
-            const me = this;
-            me.root.dataEngine().gridHub({
-                cmd     :'getGridMatrix',
-                data    : {},
-                dataType: 'json'
-            },
-            function(resultData) {
-                cbk(resultData.result);
-            }, function(err) {
-                cbk(false);
-            });
-        },
 
         getGridHub(target, cbk) {
             const me = this;
