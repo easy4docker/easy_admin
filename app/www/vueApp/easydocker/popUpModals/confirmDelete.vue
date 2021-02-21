@@ -21,12 +21,14 @@ module.exports = {
     methods :{
         execDeletVirtualServer() {
             const me = this;
+            const host = me.parent.cfg.target;
             const cfg = {
                 cmd : 'deleteVServer',
                 data : me.parent.cfg.data,
+                target  : host,
                 dataType: 'JSON'
             };
-            const host = me.parent.cfg.target;
+            
             caller = me.parent.caller;
             me.root.dataEngine()[(host === 'local') ? 'appPost' : 'gridHub'](cfg,
                 function(result) {
