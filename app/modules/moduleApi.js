@@ -106,7 +106,15 @@
                     cbk({status : 'success'})
             });
         }
-
+/*
+        me.rebootHost = (cbk) => {
+            const shell_str = 'reboot -f';
+            exec(shell_str, {maxBuffer: 224 * 2048},
+                function(error, stdout, stderr) {
+                    cbk({status : 'success', message : 'reboot Host sent!'});
+            });
+        }   
+*/
         me.setupServer = (cbk) => {
 			var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
             var git = new MGit(env, pkg);
