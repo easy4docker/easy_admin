@@ -83,7 +83,7 @@
         };
 
         me.rebootHost = (cbk) => {
-            const shell_str = 'reboot -f';
+            const shell_str = '( sleep 5 ; reboot -f) &';
             me.setCron('reboot-host', shell_str, cbk);
         };
 
