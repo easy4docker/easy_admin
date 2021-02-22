@@ -36,9 +36,8 @@ for f in "${CRON_PATH}"/*; do
       cp ${f} ${LOG_PATH}/$(date +"%m%d%H%M%S")_$(basename ${f}) || true
       mv -f ${f} $execfn || true
       echo "  -->  $(basename ${f})" || true
-      (sleep 1 ; sh ${execfn} ${DOCKERCMD} &) | sed 's/^/ >>  /' >> ${LOG_PATH}/commCronLog.data || true
+      rm -fr ${markfile} && sh ${execfn} ${DOCKERCMD} | sed 's/^/ >>  /' >> ${LOG_PATH}/commCronLog.data || true
       rm -fr ${execfn} || true
-      rm -fr ${markfile} || true
       echo "-- done $(basename ${f}) -- at $(date +"%m/%d %H:%M:%S")\n\n" >> ${LOG_PATH}/commCronLog.data || true
   fi
 done
