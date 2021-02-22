@@ -129,12 +129,15 @@ module.exports = {
     mounted() {
         var me = this;
         me.serverTypeFilter = Object.keys(me.serverTypes);
-        me.root.getGridMatrix(function() {
-            for (let k in me.root.gridMatrix) {
-                me.root.gridSvrs[k] = true;
-            }
-            me.getServerList()
-        });
+        setTimeout(
+            function() {
+                    for (let k in me.root.gridMatrix) {
+                        alert(k);
+                        me.root.gridSvrs[k] = true;
+                    }
+                me.getServerList()
+            }, 50
+        );
     },
     watch: {
         serverTypeFilter: function(val) {
@@ -168,7 +171,6 @@ module.exports = {
                 me.serverTypeFilter = list;
             }
         },
-
         rebootHost(host) {
             const me = this;
             me.root.dataEngine().gridHub({
