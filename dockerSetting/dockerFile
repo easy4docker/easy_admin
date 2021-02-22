@@ -16,4 +16,5 @@ RUN npm install body-parser
 RUN npm install md5
 RUN npm install request
 
+COPY _entrypoint.sh /var/_entrypoint.sh
 ENTRYPOINT cron start && cd /var && sh _entrypoint.sh
