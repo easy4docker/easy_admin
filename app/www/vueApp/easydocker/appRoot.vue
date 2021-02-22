@@ -70,7 +70,7 @@ module.exports = {
                     console.log(err);
                 });
         },
-        getGridMatrix() {
+        getGridMatrix(cbk) {
             const me = this;
             me.dataEngine().gridHub({
                 cmd     :'getGridMatrix',
@@ -80,6 +80,9 @@ module.exports = {
             function(result) {
                 if (result.status === 'success') {
                     me.gridMatrix = result.result;
+                    if (typeof cbk === 'function') {
+                        cbk();
+                    }
                 } else {
                     me.gridMatrix = false;
                 }

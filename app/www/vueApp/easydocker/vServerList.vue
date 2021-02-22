@@ -129,11 +129,12 @@ module.exports = {
     mounted() {
         var me = this;
         me.serverTypeFilter = Object.keys(me.serverTypes);
-        setTimeout(
-            function() {
-                me.getServerList()
-            }, 50
-        );
+        me.root.getGridMatrix(function() {
+            for (let k in me.root.gridMatrix) {
+                me.root.gridSvrs[k] = true;
+            }
+            me.getServerList()
+        });
     },
     watch: {
         serverTypeFilter: function(val) {
