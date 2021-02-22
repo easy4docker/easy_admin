@@ -89,10 +89,7 @@
                 });
         }
 
-        me.stopVServer = 
-        me.pullCode = 
-        me.rebootHost = 
-        me.startVServer = (cbk) => {
+        me.stopVServer = me.pullCode = me.rebootHost = me.startVServer = (cbk) => {
             Servers[req.body.cmd](req.body.serverName,
                 (data) => {
                     me.refreshTokenSend(data, cbk);
