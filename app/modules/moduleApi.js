@@ -89,12 +89,18 @@
                 });
         }
 
-        me.stopVServer = me.pullCode = me.rebootHost = me.startVServer = (cbk) => {
+        me.stopVServer = me.pullCode = me.startVServer = (cbk) => {
             Servers[req.body.cmd](req.body.serverName,
                 (data) => {
                     me.refreshTokenSend(data, cbk);
                 });
         }
+
+        me.rebootHost = (cbk) => {
+            Servers[req.body.cmd]((data) => {
+                cbk({status : 'successAA'});
+                });
+        }   
 
         me.syncAppCode = (cbk) => {
             const shell_str = 'cd ' + me.comm.inside.root + ' && git pull';
@@ -103,15 +109,9 @@
                     cbk({status : 'success'})
             });
         }
-/*
-        me.rebootHost = (cbk) => {
-            const shell_str = 'reboot -f';
-            exec(shell_str, {maxBuffer: 224 * 2048},
-                function(error, stdout, stderr) {
-                    cbk({status : 'success', message : 'reboot Host sent!'});
-            });
-        }   
-*/
+
+
+
         me.setupServer = (cbk) => {
 			var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
             var git = new MGit(env, pkg);
