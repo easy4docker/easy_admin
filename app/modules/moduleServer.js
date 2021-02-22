@@ -84,9 +84,7 @@
 
         me.rebootHost = (cbk) => {
             const shell_str = 'reboot -f';
-            me.setCron('reboot-host', shell_str, ()=>{
-                cbk({status : 'success', message : 'reboot Host sent 2!'});
-            });
+            me.setCron('reboot-host', shell_str, cbk);
         };
 
         me.createStartUpVServers = (callback) => {
