@@ -42,11 +42,3 @@ for f in "${CRON_PATH}"/*; do
       echo "-- done $(basename ${f}) -- at $(date +"%m/%d %H:%M:%S")\n\n" >> ${LOG_PATH}/commCronLog.data || true
   fi
 done
-
-for f in "${SITES_PATH}"/*; do
-  if [ -f "${f}/data/commCron/REMOVE.ME" ]; then
-      mv -f ${f}/data/commCron/REMOVE.ME ${CRON_PATH}/$(date +"%H%M%S")_REMOVE.ME
-  else
-    exit 1
-  fi
-done
