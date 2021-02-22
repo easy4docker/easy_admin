@@ -185,9 +185,7 @@ module.exports = {
                 }, function(err) {
                    
                 });
-            
         },
-
         filteredResult(k) {
             var me = this;
             return me.list[k].filter(function(item) {
