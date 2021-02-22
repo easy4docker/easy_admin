@@ -17,7 +17,7 @@ markfile=${SCR_DIR}/data/mark.data
 # --- clean longer time task -----
 for file in $(find $markfile -not -newermt '-300 seconds' 2>&1) ;do
   if [ -f "${markfile}" ]; then
-    vfn=$(<${markfile})
+    vfn=$(cat ${markfile})
     cmda="rm -fr ${vfn} && pkill -f ${vfn} > /dev/null && rm -fr ${markfile} >/dev/null 2>&1"
     eval "$cmda"
   fi
