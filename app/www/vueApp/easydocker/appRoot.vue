@@ -80,10 +80,6 @@ module.exports = {
             function(result) {
                 if (result.status === 'success') {
                     me.gridMatrix = result.result;
-                    /*
-                    for (let k in me.gridMatrix) {
-                        me.gridSvrs[k] = true;
-                    }*/
                 } else {
                     me.gridMatrix = false;
                 }
