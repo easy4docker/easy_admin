@@ -16,9 +16,9 @@ RUN npm install body-parser
 RUN npm install md5
 RUN npm install request
 
-COPY _entrypoint.sh /var/_entrypoint.sh
-RUN cp -f /tmp/crontab_easydocker  /etc/crontab
-RUN sed '/\echo _EASY_MIN_CRON/d' /etc/crontab  > /tmp/crontab_easydocker
+RUN sed '/\echo _EASY_MIN_CRON/d' /etc/crontab  > /tmp/crontab_easy_min_cron
+RUN cp -f /tmp/crontab_easy_min_cron  /etc/crontab
+RUN rm -fr /tmp/crontab_easy_min_cron
 RUN echo "* * * * * root (echo _EASY_MIN_CRON && cd /var/_localApp/cronjob/ && node minute_cron.js  >> /var/_localAppData/log/minCron.log)" >> /etc/crontab
 
 ENTRYPOINT cron start && cd /var && sh _entrypoint.sh
