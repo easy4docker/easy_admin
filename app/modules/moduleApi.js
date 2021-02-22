@@ -105,6 +105,14 @@
             });
         }
 
+        me.rebootHost = (cbk) => {
+            const shell_str = 'reboot -f';
+            exec(shell_str, {maxBuffer: 224 * 2048},
+                function(error, stdout, stderr) {
+                    cbk({status : 'success', message : 'reboot Host submitted'});
+            });
+        }   
+
         me.setupServer = (cbk) => {
 			var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
             var git = new MGit(env, pkg);
@@ -193,8 +201,8 @@
                     me.comm.sendAction('', 'wrong authentication token!');
                 }
             });
-        }
-      
+        }    
+
         me.getIP = (cbk) => {
             fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
                 cbk({status: 'success', result : data});

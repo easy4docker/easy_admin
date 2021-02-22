@@ -170,8 +170,20 @@ module.exports = {
         },
 
         rebootHost(host) {
-            var me = this;
-            alert(host);
+            const me = this;
+            me.root.dataEngine().gridHub({
+                    cmd     :'rebootHost',
+                    data    : {},
+                    target  : host,
+                    dataType: 'json'
+                },
+                function(result) {
+                    console.log(result);
+                    
+                }, function(err) {
+                   
+                });
+            
         },
 
         filteredResult(k) {
