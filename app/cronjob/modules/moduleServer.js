@@ -22,32 +22,25 @@
                 me.deleteServer(server, (data) => {
                     console.log('==deleteServer==>>' + server);
                     console.log(data);
-                    cbk(data);
+                    cbk(true);
                 });
             }
             _f['deleteFolder'] = (cbk)=> {
                 var cmd = 'rm -fr ' + env.dataFolder + '/sites/' + server;
+                console.log(cmd);
                 cbk(cmd);
                 /*   
                     exec(cmd, {maxBuffer: 224 * 2048},
                         function(error, stdout, stderr) {
-                            me.getSites((sitesCfg) => {
-                                if (sitesCfg[serverName]) {
-                                    sitesCfg[serverName].branch = branch;
-                                }
-                                me.saveSites(sitesCfg, 
-                                    ()=> {
-                                        callback({status : 'success'})
-                                    }, true);
-                            });
+                            cbk(true);
                     });
                 */ 
             }
 
             const cp = new CP();
             cp.serial(_f, (data) => {
-                console.log(server + '==2=>');
-                callback('Success');
+                console.log(data);
+                callback(true);
             }, 3000);  
         }
         me.getSites = (cbk) => {
