@@ -47,6 +47,14 @@ const { eventNames } = require('process');
                 
             }
 
+            _f['gridOldToken'] = (cbk)=> {
+                var fn = env.keyFolder + '/_gridOldToken';
+                fs.readFile(fn, 'utf-8', (err, data) => {
+                    cbk((err) ? '' : data);
+                });
+                
+            }
+
             _f['authToken'] = (cbk)=> {
                 var fn = env.keyFolder + '/authToken.json';
                 me.readJson(fn, (data) => {
