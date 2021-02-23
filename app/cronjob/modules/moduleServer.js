@@ -49,9 +49,8 @@ const { eventNames } = require('process');
             }
 
             _f['authToken'] = (cbk)=> {
-                // host _env.json
-                var fn = env.keyFolder + '/authToken.json';
-                me.readJson(fn, (data) => {
+                var fn = env.keyFolder + '/authToken';
+                me.readFile(fn, 'utf-8', (data) => {
                     cbk(data)
                 });
                 
