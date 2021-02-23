@@ -25,8 +25,6 @@ const { eventNames } = require('process');
                 // host _env.json
                 var fn = env.keyFolder + '/_gridMatrix.json';
                 me.readJson(fn, (data) => {
-                    console.log('gridMatrix->');
-                    console.log(data);
                     cbk(data)
                 });
                 
