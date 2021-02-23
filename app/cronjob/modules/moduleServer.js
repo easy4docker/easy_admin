@@ -47,15 +47,8 @@
             const cp = new CP();
             cp.serial(_f, (data) => {
                 console.log(server + '==2=>');
-                callback(data);
-              // console.log(data);
-            }, 3000);
-            /*
-                1- remove config
-                2- delete folder
-                3- remove container
-            */
-            
+                callback('Success');
+            }, 3000);  
         }
         me.getSites = (cbk) => {
             me.readJson(env.dataFolder + '/_servers_cfg.json', (list) => {
