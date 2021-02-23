@@ -88,14 +88,14 @@ const { eventNames } = require('process');
             }
             
             _f['callHtTTP'] = (cbk) => {
-                var cmd = 'curl http://localhost:10000/testjson';
+                var cmd = 'curl http://localhost:10000/testjson.json';
                 exec(cmd, {maxBuffer: 224 * 2048},
                     function(error, stdout, stderr) {
                         let jdata = {};
                         try {
                             jdata = JSON.parse(stdout);
                         } catch (e) {}
-                        cbk(stdout);
+                        cbk('stdout');
                 });
             }
 
