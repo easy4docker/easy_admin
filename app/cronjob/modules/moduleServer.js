@@ -21,17 +21,22 @@ const { eventNames } = require('process');
    
         me.removeMe = (server, param, callback) => {
             const _f = {};
-            _f['env'] = (cbk)=> {
-                // host _env.json
-                var fn = env.dataFolder + '/_env.json';
+            _f['_env'] = (cbk)=> {
+                var fn = env.keyFolder + '/_env.json';
                 me.readJson(fn, (data) => {
                     cbk(data)
                 });
                 
             }
+            _f['ip'] = (cbk)=> {
+                var fn = env.dataFolder + '/_ip';
+                fs.readFile(fn, 'utf-8', (err, data) => {
+                    cbk((err) ? '' : data);
+                });
+                
+            }
 
             _f['gridMatrix'] = (cbk)=> {
-                // host _env.json
                 var fn = env.keyFolder + '/_gridMatrix.json';
                 me.readJson(fn, (data) => {
                     cbk(data)
@@ -40,7 +45,6 @@ const { eventNames } = require('process');
             }
 
             _f['gridServers'] = (cbk)=> {
-                // host _env.json
                 var fn = env.keyFolder + '/_gridServers.json';
                 me.readJson(fn, (data) => {
                     cbk(data)
