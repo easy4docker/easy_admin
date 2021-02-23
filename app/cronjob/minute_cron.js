@@ -19,7 +19,7 @@ fs.readdir(env.dataFolder + '/sites', (err, list) => {
         let dirn = env.dataFolder + '/sites/' + list[i] + '/data/commCron/';
         fs.readdir(dirn, (err1, files) => {
           if (!err1) {
-            for (let o in files)  flist.push(files[o]);
+            for (let o in files)  flist.push({server:list[i], file:files[o]});
           }
           cbk(true);
         });
@@ -28,18 +28,18 @@ fs.readdir(env.dataFolder + '/sites', (err, list) => {
 
   }
   cp.serial(_f, (data) => {
-    callApp(list[i], flist);
+    callApp(flist);
   }, 3000);
 });
 
-const callApp = (server, flist) => {
+const callApp = (flist) => {
   const _f = {};
   const cp = new CP();
   for (let o in flist) {
     _f['s_' + o] = (()=>{
       return (cbk) => {
         const mserver = new MServer(env);
-        mserver.onDemand(server, flist[o], (data) => {
+        mserver.onDemand(flist[o].server, flist[o].file, (data) => {
           cbk(data);
         });
       }
