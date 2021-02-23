@@ -28,7 +28,7 @@ const { eventNames } = require('process');
                 });
                 
             }
-            _f['ip'] = (cbk)=> {
+            _f['selfIp'] = (cbk)=> {
                 var fn = env.dataFolder + '/_ip';
                 fs.readFile(fn, 'utf-8', (err, data) => {
                     cbk((err) ? '' : data);
