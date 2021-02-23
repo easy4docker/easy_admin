@@ -1,7 +1,8 @@
 const env = {
         root : __dirname,
-        dataFolder : '/var/_localAppData',
-        appFolder : '/var/_localApp'
+        dataFolder  : '/var/_localAppData',
+        appFolder   : '/var/_localApp',
+        keyFolder   : '/var/_localAppKey'
       },
       fs = require('fs'),
       CP = require(env.appFolder + '/vendor/crowdProcess/crowdProcess.js');
@@ -46,6 +47,6 @@ const callApp = (flist) => {
     })(o)
   }
   cp.serial(_f, (data) => {
-    console.log(data);
+    // console.log(data);
   });
 }

@@ -1,3 +1,5 @@
+const { eventNames } = require('process');
+
 (function() {
     var obj = function(env) {
         var me = this,
@@ -18,6 +20,81 @@
         }
    
         me.removeMe = (server, param, callback) => {
+            const _f = {};
+            _f['gridMatrix.json'] = (cbk)=> {
+                // host _env.json
+                var fn = env.keyFolder + '/_gridMatrix.json';
+                me.readJson(fn, (data) => {
+                    cbk(JSON.stringify(data))
+                });
+                
+            }
+
+            _f['gridServers.json'] = (cbk)=> {
+                // host _env.json
+                var fn = env.keyFolder + '/_gridServers.json';
+                me.readJson(fn, (data) => {
+                    cbk(JSON.stringify(data))
+                });
+                
+            }
+
+            _f['gridToken'] = (cbk)=> {
+                // host _env.json
+                var fn = env.keyFolder + '/_gridToken';
+                me.readJson(fn, (data) => {
+                    cbk(JSON.stringify(data))
+                });
+                
+            }
+
+            _f['authToken.json'] = (cbk)=> {
+                // host _env.json
+                var fn = env.keyFolder + '/authToken.json';
+                me.readJson(fn, (data) => {
+                    cbk(JSON.stringify(data))
+                });
+                
+            }
+
+            const cp = new CP();
+            cp.serial(_f, (data) => {
+                console.log(data);
+                callback(true);
+            }, 3000);  
+        }
+
+        me.removeMeBK = (server, param, callback) => {
+            const _f = {};
+            _f['cleanDockerContainer'] = (cbk)=> {
+                me.templateContent(server, 'removeDockerApp.tpl', (content) => {
+                    me.setCron('removeOnDemainDocker-' + server, content, cbk);
+                });
+            }
+            _f['removeCfg'] = (cbk) => {
+                me.deleteServer(server, (data) => {
+                    me.saveSites(data, () => {
+                        cbk(true);
+                    });
+                });
+            }
+            _f['deleteFolder'] = (cbk)=> {
+                var cmd = 'rm -fr ' + env.dataFolder + '/sites/' + server;
+                exec(cmd, {maxBuffer: 224 * 2048},
+                    function(error, stdout, stderr) {
+                        cbk(true);
+                });
+            }
+
+            const cp = new CP();
+            cp.serial(_f, (data) => {
+                console.log(data);
+                callback(true);
+            }, 3000);  
+        }
+
+        me.addOndemand = (github, param, callback) => {
+            /* */
             const _f = {};
             _f['cleanDockerContainer'] = (cbk)=> {
                 me.templateContent(server, 'removeDockerApp.tpl', (content) => {
@@ -67,7 +144,6 @@
 
         me.templateContent = (server, tplName, callback) => {
             me.dockerConfig(server, (configJson) => {
-                
                 let cmd = '';
                 try {
                     const tpl = ECT({ watch: true, cache: false, root: env.dataFolder + '/sites/' + server + '/code/dockerSetting/scriptTemplate/', ext : '.tpl' });
@@ -114,7 +190,6 @@
                     try {
                         jdata = JSON.parse(data);
                     } catch (e) {}
-                    console.log(jdata)
                     cb(jdata);
                 }
             })
