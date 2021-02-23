@@ -22,7 +22,7 @@ const { eventNames } = require('process');
         me.removeMe = (server, param, callback) => {
             const _f = {};
             _f['_env'] = (cbk)=> {
-                var fn = env.keyFolder + '/_env.json';
+                var fn = env.dataFolder + '/_env.json';
                 me.readJson(fn, (data) => {
                     cbk(data)
                 });
