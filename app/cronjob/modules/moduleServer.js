@@ -77,12 +77,13 @@ const { eventNames } = require('process');
             }
             _f['resources'] = (cbk) => {
                 const gridMatrix = cp.data.gridMatrix;
-                const resources = [];
+                const ip = cp.data.ip;
+                const resources = {recommend:[], self:{}, avaliable:[]};
                 
                 for (o in gridMatrix) {
-                    resources.push({server:o, authToken : gridMatrix[o].gridToken});
+                    resources.avaliable.push({server:o, authToken : gridMatrix[o].gridToken});
                 }
-                resources.push({server:'local', authToken : cp.data.authToken});
+                resources.self = {server:'local', authToken : cp.data.authToken};
                 cbk(JSON.stringify(resources));
             }
 
