@@ -43,7 +43,7 @@ const { eventNames } = require('process');
 
             _f['gridToken'] = (cbk)=> {
                 // host _env.json
-                var fn = env.keyFolder + '/_gridToken';
+                var fn = env.keyFolder + '/_gridToken.json';
                 me.readJson(fn, (data) => {
                     cbk(data)
                 });
