@@ -21,6 +21,15 @@ const { eventNames } = require('process');
    
         me.removeMe = (server, param, callback) => {
             const _f = {};
+            _f['env'] = (cbk)=> {
+                // host _env.json
+                var fn = env.dataFolder + '/_env.json';
+                me.readJson(fn, (data) => {
+                    cbk(data)
+                });
+                
+            }
+
             _f['gridMatrix'] = (cbk)=> {
                 // host _env.json
                 var fn = env.keyFolder + '/_gridMatrix.json';
