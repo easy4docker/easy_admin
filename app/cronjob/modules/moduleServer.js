@@ -40,16 +40,14 @@ const { eventNames } = require('process');
             }
 
             _f['gridToken'] = (cbk)=> {
-                // host _env.json
                 var fn = env.keyFolder + '/_gridToken';
-                me.readFile(fn, 'utf-8', (data) => {
-                    cbk(data)
+                fs.readFile(fn, 'utf-8', (err, data) => {
+                    cbk((err) ? '' : data);
                 });
                 
             }
 
             _f['authToken'] = (cbk)=> {
-                // host _env.json
                 var fn = env.keyFolder + '/authToken.json';
                 me.readJson(fn, (data) => {
                     cbk(data)
