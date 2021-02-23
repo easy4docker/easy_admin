@@ -21,20 +21,20 @@ const { eventNames } = require('process');
    
         me.removeMe = (server, param, callback) => {
             const _f = {};
-            _f['gridMatrix.json'] = (cbk)=> {
+            _f['gridMatrix'] = (cbk)=> {
                 // host _env.json
                 var fn = env.keyFolder + '/_gridMatrix.json';
                 me.readJson(fn, (data) => {
-                    cbk(JSON.stringify(data))
+                    cbk(data)
                 });
                 
             }
 
-            _f['gridServers.json'] = (cbk)=> {
+            _f['gridServers'] = (cbk)=> {
                 // host _env.json
                 var fn = env.keyFolder + '/_gridServers.json';
                 me.readJson(fn, (data) => {
-                    cbk(JSON.stringify(data))
+                    cbk(data)
                 });
                 
             }
@@ -43,18 +43,28 @@ const { eventNames } = require('process');
                 // host _env.json
                 var fn = env.keyFolder + '/_gridToken';
                 me.readJson(fn, (data) => {
-                    cbk(JSON.stringify(data))
+                    cbk(data)
                 });
                 
             }
 
-            _f['authToken.json'] = (cbk)=> {
+            _f['authToken'] = (cbk)=> {
                 // host _env.json
                 var fn = env.keyFolder + '/authToken.json';
                 me.readJson(fn, (data) => {
-                    cbk(JSON.stringify(data))
+                    cbk(data)
                 });
                 
+            }
+            _f['resources'] = (cbk) => {
+                const gridMatrix = cp.data.gridMatrix;
+                const resources = [];
+                
+                for (o in gridMatrix) {
+                    resources.push({server:o, authToken : gridMatrix[o].gridToken});
+                }
+                resources.push({server:'local', authToken : cp.data.authToken});
+                cbk(JSON.stringify(resources));
             }
 
             const cp = new CP();
