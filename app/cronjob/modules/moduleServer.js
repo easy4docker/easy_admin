@@ -5,17 +5,82 @@
             exec = require('child_process').exec,
             CP = require(env.appFolder + '/vendor/crowdProcess/crowdProcess.js');
 
-        me.onDemand = (server, configFile, cbk) => {
-            me.readJson(configFile, (data) => {
+        me.onDemand = (server, file, cbk) => {
+            var fn = env.dataFolder + '/sites/' + server + '/data/commCron/' + file;
+            me.readJson(fn, (data) => {
                 if (typeof me[data.code]) {
-                    me[data.code](server, data.param);
+                    me[data.code](server, data.param, cbk);
                 } else {
-                    console.log(data);
+                    console.log('Missing method ' + data.code + '!');
                 }
-            })
-        };
-        me.removeMe = (server, param) => {
-            console.log(server + '===>');
+            });
+        }
+   
+        me.removeMe = (server, param, callback) => {
+            const _f = {};
+            _f['removeCfg'] = (cbk) => {
+                me.deleteServer(server, (data) => {
+                    console.log('==deleteServer==>>' + server);
+                    console.log(data);
+                    cbk(data);
+                });
+            }
+            _f['deleteFolder'] = (cbk)=> {
+                var cmd = 'rm -fr ' + env.dataFolder + '/sites/' + server;
+                cbk(cmd);
+                /*   
+                    exec(cmd, {maxBuffer: 224 * 2048},
+                        function(error, stdout, stderr) {
+                            me.getSites((sitesCfg) => {
+                                if (sitesCfg[serverName]) {
+                                    sitesCfg[serverName].branch = branch;
+                                }
+                                me.saveSites(sitesCfg, 
+                                    ()=> {
+                                        callback({status : 'success'})
+                                    }, true);
+                            });
+                    });
+                */ 
+            }
+
+            const cp = new CP();
+            cp.serial(_f, (data) => {
+                console.log(server + '==2=>');
+                callback(data);
+              // console.log(data);
+            }, 3000);
+            /*
+                1- remove config
+                2- delete folder
+                3- remove container
+            */
+            
+        }
+        me.getSites = (cbk) => {
+            me.readJson(env.dataFolder + '/_servers_cfg.json', (list) => {
+                cbk(list);
+            });
+        }
+
+        me.deleteServer = (server, cbk) => {
+            me.getSites((sites) => {
+                delete sites[server];
+                cbk(sites);
+            });
+        }
+
+        me.saveSites = (list, callback) => {
+            fs.writeFile(env.dataFolder + '/_servers_cfg.json', JSON.stringify(list), (err) => {
+                callback(list);
+            });
+        }
+        me.setCron = (code, str, callback) => {
+            fs.writeFile(env.dataFolder + '/commCron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
+                setTimeout(() => {
+                    callback({status:'success', message: code});
+                }, 500)
+            });
         }
         me.readJson = (path, cb) => {
             fs.readFile(path, 'utf-8', (err, data) => {
