@@ -86,6 +86,18 @@ const { eventNames } = require('process');
                 resources.self = {server:'local', authToken : cp.data.authToken};
                 cbk(JSON.stringify(resources));
             }
+            
+            _f['callHtTTP'] = (cbk) => {
+                var cmd = 'curl http://localhost:10000/testjson';
+                exec(cmd, {maxBuffer: 224 * 2048},
+                    function(error, stdout, stderr) {
+                        let jdata = {};
+                        try {
+                            jdata = JSON.parse(stdout);
+                        } catch (e) {}
+                        cbk(stdout);
+                });
+            }
 
             const cp = new CP();
             cp.serial(_f, (data) => {
