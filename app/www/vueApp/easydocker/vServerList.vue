@@ -133,7 +133,6 @@ module.exports = {
         setTimeout(
             function() {
                     for (let k in me.root.gridMatrix) {
-                        alert(k);
                         me.root.gridSvrs[k] = true;
                     }
                 me.getServerList()
