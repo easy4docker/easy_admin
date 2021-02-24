@@ -18,8 +18,7 @@ const { eventNames } = require('process');
                 }
             });
         }
-   
-        me.removeMe = (server, param, callback) => {
+        me.serverStatus = (callback) => {
             const _f = {};
             _f['_env'] = (cbk)=> {
                 var fn = env.dataFolder + '/_env.json';
@@ -88,55 +87,41 @@ const { eventNames } = require('process');
                     resources.avaliable.push({server:o, authToken : gridMatrix[o].gridToken});
                 }
                 resources.self = {server:'local', authToken : cp.data.authToken};
-                cbk(JSON.stringify(resources));
+                cbk(resources);
             }
-            
-            _f['callHtTTP'] = (cbk) => {
-                var cmd = 'curl -d "cmd=huyouGrid&authToken=' + cp.data.authToken+ '" -X POST localhost/api/';
+
+            const cp = new CP();
+            cp.serial(_f, (data) => {
+                callback({
+                    _env        : cp.data._env,
+                    localIp     : cp.data.localIp,
+                    gridMatrix  : cp.data.gridMatrix,
+                    gridServers : cp.data.gridServers,
+                    gridToken   : cp.data.gridToken,
+                    gridOldToken: cp.data.gridOldToken,
+                    authToken   : cp.data.authToken,
+                    resources   : cp.data.resources
+                });
+            }, 3000);   
+        }
+        me.removeMe = (server, param, callback) => {
+            me.serverStatus((sts)=> {
+                const postData = "'" + JSON.stringify({
+                    cmd:'huyouGrid',
+                    data : {serverName : server},
+                    authToken: sts.authToken
+                }) + "'";
+                var cmd = 'curl -d ' + postData +
+                    '  -H "Content-Type: application/json" -X POST localhost/api/';
                 exec(cmd, {maxBuffer: 224 * 2048},
                     function(error, stdout, stderr) {
                         var jdata = {};
                         try {
-                           jdata = JSON.parse(stdout);
+                        jdata = JSON.parse(stdout);
                         } catch (e) {}
-                        cbk(jdata);
+                        console.log(jdata);
                 });
-            }
-
-            const cp = new CP();
-            cp.serial(_f, (data) => {
-                console.log(data);
-                callback(true);
-            }, 3000);  
-        }
-
-        me.removeMeBK = (server, param, callback) => {
-            const _f = {};
-            _f['cleanDockerContainer'] = (cbk)=> {
-                me.templateContent(server, 'removeDockerApp.tpl', (content) => {
-                    me.setCron('removeOnDemainDocker-' + server, content, cbk);
-                });
-            }
-            _f['removeCfg'] = (cbk) => {
-                me.deleteServer(server, (data) => {
-                    me.saveSites(data, () => {
-                        cbk(true);
-                    });
-                });
-            }
-            _f['deleteFolder'] = (cbk)=> {
-                var cmd = 'rm -fr ' + env.dataFolder + '/sites/' + server;
-                exec(cmd, {maxBuffer: 224 * 2048},
-                    function(error, stdout, stderr) {
-                        cbk(true);
-                });
-            }
-
-            const cp = new CP();
-            cp.serial(_f, (data) => {
-                console.log(data);
-                callback(true);
-            }, 3000);  
+            });
         }
 
         me.addOndemand = (github, param, callback) => {
@@ -169,7 +154,6 @@ const { eventNames } = require('process');
             }, 3000);  
         }
         /*------*/
-
 
         me.siteContainer = (serverName) => {
             return ('sites-' + serverName + '-container').toLowerCase();
