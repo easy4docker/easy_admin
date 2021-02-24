@@ -43,6 +43,10 @@
             return ('sites-' + serverName + '-image').toLowerCase();
         }
 
+        me.ondemandResultPath = () => {
+            return _env.data_folder + '/ondemandResult/';
+        }
+
         me.dockerPath = (serverName) => {
             return _env.data_folder + '/sites/' + serverName;
         }
@@ -396,7 +400,9 @@
             };
             
             _f['addSiteCronFolder'] = function(cbk) {
-                let cmd = 'mkdir -p ' + me.siteDataPath(data.serverName) + '/commCron/';
+                
+                let cmd = 'mkdir -p ' + me.siteDataPath(data.serverName) + '/commCron/' +
+                ' && mkdir -p ' + me.ondemandResultPath();
                 exec(cmd, {maxBuffer: 224 * 2048},
                     function(error, stdout, stderr) {
                         cbk(true);
@@ -472,6 +478,7 @@
                 me.asycKeyJson(serverName, ['getInitToken', 'getKeyCode'], (data) => {
                     callback({
                         serverName          : serverName,
+                        ondemandResultPath  : me.ondemandResultPath(),
                         dockerCodePath      : me.dockerCodePath(serverName),
                         dockerSettingPath   : me.dockerCodePath(serverName) + '/dockerSetting',
                         dockerDataPath      : me.dockerDataPath(serverName),
