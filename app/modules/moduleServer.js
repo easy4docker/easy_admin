@@ -349,9 +349,6 @@
             });    
         }
 
-        me.huyouGrid = (callback) => {
-            callback('huyouGrid');
-        }
         me.addVServer = (data, callback) => {
             var _f={};
             let randomCode = '', 

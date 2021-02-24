@@ -107,7 +107,7 @@ const { eventNames } = require('process');
         me.removeMe = (server, param, callback) => {
             me.serverStatus((sts)=> {
                 const postData = "'" + JSON.stringify({
-                    cmd:'huyouGrid',
+                    cmd:'deleteVServer',
                     data : {serverName : server},
                     authToken: sts.authToken
                 }) + "'";
