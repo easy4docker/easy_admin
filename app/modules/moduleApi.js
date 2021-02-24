@@ -59,7 +59,7 @@
                 'startVServer', 'gitSiteBranchs', 'gitSwitchBranch',
                 'deleteVServer', 'addServer', 'setupServer',
                 'localGridAccessSetup', 'syncAppCode', 'getGridMatrix',
-                'addGrid', 'getGrids', 'removeGrid', 'gridHub'
+                'addGrid', 'getGrids', 'removeGrid', 'gridHub', 'huyouGrid'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -96,9 +96,9 @@
                 });
         }
 
-        me.rebootHost = (cbk) => {
+        me.huyouGrid = me.rebootHost = (cbk) => {
             Servers[req.body.cmd]((data) => {
-                cbk({status : 'successAA'});
+                cbk({status : 'success'});
                 });
         }   
 

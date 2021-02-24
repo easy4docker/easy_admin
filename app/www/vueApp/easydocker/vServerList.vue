@@ -117,7 +117,8 @@ module.exports = {
                 'database'  : 'Mysql Database',
                 'databaseCloud'  : 'Mysql Cloud',
                 'backendCloud'   : 'Backend Cloud',
-                'webServer' : 'Web Server'
+                'webServer' : 'Web Server',
+                'ondemand'  : 'On Demand'
             },
             serverTypeFilter : [],
             root :  this.$parent.root,

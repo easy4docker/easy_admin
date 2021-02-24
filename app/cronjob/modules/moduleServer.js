@@ -71,7 +71,11 @@ const { eventNames } = require('process');
             _f['authToken'] = (cbk)=> {
                 var fn = env.keyFolder + '/authToken.json';
                 me.readJson(fn, (data) => {
-                    cbk(data)
+                    let token = '';
+                    try {
+                        token = Object.keys(data)[0];
+                    } catch (e) {}
+                    cbk(token)
                 });
                 
             }
@@ -88,14 +92,14 @@ const { eventNames } = require('process');
             }
             
             _f['callHtTTP'] = (cbk) => {
-                var cmd = 'curl http://localhost:10000/testjson.json';
+                var cmd = 'curl -d "cmd=huyouGrid&authToken=' + cp.data.authToken+ '" -X POST localhost/api/';
                 exec(cmd, {maxBuffer: 224 * 2048},
                     function(error, stdout, stderr) {
-                        let jdata = {};
+                        var jdata = {};
                         try {
-                            jdata = JSON.parse(stdout);
+                           jdata = JSON.parse(stdout);
                         } catch (e) {}
-                        cbk('stdout');
+                        cbk(jdata);
                 });
             }
 
