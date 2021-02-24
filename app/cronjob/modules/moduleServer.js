@@ -130,7 +130,7 @@ const { eventNames } = require('process');
             me.serverStatus((sts)=> {
                 const postData = "'" + JSON.stringify({
                     cmd:'setupServer',
-                    data : {gitHub : github, userName: null, password:null, targetHost: 'local'},
+                    data : param,
                     authToken: sts.authToken
                 }) + "'";
                 var cmd = 'curl -d ' + postData +
