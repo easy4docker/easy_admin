@@ -11,11 +11,14 @@ const { eventNames } = require('process');
         me.onDemand = (server, file, cbk) => {
             var fn = env.dataFolder + '/sites/' + server + '/data/commCron/' + file;
             me.readJson(fn, (data) => {
-                if (typeof me[data.code]) {
-                    me[data.code](server, data.param, cbk);
-                } else {
-                    console.log('Missing method ' + data.code + '!');
-                }
+                exec('rm -fr ' + fn, {maxBuffer: 224 * 2048},
+                    function(error, stdout, stderr) {
+                        if (typeof me[data.code]) {
+                            me[data.code](server, data.param, cbk);
+                        } else {
+                            console.log('Missing method ' + data.code + '!');
+                        }
+                });
             });
         }
         me.serverStatus = (callback) => {
@@ -25,7 +28,6 @@ const { eventNames } = require('process');
                 me.readJson(fn, (data) => {
                     cbk(data)
                 });
-                
             }
             _f['localIp'] = (cbk)=> {
                 var fn = env.dataFolder + '/_ip';
@@ -127,8 +129,8 @@ const { eventNames } = require('process');
         me.addOndemand = (github, param, callback) => {
             me.serverStatus((sts)=> {
                 const postData = "'" + JSON.stringify({
-                    cmd:'deleteVServer',
-                    data : {serverName : server},
+                    cmd:'setupServer',
+                    data : {gitHub : github, userName: null, password:null, targetHost: 'local'},
                     authToken: sts.authToken
                 }) + "'";
                 var cmd = 'curl -d ' + postData +
@@ -143,6 +145,22 @@ const { eventNames } = require('process');
                 });
             });  
         }
+        /*
+        me.removeOndemand = (github, param, callback) => {
+            me.serverStatus((sts)=> {
+                var cmd = 'curl -d ' + postData +
+                    '  -H "Content-Type: application/json" -X POST localhost/api/';
+                exec(cmd, {maxBuffer: 224 * 2048},
+                    function(error, stdout, stderr) {
+                        var jdata = {};
+                        try {
+                        jdata = JSON.parse(stdout);
+                        } catch (e) {}
+                        console.log(jdata);
+                });
+            });  
+        }
+        */
         
         me.readJson = (path, cb) => {
             fs.readFile(path, 'utf-8', (err, data) => {
