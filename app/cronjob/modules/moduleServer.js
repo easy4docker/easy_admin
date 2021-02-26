@@ -12,7 +12,7 @@ const { eventNames } = require('process');
 
         me.onDemand = (server, file, cbk) => {
             // remove me.siteCommCronMark if longer than 59s
-            exec('find ' + me.siteCommCronMark + ' -type f -mtime +59s -delete', {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
+            // exec('cd ' + env.dataFolder + ' && find siteCommCronMark.txt -type f -mtime +59s -delete', {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
                 fs.stat(me.siteCommCronMark, function(err, stat) {
                     if (err && err.code === 'ENOENT') {
                         me.siteCommCronFn = env.dataFolder + '/sites/' + server + '/data/commCron/' + file;
@@ -30,10 +30,18 @@ const { eventNames } = require('process');
                             });
                         });
                     } else {
-                        console.log('continuing ... ' +  data );
+                        let delta = new Date().getTime() - ((!stat || !stat.mtime) ? 0 : new Date(stat.mtime).getTime());
+                        if (delta > 59000) {
+                            fs.unlink(me.siteCommCronMark, () => {
+                                console.log('removed ... ' +  file);
+                            });
+                           
+                        } else {
+                            console.log('continuing ... ' +  file);
+                        }
                     }
                 });
-            });
+            // });
         }
         me.removeMark = (cbk) => {
             exec('rm -fr ' + me.siteCommCronFn + ' && rm -fr ' + me.siteCommCronMark, {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
