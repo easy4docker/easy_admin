@@ -28,9 +28,7 @@ const { eventNames } = require('process');
                         });
                     });
                 } else {
-                    fs.readFile(me.siteCommCronMark, 'utf-8', (error, data) => {
-                        console.log('continuing ... ' +  data );
-                    });
+                    console.log('continuing ... ' +  data );
                 }
             });
             /*
