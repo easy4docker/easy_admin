@@ -11,37 +11,35 @@ const { eventNames } = require('process');
         me.siteCommCronFn = '';
 
         me.onDemand = (server, file, cbk) => {
-            // remove me.siteCommCronMark if longer than 59s
-            // exec('cd ' + env.dataFolder + ' && find siteCommCronMark.txt -type f -mtime +59s -delete', {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
-                fs.stat(me.siteCommCronMark, function(err, stat) {
-                    if (err && err.code === 'ENOENT') {
-                        me.siteCommCronFn = env.dataFolder + '/sites/' + server + '/data/commCron/' + file;
-                        fs.writeFile(me.siteCommCronMark, me.siteCommCronFn, () => {
-                            me.readJson(me.siteCommCronFn, (data) => {
-                                if (typeof me[data.code] === 'function') {
-                                    console.log(data.code);
-                                    me[data.code](server, data.param, cbk);
-                                } else {
-                                    me.removeMark(() => {
-                                        console.log('clean siteCommCronMark =>' + me.siteCommCronFn);
-                                    })
-                                    
-                                }
-                            });
+            fs.stat(me.siteCommCronMark, function(err, stat) {
+                if (err && err.code === 'ENOENT') {
+                    me.siteCommCronFn = env.dataFolder + '/sites/' + server + '/data/commCron/' + file;
+                    fs.writeFile(me.siteCommCronMark, me.siteCommCronFn, () => {
+                        me.readJson(me.siteCommCronFn, (data) => {
+                            if (typeof me[data.code] === 'function') {
+                                console.log(data.code);
+                                me[data.code](server, data.param, cbk);
+                            } else {
+                                me.removeMark(() => {
+                                    console.log('clean siteCommCronMark =>' + me.siteCommCronFn);
+                                })
+                                
+                            }
                         });
+                    });
+                } else {
+                    let delta = new Date().getTime() - ((!stat || !stat.mtime) ? 0 : new Date(stat.mtime).getTime());
+                    // remove me.siteCommCronMark if longer than 59s
+                    if (delta > 59000) {
+                        fs.unlink(me.siteCommCronMark, () => {
+                            console.log('removed ... ' +  file);
+                        });
+                        
                     } else {
-                        let delta = new Date().getTime() - ((!stat || !stat.mtime) ? 0 : new Date(stat.mtime).getTime());
-                        if (delta > 59000) {
-                            fs.unlink(me.siteCommCronMark, () => {
-                                console.log('removed ... ' +  file);
-                            });
-                           
-                        } else {
-                            console.log('continuing ... ' +  file);
-                        }
+                        console.log('continuing ... ' +  file);
                     }
-                });
-            // });
+                }
+            });
         }
         me.removeMark = (cbk) => {
             exec('rm -fr ' + me.siteCommCronFn + ' && rm -fr ' + me.siteCommCronMark, {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
