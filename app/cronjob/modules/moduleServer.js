@@ -31,18 +31,6 @@ const { eventNames } = require('process');
                     console.log('continuing ... ' +  data );
                 }
             });
-            /*
-            var fn = env.dataFolder + '/sites/' + server + '/data/commCron/' + file;
-            me.readJson(fn, (data) => {
-                exec('rm -fr ' + fn, {maxBuffer: 224 * 2048},
-                    function(error, stdout, stderr) {
-                        if (typeof me[data.code]) {
-                            me[data.code](server, data.param, cbk);
-                        } else {
-                            console.log('Missing method ' + data.code + '!');
-                        }
-                });
-            });*/
         }
         me.removeMark = (cbk) => {
             exec('rm -fr ' + me.siteCommCronFn + ' && rm -fr ' + me.siteCommCronMark, {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
