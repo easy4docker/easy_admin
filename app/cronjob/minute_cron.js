@@ -29,32 +29,11 @@ fs.readdir(env.dataFolder + '/sites', (err, list) => {
 
   }
   cp.serial(_f, (data) => {
-    // callApp(flist);
     if (flist.length) {
       const mserver = new MServer(env);
-      mserver.onDemand(flist[o].server, flist[o].file, (data) => {
+      mserver.onDemand(flist[0].server, flist[0].file, (data) => {
         console.log('Done !');
       });
     }
   }, 3000);
 });
-console.log('Done AA !');
-/*
-const callApp = (flist) => {
-  const _f = {};
-  const cp = new CP();
-  for (let o in flist) {
-    _f['s_' + o] = (()=>{
-      return (cbk) => {
-        const mserver = new MServer(env);
-        mserver.onDemand(flist[o].server, flist[o].file, (data) => {
-          cbk(data);
-        });
-      }
-    })(o)
-  }
-  cp.serial(_f, (data) => {
-    // console.log(data);
-  });
-}
-*/

@@ -8,7 +8,21 @@ const { eventNames } = require('process');
             CP = require(env.appFolder + '/vendor/crowdProcess/crowdProcess.js'),
             ECT = require('ect');
 
+        me.siteCommCronMark = '';
+        me.siteCommCronFn = '';
+
         me.onDemand = (server, file, cbk) => {
+            fs.stat(me.siteCommCronMark, function(err, stat) {
+                if(err.code === 'ENOENT') {
+                    me.siteCommCronFn = env.dataFolder + '/sites/' + server + '/data/commCron/' + file;
+                    me.readJson(me.siteCommCronFn, (data) => {
+                        console.log(data);
+                    });
+                } else {
+                    console.log('current me.siteCommCronMark -> ' +  me.siteCommCronFn );
+                }
+            });
+            /*
             var fn = env.dataFolder + '/sites/' + server + '/data/commCron/' + file;
             me.readJson(fn, (data) => {
                 exec('rm -fr ' + fn, {maxBuffer: 224 * 2048},
@@ -19,7 +33,7 @@ const { eventNames } = require('process');
                             console.log('Missing method ' + data.code + '!');
                         }
                 });
-            });
+            });*/
         }
         me.serverStatus = (callback) => {
             const _f = {};
