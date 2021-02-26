@@ -10,6 +10,7 @@ do
     if [ $stsCron != 0 ] ; then
         cd /var/shellScript
         sh execPassthrough.sh
+        echo "test" >> ${DATA_DIR}/log/console_out.txt
     fi
     sleep 1
 done
