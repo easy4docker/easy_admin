@@ -2,6 +2,7 @@ APP_DIR="/var/_localApp"
 DATA_DIR="/var/_localAppData"
 
 cd ${APP_DIR}
+echo "test777" >> ${DATA_DIR}/log/console_out.txt
 node server.js >> ${DATA_DIR}/log/console_out.txt
 echo "test888" >> ${DATA_DIR}/log/console_out.txt
 stsCron=1
