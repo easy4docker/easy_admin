@@ -500,7 +500,7 @@
             });
         };
 
-        me.templateContentBK = (serverName, tplName, callback) => {
+        me.templateContent = (serverName, tplName, callback) => {
             me.dockerConfig(serverName, (configJson) => {
                 let cmd = '';
                 try {
@@ -513,18 +513,19 @@
             })
         }
 
-        me.templateContent = (serverName, tplName, callback) => {
+        me.templateContentBK = (serverName, tplName, callback) => {
             me.dockerConfig(serverName, (configJson) => {
                 let tplFn = me.siteCodePath(serverName) + '/dockerSetting/scriptTemplate/' + tplName;
-                fs.readFile(tplFn, 'utf-8', (err, page) => {
-                        let cmd = '';
-                        if (!err) {
-                            const tpl = pkg.ECT({ root : {page: page}});
-                            cmd = tpl.render(tplName, configJson);
-                        } else {
-                            cmd = 'echo "' + err.message + '"' + "\n";
-                        }
-                        callback(cmd);
+                fs.readFile(tplFn, 'utf-8', (err, content) => {
+                    let cmd = '';
+                    if (!err) {
+                        var ECT = require('ect');
+                        var tpl = ECT({ root : {layout: '', page: content}});
+                        cmd = tpl.render(page, configJson);
+                    } else {
+                        cmd = 'echo "' + err.message + '"' + "\n";
+                    }
+                    callback(cmd);
                 });
             })
         }
