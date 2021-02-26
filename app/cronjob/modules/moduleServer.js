@@ -17,6 +17,7 @@ const { eventNames } = require('process');
                     fs.writeFile(me.siteCommCronMark, me.siteCommCronFn, () => {
                         me.readJson(me.siteCommCronFn, (data) => {
                             if (typeof me[data.code] === 'function') {
+                                console.log(data.code);
                                 me[data.code](server, data.param, cbk);
                             } else {
                                 me.removeMark(() => {
