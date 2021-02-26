@@ -519,8 +519,7 @@
                 fs.readFile(tplFn, 'utf-8', (err, content) => {
                     let cmd = '';
                     if (!err) {
-                        var ECT = require('ect');
-                        var tpl = ECT({ root : {layout: '', page: content}});
+                        var tpl = pkg.ECT({ root : {layout: '', page: content}});
                         cmd = tpl.render('page', configJson);
                     } else {
                         cmd = 'echo "' + err.message + '"' + "\n";
