@@ -3,7 +3,7 @@ DATA_DIR="/var/_localAppData"
 
 cd ${APP_DIR}
 node server.js >> ${DATA_DIR}/log/console_out.txt
-
+echo "test888" >> ${DATA_DIR}/log/console_out.txt
 stsCron=1
 until [ $stsCron = 0 ]
 do 
