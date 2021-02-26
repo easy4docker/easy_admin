@@ -29,10 +29,17 @@ fs.readdir(env.dataFolder + '/sites', (err, list) => {
 
   }
   cp.serial(_f, (data) => {
-    callApp(flist);
+    // callApp(flist);
+    if (flist.length) {
+      const mserver = new MServer(env);
+      mserver.onDemand(flist[o].server, flist[o].file, (data) => {
+        console.log('Done !');
+      });
+    }
   }, 3000);
 });
-
+console.log('Done AA !');
+/*
 const callApp = (flist) => {
   const _f = {};
   const cp = new CP();
@@ -50,3 +57,4 @@ const callApp = (flist) => {
     // console.log(data);
   });
 }
+*/

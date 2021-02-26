@@ -13,4 +13,4 @@ for file in $(find $markfile -not -newermt '-120 seconds' 2>&1) ;do
   fi
 done
 
-cd ${DATA_DIR}/cronjob/ && node minute_cron.js  > ${DATA_DIR}/log/minCron.txt
+cd ${APP_DIR}/cronjob/ && node minute_cron.js  > ${DATA_DIR}/log/minCron.txt
