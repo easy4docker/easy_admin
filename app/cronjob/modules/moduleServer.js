@@ -5,36 +5,39 @@ const { eventNames } = require('process');
         var me = this,
             fs = require('fs'),
             exec = require('child_process').exec,
-            CP = require(env.appFolder + '/vendor/crowdProcess/crowdProcess.js'),
-            ECT = require('ect');
+            CP = require(env.appFolder + '/vendor/crowdProcess/crowdProcess.js');
 
-        me.siteCommCronMark = '';
+        me.siteCommCronMark = env.dataFolder + '/siteCommCronMark.txt';
         me.siteCommCronFn = '';
 
         me.onDemand = (server, file, cbk) => {
             fs.stat(me.siteCommCronMark, function(err, stat) {
-                if(err.code === 'ENOENT') {
+                if (err && err.code === 'ENOENT') {
                     me.siteCommCronFn = env.dataFolder + '/sites/' + server + '/data/commCron/' + file;
-                    me.readJson(me.siteCommCronFn, (data) => {
-                        console.log(data);
+                    fs.writeFile(me.siteCommCronMark, me.siteCommCronFn, () => {
+                        me.readJson(me.siteCommCronFn, (data) => {
+                            if (typeof me[data.code] === 'function') {
+                                me[data.code](server, data.param, cbk);
+                            } else {
+                                me.removeMark(() => {
+                                    console.log('Skipped this file ...'  + file);
+                                });
+                            }
+                        });
                     });
                 } else {
-                    console.log('current me.siteCommCronMark -> ' +  me.siteCommCronFn );
+                    fs.readFile(me.siteCommCronMark, 'utf-8', (error, data) => {
+                        console.log('continuing ... ' +  data );
+                    });
                 }
             });
-            /*
-            var fn = env.dataFolder + '/sites/' + server + '/data/commCron/' + file;
-            me.readJson(fn, (data) => {
-                exec('rm -fr ' + fn, {maxBuffer: 224 * 2048},
-                    function(error, stdout, stderr) {
-                        if (typeof me[data.code]) {
-                            me[data.code](server, data.param, cbk);
-                        } else {
-                            console.log('Missing method ' + data.code + '!');
-                        }
-                });
-            });*/
         }
+        me.removeMark = (cbk) => {
+            exec('rm -fr ' + me.siteCommCronFn + ' && rm -fr ' + me.siteCommCronMark, {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
+                cbk();
+            });
+        }
+
         me.serverStatus = (callback) => {
             const _f = {};
             _f['_env'] = (cbk)=> {
@@ -135,7 +138,9 @@ const { eventNames } = require('process');
                         try {
                         jdata = JSON.parse(stdout);
                         } catch (e) {}
-                        console.log(jdata);
+                        me.removeMark(() => {
+                            console.log(jdata);
+                        });
                 });
             });
         }
@@ -155,7 +160,9 @@ const { eventNames } = require('process');
                         try {
                         jdata = JSON.parse(stdout);
                         } catch (e) {}
-                        console.log(jdata);
+                        me.removeMark(() => {
+                            console.log(jdata);
+                        }); 
                 });
             });  
         }
