@@ -34,6 +34,9 @@ fs.readdir(env.dataFolder + '/sites', (err, list) => {
       mserver.onDemand(flist[0].server, flist[0].file, (data) => {
         console.log('Done !');
       });
+    } else {
+      const mserver = new MServer(env);
+      mserver.auditOndemand();
     }
   }, 3000);
 });

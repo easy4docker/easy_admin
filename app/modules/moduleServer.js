@@ -186,7 +186,8 @@
                         hashCode    : data['hashCode'],
                         docker      : (!data.dockerSetting) ? [] : data.dockerSetting,
                         branch      : data['branch'],
-                        unidx       : me.getNewUnIdx(list)
+                        unidx       : me.getNewUnIdx(list),
+                        created     : new Date().getTime()
                     }
                     list[serverName] = data;
                     me.saveSites(list, (list) => {

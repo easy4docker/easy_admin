@@ -175,22 +175,13 @@ const { eventNames } = require('process');
                 });
             });  
         }
-        /*
-        me.removeOndemand = (github, param, callback) => {
-            me.serverStatus((sts)=> {
-                var cmd = 'curl -d ' + postData +
-                    '  -H "Content-Type: application/json" -X POST localhost/api/';
-                exec(cmd, {maxBuffer: 224 * 2048},
-                    function(error, stdout, stderr) {
-                        var jdata = {};
-                        try {
-                        jdata = JSON.parse(stdout);
-                        } catch (e) {}
-                        console.log(jdata);
-                });
-            });  
+
+        me.auditOndemand = () => {
+            const fn = env.dataFolder + '/_servers_cfg.json';
+            me.readJson(fn, (jdata) => {
+                console.log(jdata);
+            });
         }
-        */
         
         me.readJson = (path, cb) => {
             fs.readFile(path, 'utf-8', (err, data) => {
