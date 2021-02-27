@@ -43,8 +43,8 @@
             return ('sites-' + serverName + '-image').toLowerCase();
         }
 
-        me.ondemandResultPath = () => {
-            return _env.data_folder + '/ondemandResult/';
+        me.ondemandResultPath = (serverName) => {
+            return _env.data_folder + '/ondemandResult/' + serverName;
         }
 
         me.dockerPath = (serverName) => {
@@ -408,15 +408,6 @@
                         cbk(true);
                 });
             };
-
-            _f['ondemandResultPath'] = function(cbk) {
-                
-                let cmd = 'mkdir -p ' + me.ondemandResultPath();
-                exec(cmd, {maxBuffer: 224 * 2048},
-                    function(error, stdout, stderr) {
-                        cbk(true);
-                });
-            };
         
             _f['addRemoveMe'] = function(cbk) {
                 me.addRemoveMe(data.serverName, cbk);
@@ -487,7 +478,7 @@
                 me.asycKeyJson(serverName, ['getInitToken', 'getKeyCode'], (data) => {
                     callback({
                         serverName          : serverName,
-                        ondemandResultPath  : me.ondemandResultPath(),
+                        ondemandResultPath  : me.ondemandResultPath(serverName),
                         dockerCodePath      : me.dockerCodePath(serverName),
                         dockerSettingPath   : me.dockerCodePath(serverName) + '/dockerSetting',
                         dockerDataPath      : me.dockerDataPath(serverName),
