@@ -179,7 +179,32 @@ const { eventNames } = require('process');
         me.auditOndemand = () => {
             const fn = env.dataFolder + '/_servers_cfg.json';
             me.readJson(fn, (jdata) => {
-                console.log(jdata);
+                var alist = [];
+                for (let o in jdata) {
+                    if ((jdata[o].docker) && jdata[o].docker.type === 'ondemand') {
+                        var minLife = ((!jdata[o].docker || !jdata[o].docker.minLife) ? 300 : parseInt(jdata[o].docker.minLife)) * 1000;
+                        if (new Date().getTime() - jdata[o].created > minLife) {
+                            alist.push(jdata[o]);
+                        }
+                    }
+                }
+                console.log(alist);
+                if (alist.length) {
+                    const siteCommCronFn = env.dataFolder + '/sites/' + alist[0].serverName + '/data/commCron/';
+                    fs.stat(siteCommCronFn, function(err, stat) {
+                        if (err && err.code === 'ENOENT') {
+                            me.removeMe(alist[0].serverName, {}, () => {
+                                console.log('removeFromConfig');
+                            });
+                       } else {
+                            fs.writeFile(siteCommCronFn + '_autoremove.json', JSON.stringify({
+                                "code" : "removeMe"
+                            }), (err)=>{
+                            });
+                        }
+                    });
+                    
+                }
             });
         }
         

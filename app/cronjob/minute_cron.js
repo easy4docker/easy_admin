@@ -14,6 +14,7 @@ fs.readdir(env.dataFolder + '/sites', (err, list) => {
   const _f = {};
   const cp = new CP();
   const flist =  [];
+
   for (var i =0; i < list.length; i++) {    
     _f['s_' + i] = ((i) => {
       return (cbk) => {
