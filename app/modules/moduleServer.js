@@ -402,8 +402,16 @@
             
             _f['addSiteCronFolder'] = function(cbk) {
                 
-                let cmd = 'mkdir -p ' + me.siteDataPath(data.serverName) + '/commCron/' +
-                ' && mkdir -p ' + me.ondemandResultPath();
+                let cmd = 'mkdir -p ' + me.siteDataPath(data.serverName) + '/commCron/';
+                exec(cmd, {maxBuffer: 224 * 2048},
+                    function(error, stdout, stderr) {
+                        cbk(true);
+                });
+            };
+
+            _f['ondemandResultPath'] = function(cbk) {
+                
+                let cmd = 'mkdir -p ' + me.ondemandResultPath();
                 exec(cmd, {maxBuffer: 224 * 2048},
                     function(error, stdout, stderr) {
                         cbk(true);
