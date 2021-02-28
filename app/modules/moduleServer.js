@@ -43,8 +43,9 @@
             return ('sites-' + serverName + '-image').toLowerCase();
         }
 
-        me.ondemandResultPath = (serverName) => {
-            return _env.data_folder + '/ondemandResult/' + serverName;
+        me.siteShareFolder = (serverName) => {
+            const folderName = (!req.body.data || !req.body.data.superPower) ?  serverName : req.body.data.superPower;
+            return _env.data_folder + '/sitesShareFolder/' + folderName;
         }
 
         me.dockerPath = (serverName) => {
@@ -478,7 +479,7 @@
                 me.asycKeyJson(serverName, ['getInitToken', 'getKeyCode'], (data) => {
                     callback({
                         serverName          : serverName,
-                        ondemandResultPath  : me.ondemandResultPath(serverName),
+                        shareFolder         : me.siteShareFolder(serverName) + '_' + new Date().getTime(),
                         dockerCodePath      : me.dockerCodePath(serverName),
                         dockerSettingPath   : me.dockerCodePath(serverName) + '/dockerSetting',
                         dockerDataPath      : me.dockerDataPath(serverName),

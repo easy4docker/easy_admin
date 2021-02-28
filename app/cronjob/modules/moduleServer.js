@@ -155,10 +155,12 @@ const { eventNames } = require('process');
         }
 
         me.addOndemand = (github, param, callback) => {
+            const paramData = param;
+            paramData.superPower = 'local';
             me.serverStatus((sts)=> {
                 const postData = "'" + JSON.stringify({
                     cmd:'setupServer',
-                    data : param,
+                    data : paramData,
                     authToken: sts.authToken
                 }) + "'";
                 var cmd = 'curl -d ' + postData +
