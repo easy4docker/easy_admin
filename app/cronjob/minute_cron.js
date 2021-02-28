@@ -7,6 +7,13 @@ const env = {
       fs = require('fs'),
       CP = require(env.appFolder + '/vendor/crowdProcess/crowdProcess.js');
 
+  var localConfig = {};
+  try {
+    localConfig = require(env.data_dir + '/_env.json');
+  } catch (e) {}
+
+env.localConfig = JSON.stringify(localConfig);
+
 delete require.cache[__dirname + '/modules/moduleServer.js'];
 const MServer = require(__dirname + '/modules/moduleServer.js');
 

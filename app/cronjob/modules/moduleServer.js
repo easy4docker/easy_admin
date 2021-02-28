@@ -154,7 +154,48 @@ const { eventNames } = require('process');
             });
         }
 
+        me.siteShareFolder = (serverName) => {
+            const serverCode = serverName.replace(/\_([0-9]+)$/, '');
+            const folderName = (!req.body.data || !req.body.data.superPower) ?  serverName: 
+                req.body.data.superPower.server + '/' + serverCode +  '_' + req.body.data.superPower.host + '_' + new Date().getTime();
+            return _env.data_folder + '/sitesShareFolder/' + folderName;
+        }
+
         me.addOndemand = (server, param, callback) => {
+            // const serverCode = server.replace(/\_([0-9]+)$/, '');
+            var cmd = env.dataFolder  + '/_ip';
+            fs.readFile(env.dataFolder  + '/_ip', 'utf-8',
+                function(err, ipData) {
+                    const host = (err) ? 'localhost' : ipData;
+                    const paramData = param;
+                    
+                    paramData.superPower = {
+                        host : host,   
+                        server:server
+                    };
+                    me.serverStatus((sts)=> {
+                        const postData = "'" + JSON.stringify({
+                            cmd:'setupServer',
+                            data : paramData,
+                            authToken: sts.authToken
+                        }) + "'";
+                        var cmd = 'curl -d ' + postData +
+                            '  -H "Content-Type: application/json" -X POST localhost/api/';
+                        exec(cmd, {maxBuffer: 224 * 2048},
+                            function(error, stdout, stderr) {
+                                var jdata = {};
+                                try {
+                                jdata = JSON.parse(stdout);
+                                } catch (e) {}
+                                me.removeMark(() => {
+                                    console.log(jdata);
+                                }); 
+                        });
+                    });  
+            });
+        }
+
+        me.addOndemandBK = (server, param, callback) => {
             const paramData = param;
             paramData.superPower = {
                 host : 'localhost',   
