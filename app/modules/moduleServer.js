@@ -46,7 +46,7 @@
         me.siteShareFolder = (serverName) => {
             const serverCode = serverName.replace(/\_([0-9]+)$/, '');
             const folderName = (!req.body.data || !req.body.data.superPower) ?  serverName: 
-                req.body.data.superPower.server + '/' + serverCode +  '_' + req.body.data.superPower.host + '_' + new Date().getTime();
+                req.body.data.superPower.server + '/' + serverCode +  '_' + req.body.data.superPower.host.replace(':', '') + '_' + new Date().getTime();
             return _env.data_folder + '/sitesShareFolder/' + folderName;
         }
 

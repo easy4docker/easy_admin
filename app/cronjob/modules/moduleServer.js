@@ -166,7 +166,7 @@ const { eventNames } = require('process');
             var cmd = env.dataFolder  + '/_ip';
             fs.readFile(env.dataFolder  + '/_ip', 'utf-8',
                 function(err, ipData) {
-                    const host = (err) ? 'localhost' : ipData;
+                    const host = (!err || ipData !== 'localhost') ? ipData : 'localhost:10000';
                     const paramData = param;
                     
                     paramData.superPower = {
