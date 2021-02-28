@@ -479,7 +479,7 @@
                 me.asycKeyJson(serverName, ['getInitToken', 'getKeyCode'], (data) => {
                     callback({
                         serverName          : serverName,
-                        shareFolder         : me.siteShareFolder(serverName),
+                        shareFolder         : me.siteShareFolder(serverName) + '_' + new Date().getTime(),
                         dockerCodePath      : me.dockerCodePath(serverName),
                         dockerSettingPath   : me.dockerCodePath(serverName) + '/dockerSetting',
                         dockerDataPath      : me.dockerDataPath(serverName),
