@@ -154,9 +154,9 @@ const { eventNames } = require('process');
             });
         }
 
-        me.addOndemand = (github, param, callback) => {
+        me.addOndemand = (server, param, callback) => {
             const paramData = param;
-            paramData.superPower = 'local';
+            paramData.superPower = server;
             me.serverStatus((sts)=> {
                 const postData = "'" + JSON.stringify({
                     cmd:'setupServer',
