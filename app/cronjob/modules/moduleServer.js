@@ -156,7 +156,10 @@ const { eventNames } = require('process');
 
         me.addOndemand = (server, param, callback) => {
             const paramData = param;
-            paramData.superPower = server;
+            paramData.superPower = {
+                host : 'localhost',   
+                server:server
+            };
             me.serverStatus((sts)=> {
                 const postData = "'" + JSON.stringify({
                     cmd:'setupServer',
