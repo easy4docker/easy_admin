@@ -162,11 +162,10 @@ const { eventNames } = require('process');
         }
 
         me.addOndemand = (server, param, callback) => {
-            // const serverCode = server.replace(/\_([0-9]+)$/, '');
-            var cmd = env.dataFolder  + '/_ip';
             fs.readFile(env.dataFolder  + '/_ip', 'utf-8',
                 function(err, ipData) {
-                    const host = (!err && ipData !== 'localhost') ? ipData : 'localhost:10000';
+                    const ip = ipData.replace(/(\n|\r)/ig, '')
+                    const host = (!err && ip !== 'localhost') ? ipData : 'localhost:10000';
                     const paramData = param;
                     
                     paramData.superPower = {
