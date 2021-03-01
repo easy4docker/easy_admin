@@ -413,10 +413,17 @@
                 });
             };
         
-            _f['addRemoveMe'] = function(cbk) {
+            _f['addRemoveMe'] = (cbk) => {
                 me.addRemoveMe(data.serverName, cbk);
             };
             
+            _f['saveSuperServer'] = (cbk) => {
+                const dirn = me.siteShareFolder(data.serverName);
+                fs.writeFile(dirn + '/uuu', 'test', ()=>{
+                    cbk(true);
+                });
+            }
+
             _f['createStartUpVServers'] = function(cbk) {
                 me.createStartUpVServers(cbk); 
             };
