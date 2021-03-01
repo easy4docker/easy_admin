@@ -165,7 +165,7 @@ const { eventNames } = require('process');
             fs.readFile(env.dataFolder  + '/_ip', 'utf-8',
                 function(err, ipData) {
                     const ip = ipData.replace(/(\n|\r)/ig, '')
-                    const host = (!err && ip !== 'localhost') ? ipData : 'localhost:10000';
+                    const host = (!err && ip !== 'localhost') ? (ipData + ':10000') : 'localhost';
                     const paramData = param;
                     
                     paramData.superPower = {
