@@ -1,11 +1,17 @@
 const express = require('express');
+const multer  = require('multer')
+
+const bodyParser = require('body-parser');
+const upload = multer({ dest: '/tmp/uploaded' });
 const app = express();
-var bodyParser = require('body-parser');
+
 var path = require('path');
 // var morgan = require('morgan');
 var fs = require('fs');
 
 const port = 80;
+
+
 var env = {
     root : __dirname,
     dataFolder : '/var/_localAppData',
@@ -52,6 +58,19 @@ app.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
+
+app.post('/upload', 
+  upload.any(),
+  (req, res, next) => {
+    // if need do authToken as req.body.authToken TODO here
+    next();
+  },
+  (req, res, next) => {
+    var APPUPLOAD = pkg.require(__dirname + '/modules/moduleUpload.js');
+    var mupload = new APPUPLOAD(env, pkg, req, res);
+    mupload.runUpload();
+  }
+)
 
 var RESTS = 'get|put|post|delete'.split('|');
 

@@ -8,6 +8,7 @@ RUN apt-get -y install git
 RUN apt-get install -y cron
 RUN apt-get install -y vim
 
+RUN npm install multer
 RUN npm install morgan
 RUN npm install debug
 RUN npm install ect

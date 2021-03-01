@@ -48,7 +48,9 @@
             let folderName = (!req.body.data || !req.body.data.superPower) ?  serverName: 
                 req.body.data.superPower.server + '/' + serverCode + '_' + new Date().getTime();
                
-            return _env.data_folder + '/sitesShareFolder/' + folderName;
+            return {
+                host : (!req.body.data || !req.body.data.superPower) ? 'localhost' : req.body.data.superPower.host,
+                folder : _env.data_folder + '/sitesShareFolder/' + folderName}
         }
 
         me.dockerPath = (serverName) => {
@@ -416,13 +418,6 @@
             _f['addRemoveMe'] = (cbk) => {
                 me.addRemoveMe(data.serverName, cbk);
             };
-            
-            _f['saveSuperServer'] = (cbk) => {
-                const dirn = me.siteShareFolder(data.serverName);
-                fs.writeFile(dirn + '/uuu', 'test', ()=>{
-                    cbk(true);
-                });
-            }
 
             _f['createStartUpVServers'] = function(cbk) {
                 me.createStartUpVServers(cbk); 
@@ -489,7 +484,8 @@
                 me.asycKeyJson(serverName, ['getInitToken', 'getKeyCode'], (data) => {
                     callback({
                         serverName          : serverName,
-                        shareFolder         : me.siteShareFolder(serverName),
+                        shareFolder         : me.siteShareFolder(serverName).folder,
+                        onDemandCallbackHost: me.siteShareFolder(serverName).host,
                         dockerCodePath      : me.dockerCodePath(serverName),
                         dockerSettingPath   : me.dockerCodePath(serverName) + '/dockerSetting',
                         dockerDataPath      : me.dockerDataPath(serverName),

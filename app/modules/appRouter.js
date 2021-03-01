@@ -88,7 +88,7 @@
 						var MAdupter= pkg.require(env.root+ '/modules/moduleAdupter.js');
 						let maupter =  new MAdupter(env, pkg, req, res);
 						maupter.call();
-						break; 
+						break;
 					case '_grid':
 						var MAGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
 						let mGrid =  new MAGrid(env, pkg, req, res);
