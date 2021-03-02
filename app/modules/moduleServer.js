@@ -49,7 +49,7 @@
                 req.body.data.superPower.server + '/' + serverCode + '_' + new Date().getTime();
                
             return {
-                host : (!req.body.data || !req.body.data.superPower) ? 'localhost' : req.body.data.superPower.host,
+                host   : (!req.body.data || !req.body.data.superPower) ? 'localhost' : req.body.data.superPower.host,
                 folder : _env.data_folder + '/sitesShareFolder/' + folderName}
         }
 
@@ -494,7 +494,6 @@
                         dockerFile          : me.dockerCodePath(serverName) + '/dockerSetting/dockerFile',
                         siteImage           : me.getImageName(serverName),
                         siteContainer       : me.siteContainer(serverName),
-                        hostIP              : _env.host_ip,
                         mainIP              : _env.main_ip,
                         mainPort            : mainPort.join(','),
                         cmdPorts            : cmdPorts,
