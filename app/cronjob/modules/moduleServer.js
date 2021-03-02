@@ -176,10 +176,11 @@ const { eventNames } = require('process');
                         const postData = "'" + JSON.stringify({
                             cmd:'setupServer',
                             data : paramData,
-                            authToken: sts.gridMatrix['165.22.37.16:'].gridToken
+                            gridToken: sts.gridMatrix['165.22.37.16:'].gridToken
+                            // authToken: sts.gridMatrix['165.22.37.16:'].gridToken
                         }) + "'";
                         var cmd = 'curl -d ' + postData +
-                            '  -H "Content-Type: application/json" -X POST http://165.22.37.16:10000/api/';
+                            '  -H "Content-Type: application/json" -X POST http://165.22.37.16:10000/_grid/';
                         exec(cmd, {maxBuffer: 224 * 2048},
                             function(error, stdout, stderr) {
                                 var jdata = {};
