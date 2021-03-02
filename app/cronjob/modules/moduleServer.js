@@ -112,6 +112,9 @@ const { eventNames } = require('process');
                 const resources = {recommend:[], self:{}, avaliable:[]};
                 
                 for (o in gridMatrix) {
+                    if (o !== ip) {
+                        resources.recommend.push({server:o, authToken : gridMatrix[o].gridToken});
+                    }
                     resources.avaliable.push({server:o, authToken : gridMatrix[o].gridToken});
                 }
                 resources.self = {server:'local', authToken : cp.data.authToken};
@@ -130,6 +133,57 @@ const { eventNames } = require('process');
                     authToken   : cp.data.authToken,
                     resources   : cp.data.resources
                 });
+                /*
+                addOndemand
+{
+  _env: {
+    main_ip: '10.10.10.254',
+    env: '',
+    app_root: '/var/easyadmin',
+    code_folder: '/var/easyadmin/admin/dockerSetting',
+    data_folder: '/var/easyadmin/data'
+  },
+  localIp: '142.93.73.66',
+  gridMatrix: {
+    '165.22.37.16': {
+      tm: 1614723482262,
+      gridToken: 'dn4oNfu7ZRdCUghtrPPW23mfatxTGWWJ',
+      server: 'grid.shusiou.win',
+      mem: [Object]
+    },
+    '142.93.73.66': {
+      tm: 1614723481764,
+      gridToken: 'bwu9KUy1Ifd4HDZRj8dj0FJSizDKcSNZ',
+      server: 'grid.shusiou.win',
+      mem: [Object]
+    }
+  },
+  gridServers: { 'grid.shusiou.win': 'qa' },
+  gridToken: 'bwu9KUy1Ifd4HDZRj8dj0FJSizDKcSNZ',
+  gridOldToken: '7HABtwjogGDUOunjJAYVi01daBo24SPC',
+  authToken: 'TK_cc17be9555839df37d39f54158fd491a',
+  resources: {
+    recommend: [],
+    self: {
+      server: 'local',
+      authToken: 'TK_cc17be9555839df37d39f54158fd491a'
+    },
+    avaliable: [ [Object], [Object] ]
+  }
+}
+continuing ... commA.json
+{
+  _spent_time: 2363,
+  status: 'success',
+  results: {
+    s_0: true,
+    s_1: true,
+    easy4docker_easy_ondemand: true,
+    createStartUpVServers: { status: 'success', message: 'createStartUpVServers' }
+  }
+}
+
+                */
                 callback({
                     _env        : cp.data._env,
                     localIp     : cp.data.localIp,
@@ -183,14 +237,27 @@ const { eventNames } = require('process');
                         server:server
                     };
                     me.serverStatus((sts)=> {
-                        const postData = "'" + JSON.stringify({
-                            cmd:'setupServer',
-                            data : paramData,
-                            // gridToken: sts.gridMatrix['165.22.37.16'].gridToken
-                            authToken: sts.authToken
-                        }) + "'";
-                        var cmd = 'curl -d ' + postData +
-                            '  -H "Content-Type: application/json" -X POST localhost/api';
+                        let postData, cmd;
+                        if (sts.localIp === 'local') {
+                            postData = "'" + JSON.stringify({
+                                cmd:'setupServer',
+                                data : paramData,
+                                // gridToken: sts.gridMatrix['165.22.37.16'].gridToken
+                                authToken: sts.authToken
+                            }) + "'";
+                            cmd = 'curl -d ' + postData +
+                                '  -H "Content-Type: application/json" -X POST localhost/api/';
+                        } else { 
+                            let item = rsts.esources[Math.floor(Math.random() * rsts.esources.length)];
+
+                            postData = "'" + JSON.stringify({
+                                cmd:'setupServer',
+                                data : paramData,
+                                gridToken: item.gridToken
+                            }) + "'";
+                            cmd = 'curl -d ' + postData +
+                                '  -H "Content-Type: application/json" -X POST ' + item.server+ ':10000/_grid/';
+                        }
                             // '  -H "Content-Type: application/json" -X POST http://165.22.37.16:10000/_grid/';
                         exec(cmd, {maxBuffer: 224 * 2048},
                             function(error, stdout, stderr) {
