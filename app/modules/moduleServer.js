@@ -481,6 +481,7 @@
                 for (var i = 0;  i < cloudPort.length; i++) {
                     cmdCloudPort += ' -p ' + (30000 + parseInt(site_config.unidx * 1000) + parseInt(cloudPort[i])) + ':' + cloudPort[i] + ' ';
                 }
+
                 me.asycKeyJson(serverName, ['getInitToken', 'getKeyCode'], (data) => {
                     callback({
                         serverName          : serverName,
@@ -493,6 +494,7 @@
                         dockerFile          : me.dockerCodePath(serverName) + '/dockerSetting/dockerFile',
                         siteImage           : me.getImageName(serverName),
                         siteContainer       : me.siteContainer(serverName),
+                        hostIP              : _env.host_ip,
                         mainIP              : _env.main_ip,
                         mainPort            : mainPort.join(','),
                         cmdPorts            : cmdPorts,

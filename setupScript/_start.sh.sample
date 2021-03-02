@@ -62,7 +62,7 @@ if [ $OSENV = "Mac" ]; then
     echo "localhost" > ${SCR_DIR}/data/_ipA
 fi
 
-echo "{\"main_ip\": \"${MAIN_IP}\", \"env\": \"$1\", \"app_root\": \"${SCR_DIR}\", \"code_folder\": \"$PWD\", \"data_folder\": \"$DATA_DIR\"}" > "$DATA_DIR"/_env.json
+echo "{\"main_ip\": \"${MAIN_IP}\", \"host_ip\": \"$(cat ${SCR_DIR}/data/_ip)\", \"env\": \"$1\", \"app_root\": \"${SCR_DIR}\", \"code_folder\": \"$PWD\", \"data_folder\": \"$DATA_DIR\"}" > "$DATA_DIR"/_env.json
 
 sh ${DATA_DIR}/_startUpScript.sh
 
