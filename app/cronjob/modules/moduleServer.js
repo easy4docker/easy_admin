@@ -249,7 +249,8 @@ continuing ... commA.json
                                 '  -H "Content-Type: application/json" -X POST localhost/api/';
                         } else { 
                             let item = sts.resources[Math.floor(Math.random() * sts.resources.length)];
-
+                            console.log('---item--->');
+                            console.log(item);
                             postData = "'" + JSON.stringify({
                                 cmd:'setupServer',
                                 data : paramData,
