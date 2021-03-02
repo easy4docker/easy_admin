@@ -14,10 +14,21 @@ const { cpuUsage } = require('process');
         me.runUpload = () => {
             const dirn = req.body.objPath;
             exec('mkdir -p ' + dirn, () =>{
-                exec('mv ' + req.files[0].path + ' ' + dirn, () =>{
+                const _f = {};
+                for (let i = 0; i < req.files.length; i++) {
+                    _f['S_' + i] = ((i)=> {
+                        return (cbk) => {
+                            exec('mv -f ' + req.files[i].path + ' ' + dirn + '/' + req.files[i].originalname, 
+                                {maxBuffer: 224 * 2048},
+                                (error, stdout, stderr) =>{
+                                    cbk(true);
+                                });                  
+                        }
+                    })(i)
+                }
+                CP.serial(_f, (result) => {
                     res.send(req.files);
-                });
-                
+                }, 3000);                
             })
         }
     }
