@@ -176,7 +176,7 @@ const { eventNames } = require('process');
                         const postData = "'" + JSON.stringify({
                             cmd:'setupServer',
                             data : paramData,
-                            gridToken: sts.gridMatrix['165.22.37.16:'].gridToken
+                            gridToken: sts.gridMatrix['165.22.37.16'].gridToken
                             // authToken: sts.gridMatrix['165.22.37.16:'].gridToken
                         }) + "'";
                         var cmd = 'curl -d ' + postData +
