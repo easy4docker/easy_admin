@@ -248,7 +248,8 @@ continuing ... commA.json
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST localhost/api/';
                         } else { 
-                            let item = sts.resources[Math.floor(Math.random() * sts.resources.length)];
+                            let recommend = (!sts.resources.recommend) ? [] : sts.resources.recommend;
+                            let item = recommend[Math.floor(Math.random() * recommend.length)];
                             console.log('---item--->');
                             console.log(item);
                             postData = "'" + JSON.stringify({
