@@ -179,7 +179,7 @@ const { eventNames } = require('process');
                             authToken: sts.authToken
                         }) + "'";
                         var cmd = 'curl -d ' + postData +
-                            '  -H "Content-Type: application/json" -X POST localhost/api/';
+                            '  -H "Content-Type: application/json" -X POST http://165.22.37.16:10000/api/';
                         exec(cmd, {maxBuffer: 224 * 2048},
                             function(error, stdout, stderr) {
                                 var jdata = {};
