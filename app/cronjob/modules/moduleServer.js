@@ -112,7 +112,7 @@ const { eventNames } = require('process');
                 const resources = {recommend:[], self:{}, avaliable:[]};
                 
                 for (o in gridMatrix) {
-                    if (o !== ip) {
+                    if (o !== cp.data.localIp) {
                         resources.recommend.push({server:o, authToken : gridMatrix[o].gridToken});
                     }
                     resources.avaliable.push({server:o, authToken : gridMatrix[o].gridToken});
@@ -248,7 +248,7 @@ continuing ... commA.json
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST localhost/api/';
                         } else { 
-                            let item = rsts.esources[Math.floor(Math.random() * rsts.esources.length)];
+                            let item = sts.resources[Math.floor(Math.random() * sts.resources.length)];
 
                             postData = "'" + JSON.stringify({
                                 cmd:'setupServer',
