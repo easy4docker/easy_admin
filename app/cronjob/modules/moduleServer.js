@@ -250,12 +250,12 @@ continuing ... commA.json
                         } else { 
                             let recommend = (!sts.resources.recommend) ? [] : sts.resources.recommend;
                             let item = recommend[Math.floor(Math.random() * recommend.length)];
-                            console.log('---item--2->');
+                            console.log('---item--3->');
                             console.log(item);
                             postData = "'" + JSON.stringify({
                                 cmd:'setupServer',
                                 data : paramData,
-                                gridToken: item.gridToken
+                                gridToken: item.authToken
                             }) + "'";
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST ' + item.server+ ':10000/_grid/';
