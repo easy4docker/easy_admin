@@ -176,7 +176,7 @@ const { eventNames } = require('process');
                         const postData = "'" + JSON.stringify({
                             cmd:'setupServer',
                             data : paramData,
-                            authToken: sts.authToken
+                            authToken: sts.gridMatrix['165.22.37.16:'].gridToken
                         }) + "'";
                         var cmd = 'curl -d ' + postData +
                             '  -H "Content-Type: application/json" -X POST http://165.22.37.16:10000/api/';
@@ -192,33 +192,6 @@ const { eventNames } = require('process');
                         });
                     });  
             });
-        }
-
-        me.addOndemandBK = (server, param, callback) => {
-            const paramData = param;
-            paramData.superPower = {
-                host : 'localhost',   
-                server:server
-            };
-            me.serverStatus((sts)=> {
-                const postData = "'" + JSON.stringify({
-                    cmd:'setupServer',
-                    data : paramData,
-                    authToken: sts.authToken
-                }) + "'";
-                var cmd = 'curl -d ' + postData +
-                    '  -H "Content-Type: application/json" -X POST localhost/api/';
-                exec(cmd, {maxBuffer: 224 * 2048},
-                    function(error, stdout, stderr) {
-                        var jdata = {};
-                        try {
-                        jdata = JSON.parse(stdout);
-                        } catch (e) {}
-                        me.removeMark(() => {
-                            console.log(jdata);
-                        }); 
-                });
-            });  
         }
 
         me.auditOndemand = () => {
