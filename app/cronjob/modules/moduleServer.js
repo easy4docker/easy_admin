@@ -120,6 +120,16 @@ const { eventNames } = require('process');
 
             const cp = new CP();
             cp.serial(_f, (data) => {
+                console.log({
+                    _env        : cp.data._env,
+                    localIp     : cp.data.localIp,
+                    gridMatrix  : cp.data.gridMatrix,
+                    gridServers : cp.data.gridServers,
+                    gridToken   : cp.data.gridToken,
+                    gridOldToken: cp.data.gridOldToken,
+                    authToken   : cp.data.authToken,
+                    resources   : cp.data.resources
+                });
                 callback({
                     _env        : cp.data._env,
                     localIp     : cp.data.localIp,
@@ -176,11 +186,12 @@ const { eventNames } = require('process');
                         const postData = "'" + JSON.stringify({
                             cmd:'setupServer',
                             data : paramData,
-                            gridToken: sts.gridMatrix['165.22.37.16'].gridToken
-                            // authToken: sts.gridMatrix['165.22.37.16:'].gridToken
+                            // gridToken: sts.gridMatrix['165.22.37.16'].gridToken
+                            authToken: sts.authToken
                         }) + "'";
                         var cmd = 'curl -d ' + postData +
-                            '  -H "Content-Type: application/json" -X POST http://165.22.37.16:10000/_grid/';
+                            '  -H "Content-Type: application/json" -X POST localhost/api';
+                            // '  -H "Content-Type: application/json" -X POST http://165.22.37.16:10000/_grid/';
                         exec(cmd, {maxBuffer: 224 * 2048},
                             function(error, stdout, stderr) {
                                 var jdata = {};
