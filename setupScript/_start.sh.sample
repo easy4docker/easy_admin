@@ -8,6 +8,24 @@ LOG_PATH=${DATA_DIR}/log
 MAIN_NET="10.10.10"
 MAIN_IP="10.10.10.254"
 
+# ---- prepare S -----
+OSENV=""
+case "$(uname -s)" in
+   Darwin)
+     OSENV='Mac'
+     ;;
+   Linux)
+     OSENV='Linux'
+     ;;
+
+   CYGWIN*|MINGW32*|MSYS*|MINGW*)
+     OSENV='MS Windows'
+     ;;
+   *)
+     OSENV='' 
+     ;;
+esac
+
 if  [ "$DOCKERCMD" = "" ]; then
     echo "\nDocker should be installed!" >> ${LOG_PATH}/easyDockerLog.data
     exit 1
