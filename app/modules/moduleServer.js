@@ -415,6 +415,15 @@
                         cbk(true);
                 });
             };
+
+            _f['addShareConfig'] = function(cbk) {
+                let cmd = 'mkdir -p ' + me.siteDataPath(data.serverName)+ '/shareConfig/ && ';
+                cmd += ' echo "' + data.serverName + '" > ' + me.siteDataPath(data.serverName) + '/shareConfig/niu.txt ';
+                exec(cmd, {maxBuffer: 224 * 2048},
+                    function(error, stdout, stderr) {
+                        cbk(true);
+                });
+            };
         
             _f['addRemoveMe'] = (cbk) => {
                 me.addRemoveMe(data.serverName, cbk);
@@ -464,6 +473,16 @@
             }, 30000);
         };
 
+        me.saveDockerConfig = (serverName, cfg, cbk) => {
+            let cmd = 'mkdir -p ' + cfg.shareFolder;
+            exec(cmd, {maxBuffer: 224 * 2048},
+                function(error, stdout, stderr) {
+                    fs.writeFile(me.siteDataPath(serverName) + '/siteDockerConfig.json', JSON.stringify(cfg), ()=> {
+                        cbk(cfg);
+                    })
+            });
+        }
+
         me.dockerConfig = (serverName, callback) => {
             me.getSites(
                 (list) => {
@@ -485,7 +504,7 @@
 
                 me.asycKeyJson(serverName, ['getInitToken', 'getKeyCode'], (data) => {
                     let objSiteShare = me.siteShareFolder(serverName)
-                    callback({
+                    me.saveDockerConfig(serverName, {
                         serverName          : serverName,
                         shareFolder         : objSiteShare.folder,
                         superPowerServer    : objSiteShare.superPowerServer,
@@ -505,7 +524,7 @@
                         siteCodePath        : me.siteCodePath(serverName),
                         keyCode             : data.getKeyCode,
                         initToken           : data.getInitToken
-                    });
+                    }, callback);
                 });
 
             });
