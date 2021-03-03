@@ -238,17 +238,18 @@ continuing ... commA.json
                     };
                     me.serverStatus((sts)=> {
                         let postData, cmd;
-                        if (sts.localIp === 'local') {
+                        let recommend = (!!sts.resources || !sts.resources.recommend) ? [] : sts.resources.recommend;
+
+                        if (sts.localIp === 'local' || !recommend.length) {
                             postData = "'" + JSON.stringify({
                                 cmd:'setupServer',
                                 data : paramData,
-                                // gridToken: sts.gridMatrix['165.22.37.16'].gridToken
                                 authToken: sts.authToken
                             }) + "'";
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST localhost/api/';
                         } else { 
-                            let recommend = (!sts.resources.recommend) ? [] : sts.resources.recommend;
+                            
                             let item = recommend[Math.floor(Math.random() * recommend.length)];
                             postData = "'" + JSON.stringify({
                                 cmd:'setupServer',
