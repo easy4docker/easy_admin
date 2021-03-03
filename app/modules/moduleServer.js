@@ -51,6 +51,8 @@
             return {
                 host   : (!req.body.data || !req.body.data.superPower) ? 'localhost' : req.body.data.superPower.host,
                 folder : _env.data_folder + '/sitesShareFolder/' + folderName,
+                // folder : me.sitePath(serverName) + '/sitesShareFolder/' + folderName,
+                selfSharedFolder : me.sitePath(serverName) + '/sitesShareFolder/' + folderName,
                 superPowerServer : (!req.body.data || !req.body.data.superPower) ? '' : req.body.data.superPower.server}
         }
 
@@ -507,6 +509,7 @@
                     me.saveDockerConfig(serverName, {
                         serverName          : serverName,
                         shareFolder         : objSiteShare.folder,
+                        selfSharedFolder    : objSiteShare.selfSharedFolder,
                         superPowerServer    : objSiteShare.superPowerServer,
                         onDemandCallbackHost: objSiteShare.host,
                         dockerCodePath      : me.dockerCodePath(serverName),
