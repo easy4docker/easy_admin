@@ -133,57 +133,6 @@ const { eventNames } = require('process');
                     authToken   : cp.data.authToken,
                     resources   : cp.data.resources
                 });
-                /*
-                addOndemand
-{
-  _env: {
-    main_ip: '10.10.10.254',
-    env: '',
-    app_root: '/var/easyadmin',
-    code_folder: '/var/easyadmin/admin/dockerSetting',
-    data_folder: '/var/easyadmin/data'
-  },
-  localIp: '142.93.73.66',
-  gridMatrix: {
-    '165.22.37.16': {
-      tm: 1614723482262,
-      gridToken: 'dn4oNfu7ZRdCUghtrPPW23mfatxTGWWJ',
-      server: 'grid.shusiou.win',
-      mem: [Object]
-    },
-    '142.93.73.66': {
-      tm: 1614723481764,
-      gridToken: 'bwu9KUy1Ifd4HDZRj8dj0FJSizDKcSNZ',
-      server: 'grid.shusiou.win',
-      mem: [Object]
-    }
-  },
-  gridServers: { 'grid.shusiou.win': 'qa' },
-  gridToken: 'bwu9KUy1Ifd4HDZRj8dj0FJSizDKcSNZ',
-  gridOldToken: '7HABtwjogGDUOunjJAYVi01daBo24SPC',
-  authToken: 'TK_cc17be9555839df37d39f54158fd491a',
-  resources: {
-    recommend: [],
-    self: {
-      server: 'local',
-      authToken: 'TK_cc17be9555839df37d39f54158fd491a'
-    },
-    avaliable: [ [Object], [Object] ]
-  }
-}
-continuing ... commA.json
-{
-  _spent_time: 2363,
-  status: 'success',
-  results: {
-    s_0: true,
-    s_1: true,
-    easy4docker_easy_ondemand: true,
-    createStartUpVServers: { status: 'success', message: 'createStartUpVServers' }
-  }
-}
-
-                */
                 callback({
                     _env        : cp.data._env,
                     localIp     : cp.data.localIp,

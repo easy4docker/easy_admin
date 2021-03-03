@@ -52,7 +52,7 @@
                 host   : (!req.body.data || !req.body.data.superPower) ? 'localhost' : req.body.data.superPower.host,
                 folder : _env.data_folder + '/sitesShareFolder/' + folderName,
                 // folder : me.sitePath(serverName) + '/sitesShareFolder/' + folderName,
-                selfSharedFolder : me.sitePath(serverName) + '/sitesShareFolder/' + folderName,
+                selfSharedFolder : data_dir + '/sitesShareFolder/' + folderName,
                 superPowerServer : (!req.body.data || !req.body.data.superPower) ? '' : req.body.data.superPower.server}
         }
 
@@ -417,15 +417,6 @@
                         cbk(true);
                 });
             };
-
-            _f['addShareConfig'] = function(cbk) {
-                let cmd = 'mkdir -p ' + me.siteDataPath(data.serverName)+ '/shareConfig/ && ';
-                cmd += ' echo "' + data.serverName + '" > ' + me.siteDataPath(data.serverName) + '/shareConfig/niu.txt ';
-                exec(cmd, {maxBuffer: 224 * 2048},
-                    function(error, stdout, stderr) {
-                        cbk(true);
-                });
-            };
         
             _f['addRemoveMe'] = (cbk) => {
                 me.addRemoveMe(data.serverName, cbk);
@@ -475,16 +466,6 @@
             }, 30000);
         };
 
-        me.saveDockerConfig = (serverName, cfg, cbk) => {
-            let cmd = 'mkdir -p ' + cfg.shareFolder;
-            exec(cmd, {maxBuffer: 224 * 2048},
-                function(error, stdout, stderr) {
-                    fs.writeFile(me.siteDataPath(serverName) + '/siteDockerConfig.json', JSON.stringify(cfg), ()=> {
-                        cbk(cfg);
-                    })
-            });
-        }
-
         me.dockerConfig = (serverName, callback) => {
             me.getSites(
                 (list) => {
@@ -506,7 +487,7 @@
 
                 me.asycKeyJson(serverName, ['getInitToken', 'getKeyCode'], (data) => {
                     let objSiteShare = me.siteShareFolder(serverName)
-                    me.saveDockerConfig(serverName, {
+                    callback({
                         serverName          : serverName,
                         shareFolder         : objSiteShare.folder,
                         selfSharedFolder    : objSiteShare.selfSharedFolder,
@@ -527,24 +508,11 @@
                         siteCodePath        : me.siteCodePath(serverName),
                         keyCode             : data.getKeyCode,
                         initToken           : data.getInitToken
-                    }, callback);
+                    });
                 });
 
             });
         };
-
-        me.templateContentBK = (serverName, tplName, callback) => {
-            me.dockerConfig(serverName, (configJson) => {
-                let cmd = '';
-                try {
-                    const tpl = pkg.ECT({ watch: true, cache: false, root: me.siteCodePath(serverName) + '/dockerSetting/scriptTemplate/', ext : '.tpl' });
-                    cmd = tpl.render(tplName, configJson);
-                } catch(e) {
-                    cmd = 'echo "' + e.message + '"' + "\n";
-                }
-                callback(cmd);
-            })
-        }
 
         me.templateContent = (serverName, tplName, callback) => {
             me.dockerConfig(serverName, (configJson) => {
