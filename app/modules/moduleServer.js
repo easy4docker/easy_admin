@@ -50,8 +50,8 @@
                
             return {
                 host   : (!req.body.data || !req.body.data.superPower) ? 'localhost' : req.body.data.superPower.host,
-                folder : _env.data_folder + '/sitesShareFolder/' + folderName,
-                superPowerServer : req.body.data.superPower.server }
+                folder : _env.data_folder + '/sitesShareFolder/' + folderName},
+                superPowerServer : req.body.data.superPower.server
         }
 
         me.dockerPath = (serverName) => {
@@ -484,12 +484,11 @@
                 }
 
                 me.asycKeyJson(serverName, ['getInitToken', 'getKeyCode'], (data) => {
-                    const siteShareFolder = me.siteShareFolder(serverName);
                     callback({
                         serverName          : serverName,
-                        shareFolder         : siteShareFolder.folder,
-                        superPowerServer    : siteShareFolder.superPowerServer,
-                        onDemandCallbackHost: siteShareFolder.host,
+                        shareFolder         : me.siteShareFolder(serverName).folder,
+                        superPowerServer    : me.siteShareFolder(serverName).superPowerServer,
+                        onDemandCallbackHost: me.siteShareFolder(serverName).host,
                         dockerCodePath      : me.dockerCodePath(serverName),
                         dockerSettingPath   : me.dockerCodePath(serverName) + '/dockerSetting',
                         dockerDataPath      : me.dockerDataPath(serverName),
