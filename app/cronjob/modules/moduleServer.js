@@ -250,8 +250,6 @@ continuing ... commA.json
                         } else { 
                             let recommend = (!sts.resources.recommend) ? [] : sts.resources.recommend;
                             let item = recommend[Math.floor(Math.random() * recommend.length)];
-                            console.log('---item--3->');
-                            console.log(item);
                             postData = "'" + JSON.stringify({
                                 cmd:'setupServer',
                                 data : paramData,
