@@ -260,7 +260,7 @@ const { eventNames } = require('process');
                 if (err && err.code === 'ENOENT') {
                     let dirn = folderObj.dir + '/' + folderObj.folder + '/';
                     me.readJson(dirn + '_dockerSetting.json',  (setting) => {
-                        let host = (setting.onDemandCallbackHost === 'localhost') ? 'localhost' : (setting.onDemandCallbackHost + ':10000'); 
+                        let host = (setting.onDemandCallbackHost === 'localhost') ? 'localhost' : (setting.onDemandCallbackHost); 
                         let cmd = 'cd ' + dirn;
 
                         fs.writeFile(me.siteCommCronMark, folderObj.folder, () => {
