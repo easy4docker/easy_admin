@@ -14,7 +14,7 @@ const { cpuUsage } = require('process');
         me.runUpload = () => {
             const dirn = req.body.objPath;
             var cmd = 'mkdir -p ' + dirn + ' && echo "' + req.body.gridToken + '" > ' + dirn + '/gridToken.txt';
-            exec(cmd + dirn, () =>{
+            exec(cmd, () =>{
                 const _f = {};
                 for (let i = 0; i < req.files.length; i++) {
                     _f['S_' + i] = ((i)=> {

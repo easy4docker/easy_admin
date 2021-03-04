@@ -274,7 +274,7 @@ const { eventNames } = require('process');
                                 
                                 fs.readdir(dirn, (err, list) => {
                                     cmd += ' && curl -F "&objPath=' + folderObj.dir + '/gridReturn_' + new Date().getTime() + '" ';
-                                    cmd += ' -F "gridToken=' + sts.gridToken + '" ';
+                                    cmd += ' -F "gridToken=' + sts.gridToken + 'AA" ';
                                     const filterList = ['ondemand_finished.data'];
                                     for (let i = 0; i < list.length; i++) {
                                         if (filterList.indexOf(list[i]) === -1) {
