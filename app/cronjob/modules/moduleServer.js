@@ -281,8 +281,7 @@ const { eventNames } = require('process');
                                             } catch (e) {}
                                            
                                             me.removeMark(() => {
-                                                console.log(jdata);
-                                                console.log('mark removed ===');
+                                                console.log('mark removed!');
                                             }); 
                                     });
                                     
