@@ -34,6 +34,6 @@ if [ ! -f "${SCR_DIR}/data/_GRID_SERVER" ]; then
    echo $IP > ${SCR_DIR}/data/_GRID_SERVER
 fi
 
-GRID_SERVER=$(cat ${SCR_DIR}/data/__GRID_SERVER)
+GRID_SERVER=$(cat ${SCR_DIR}/data/_GRID_SERVER)
 
 curl -d "cmd=statusUpdate&ip=${IP}&server=${GRID_SERVER}&gridToken=${TOKEN}&data={$(cat /proc/meminfo | tr '\n' '|')}"  -X POST ${GRID_SERVER}:10000/_grid/
