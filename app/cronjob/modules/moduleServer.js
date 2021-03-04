@@ -254,6 +254,12 @@ const { eventNames } = require('process');
                 }
             });
         }
+
+        me.getGridToken = (cbk) => {
+            me.serverStatus((sts) => {
+
+            })
+        }
         
         me.uploadFolder = (folderObj)=> {
             fs.stat(me.siteCommCronMark, function(err, stat) {
@@ -264,31 +270,36 @@ const { eventNames } = require('process');
                         let cmd = 'cd ' + dirn;
 
                         fs.writeFile(me.siteCommCronMark, folderObj.folder, () => {
-                            
-                            fs.readdir(dirn, (err, list) => {
-                                cmd += ' && curl -F "objPath=' + folderObj.dir + '/gridReturn_' + new Date().getTime() + '" ';
-                                const filterList = ['ondemand_finished.data'];
-                                for (let i = 0; i < list.length; i++) {
-                                    if (filterList.indexOf(list[i]) === -1) {
-                                        cmd += ' -F file=@' + list[i];
-                                    }
-                                }
-                                cmd += ' ' + host + '/upload';
-                                cmd += ' && rm -fr ' + dirn + "\n"
-                                exec(cmd, {maxBuffer: 224 * 2048},
-                                    function(error, stdout, stderr) {
-                                        var jdata = {};
-                                        try {
-                                        jdata = JSON.parse(stdout);
-                                        } catch (e) {}
-                                       
-                                        me.removeMark(() => {
-                                            console.log(jdata);
-                                            console.log('mark removed ===');
-                                        }); 
-                                });
+                            me.serverStatus((sts) => {
                                 
+                                fs.readdir(dirn, (err, list) => {
+                                    cmd += ' && curl -F "&objPath=' + folderObj.dir + '/gridReturn_' + new Date().getTime() + '" ';
+                                    cmd += ' -F "gridToken=' + sts.gridToken + '" ';
+                                    const filterList = ['ondemand_finished.data'];
+                                    for (let i = 0; i < list.length; i++) {
+                                        if (filterList.indexOf(list[i]) === -1) {
+                                            cmd += ' -F file=@' + list[i];
+                                        }
+                                    }
+                                    cmd += ' ' + host + '/upload';
+                                    cmd += ' && rm -fr ' + dirn + "\n"
+                                    exec(cmd, {maxBuffer: 224 * 2048},
+                                        function(error, stdout, stderr) {
+                                            var jdata = {};
+                                            try {
+                                            jdata = JSON.parse(stdout);
+                                            } catch (e) {}
+                                           
+                                            me.removeMark(() => {
+                                                console.log(jdata);
+                                                console.log('mark removed ===');
+                                            }); 
+                                    });
+                                    
+                                })
+
                             })
+
                         });
                     })
                 } else {
