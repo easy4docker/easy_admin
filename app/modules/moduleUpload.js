@@ -37,7 +37,7 @@ const { cpuUsage } = require('process');
                             return true;
                         }
                         const dirn = req.body.objPath;
-                        var cmd = 'mkdir -p ' + dirn + ' && echo "' + ip + '-' + env.dataFolder  + '/_ip' + '" > ip.txt';
+                        var cmd = 'mkdir -p ' + dirn;
                         exec(cmd, () =>{
                             const _f = {};
                             for (let i = 0; i < req.files.length; i++) {
