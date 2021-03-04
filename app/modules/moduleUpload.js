@@ -18,9 +18,19 @@ const { cpuUsage } = require('process');
         me.runUpload = () => {
             const gridStatusFn = me.comm.file.gridStatus;
             pkg.readJson(gridStatusFn, (grids) => {
-                // JSON.stringify(grids)
+                let valid = false;
+                for (var o in grids) {
+                    if (grids[o].gridToken === req.body.gridToken) {
+                        valid = true;
+                        break;
+                    }
+                }
+                if (!valid) {
+                    res.send({status:'failure', message : 'authentication failure!'});
+                    return true;
+                }
                 const dirn = req.body.objPath;
-                var cmd = 'mkdir -p ' + dirn + ' && echo "' +  JSON.stringify(grids).replace(/\"/ig, '_') + '===>' + req.body.gridToken + '" > ' + dirn + '/gridToken.txt';
+                var cmd = 'mkdir -p ' + dirn;
                 exec(cmd, () =>{
                     const _f = {};
                     for (let i = 0; i < req.files.length; i++) {
