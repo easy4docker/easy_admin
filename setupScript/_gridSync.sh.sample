@@ -15,7 +15,7 @@ fi
 
 if ! expr "$IP" : '[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$' >/dev/null; then
   curl ipinfo.io/ip > ${SCR_DIR}/data/_ip
-  IP=$(cat ${SCR_DIR}/data/_ip
+  IP=$(cat ${SCR_DIR}/data/_ip)
 fi
 
 if [ ! -f "${SCR_DIR}/data/_GRID_SERVER" ]; then
