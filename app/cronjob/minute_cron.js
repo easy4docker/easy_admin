@@ -95,7 +95,7 @@ var doUpload = () => {
         mserver.uploadFolder(flist[0]);
       } else {
         const mserver = new MServer(env);
-       // mserver.auditOndemand();
+        mserver.auditOndemand();
       }
     }, 3000);
   });
