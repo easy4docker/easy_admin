@@ -187,7 +187,7 @@ const { eventNames } = require('process');
                     };
                     me.serverStatus((sts)=> {
                         let postData, cmd;
-                        let recommend = (!!sts.resources || !sts.resources.recommend) ? [] : sts.resources.recommend;
+                        let recommend = (!sts.resources || !sts.resources.recommend) ? [] : sts.resources.recommend;
 
                         if (sts.localIp === 'local' || !recommend.length) {
                             postData = "'" + JSON.stringify({
