@@ -1,16 +1,22 @@
 #!/bin/bash
-  
-GRID_SERVER="$1"
 SCR_DIR=$(cd `dirname $0` && pwd)
-
-IP=$(cat ${SCR_DIR}/data/_ip)
-IPA=$(cat ${SCR_DIR}/data/_ipA)
 
 if [ ! -f "${SCR_DIR}/easydocker_KEY/_gridToken" ]; then
     # bash generate random 32 character alphanumeric string (upper and lowercase) and 
     echo $(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1) > ${SCR_DIR}/easydocker_KEY/_gridToken
 fi
 TOKEN=$(cat ${SCR_DIR}/easydocker_KEY/_gridToken)
+
+if [ ! -f "${SCR_DIR}/data/_ip" ]; then
+   curl ipinfo.io/ip > ${SCR_DIR}/data/_ip
+fi
+
+if [ ! -f "${SCR_DIR}/data/_ipA" ]; then
+   curl ipinfo.io/ip > ${SCR_DIR}/data/_ipA
+fi
+
+IP=$(cat ${SCR_DIR}/data/_ip)
+IPA=$(cat ${SCR_DIR}/data/_ipA)
 
 
 if [ "${IPA}" != "${IP}" ] | [ -z "${IP}" ] | [ -z "${IPA}" ]; then
@@ -23,5 +29,11 @@ if [ "${IPA}" != "${IP}" ] | [ -z "${IP}" ] | [ -z "${IPA}" ]; then
         IP=$(cat ${SCR_DIR}/data/_ipA)
     fi
 fi
+
+if [ ! -f "${SCR_DIR}/data/_GRID_SERVER" ]; then
+   echo $IP > ${SCR_DIR}/data/_GRID_SERVER
+fi
+
+GRID_SERVER=$(cat ${SCR_DIR}/data/__GRID_SERVER)
 
 curl -d "cmd=statusUpdate&ip=${IP}&server=${GRID_SERVER}&gridToken=${TOKEN}&data={$(cat /proc/meminfo | tr '\n' '|')}"  -X POST ${GRID_SERVER}:10000/_grid/
