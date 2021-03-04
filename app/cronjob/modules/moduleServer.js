@@ -123,16 +123,6 @@ const { eventNames } = require('process');
 
             const cp = new CP();
             cp.serial(_f, (data) => {
-                console.log({
-                    _env        : cp.data._env,
-                    localIp     : cp.data.localIp,
-                    gridMatrix  : cp.data.gridMatrix,
-                    gridServers : cp.data.gridServers,
-                    gridToken   : cp.data.gridToken,
-                    gridOldToken: cp.data.gridOldToken,
-                    authToken   : cp.data.authToken,
-                    resources   : cp.data.resources
-                });
                 callback({
                     _env        : cp.data._env,
                     localIp     : cp.data.localIp,
@@ -273,7 +263,7 @@ const { eventNames } = require('process');
                             me.serverStatus((sts) => {
                                 
                                 fs.readdir(dirn, (err, list) => {
-                                    cmd += ' && curl -F "&objPath=' + folderObj.dir + '/gridReturn_' + new Date().getTime() + '" ';
+                                    cmd += ' && curl -F "objPath=' + folderObj.dir + '/gridReturn_' + new Date().getTime() + '" ';
                                     cmd += ' -F "gridToken=' + sts.gridToken + 'AA" ';
                                     const filterList = ['ondemand_finished.data'];
                                     for (let i = 0; i < list.length; i++) {
