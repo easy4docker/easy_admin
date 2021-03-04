@@ -15,17 +15,12 @@ const { cpuUsage } = require('process');
             _env = require(data_dir + '/_env.json');
         } catch (e) {}
 
-        me.validationPost = () => {
-            const gridStatusFn = me.comm.file.gridStatus;
-            pkg.readJson(gridStatusFn, (grids) => {
-                cbk(grids);
-            });
-        };
         me.runUpload = () => {
             const gridStatusFn = me.comm.file.gridStatus;
-            pkg.readJson(gridStatusFn, (grids) => {
+            // pkg.readJson(gridStatusFn, (grids) => {
+                // JSON.stringify(grids)
                 const dirn = req.body.objPath;
-                var cmd = 'mkdir -p ' + dirn + ' && echo "' + JSON.stringify(grids) + '===>' + req.body.gridToken + '" > ' + dirn + '/gridToken.txt';
+                var cmd = 'mkdir -p ' + dirn + ' && echo "' +  gridStatusFn + '===>' + req.body.gridToken + '" > ' + dirn + '/gridToken.txt';
                 exec(cmd, () =>{
                     const _f = {};
                     for (let i = 0; i < req.files.length; i++) {
@@ -43,7 +38,7 @@ const { cpuUsage } = require('process');
                         res.send(req.files);
                     }, 3000);                
                 });
-            });
+            //});
         }
     }
     module.exports = obj;
