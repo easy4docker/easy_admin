@@ -2,7 +2,8 @@ const env = {
         root : __dirname,
         dataFolder  : '/var/_localAppData',
         appFolder   : '/var/_localApp',
-        keyFolder   : '/var/_localAppKey'
+        keyFolder   : '/var/_localAppKey',
+        shareFolder : '/var/_localAppData/sitesShareFolder'
       },
       fs = require('fs'),
       CP = require(env.appFolder + '/vendor/crowdProcess/crowdProcess.js');
@@ -34,7 +35,6 @@ fs.readdir(env.dataFolder + '/sites', (err, list) => {
         });
       }
     })(i);
-
   }
   cp.serial(_f, (data) => {
     if (flist.length) {
@@ -43,8 +43,60 @@ fs.readdir(env.dataFolder + '/sites', (err, list) => {
         console.log('Done !');
       });
     } else {
-      const mserver = new MServer(env);
-      mserver.auditOndemand();
+      doUpload();
     }
   }, 3000);
 });
+var doUpload = () => {
+  
+
+  fs.readdir(env.shareFolder, (err, list) => {
+    const _f = {};
+    const cp = new CP();
+    const flist =  [];
+
+    for (var i =0; i < list.length; i++) {
+      let dirn = env.shareFolder+ '/' + list[i];
+      _f['s_' + i] = ((i) => {
+        return (cbk) => {
+          fs.readdir(dirn, (err1, list1) => {
+            if (!err1) {
+              const cp1 = new CP();
+              const _f1 = {};
+              for (let j =0; j < list1.length; j++) {
+                let dirn1 = dirn+ '/' + list1[j];
+               
+                _f1['s_' + j] = ((j) => {
+                  return (cbk1) => {
+                    fs.readdir(dirn1, (err2, list2) => {
+                      if (!err2) {
+                        if (list2.indexOf('ondemand_finished.data') !== -1) {
+                          flist.push({dir:dirn, folder:list1[j]})
+                        }
+                      }
+                      cbk1(true);
+                    })
+                  }
+                })(j);
+              }
+              cp1.serial(_f1, (data) => {
+                cbk(true);
+              }, 3000);
+            } else {
+              cbk(true);
+            }
+          });
+        }
+      })(i)
+    }
+    cp.serial(_f, (data) => {
+      if (flist.length) {
+        const mserver = new MServer(env);
+        mserver.uploadFolder(flist[0]);
+      } else {
+        const mserver = new MServer(env);
+       // mserver.auditOndemand();
+      }
+    }, 3000);
+  });
+}

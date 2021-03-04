@@ -255,6 +255,48 @@ const { eventNames } = require('process');
             });
         }
         
+        me.uploadFolder = (folderObj)=> {
+            fs.stat(me.siteCommCronMark, function(err, stat) {
+                if (err && err.code === 'ENOENT') {
+                    let dirn = folderObj.dir + '/' + folderObj.folder + '/';
+                    me.readJson(dirn + '_dockerSetting.json',  (setting) => {
+                        let host = (setting.onDemandCallbackHost === 'localhost') ? 'localhost' : (setting.onDemandCallbackHost + ':10000'); 
+                        let cmd = 'cd ' + dirn;
+
+                        fs.writeFile(me.siteCommCronMark, folderObj.folder, () => {
+                            
+                            fs.readdir(dirn, (err, list) => {
+                                cmd += ' && curl -F "objPath=' + folderObj.dir + '/gridReturn_' + new Date().getTime() + '" ';
+                                const filterList = ['ondemand_finished.data'];
+                                for (let i = 0; i < list.length; i++) {
+                                    if (filterList.indexOf(list[i]) === -1) {
+                                        cmd += ' -F file=@' + list[i];
+                                    }
+                                }
+                                cmd += ' ' + host + '/upload';
+                                cmd += ' && rm -fr ' + dirn + "\n"
+                                exec(cmd, {maxBuffer: 224 * 2048},
+                                    function(error, stdout, stderr) {
+                                        var jdata = {};
+                                        try {
+                                        jdata = JSON.parse(stdout);
+                                        } catch (e) {}
+                                       
+                                        me.removeMark(() => {
+                                            console.log(jdata);
+                                            console.log('mark removed ===');
+                                        }); 
+                                });
+                                
+                            })
+                        });
+                    })
+                } else {
+                    // console.log('skipped .me.');
+                }
+            });
+
+        }
         me.readJson = (path, cb) => {
             fs.readFile(path, 'utf-8', (err, data) => {
                 if (err) {
