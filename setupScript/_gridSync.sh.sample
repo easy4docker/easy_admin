@@ -7,27 +7,15 @@ if [ ! -f "${SCR_DIR}/easydocker_KEY/_gridToken" ]; then
 fi
 TOKEN=$(cat ${SCR_DIR}/easydocker_KEY/_gridToken)
 
-if [ ! -f "${SCR_DIR}/data/_ip" ]; then
-   curl ipinfo.io/ip > ${SCR_DIR}/data/_ip
-fi
-
-if [ ! -f "${SCR_DIR}/data/_ipA" ]; then
-   curl ipinfo.io/ip > ${SCR_DIR}/data/_ipA
-fi
-
 IP=$(cat ${SCR_DIR}/data/_ip)
-IPA=$(cat ${SCR_DIR}/data/_ipA)
+if ! expr "$IP" : '[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$' >/dev/null; then
+  curl ifconfig.me > ${SCR_DIR}/data/_ip
+  IP=$(cat ${SCR_DIR}/data/_ip)
+fi
 
-
-if [ "${IPA}" != "${IP}" ] | [ -z "${IP}" ] | [ -z "${IPA}" ]; then
-    echo "ASK OUTSIDE" 
-    curl ipinfo.io/ip > ${SCR_DIR}/data/_ip
-    curl ifconfig.me > ${SCR_DIR}/data/_ipA
-    if [ -z "${IPA}" ]; then
-        IP=$(cat ${SCR_DIR}/data/_ip)
-    else
-        IP=$(cat ${SCR_DIR}/data/_ipA)
-    fi
+if ! expr "$IP" : '[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$' >/dev/null; then
+  curl ipinfo.io/ip > ${SCR_DIR}/data/_ip
+  IP=$(cat ${SCR_DIR}/data/_ip
 fi
 
 if [ ! -f "${SCR_DIR}/data/_GRID_SERVER" ]; then
