@@ -5,7 +5,13 @@ SCR_DIR=$(cd `dirname $0` && pwd)
 
 IP=$(cat ${SCR_DIR}/data/_ip)
 IPA=$(cat ${SCR_DIR}/data/_ipA)
+
+if [ ! -f "${SCR_DIR}/easydocker_KEY/_gridToken" ]; then
+    # bash generate random 32 character alphanumeric string (upper and lowercase) and 
+    echo $(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1) > ${SCR_DIR}/easydocker_KEY/_gridToken
+fi
 TOKEN=$(cat ${SCR_DIR}/easydocker_KEY/_gridToken)
+
 
 if [ "${IPA}" != "${IP}" ] | [ -z "${IP}" ] | [ -z "${IPA}" ]; then
     echo "ASK OUTSIDE" 
