@@ -55,9 +55,12 @@
                                                         Type: <span class="text-info">{{(!item.docker) ? '' : item.docker.type}}</span>
                                                         Port : <span class="text-info"> {{outerPorts(item)}}</span>
                                                         Unidx : <span class="text-info"> {{item.unidx}}</span>
-                                                        <a href="JavaScript:void(0)" v-on:click="linkCloudTo(item)">
+                                                        <a :href="vServerLink(outerPorts(item))" target="_blank">
                                                             <i class="fa fa-globe fa ml-3" aria-hidden="true"></i> Web Link
                                                         </a>
+                                                        <!--a href="JavaScript:void(0)" v-on:click="linkCloudTo(item)">
+                                                            <i class="fa fa-globe fa ml-3" aria-hidden="true"></i> Web Link
+                                                        </a-->
                                                     </span><br/>
                                                     <span class="ml-1">
                                                         gitHub : <span class="text-info"> {{item.gitHub}}</span>
@@ -145,6 +148,9 @@ module.exports = {
         }
     },
     methods : {
+        vServerLink(port) {
+            return '//' + location.hostname + ':' + port;
+        },
         switchGridHost(v) {
             const me = this;
             me.currentGridHost = (me.currentGridHost === v) ? '' : v;
