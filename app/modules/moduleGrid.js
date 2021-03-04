@@ -286,6 +286,14 @@
                         
                         cbk(ret);
                     }
+                    _f['removeOvertime'] = (cbk) => {
+                        for (o in grids) {
+                            if (new Date().getTime() - grids[o].tm > 300000) {
+                                delete grids[o];
+                            }
+                        }
+                        cbk(true);
+                    }
                     _f['saveGridStatus'] = (cbk) => {
                         grids[data.ip] = {tm: new Date().getTime(), gridToken: CP.data.newToken, server: data.server, tag: data.tag,
                         mem : CP.data.memStatus};
