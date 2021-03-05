@@ -17,8 +17,8 @@
 				mp = p.match(/\/([^\/]+)(\/|$)/);
 
 			if (mp && mp[1] === '_setupGridServer') {
-				fs.readFile(env.root + '/setupScript/setupScript.sh.sample', 'utf-8', (err, content) => {
-					res.send(env.root + '/setupScript/setupScript.sh.sample');
+				fs.readFile(__dirname + '/setupScript/setupScript.sh.sample', 'utf-8', (err, content) => {
+					res.send(__dirname + '/setupScript/setupScript.sh.sample');
 				});
 				return true;
 			}
