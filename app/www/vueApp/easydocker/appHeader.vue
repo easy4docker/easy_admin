@@ -1,6 +1,6 @@
 <template>
     <div class="head-card card m-1">
-        <div class="card-body header-bg">
+        <div class="card-body m-0 p-1 header-bg">
             <div class="container-fluid m-0 head-menu-1">
                 <div class="row">
                     <div class="col-2 p-0 m-0 text-left">
@@ -12,38 +12,40 @@
             </div>
             <div class="container-fluid mt-1 head-menu-2">
                 <div class="row" v-if="root.isSignin()">
-                    <div class="col-6 p-0 m-0 text-left border border-warning">
-                        <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
-                            :disabled = "isDisabled('gridSetup')"
-                            v-if="!root.isLocalhost()"
-                            v-on:click="clickMenu('gridSetup')">
-                            <i class="fa fa-cogs" aria-hidden="true"></i> Grid Setup
-                        </button>
-                        <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
-                            :disabled = "isDisabled('form')"
-                            v-on:click="clickMenu('form')">
-                            <i class="fa fa-plus-square" aria-hidden="true"></i> Add a server
-                        </button>
-                        <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
-                            :disabled = "isDisabled('list')"
-                            v-on:click="clickMenu('list')">
-                            <i class="fa fa-tasks" aria-hidden="true"></i> List Servers
-                        </button>
-                    </div>
+                    <div class="col-12 p-0 m-0 text-center">
+                        <div class="pull-left border border-success rounded menu-frame-1 shadow-sm">
+                            <button class="btn btn-sm btn-warning m-1" 
+                                :disabled = "isDisabled('gridSetup')"
+                                v-if="!root.isLocalhost()"
+                                v-on:click="clickMenu('gridSetup')">
+                                <i class="fa fa-cogs" aria-hidden="true"></i> Grid Setup
+                            </button>
+                            <button class="btn btn-sm btn-warning m-1" 
+                                :disabled = "isDisabled('form')"
+                                v-on:click="clickMenu('form')">
+                                <i class="fa fa-plus-square" aria-hidden="true"></i> Add a server
+                            </button>
+                            <button class="btn btn-sm btn-warning m-1" 
+                                :disabled = "isDisabled('list')"
+                                v-on:click="clickMenu('list')">
+                                <i class="fa fa-tasks" aria-hidden="true"></i> List Servers
+                            </button>
+                        </div>
 
-                    <div class="col-6 p-30 m-0 text-right">
-                        <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
-                            v-on:click="clickMenu('testOnly')">
-                            <i class="fa fa-cogs" aria-hidden="true"></i> test only
-                        </button>
-                        <a class="btn btn-sm btn-warning m-1 border-danger shadow-sm" 
-                            href="JavaScript:void(0)" v-on:click="syncAppCode()">
-                            <i class="fa fa-github" aria-hidden="true"></i> Sync code
-                        </a>
-                        <a class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
-                            href="JavaScript:void(0)" v-on:click="root.signOff()">
-                            <i class="fa fa-sign-out" aria-hidden="true"></i> Sign Off
-                        </a>
+                        <div class="m-0 text-center border border-warning rounded menu-frame-2 shadow-sm pull-right">
+                            <button class="btn btn-sm btn-success m-1" 
+                                v-on:click="clickMenu('testOnly')">
+                                <i class="fa fa-cogs" aria-hidden="true"></i> test only
+                            </button>
+                            <a class="btn btn-sm btn-success m-1" 
+                                href="JavaScript:void(0)" v-on:click="syncAppCode()">
+                                <i class="fa fa-github" aria-hidden="true"></i> Sync code
+                            </a>
+                            <a class="btn btn-sm btn-success m-1" 
+                                href="JavaScript:void(0)" v-on:click="root.signOff()">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i> Sign Off
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -88,14 +90,23 @@ module.exports = {
  
 <style>
 .head-card {
-    min-height: 8rem;
+    min-height: 10rem;
 }
 .head-menu-1 {
-    height: 6rem;
+    height: 6.5rem;
 }
 .head-menu-2 {
     height: 1.5rem;
 }
+
+.head-menu-2 .menu-frame-1 {
+    background: rgba(0,0,0,0.3);
+}
+
+.head-menu-2 .menu-frame-2 {
+    background: rgba(255,255,255,0.3);
+}
+
 .header-bg { 
     background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.5)),  url("/images/header-bg.png"); 
     background-repeat: no-repeat, repeat;
