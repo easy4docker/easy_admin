@@ -6,7 +6,8 @@
                     <div class="col-2 p-0 m-0 text-left">
                     </div>
                     <div class="col-8 p-2 text-center">
-                        <h1 class="header-title m-3">EasyDocker Admin <span class="version">(Version &alpha;)</span></h1>
+                        <h1 class="header-title m-3">EasyDocker Admin 
+                            <span class="version">(Version &alpha;)</span></h1>
                     </div>
                     <div class="col-2 p-0 m-0 text-right text-warning"></div>
                 </div>
@@ -122,6 +123,6 @@ module.exports = {
        1px 1px 0 #000;
 }
 .header-title .version {
-    font-size: 1.2rem
+    font-size: 1.5rem
 }
 </style>
