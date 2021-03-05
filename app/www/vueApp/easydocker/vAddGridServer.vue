@@ -14,7 +14,7 @@
             <div class="m-3">
                 <h3>Step 1</h3>
                 Recommended cloud services:<br/>
-                1 - DigitalOcean <a href="" target="_blank">https://www.digitalocean.com</a><br/>
+                1 - DigitalOcean <a href="https://www.digitalocean.com" target="_blank">https://www.digitalocean.com</a><br/>
                 2 - Aws <a href="https://aws.amazon.com" target="_blank">https://aws.amazon.com</a><br/>
                 3 - Azure <a href="https://azure.microsoft.com" target="_blank">https://azure.microsoft.com</a>
                 <hr/>
@@ -26,6 +26,8 @@
                 {{/*root.gridMatrix*/}}
                 <hr/>
                 <h3>Step 3</h3>
+                1 - check setup http://{ip}:10000<br/>
+                2 - check grid host ip list
             </div>
         </div>
     </div>
