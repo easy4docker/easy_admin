@@ -15,7 +15,7 @@
                 <div class="local-grid-error">
                 # mkdir  /var/easydocker<br/>
                 # cd /var/easydocker<br/>
-                # culr http://grid.shusiou.win:10000/_setupGridServer -o setup.sh<br/>
+                # culr http://{{setupUrl()}}:10000/_setupGridServer -o setup.sh<br/>
                 # sh setup.sh<hr/>
                 {{root.gridMatrix}}
                 </div>
@@ -39,7 +39,9 @@ module.exports = {
         var me = this;
     },
     methods : {
-
+        setupUrl() {
+            return location.hostname
+        }
     }
 }
 </script>
