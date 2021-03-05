@@ -17,8 +17,8 @@
 				mp = p.match(/\/([^\/]+)(\/|$)/);
 
 			if (mp && mp[1] === '_setupGridServer') {
-				fs.readFile(env.root + '/shellScriptSample/setup.sh.sample', 'utf-8', (err, content) => {
-					res.send(content);
+				fs.readFile(env.dataFolder  + '/_ip', 'utf-8', (err, ipData) => {
+					res.render(env.root  + '/views/shellScriptSample//setup.sh.sample', {gridIp:ipData.replace(/(\n|\r)/ig, '')});
 				});
 				return true;
 			}

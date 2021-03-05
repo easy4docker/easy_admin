@@ -49,6 +49,8 @@ mkdir -p ${SCR_DIR}/data/commCron
 mkdir -p ${SCR_DIR}/data/tmp
 mkdir -p ${SCR_DIR}/easydocker_KEY
 
+echo "<%gridIp%>" > ${SCR_DIR}/data/_GRID_SERVER
+
 git clone https://github.com/easy4docker/easy_admin.git ${SCR_DIR}/admin
 
 if [ $OSENV = "Linux" ]; then
