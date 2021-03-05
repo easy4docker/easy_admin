@@ -10,6 +10,7 @@
         "/vueApp/easydocker/appBody.vue",
         "/vueApp/easydocker/vServerList.vue",
         "/vueApp/easydocker/vFormServer.vue",
+        "/vueApp/easydocker/vAddGridServer.vue",
         "/vueApp/easydocker/popUpModals/addGridMonitor.vue"
     ],
     "JS" : [

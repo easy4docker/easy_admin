@@ -5,7 +5,7 @@
                 <span v-if="root.isSignin()">
                     <v-form-server v-if="root.matrix('form')"></v-form-server>
                     <v-server-list v-if="root.matrix('list')"></v-server-list>
-                    <v-form-grid v-if="root.matrix('gridSetup')"></v-form-grid>
+                    <v-add-grid-server v-if="root.matrix('gridSetup')"></v-add-grid-server>
                     <test-only v-if="root.matrix('testOnly')"></test-only>
                 </span>
             </div>
@@ -32,7 +32,8 @@ module.exports = {
         }, 
         TPL :{
             'vServerList' : '/vueApp/easydocker/vServerList.vue',
-            'vFormServer' : '/vueApp/easydocker/vFormServer.vue'
+            'vFormServer' : '/vueApp/easydocker/vFormServer.vue',
+            'vAddGridServer' : '/vueApp/easydocker/vAddGridServer.vue'
         }
     })
 }
