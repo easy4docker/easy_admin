@@ -113,7 +113,7 @@ module.exports = {
 }
 
 .header-title {
-    font-family: "RocknRoll One";
+    font-family: "RocknRoll One", Arial, Verdana, Serif;
    -webkit-text-stroke: 1px black;
    color: white;
    text-shadow:
@@ -124,7 +124,7 @@ module.exports = {
        1px 1px 0 #000;
 }
 .header-title .version {
-    // font-family: "RocknRoll One, Arial, Helvetica, sans-serif;";
+    font-family: Arial, Verdana, Serif;
     font-size: 1.5rem
 }
 </style>
