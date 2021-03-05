@@ -14,10 +14,10 @@
             <div class="p-2 alert-secondary grid-list border rounded">
                 <div>
                 <h3>Step 1</h3>
-                Recommendation:
+                Recommended cloud services:<br/>
                 1 - DigitalOcean https://www.digitalocean.com/<br/>
-                2 - DigitalOcean https://www.digitalocean.com/<br/>
-                3 - DigitalOcean https://www.digitalocean.com/
+                2 - Aws https://aws.amazon.com/<br/>
+                3 - Azure https://azure.microsoft.com/
                 <hr/>
                 <h3>Step 2</h3>
                 # mkdir  /var/easydocker<br/>
