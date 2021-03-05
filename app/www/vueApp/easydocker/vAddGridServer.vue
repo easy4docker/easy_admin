@@ -6,7 +6,7 @@
                 <div class="container-fluid p-2">
                     <div class="row">
                         <div class="col-12 p-2">
-                           <label><h3>Join a grid</h3></label>
+                           <label><h3>Add a grid member server</h3></label>
                         </div>
                     </div>
                     <div class="row">
