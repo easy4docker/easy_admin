@@ -71,14 +71,6 @@ const { eventNames } = require('process');
                 
             }
 
-            _f['gridServers'] = (cbk)=> {
-                var fn = env.keyFolder + '/_gridServers.json';
-                me.readJson(fn, (data) => {
-                    cbk(data)
-                });
-                
-            }
-
             _f['gridToken'] = (cbk)=> {
                 var fn = env.keyFolder + '/_gridToken';
                 fs.readFile(fn, 'utf-8', (err, data) => {
@@ -127,7 +119,6 @@ const { eventNames } = require('process');
                     _env        : cp.data._env,
                     localIp     : cp.data.localIp,
                     gridMatrix  : cp.data.gridMatrix,
-                    gridServers : cp.data.gridServers,
                     gridToken   : cp.data.gridToken,
                     gridOldToken: cp.data.gridOldToken,
                     authToken   : cp.data.authToken,
