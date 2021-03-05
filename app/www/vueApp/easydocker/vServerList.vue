@@ -135,11 +135,11 @@ module.exports = {
         me.serverTypeFilter = Object.keys(me.serverTypes);
         setTimeout(
             function() {
-                    for (let k in me.root.gridMatrix) {
-                        me.root.gridSvrs[k] = true;
-                    }
+                for (let k in me.root.gridMatrix) {
+                    me.root.gridSvrs[k] = true;
+                }
                 me.getServerList();
-            }, 500
+            }, 120
         );
     },
     watch: {
