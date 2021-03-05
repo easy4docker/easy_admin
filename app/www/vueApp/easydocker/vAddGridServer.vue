@@ -12,19 +12,19 @@
                  </div>
             </div>
             <div class="p-2 alert-secondary grid-list border rounded">
-                <div>
-                <h3>Step 1</h3>
-                Recommended cloud services:<br/>
-                1 - DigitalOcean <a href="" target="_blank">https://www.digitalocean.com</a><br/>
-                2 - Aws <a href="https://aws.amazon.com" target="_blank">https://aws.amazon.com</a><br/>
-                3 - Azure <a href="https://azure.microsoft.com" target="_blank">https://azure.microsoft.com</a>
-                <hr/>
-                <h3>Step 2</h3>
-                # mkdir  /var/easydocker<br/>
-                # cd /var/easydocker<br/>
-                # culr {{setupUrl()}}/_setupGridServer -o setup.sh<br/>
-                # sh setup.sh<hr/>
-                {{/*root.gridMatrix*/}}
+                <div class="m-3">
+                    <h3>Step 1</h3>
+                    Recommended cloud services:<br/>
+                    1 - DigitalOcean <a href="" target="_blank">https://www.digitalocean.com</a><br/>
+                    2 - Aws <a href="https://aws.amazon.com" target="_blank">https://aws.amazon.com</a><br/>
+                    3 - Azure <a href="https://azure.microsoft.com" target="_blank">https://azure.microsoft.com</a>
+                    <hr/>
+                    <h3>Step 2</h3>
+                    # mkdir  /var/easydocker<br/>
+                    # cd /var/easydocker<br/>
+                    # culr {{setupUrl()}}/_setupGridServer -o setup.sh<br/>
+                    # sh setup.sh<hr/>
+                    {{/*root.gridMatrix*/}}
                 </div>
             </div>
         </form>
