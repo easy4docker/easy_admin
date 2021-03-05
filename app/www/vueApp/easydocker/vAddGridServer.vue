@@ -17,7 +17,7 @@
                 # cd /var/easydocker<br/>
                 # culr {{setupUrl()}}/_setupGridServer -o setup.sh<br/>
                 # sh setup.sh<hr/>
-                {{root.gridMatrix}}
+                {{/*root.gridMatrix*/}}
                 </div>
             </div>
         </form>
