@@ -12,7 +12,10 @@
                  </div>
             </div>
             <div class="p-2 alert-secondary grid-list border rounded">
-                <div class="local-grid-error">
+                <div>
+                <h3>Step 1</h3>
+                <hr/>
+                <h3>Step 2</h3>
                 # mkdir  /var/easydocker<br/>
                 # cd /var/easydocker<br/>
                 # culr {{setupUrl()}}/_setupGridServer -o setup.sh<br/>
