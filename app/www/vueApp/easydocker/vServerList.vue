@@ -139,7 +139,7 @@ module.exports = {
                         me.root.gridSvrs[k] = true;
                     }
                 me.getServerList();
-            }, 50
+            }, 500
         );
     },
     watch: {
