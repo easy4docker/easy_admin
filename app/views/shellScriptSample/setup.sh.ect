@@ -71,8 +71,8 @@ if [ $OSENV = "Linux" ]; then
   cp -f /tmp/crontab_easydocker  /etc/crontab
   sed '/\echo _EASY_GRID_SYNC/d' /etc/crontab  > /tmp/crontab_easydocker
   cp -f /tmp/crontab_easydocker  /etc/crontab
-  echo "@reboot root (echo _EASY_DOCKER && cd  ${SCR_DIR} && sh _start.sh)\n" >> /etc/crontab
-  echo "*/2 * * * *  root (echo _EASY_GRID_SYNC && cd ${SCR_DIR} && sh _gridSync.sh)\n" >> /etc/crontab
+  echo "@reboot root (echo _EASY_DOCKER && cd  ${SCR_DIR} && sh _start.sh)" >> /etc/crontab
+  echo "*/2 * * * *  root (echo _EASY_GRID_SYNC && cd ${SCR_DIR} && sh _gridSync.sh)" >> /etc/crontab
   cp ${SCR_DIR}/admin/setupScript/_gridSync.sh.sample  ${SCR_DIR}/_gridSync.sh
 fi
 
