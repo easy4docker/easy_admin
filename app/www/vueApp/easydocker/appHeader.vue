@@ -16,7 +16,7 @@
                 <div class="row" v-if="root.isSignin()">
                     <div class="col-12 p-0 m-0 text-center">
                         <div class="pull-left border border-light rounded menu-frame shadow-sm">
-                            <button class="btn btn-outline-lightg m-1" 
+                            <button class="btn btn-outline-light m-1" 
                                 :disabled = "isDisabled('gridSetup')"
                                 v-if="!root.isLocalhost()"
                                 v-on:click="clickMenu('gridSetup')">
