@@ -5,8 +5,8 @@
                 <div class="row">
                     <div class="col-2 p-0 m-0 text-left">
                     </div>
-                    <div class="col-8 p-2 text-center">
-                        <h1 class="header-title m-3">EasyDocker Admin Tool <span class="version">(Version &alpha;)</span></h1>
+                    <div class="col-8 p-3 text-center">
+                        <h2 class="header-title m-3">EasyDocker Admin Tool <span class="version">(Version &alpha;)</span></h2>
                     </div>
                     <div class="col-2 p-0 m-0 text-right text-warning"></div>
                 </div>
@@ -91,10 +91,10 @@ module.exports = {
  
 <style>
 .head-card {
-    min-height: 10rem;
+    min-height: 9.5rem;
 }
 .head-menu-1 {
-    height: 6.5rem;
+    height: 5.8rem;
 }
 .head-menu-2 {
     height: 1.5rem;
