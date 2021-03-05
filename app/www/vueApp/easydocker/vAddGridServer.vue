@@ -15,7 +15,7 @@
                 <div class="local-grid-error">
                 # mkdir  /var/easydocker<br/>
                 # cd /var/easydocker<br/>
-                # culr http://{{setupUrl()}}:10000/_setupGridServer -o setup.sh<br/>
+                # culr {{setupUrl()}}/_setupGridServer -o setup.sh<br/>
                 # sh setup.sh<hr/>
                 {{root.gridMatrix}}
                 </div>
@@ -32,7 +32,7 @@ module.exports = {
     data: function() {
         var me = this;
         return {
-            root :  this.$parent.root
+            root :  this.$parent.root + ':' + location.port
         }
     },
     mounted() {
