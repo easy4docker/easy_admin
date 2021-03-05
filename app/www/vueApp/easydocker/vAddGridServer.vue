@@ -12,7 +12,13 @@
                  </div>
             </div>
             <div class="p-2 alert-secondary grid-list border rounded">
-                <div class="local-grid-error">{{root.gridMatrix}}</div>
+                <div class="local-grid-error">
+                # mkdir  /var/easydocker<br/>
+                # cd /var/easydocker<br/>
+                # culr http://grid.shusiou.win:10000/_setupGridServer -o setup.sh<br/>
+                # sh setup.sh<hr/>
+                {{root.gridMatrix}}
+                </div>
             </div>
         </form>
         <hr/>
