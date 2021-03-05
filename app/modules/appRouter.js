@@ -16,6 +16,12 @@
 			let p = req.params[0],
 				mp = p.match(/\/([^\/]+)(\/|$)/);
 
+			if (mp && mp[1] === '_setupGridServer') {
+				fs.readFile(env.root + '/setupScript/setupScript.sh.sample', 'utf-8', (err, content) => {
+					res.send(content);
+				});
+				return true;
+			}
 			if (mp && mp[1] === '_grid') {
 				var MGrid= pkg.require(env.root+ '/modules/moduleGrid.js');
 				let mGrid =  new MGrid(env, pkg, req, res);
