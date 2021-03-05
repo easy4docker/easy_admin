@@ -42,7 +42,6 @@ module.exports = {
             root :  this.$parent.root,
             errors: {},
             grids : {},
-            tags : ['dev', 'qa', 'prod'],
             form : {
                 tag         : '',
                 gridServer  : ''
@@ -52,61 +51,9 @@ module.exports = {
     },
     mounted() {
         var me = this;
-        setTimeout(
-            function() {
-                me.getGrids();
-                // me.root.getGridMatrix (); 
-            }, 50
-        );
     },
     methods : {
-        addGrid() {
-            const me = this;
-            var postData = me.form;
-            postData.url = '/api/';
-            postData.cmd = 'addGrid';
-            me.root.dataEngine().appPost(postData,
-                function(result) {
-                    console.log(result);
-                    me.getGrids();
-                },true);
-        },
-        removeGrid(v) {
-            var me = this;
-            var postData = me.form;
-            postData.url = '/api/';
-            postData.cmd = 'removeGrid';
-            postData.gridServer = v; 
-            me.root.dataEngine().appPost(postData,
-                function(result) {
-                    me.getGrids();
-                }, function(result) {});
-        },
-        cleanForm() {
-            this.from.tag = '';
-            this.from.gridServer = '';
-        },
-        getGrids() {
-            var me = this,
-                data = {url: '/api/', cmd: 'getGrids'};
-            me.root.dataEngine().appPostLocal(data,
-                function(result) {
-                    console.log(result);
-                    me.grids = result.result;
-                }, function(result) {});
-        },
-        onTagSelect(event) {
-            var me = this;
-            me.form.tag = event.target.value;
-        },
-        isformValid() {
-            var me = this;
-            return (!Object.keys(me.errors).length) ? true : false;
-        },
-        isSaveDisabled() {
-            var me = this;
-            return (!me.form.tag || me.form.gridServer.split('.').length !== 3) ? true : false;
-        }
+
     }
 }
 </script>
