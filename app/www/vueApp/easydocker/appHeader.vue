@@ -91,10 +91,10 @@ module.exports = {
  
 <style>
 .head-card {
-    min-height: 9.8rem;
+    min-height: 10.8rem;
 }
 .head-menu-1 {
-    height: 5.8rem;
+    height: 7rem;
 }
 .head-menu-2 {
     height: 1.5rem;
