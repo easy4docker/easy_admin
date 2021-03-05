@@ -22,7 +22,7 @@
                 # mkdir  /var/easydocker<br/>
                 # cd /var/easydocker<br/>
                 # culr {{setupUrl()}}/_setupGridServer -o setup.sh<br/>
-                # sh setup.sh<hr/>
+                # sh setup.sh<br/>
                 {{/*root.gridMatrix*/}}
                 <hr/>
                 <h3>Step 3</h3>
