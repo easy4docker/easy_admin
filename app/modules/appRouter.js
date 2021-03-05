@@ -18,7 +18,8 @@
 
 			if (mp && mp[1] === '_setupGridServer') {
 				fs.readFile(env.dataFolder  + '/_ip', 'utf-8', (err, ipData) => {
-					res.render(env.root  + '/views/shellScriptSample/setup.sh.ect', {gridIp:ipData.replace(/(\n|\r)/ig, '')});
+					res.send(env.root  + '/views/shellScriptSample/setup.sh.ect', {gridIp:1234});
+					// res.render(env.root  + '/views/shellScriptSample/setup.sh.ect', {gridIp:ipData.replace(/(\n|\r)/ig, '')});
 				});
 				return true;
 			}
