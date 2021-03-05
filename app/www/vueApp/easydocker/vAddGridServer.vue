@@ -9,36 +9,6 @@
                            <label><h3>Add a grid member server</h3></label>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-2 p-2">
-                           <label class="ml-3">Grid Server</label>
-                        </div>
-                        <div class="col-9 p-2">
-                            <input type="text" class="form-control" v-model="form.gridServer"  placeholder="xxx.xxx.xxx">
-                        </div>
-                        <div class="col-1 p-2">
-                            
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-2 p-2">
-                            <label class="ml-3">Grid Tag</label>
-                        </div>
-                        <div class="col-7 p-2">
-                            <select class="form-control" :required="true" @change="onTagSelect($event)" v-model="form.tag">
-                                <option 
-                                v-for="tag in tags" 
-                                v-bind:value="tag"
-                                :selected="tag ==  form.tag"
-                                >{{ tag }}</option>
-                            </select>  
-                        </div>
-                        <div class="col-2 p-2 pl-3">
-                            <button type="button" class="btn btn-info m-0" v-on:click="addGrid()" :disabled = "isSaveDisabled()">
-                                <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
-                            </button>
-                        </div>
-                     </div>
                  </div>
             </div>
             <div class="p-2 alert-secondary grid-list border rounded">
