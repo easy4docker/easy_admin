@@ -123,7 +123,7 @@
             });
         }
 
-        me.dataGrids = (cbk) => {
+        me.dataGridsBK = (cbk) => {
             pkg.readJson(gridServerFn, (grids) => {
                 cbk(grids);
             });
@@ -134,7 +134,7 @@
             });
         }
         /* --- POST function ---->> */
-        me.removeGrid = (callback) => {
+        me.removeGridBK = (callback) => {
             var data = req.body;
             
             me.dataGrids(
@@ -163,7 +163,7 @@
             );
         }
 
-        me.addGrid = (callback) => {
+        me.addGridBK = (callback) => {
             var data = req.body;
             me.dataGrids(
                 (gridServer) => {
@@ -205,7 +205,7 @@
             })
         }
 
-        me.getGrids = (cbk) => {
+        me.getGridsBK = (cbk) => {
             me.dataGrids(
                 (gridServer) => {
                     cbk({status: "success", result:gridServer});
