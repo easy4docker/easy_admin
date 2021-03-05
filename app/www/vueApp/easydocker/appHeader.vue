@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-2 p-0 m-0 text-left">
                     </div>
-                    <div class="col-8 p-2 text-center">
+                    <div class="col-8 p-3 text-center">
                         <h1 class="header-title m-3">EasyDocker Admin 
                             <span class="version">(Version &alpha;)</span></h1>
                     </div>
@@ -113,6 +113,7 @@ module.exports = {
 }
 
 .header-title {
+    font-family: "RocknRoll One";
    -webkit-text-stroke: 1px black;
    color: white;
    text-shadow:
@@ -123,6 +124,7 @@ module.exports = {
        1px 1px 0 #000;
 }
 .header-title .version {
+    font-family: default;
     font-size: 1.5rem
 }
 </style>
