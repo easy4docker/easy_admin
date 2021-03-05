@@ -42,15 +42,21 @@ module.exports = {
   
             gridAdminServer : '',
             triggerSpinner : false,
-            module : 'list',
+            module : '',
             menu   : '',
             token : '',
             easydockerFP : '',
             localEnv : {}
         }
+    },    
+    watch : {
+        module :  function (newValue, oldValue) {
+            history.pushState('', '', '/app/' + newValue);
+        } 
     },
     mounted () {
         var me = this;
+        me.module = (!/^\/app\//.test(location.pathname)) ? '' : (location.pathname.replace(/\/app\//, ''));
         setTimeout(function() {
             me.easydockerFP = localStorage.getItem('easydockerFP');
             me.getGridMatrix();

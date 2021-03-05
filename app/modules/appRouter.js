@@ -49,6 +49,11 @@
 				api.call('get', false);
 				return true
 			}
+			if (mp && mp[1] === 'app') {
+				var fn = env.root + '/www/index.html';
+				res.sendFile(fn);
+				return true
+			}
 
 			if (p == '/') {
 				var fn = env.root + '/www/index.html';

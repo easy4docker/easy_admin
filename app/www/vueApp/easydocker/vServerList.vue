@@ -138,7 +138,7 @@ module.exports = {
                     for (let k in me.root.gridMatrix) {
                         me.root.gridSvrs[k] = true;
                     }
-                me.getServerList()
+                me.getServerList();
             }, 50
         );
     },
