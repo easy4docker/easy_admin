@@ -39,14 +39,7 @@ module.exports = {
     data: function() {
         var me = this;
         return {
-            root :  this.$parent.root,
-            errors: {},
-            grids : {},
-            form : {
-                tag         : '',
-                gridServer  : ''
-            },
-            gridMatrix : {}
+            root :  this.$parent.root
         }
     },
     mounted() {
@@ -59,38 +52,4 @@ module.exports = {
 </script>
  
 <style>
-.noFormImage {
-    min-width: 100%;
-    min-height :512px;
-    background-image: url("/imgs/icon1.png");
-    background-color: transparent;
-    background-size: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-.dropdown-pick-docker {
-    height:20em;
-    z-index: 3000;
-    width: 800px !important; 
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-
-.bg-odd {  min-height : 6em; border-bottom: 1px dashed; border-color: #aaa;}
-.bg-even {  min-height : 6em;  border-bottom: 1px dashed; border-color: #aaa; }
-.border-width-1 {  border-width: 6px; border-color: #999}
-
-input.dockerSetting[readonly] {
-  background-color:transparent;
-}
-
-.text-capitalize {
-  text-transform: capitalize;
-}
-.grid-list {
-    min-height: 20rem
-}
-.local-grid-error {
-   color : #ff0000
-}
 </style>
