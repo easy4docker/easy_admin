@@ -43,7 +43,7 @@
 
         me.post = () => {
             const METHODS = [
-                'statusUpdate', 'removeGrid', 'addGrid', 'getGrids', 'getGridMatrix', 'gridAccess', 'serverMem',
+                'statusUpdate', 'getGridMatrix', 'gridAccess', 'serverMem',
                 'setupServer'
             ];
 
