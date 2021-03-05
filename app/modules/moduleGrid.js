@@ -123,94 +123,12 @@
             });
         }
 
-        me.dataGridsBK = (cbk) => {
-            pkg.readJson(gridServerFn, (grids) => {
-                cbk(grids);
-            });
-        }
         me.setCron = (code, str, callback) => {
             fs.writeFile(me.comm.inside.data + '/commCron/' + code + '_' + new Date().getTime() + '.sh', str, function (err) {
                 callback({status:'success'});
             });
         }
         /* --- POST function ---->> */
-        me.removeGridBK = (callback) => {
-            var data = req.body;
-            
-            me.dataGrids(
-                (gridServer) => {
-                    const _f = {};
-                    _f['removeGrid'] = (cbk) => {
-                        if (data.gridServer) {
-                            delete gridServer[data.gridServer];
-                        }
-                        fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
-                            cbk(true);
-                        });
-                    };
-                    _f['removeCron'] = (cbk) => {
-                        let shell_fn = (me.comm.outside.env === 'local')? (me.comm.outside.data_folder + '/log/ctab') : '/etc/crontab';
-                        let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
-                        me.setCron('remove-grid', shell_str, (err) => {
-                            cbk(true);
-                        });
-                    }
-                    
-                    CP.serial(_f, (data) => {
-                        me.getGrids(callback);
-                    }, 3000)
-                }
-            );
-        }
-
-        me.addGridBK = (callback) => {
-            var data = req.body;
-            me.dataGrids(
-                (gridServer) => {
-                const _f = {};
-                if (data.gridServer) {
-                    gridServer[data.gridServer] = data.tag;
-                }
-    
-                _f['saveGrids'] = (cbk) => {
-                    fs.writeFile(gridServerFn, JSON.stringify(gridServer), (err) => {
-                        cbk(true);
-                    });
-                };
-    
-                _f['gridTokenFn'] = (cbk) => {
-                    fs.writeFile(gridTokenFn, me.makeid(32), (err) => {
-                        cbk(true);
-                    });
-                };
-                _f['addToCron'] = (cbk) => {
-                    let shell_fn = (me.comm.outside.env === 'local')? (me.comm.outside.data_folder + '/log/ctab') : '/etc/crontab';
-                    let shell_str = "sed '/\echo _EASY_GRID_SYNC/d' " + shell_fn + " > /tmp/crontab_easy_grid &&  cp -f /tmp/crontab_easy_grid " + shell_fn;
-                  
-                    shell_str += "\n" + 'echo "*/2 * * * *  root (echo _EASY_GRID_SYNC && cd  ' + me.comm.outside.app_root + ' && sh _gridSync.sh ' + 
-                        data.gridServer + ' ' + data.tag + ')" >> ';
-    
-                    if (me.comm.outside.env === 'local') {
-                        shell_str += me.comm.outside.data_folder + '/log/ctab';
-                    } else {
-                        shell_str += '/etc/crontab';
-                    }
-                    me.setCron('gridSync', shell_str, (err) => {
-                        cbk(true);
-                    });
-                }
-                CP.serial(_f, (data) => {
-                    me.getGrids(callback);
-                }, 3000)
-            })
-        }
-
-        me.getGridsBK = (cbk) => {
-            me.dataGrids(
-                (gridServer) => {
-                    cbk({status: "success", result:gridServer});
-            });
-        }
 
         me.getGridMatrix = (cbk) => {
             pkg.readJson(gridStatusFn, (grids) => {
