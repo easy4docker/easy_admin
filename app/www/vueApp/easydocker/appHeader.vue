@@ -124,7 +124,7 @@ module.exports = {
        1px 1px 0 #000;
 }
 .header-title .version {
-    font-family: default;
+    // font-family: "RocknRoll One, Arial, Helvetica, sans-serif;";
     font-size: 1.5rem
 }
 </style>
