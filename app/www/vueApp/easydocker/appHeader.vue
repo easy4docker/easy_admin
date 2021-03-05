@@ -40,10 +40,6 @@
                             v-on:click="clickMenu('testOnly')">
                             <i class="fa fa-cogs" aria-hidden="true"></i> test only
                         </button>
-                        <a class="btn btn-sm btn-secondary m-1 border-danger shadow-sm" 
-                            href="JavaScript:void(0)" v-on:click="test()">
-                            * test code
-                        </a>
                         <a class="btn btn-sm btn-warning m-1 border-danger shadow-sm" 
                             href="JavaScript:void(0)" v-on:click="syncAppCode()">
                             <i class="fa fa-github" aria-hidden="true"></i> Sync code
@@ -74,9 +70,6 @@ module.exports = {
 
     },
     methods :{
-        test() {
-            this.$parent.$forceUpdate();
-        },
         isDisabled(v) {
             return (this.$parent.module === v);
         },
