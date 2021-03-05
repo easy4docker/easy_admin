@@ -12,19 +12,6 @@
                  </div>
             </div>
             <div class="p-2 alert-secondary grid-list border rounded">
-                <div class="container p-2">
-                    <div class="row" v-for="(v, k) in grids">
-                        <div class="col-1 p-2">
-                           <a href="JavaScript:void(0)" v-on:click="removeGrid(k);"><i class="fa fa-trash-o"></i></a>
-                        </div>
-                        <div class="col-1 p-2">
-                           {{v}}
-                        </div>
-                        <div class="col-10 p-2">
-                            {{k}}
-                        </div>
-                    </div>
-                </div>
                 <div class="local-grid-error">{{root.gridMatrix}}</div>
             </div>
         </form>
