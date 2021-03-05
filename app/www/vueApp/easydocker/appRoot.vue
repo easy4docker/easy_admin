@@ -56,7 +56,7 @@ module.exports = {
     },
     mounted () {
         var me = this;
-        me.module = (!/^\/app\//.test(location.pathname)) ? '' : (location.pathname.replace(/\/app\//, ''));
+        me.module = (!/^\/app\//.test(location.pathname)) ? 'list' : (location.pathname.replace(/\/app\//, ''));
         setTimeout(function() {
             me.easydockerFP = localStorage.getItem('easydockerFP');
             me.getGridMatrix();
