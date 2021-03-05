@@ -71,6 +71,13 @@ const { eventNames } = require('process');
                 
             }
 
+            _f['gridServer'] = (cbk)=> {
+                var fn = env.dataFolder + '/_GRID_SERVER';
+                fs.readFile(fn, 'utf-8', (err, data) => {
+                    cbk((err) ? '' : data);
+                });                
+            }
+
             _f['gridToken'] = (cbk)=> {
                 var fn = env.keyFolder + '/_gridToken';
                 fs.readFile(fn, 'utf-8', (err, data) => {
@@ -119,6 +126,7 @@ const { eventNames } = require('process');
                     _env        : cp.data._env,
                     localIp     : cp.data.localIp,
                     gridMatrix  : cp.data.gridMatrix,
+                    gridServer : cp.data.gridServer,
                     gridToken   : cp.data.gridToken,
                     gridOldToken: cp.data.gridOldToken,
                     authToken   : cp.data.authToken,
