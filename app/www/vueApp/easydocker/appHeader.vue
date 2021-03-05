@@ -77,10 +77,6 @@ module.exports = {
             var me = this;
             me.$parent.module = v;
         },
-        restartProxy() {
-            var me = this;
-            me.$parent.dataEngine().restartProxy();
-        },
         syncAppCode() {
             var me = this;
             me.root.dataEngine().appPost({
