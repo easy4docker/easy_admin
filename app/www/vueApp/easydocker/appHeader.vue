@@ -14,26 +14,26 @@
             <div class="container-fluid mt-1 head-menu-2">
                 <div class="row" v-if="root.isSignin()">
                     <div class="col-12 p-0 m-0 text-center">
-                        <div class="pull-left border border-success rounded menu-frame-1 shadow-sm">
-                            <button class="btn btn-sm btn-warning m-1" 
+                        <div class="pull-left border border-light rounded menu-frame shadow-sm">
+                            <button class="btn btn-outline-lightg m-1" 
                                 :disabled = "isDisabled('gridSetup')"
                                 v-if="!root.isLocalhost()"
                                 v-on:click="clickMenu('gridSetup')">
                                 <i class="fa fa-cogs" aria-hidden="true"></i> Grid Setup
                             </button>
-                            <button class="btn btn-sm btn-warning m-1" 
+                            <button class="btn btn-outline-light m-1" 
                                 :disabled = "isDisabled('form')"
                                 v-on:click="clickMenu('form')">
                                 <i class="fa fa-plus-square" aria-hidden="true"></i> Add a server
                             </button>
-                            <button class="btn btn-sm btn-warning m-1" 
+                            <button class="btn btn-outline-light m-1" 
                                 :disabled = "isDisabled('list')"
                                 v-on:click="clickMenu('list')">
                                 <i class="fa fa-tasks" aria-hidden="true"></i> List Servers
                             </button>
                         </div>
 
-                        <div class="m-0 text-center border border-light rounded menu-frame-1 shadow-sm pull-right">
+                        <div class="m-0 text-center border border-light rounded menu-frame shadow-sm pull-right">
                             <button class="btn btn-outline-light m-1" 
                                 v-on:click="clickMenu('testOnly')">
                                 <i class="fa fa-cogs" aria-hidden="true"></i> Test only
@@ -100,12 +100,8 @@ module.exports = {
     height: 1.5rem;
 }
 
-.head-menu-2 .menu-frame-1 {
+.head-menu-2 .menu-frame {
     background: rgba(0,0,0,0.33);
-}
-
-.head-menu-2 .menu-frame-2 {
-    background: rgba(255,255,255,0.6);
 }
 
 .header-bg { 
