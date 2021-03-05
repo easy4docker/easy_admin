@@ -15,9 +15,9 @@
                 <div>
                 <h3>Step 1</h3>
                 Recommended cloud services:<br/>
-                1 - DigitalOcean https://www.digitalocean.com/<br/>
-                2 - Aws https://aws.amazon.com/<br/>
-                3 - Azure https://azure.microsoft.com/
+                1 - DigitalOcean <a href="" target="_blank">https://www.digitalocean.com</a><br/>
+                2 - Aws <a href="https://aws.amazon.com" target="_blank">https://aws.amazon.com</a><br/>
+                3 - Azure <a href="https://azure.microsoft.com" target="_blank">https://azure.microsoft.com</a>
                 <hr/>
                 <h3>Step 2</h3>
                 # mkdir  /var/easydocker<br/>
