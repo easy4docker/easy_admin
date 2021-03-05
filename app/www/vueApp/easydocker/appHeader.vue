@@ -34,15 +34,15 @@
                         </div>
 
                         <div class="m-0 text-center border border-warning rounded menu-frame-2 shadow-sm pull-right">
-                            <button class="btn btn-sm btn-success m-1" 
+                            <button class="btn btn-sm btn-outline-secondary m-1" 
                                 v-on:click="clickMenu('testOnly')">
                                 <i class="fa fa-cogs" aria-hidden="true"></i> test only
                             </button>
-                            <a class="btn btn-sm btn-success m-1" 
+                            <a class="btn btn-sm btn-outline-secondary m-1" 
                                 href="JavaScript:void(0)" v-on:click="syncAppCode()">
                                 <i class="fa fa-github" aria-hidden="true"></i> Sync code
                             </a>
-                            <a class="btn btn-sm btn-success m-1" 
+                            <a class="btn btn-sm btn-outline-secondary m-1" 
                                 href="JavaScript:void(0)" v-on:click="root.signOff()">
                                 <i class="fa fa-sign-out" aria-hidden="true"></i> Sign Off
                             </a>
@@ -105,7 +105,7 @@ module.exports = {
 }
 
 .head-menu-2 .menu-frame-2 {
-    background: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.5);
 }
 
 .header-bg { 
