@@ -40,7 +40,7 @@ module.exports = {
     },
     methods : {
         setupUrl() {
-            return location.protocol + '://' + location.hostname + ((location.port === '80') ? '' : (':' + location.port))
+            return location.protocol + '//' + location.hostname + ((location.port === '80') ? '' : (':' + location.port))
         }
     }
 }
