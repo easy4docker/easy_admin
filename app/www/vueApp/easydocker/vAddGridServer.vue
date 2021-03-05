@@ -32,7 +32,7 @@ module.exports = {
     data: function() {
         var me = this;
         return {
-            root :  this.$parent.root + ':' + location.port
+            root :  this.$parent.root
         }
     },
     mounted() {
@@ -40,7 +40,7 @@ module.exports = {
     },
     methods : {
         setupUrl() {
-            return location.hostname
+            return location.protocol + '://' + location.hostname + ((location.port === '80') ? '' : (':' + location.port))
         }
     }
 }
