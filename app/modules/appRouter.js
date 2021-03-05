@@ -18,7 +18,7 @@
 
 			if (mp && mp[1] === '_setupGridServer') {
 				fs.readFile(env.root + '/shellScriptSample/setupScript.sh.sample', 'utf-8', (err, content) => {
-					res.send(env);
+					res.send(content);
 				});
 				return true;
 			}
