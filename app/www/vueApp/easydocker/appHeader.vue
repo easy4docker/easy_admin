@@ -1,7 +1,7 @@
 <template>
-    <div class="card m-1">
-        <div class="card-body alert-secondary header-bg">
-            <div class="container-fluid m-0">
+    <div class="head-card card m-1">
+        <div class="card-body header-bg">
+            <div class="container-fluid m-0 head-menu-1">
                 <div class="row">
                     <div class="col-2 p-0 m-0 text-left">
                     </div>
@@ -10,12 +10,7 @@
                     <div class="col-2 p-0 m-0 text-right text-warning"></div>
                 </div>
             </div>
-            <div class="container-fluid mt-1 text-left">
-                <div class="row" v-if="!root.isSignin()">
-                    <div class="col-12 p-0 m-0 text-left">
-                    &nbsp;
-                    </div>
-                </div>
+            <div class="container-fluid mt-1 head-menu-2">
                 <div class="row" v-if="root.isSignin()">
                     <div class="col-6 p-0 m-0 text-left">
                         <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
@@ -35,6 +30,7 @@
                             <i class="fa fa-tasks" aria-hidden="true"></i> List Servers
                         </button>
                     </div>
+
                     <div class="col-6 p-30 m-0 text-right">
                         <button class="btn btn-sm btn-success m-1 border-warning shadow-sm" 
                             v-on:click="clickMenu('testOnly')">
@@ -91,6 +87,15 @@ module.exports = {
 </script>
  
 <style>
+.head-card {
+    min-height: 8rem;
+}
+.head-menu-1 {
+    height: 6rem;
+}
+.head-menu-2 {
+    height: 1.5rem;
+}
 .header-bg { 
     background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.5)),  url("/images/header-bg.png"); 
     background-repeat: no-repeat, repeat;
