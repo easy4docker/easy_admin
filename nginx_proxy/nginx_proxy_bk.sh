@@ -1,7 +1,9 @@
 # SCR_DIR=$(cd `dirname $0` && pwd)
 SCR_DIR="$(dirname "$(cd `dirname $0` && pwd)")"
-SCRIPTFN=$(basename -- $SCR_DIR)
-DATA_DIR="$(dirname "$SCR_DIR")/_"$SCRIPTFN"_DATA"
+# SCRIPTFN=$(basename -- $SCR_DIR)
+# DATA_DIR="$(dirname "$SCR_DIR")/_"$SCRIPTFN"_DATA"
+
+DATA_DIR=${SCR_DIR}/data
 
 CMD=""
 CMD="${CMD}echo \"Start proxy ...\"\n";

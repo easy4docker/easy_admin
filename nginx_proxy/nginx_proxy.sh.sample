@@ -1,0 +1,17 @@
+SCR_DIR=$(cd `dirname $0` && pwd)
+DATA_DIR=${SCR_DIR}/data
+
+echo "Start proxy ...";
+cd ${SCR_DIR}/admin/nginx_proxy
+
+docker build -f proxyDockerFile -t nginx-proxy-image .
+// docker build -t nginx-proxy-image  .
+docker container stop nginx-proxy-container
+docker container rm nginx-proxy-container
+
+mkdir -p ${DATA_DIR}/sitesConfig
+
+docker run -d -p 80:80 -v "${SCR_DIR}/admin/nginx_proxy/html":/usr/share/nginx/html \
+        -v "${DATA_DIR}/sitesConfig":/usr/share/nginx/proxy_config \
+        --network network_easydocker \
+        --name nginx-proxy-container nginx-proxy-image \
