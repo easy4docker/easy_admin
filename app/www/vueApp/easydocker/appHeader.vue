@@ -47,6 +47,10 @@
                                 href="JavaScript:void(0)" v-on:click="root.signOff()">
                                 <i class="fa fa-sign-out" aria-hidden="true"></i> Sign Off
                             </a>
+                            <a class="btn btn-danger m-1" 
+                                href="JavaScript:void(0)" v-on:click="syncAppCode()">
+                                <i class="fa fa-power-off" aria-hidden="true"></i> Restart Server
+                            </a>
                         </div>
                     </div>
                 </div>
