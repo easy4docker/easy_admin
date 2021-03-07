@@ -63,6 +63,8 @@ fi
 
 echo "{\"main_ip\": \"${MAIN_IP}\", \"host_ip\": \"$(cat ${SCR_DIR}/data/_ip)\", \"env\": \"$1\", \"app_root\": \"${SCR_DIR}\", \"code_folder\": \"$PWD\", \"data_folder\": \"$DATA_DIR\"}" > "$DATA_DIR"/_env.json
 
+sh ${SCR_DIR}/_startProxy.sh
+
 sh ${DATA_DIR}/_startUpScript.sh
 
 #--- Main common cron loop ---
