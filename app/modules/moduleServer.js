@@ -586,6 +586,29 @@
                 });
             });
         }
+        me.rebootServer = (callback) => {
+            let needProxy = false;
+            const proxyCmd = "cd " + _env.app_root +  "\n sh _start.sh";
+            me.getSites((sites) => {
+                for (var o in sites) {
+                    needProxy = (!sites[o].docker || !sites[o].docker.type || sites[o].docker.type !== 'webServer') ? needProxy : true;
+                }
+                if (needProxy) {
+                    fs.writeFile(data_dir + '/_isProxy', '1', () => {
+                        me.setCron('startProxy', proxyCmd, () =>{
+                            cbk(true);
+                        });
+                        
+                    });     
+                } else {
+                    fs.unlink(data_dir + '/_isProxy', () => {
+                        me.setCron('startProxy', proxyCmd, () =>{
+                            cbk(true);
+                        });
+                    });   
+                }
+            });
+        }
     }
     module.exports = obj;
 })()
