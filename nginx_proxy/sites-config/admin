@@ -1,7 +1,7 @@
 
      server {
         listen       80;
-        server_name  142.93.73.66;
+        # server_name  142.93.73.66;
   
         location / {
            proxy_cache                     off;

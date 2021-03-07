@@ -14,4 +14,4 @@ mkdir -p ${DATA_DIR}/sitesConfig
 docker run -d -p 80:80 -v "${SCR_DIR}/admin/nginx_proxy/html":/usr/share/nginx/html \
         -v "${DATA_DIR}/sitesConfig":/usr/share/nginx/proxy_config \
         --network network_easydocker \
-        --name nginx-proxy-container nginx-proxy-image \
+        --name nginx-proxy-container nginx-proxy-image
