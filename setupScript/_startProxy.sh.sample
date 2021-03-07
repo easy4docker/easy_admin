@@ -5,6 +5,7 @@ echo "Start proxy ...";
 cd ${SCR_DIR}/admin/nginx_proxy
 
 IsProxy=$(cat ${DATA_DIR}/_isProxy)
+mkdir -p ${DATA_DIR}/sitesConfig
 
 docker build -f proxyDockerFile -t nginx-proxy-image .
 docker container stop nginx-proxy-container
