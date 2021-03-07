@@ -91,7 +91,7 @@ module.exports = {
                 console.log(result);
                 window.location.reload();
             }, true);
-        }
+        },
         rebootServer() {
             var me = this;
             me.root.dataEngine().appPost({
