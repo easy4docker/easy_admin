@@ -103,8 +103,10 @@
         me.createStartUpVServers = (callback) => {
             const _f = {};
             let str = '';
+            let needProxy = false;
             me.getSites((sites) => {
                 for (var o in sites) {
+                    needProxy = (!sites[o].docker || !docker.sites[o].docker.type || docker.sites[o].docker.type !== 'webServer') ? needProxy : true;
                     _f[o] = ((o) => {
                         return (cbk) => {
                             str += "## --- Start " + o + " ---\n";
@@ -124,9 +126,15 @@
                 }
                 CP.serial(_f, (data) => {
                     fs.writeFile(data_dir + '/_startUpScript.sh', str, function (err) {
-                        setTimeout(() => {
-                            callback({status:'success', message: 'createStartUpVServers'});
-                        }, 500)
+                        if (needProxy) {
+                            fs.writeFile(data_dir + '_isProxy', '1', () => {
+                                callback({status:'success', message: 'createStartUpVServers'});
+                            });
+                        } else {
+                            setTimeout(() => {
+                                callback({status:'success', message: 'createStartUpVServers'});
+                            }, 500)
+                        }
                     });
                 }, 6000);
             });
