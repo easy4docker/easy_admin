@@ -2,6 +2,7 @@
     <div class="head-card card m-1">
         <div class="card-body m-0 p-1 header-bg">
             <div class="container-fluid m-0 head-menu-1">
+
                 <div class="row">
                     <div class="col-2 p-0 m-0 text-left">
                     </div>
@@ -9,7 +10,12 @@
                         <h1 class="header-title m-3">EasyDocker Admin 
                             <span class="version">(Version &alpha;)</span></h1>
                     </div>
-                    <div class="col-2 p-0 m-0 text-right text-warning"></div>
+                    <div class="col-2 p-0 m-0 text-right text-warning">
+                            <a class="btn btn-danger border border-warning pull-right" 
+                                href="JavaScript:void(0)" v-on:click="rebootServer()">
+                            <i class="fa fa-power-off" aria-hidden="true"></i> Restart Server
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="container-fluid mt-1 head-menu-2">
@@ -46,10 +52,6 @@
                             <a class="btn btn-outline-light m-1" 
                                 href="JavaScript:void(0)" v-on:click="root.signOff()">
                                 <i class="fa fa-sign-out" aria-hidden="true"></i> Sign Off
-                            </a>
-                            <a class="btn btn-danger m-1" 
-                                href="JavaScript:void(0)" v-on:click="syncAppCode()">
-                                <i class="fa fa-power-off" aria-hidden="true"></i> Restart Server
                             </a>
                         </div>
                     </div>
@@ -88,6 +90,14 @@ module.exports = {
             }, function(result) {
                 console.log(result);
                 window.location.reload();
+            }, true);
+        }
+        rebootServer() {
+            var me = this;
+            me.root.dataEngine().appPost({
+                cmd : 'rebootServer'
+            }, function(result) {
+                console.log(result);
             }, true);
         }
     }
