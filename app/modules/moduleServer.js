@@ -595,15 +595,15 @@
                 }
                 if (needProxy) {
                     fs.writeFile(data_dir + '/_isProxy', '1', () => {
-                        me.setCron('startProxy', proxyCmd, () =>{
-                            cbk(true);
+                        me.setCron('rebootServer', proxyCmd, () =>{
+                            callback(true);
                         });
                         
                     });     
                 } else {
                     fs.unlink(data_dir + '/_isProxy', () => {
-                        me.setCron('startProxy', proxyCmd, () =>{
-                            cbk(true);
+                        me.setCron('rebootServer', proxyCmd, () =>{
+                            callback(true);
                         });
                     });   
                 }
