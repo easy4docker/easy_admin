@@ -106,35 +106,32 @@
             let needProxy = false;
             me.getSites((sites) => {
                 for (var o in sites) {
-                    needProxy = (!sites[o].docker || !docker.sites[o].docker.type || docker.sites[o].docker.type !== 'webServer') ? needProxy : true;
-                    _f[o] = ((o) => {
-                        return (cbk) => {
-                            str += "## --- Start " + o + " ---\n";
-                            try {
-                                me.templateContent(o, 'addDockerApp.tpl', (content) => {
-                                    str += content;
+                    if (!sites[o].docker || !sites[o].docker.type || sites[o].docker.type !== 'webServer') {
+                        continue;
+                    } else {
+                        _f[o] = ((o) => {
+                            return (cbk) => {
+                                str += "## --- Start " + o + " ---\n";
+                                try {
+                                    me.templateContent(o, 'addDockerApp.tpl', (content) => {
+                                        str += content;
+                                        str +="\n\n";
+                                        cbk(true);
+                                    });
+                                } catch (e) {
+                                    str += 'echo "' + e.message + '"';
                                     str +="\n\n";
                                     cbk(true);
-                                });
-                            } catch (e) {
-                                str += 'echo "' + e.message + '"';
-                                str +="\n\n";
-                                cbk(true);
+                                }
                             }
-                        }
-                    })(o);
+                        })(o);
+                    }
                 }
                 CP.serial(_f, (data) => {
                     fs.writeFile(data_dir + '/_startUpScript.sh', str, function (err) {
-                        if (needProxy) {
-                            fs.writeFile(data_dir + '_isProxy', '1', () => {
-                                callback({status:'success', message: 'createStartUpVServers'});
-                            });
-                        } else {
-                            setTimeout(() => {
-                                callback({status:'success', message: 'createStartUpVServers'});
-                            }, 500)
-                        }
+                        setTimeout(() => {
+                            callback({status:'success', message: 'createStartUpVServers'});
+                        }, 500)
                     });
                 }, 6000);
             });
@@ -430,6 +427,10 @@
                 me.addRemoveMe(data.serverName, cbk);
             };
 
+            _f['updateProxy'] = function(cbk) {
+                me.updateProxy(cbk); 
+            };
+
             _f['createStartUpVServers'] = function(cbk) {
                 me.createStartUpVServers(cbk); 
             };
@@ -464,6 +465,10 @@
                 });
             };
         
+            _f['updateProxy'] = function(cbk) {
+                me.updateProxy(cbk); 
+            };
+
             _f['createStartUpVServers'] = function(cbk) {
                 me.createStartUpVServers(cbk); 
             };
@@ -474,6 +479,29 @@
             }, 30000);
         };
 
+        me.updateProxy = (cbk) => {
+            let needProxy = false;
+            const proxyCmd = "cd " + _env.app_root +  "\n sh _startProxy.sh";
+            me.getSites((sites) => {
+                for (var o in sites) {
+                    needProxy = (!sites[o].docker || !sites[o].docker.type || sites[o].docker.type !== 'webServer') ? needProxy : true;
+                }
+                if (needProxy) {
+                    fs.writeFile(data_dir + '/_isProxy', '1', () => {
+                        me.setCron('startProxy', proxyCmd, () =>{
+                            cbk(true);
+                        });
+                        
+                    });     
+                } else {
+                    fs.unlink(data_dir + '/_isProxy', () => {
+                        me.setCron('startProxy', proxyCmd, () =>{
+                            cbk(true);
+                        });
+                    });   
+                }
+            })
+        }
         me.dockerConfig = (serverName, callback) => {
             me.getSites(
                 (list) => {
