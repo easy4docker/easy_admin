@@ -1,11 +1,11 @@
 <template>
     <span class="text-left">
         <span v-if="$parent.currentDomain !== record.serverName">
-            Domain : {{record.domain}}
+            Domain : {{(!record.domain) ? 'N/A' : record.domain}} &nbsp;
             <a href="JavaScript: void(0)" v-on:click="edit()"><i class="fa fa-pencil ml-3" aria-hidden="true"></i></a>
         </span>
         <span class="input-group"  v-if="$parent.currentDomain === record.serverName">
-            <input type="text" class="form-control" placeholder="Domain" v-model="form.domain"  aria-describedby="basic-addon2">
+            <input type="text" class="form-control" placeholder="Input your domain" v-model="form.domain"  aria-describedby="basic-addon2">
             <div class="input-group-append">
                 <button class="btn btn-info" v-on:click="save(form)" type="button" :disabled="isDisabledButton()" >Update</button>
             </div>
