@@ -1,5 +1,5 @@
 <template>
-    <div class="text-left m-1">
+    <div class="text-left ml-1">
         <span v-if="!branches.length || !isCurrentServer()">
             Branch : <span class="text-info">{{branch}}</span> <i class="fa fa-arrow-left" aria-hidden="true"></i> 
             <a href="JavaScript: void(0)" v-on:click="gitSiteBranchs()">switch branch</a>
@@ -42,6 +42,7 @@ module.exports = {
         },
         gitSiteBranchs() {
             const me = this;
+            me.$parent.currentDomain = '';
             const data = {
                 cmd : 'gitSiteBranchs',
                 serverName : me.record.name,

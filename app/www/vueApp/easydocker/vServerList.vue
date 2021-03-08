@@ -50,7 +50,6 @@
                                                 <div class="col-8 p-0 m-0 text-left">
                                                     <div class="p-1 m-1 mr-2 border rounded alert-info text-info">
                                                         <h5>{{k}} - {{item.name}}</h5>
-                                                        <v-form-domain v-bind:record="item"></v-form-domain>
                                                     </div>
                                                     <span class="ml-1">
                                                         Type: <span class="text-info">{{(!item.docker) ? '' : item.docker.type}}</span>
@@ -65,11 +64,14 @@
                                                     </span><br/>
                                                     <span class="ml-1">
                                                         gitHub : <span class="text-info"> {{item.gitHub}}</span>
+                                                    </span><br/>
+                                                    <span class="ml-1">
+                                                        <v-form-domain v-bind:record="item"></v-form-domain>
                                                     </span>
                                                     <span class="ml-1">
                                                         <select-branch v-bind:record="item" v-bind:branch="item.branch" v-bind:host="k"></select-branch>
-                                                    </span><br/>
-                                                    <docker-adupter v-bind:item="item"></docker-adupter>
+                                                    </span>
+                                                    <!--docker-adupter v-bind:item="item"></docker-adupter-->
                                                 </div>
                                                 <div class="col-2 p-0 m-0 text-left">
                                                     <a class="m-1" href="JavaScript:void(0)" v-on:click="pullCode(k, item)">

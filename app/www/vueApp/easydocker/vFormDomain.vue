@@ -1,19 +1,15 @@
 <template>
-    <span>
-        <form>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Domain" v-model="form.domain"  aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-info" v-on:click="save(form)" type="button">Update</button>
-                </div>
+    <span class="text-left">
+        <span v-if="$parent.currentDomain !== record.serverName">
+            Domain : {{record.serverName}}
+            <a href="JavaScript: void(0)" v-on:click="edit()"><i class="fa fa-pencil ml-3" aria-hidden="true"></i></a>
+        </span>
+        <span class="input-group"  v-if="$parent.currentDomain === record.serverName">
+            <input type="text" class="form-control" placeholder="Domain" v-model="form.domain"  aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-info" v-on:click="save(form)" type="button" :disabled="isDisabledButton()" >Update</button>
             </div>
-            <div class="text-danger p-3" v-if="isError()">
-                <b>Please correct the following error(s):</b>
-                <ul>
-                <li v-for="(v, k) in errors">{{v}}</li>
-                </ul>
-            </div>
-        </form>
+        </span>
     </span>
 </template>
  
@@ -34,7 +30,19 @@ module.exports = {
         var me = this;
     },
     methods : {
+        edit() {
+            const me = this;
+            me.$parent.currentDomain = me.record.serverName;
+            me.$parent.currentServer = "";
+        },
+        isDisabledButton() {
+            return (this.form.domain === this.record.domainName) ? true : false;
+        },
         save(postData) {
+            const me = this;
+            me.$parent.currentDomain = "";
+            alert(99);
+            
             /*
             const me = this;
             me.gitUrlValidation();
