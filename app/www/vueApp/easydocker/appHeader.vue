@@ -41,10 +41,6 @@
                         </div>
 
                         <div class="m-0 text-center border border-light rounded menu-frame shadow-sm pull-right">
-                            <button class="btn btn-outline-light m-1" 
-                                v-on:click="clickMenu('testOnly')">
-                                <i class="fa fa-cogs" aria-hidden="true"></i> Test only
-                            </button>
                             <a class="btn btn-outline-light m-1" 
                                 href="JavaScript:void(0)" v-on:click="syncAppCode()">
                                 <i class="fa fa-github" aria-hidden="true"></i> Sync code
