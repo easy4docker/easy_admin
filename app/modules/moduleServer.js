@@ -262,6 +262,23 @@
             });
         }
 
+
+        me.updateDomain = (serverName, domain, callback) => {
+            if (serverName) {
+                me.getSites((list) => {
+                    if (list[serverName]) {
+                        list[serverName].domain = domain;
+                    }
+                    me.saveSites(list, 
+                        ()=> {
+                            callback({status : 'success'})
+                        }, true);
+                });
+            } else {
+                callback({status : 'Failure', serverName : serverName, domain : domain})
+            }
+        }
+
         me.gitSwitchBranch = (serverName, branch, callback) => {  // ??????
             var cmd = 'cd ' + me.siteCodePath(serverName) + ' && git checkout ' + branch;
             exec(cmd, {maxBuffer: 224 * 2048},

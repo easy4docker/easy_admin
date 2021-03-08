@@ -60,7 +60,7 @@
                 'deleteVServer', 'addServer', 'setupServer',
                 'localGridAccessSetup', 'syncAppCode', 'getGridMatrix',
                 'addGrid', 'getGrids', 'removeGrid', 'gridHub',
-                'rebootServer'
+                'rebootServer', 'updateDomain'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -109,8 +109,6 @@
             });
         }
 
-
-
         me.setupServer = (cbk) => {
 			var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
             var git = new MGit(env, pkg);
@@ -146,7 +144,17 @@
 				cbk(result);
 			});
         }
-        
+
+        me.updateDomain = (cbk) => {
+            if (!req.body.data) {
+                cbk({status : 'failure', message : 'missing post data'})
+            } else {
+                Servers.updateDomain(req.body.data.serverName, req.body.data.domain, (resultS) => {
+                    cbk(resultS);
+                });
+            }
+        }
+
         me.gitSwitchBranch = (cbk) => {
 			var MGit = pkg.require(env.root+ '/modules/moduleGit.js');
             var git = new MGit(env, pkg);

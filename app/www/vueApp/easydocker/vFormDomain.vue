@@ -1,7 +1,7 @@
 <template>
     <span class="text-left">
         <span v-if="$parent.currentDomain !== record.serverName">
-            Domain : {{record.serverName}}
+            Domain : {{record.domain}}
             <a href="JavaScript: void(0)" v-on:click="edit()"><i class="fa fa-pencil ml-3" aria-hidden="true"></i></a>
         </span>
         <span class="input-group"  v-if="$parent.currentDomain === record.serverName">
@@ -15,14 +15,17 @@
  
 <script>
 module.exports = {
-    props : ['record'],
+    props : ['record', 'host'],
     data: function() {
         var me = this;
         return {
             root :  this.$parent.root,
+            parent   :  this.$parent,
             errors: {},
             form : {
-                domain    : me.record.domainName
+                targetHost : me.host,
+                serverName :  me.record.serverName,
+                domain    : me.record.domain
             }
         }
     },
@@ -36,45 +39,37 @@ module.exports = {
             me.$parent.currentServer = "";
         },
         isDisabledButton() {
-            return (this.form.domain === this.record.domainName) ? true : false;
+            return (this.form.domain === this.record.domain) ? true : false;
         },
         save(postData) {
             const me = this;
-            me.$parent.currentDomain = "";
-            alert(99);
-            
-            /*
-            const me = this;
-            me.gitUrlValidation();
-
-            if (me.isformValid()) {
-                if (postData.targetHost === 'local') {
-                    me.root.dataEngine().appPost({
-                        cmd :'setupServer',
-                        data : postData
-                    }, function(result) {
-                        if (result.status === 'success') {
-                            me.root.module = 'list';
-                        }
-                        me.$forceUpdate();
-                    }, true);
-                } else {
-                    me.root.dataEngine().gridHub({
-                        cmd : 'setupServer',
-                        target : postData.targetHost,
-                        data : postData
-                    },
-                    function(result) {
-                        if (result.status === 'success') {
-                            me.root.module = 'list';
-                        }
-                        me.$forceUpdate();
-                    }, true)
-                }
-
-            } 
-            */
-            //me.$forceUpdate();
+            if (postData.targetHost === 'local') {
+                me.root.dataEngine().appPost({
+                    cmd :'updateDomain',
+                    data : postData
+                }, function(result) {
+                    if (result.status === 'success') {
+                        me.root.module = 'list';
+                        me.$parent.currentDomain = "";
+                        me.parent.getServerList();
+                    }
+ 
+                }, true);
+            } else {
+                me.root.dataEngine().gridHub({
+                    cmd : 'pdateDomain',
+                    target : postData.targetHost,
+                    data : postData
+                },
+                function(result) {
+                    if (result.status === 'success') {
+                        me.root.module = 'list';
+                        me.$parent.currentDomain = "";
+                        me.parent.getServerList();
+                    }
+                }, true);
+            }
+             
         },
         isError() {
             const me = this;

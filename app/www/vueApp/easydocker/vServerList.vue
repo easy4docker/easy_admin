@@ -66,7 +66,7 @@
                                                         gitHub : <span class="text-info"> {{item.gitHub}}</span>
                                                     </span><br/>
                                                     <span class="ml-1">
-                                                        <v-form-domain v-bind:record="item"></v-form-domain>
+                                                        <v-form-domain v-bind:record="item" v-bind:host="k"></v-form-domain>
                                                     </span>
                                                     <span class="ml-1">
                                                         <select-branch v-bind:record="item" v-bind:branch="item.branch" v-bind:host="k"></select-branch>
