@@ -50,6 +50,11 @@
                                                 <div class="col-8 p-0 m-0 text-left">
                                                     <div class="p-1 m-1 mr-2 border rounded alert-info text-info">
                                                         <h5>{{k}} - {{item.name}}</h5>
+
+                                                        Domain : {{item.domainName}}  <a href="JavaScript: void(0)" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i> Edit</a>
+                                                        <span>
+                                                            <input type="text" class="form-control" v-model="item.domainName"  placeholder="Domain name">
+                                                        </span>
                                                     </div>
                                                     <span class="ml-1">
                                                         Type: <span class="text-info">{{(!item.docker) ? '' : item.docker.type}}</span>
@@ -126,6 +131,7 @@ module.exports = {
             serverTypeFilter : [],
             root :  this.$parent.root,
             currentServer : '',
+            currentDomain : '',
             gridMatrix: {},
             currentGridHost: ''
         }
