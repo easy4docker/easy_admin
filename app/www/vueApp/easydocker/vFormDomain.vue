@@ -57,7 +57,7 @@ module.exports = {
                 }, true);
             } else {
                 me.root.dataEngine().gridHub({
-                    cmd : 'pdateDomain',
+                    cmd : 'updateDomain',
                     target : postData.targetHost,
                     data : postData
                 },
