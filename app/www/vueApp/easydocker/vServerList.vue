@@ -58,9 +58,6 @@
                                                         <a :href="vServerLink(outerPorts(item))" target="_blank">
                                                             <i class="fa fa-globe fa ml-3" aria-hidden="true"></i> Web Link
                                                         </a>
-                                                        <!--a href="JavaScript:void(0)" v-on:click="linkCloudTo(item)">
-                                                            <i class="fa fa-globe fa ml-3" aria-hidden="true"></i> Web Link
-                                                        </a-->
                                                     </span><br/>
                                                     <span class="ml-1">
                                                         gitHub : <span class="text-info"> {{item.gitHub}}</span>
@@ -79,12 +76,6 @@
                                                     </a><br/>
                                                     <a class="m-1" href="JavaScript:void(0)" v-on:click="switchBranch(k, item)">
                                                         <i class="fa fa-github" aria-hidden="true"></i> Switch branch
-                                                    </a><br/>
-                                                    <a class="m-1" href="JavaScript:void(0)" v-on:click="popupEditor(item)">
-                                                        <i class="fa fa-file-code-o mr-2" aria-hidden="true"></i>Edit Site Variabls
-                                                    </a><br/>
-                                                    <a class="m-1" v-if="isCloudTool(item)" href="JavaScript:void(0)" v-on:click="popupCloudTool(item)">
-                                                        <i class="fa fa-cloud mr-2" aria-hidden="true"></i>Cloud Token Admin
                                                     </a>
                                                 </div>
                                                 <div class="col-2 p-0 m-0 text-left">
@@ -334,102 +325,6 @@ module.exports = {
         outerPorts(item) {
             var me = this;
             return me.arrayPorts(item).join(',');
-        },
-        saveEditorContent(record, v, callback) {
-            var me = this;
-            var rec = {
-                serverName : record.name,
-                serverType : record.serverType,
-                contents   : v
-            };
-            me.root.dataEngine().saveVserverValiables(rec, 
-                function(result) {
-                    callback(result);
-            });
-        },
-        getEditorContent(record, callback) {
-            var me = this;
-            var rec = {
-                serverName : record.name,
-                serverType : record.serverType
-            };
-            me.root.dataEngine().getVserverValiables(rec, 
-                function(result) {
-                    callback(result);
-            });
-        },
-        askToken(item, callback) {
-            var me = this;
-            me.root.dataEngine().askToken(
-                item,
-                function(result) {
-                    callback(result);
-                }
-            );
-        },
-        isCloudTool(item) {
-            var me = this;
-            return  (['databaseCloud', 'backendCloud'].indexOf(item.serverType) === -1) ?  false : true;
-        },
-        linkCloudTo(item) {
-            var me = this;
-            var port = me.arrayPorts(item)
-            me.askToken(item, function(data) {
-                var tokenlist = (!data || !data.tokens || !data.tokens.list) ? {} : data.tokens.list;
-                window.open('/cloudTools/cloudAdmin.ect?host=' + item.name + ((!Object.keys(tokenlist).length) ? '' : ('&token=' + Object.keys(tokenlist)[0])));
-            });
-        },
-        popupCloudTool(item) {
-            var me = this;
-            var port = me.arrayPorts(item);
-            me.root.popUp(me).show({
-                insideModule: 'iframeObj',
-                insideModuleUrl: '/vueApp/easydocker/popUpModals/iframeObj.vue',
-                data : {
-                    url : '/html/tools/cloudTokenAdmin.ect?port=' + port + '&serverName=' + item.name + '&serverType=' + item.serverType
-                },
-                noDefaultCancel : true
-            }); 
-
-            document._iFrameBridge.close = (function(me) {
-                return function(v) {
-                    me.root.popUp(me).close();
-                }
-            })(me);
-        },
-        popupEditor(record) {
-            var me = this;
-            me.root.popUp(me).show({
-                insideModule: 'iframeObj',
-                insideModuleUrl: '/vueApp/easydocker/popUpModals/iframeObj.vue',
-                data : {
-                    url : '/html/tools/aceEditor.ect?mode=json',
-                    item : record
-                },
-                noDefaultCancel : true
-            }); 
-
-            document._iFrameBridge.close = (function(me) {
-                return function(v) {
-                    me.root.popUp(me).close();
-                }
-            })(me);
-
-            document._iFrameBridge.save = (function(me, item) {
-                return function(v) {
-                   me.saveEditorContent(item, v, function(result) {
-                       me.root.popUp(me).close();
-                   })
-                }
-            })(me, record);
-
-            document._iFrameBridge.loadContents = (function(me, item) {
-                return function(callback) {
-                   me.getEditorContent(item, function(result) {
-                       callback(result.data);
-                   })
-                }
-            })(me, record);
         }
     },
     components: VUEApp.loadComponents({
