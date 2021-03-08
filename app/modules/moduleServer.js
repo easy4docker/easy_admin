@@ -144,31 +144,7 @@
                 }, 500)
             });
         }
-
-        me.saveEtcHosts = (callback) => {
-            me.getSites((sites_list) => {
-                var str='';
-                str += "#!/bin/bash\n";
-                str += 'MARKS="#--UI_EASYDOCKER_S--"' + "\n" + 'MARKE="#--UI_EASYDOCKER_E--"' + "\n";
-                str += 'NLINE=$' + "'" + '\\n' + "'\n" + 'TABL=$' + "'" + '\\t' + "'\n";
-                str += 'v=$(sed "/"$MARKS"/,/"$MARKE"/d" /etc/hosts)' + "\n";
-                
-                str += 'p="';
-                str += (!sites_list || !Object.keys(sites_list).length) ? '' : '${MARKS}${NLINE}';
-    
-                str += '127.0.0.1${TABL}admin.local${NLINE}';
-                str += '127.0.0.1${TABL}admin_local${NLINE}';
-    
-                for (var o in sites_list) { 
-                    str += '127.0.0.1${TABL}' + o + '.local${NLINE}';
-                    str += '127.0.0.1${TABL}' + o + '_local${NLINE}';
-                }
-                str += (!sites_list || !Object.keys(sites_list).length) ? '"' : '${MARKE}"' + "\n";
-                str += 'echo "${v}\n${p}" > /etc/hosts' + "\n";
-                me.setCron('saveEtcHosts', str, callback);
-            });
-        }
-        
+           
         me.postLoadList = (callback) => { // use this
             me.getSites((sites_list) => {
                 var list = [];
@@ -225,17 +201,9 @@
                 callback(list);
             });
         }
-        me.saveSites = (list, callback, noEtcUpdate) => {
+        me.saveSites = (list, callback) => {
             fs.writeFile(sitesCfgFn, JSON.stringify(list), (err) => {
-                if (!noEtcUpdate) {
-                    me.saveEtcHosts(
-                        () => {
-                            callback(list);
-                        }
-                    )
-                } else {
-                    callback(list);
-                }
+                callback(list);
             });
         }
 
@@ -274,7 +242,7 @@
                             me.updateProxy(()=>{
                                 callback({status : 'success'})
                             }); 
-                        }, true);
+                        });
                 });
             } else {
                 callback({status : 'Failure', serverName : serverName, domain : domain})
@@ -292,7 +260,7 @@
                         me.saveSites(sitesCfg, 
                             ()=> {
                                 callback({status : 'success'})
-                            }, true);
+                            });
                     });
             });
         }
