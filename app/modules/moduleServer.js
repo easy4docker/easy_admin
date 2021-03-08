@@ -271,7 +271,9 @@
                     }
                     me.saveSites(list, 
                         ()=> {
-                            callback({status : 'success'})
+                            me.updateProxy(()=>{
+                                callback({status : 'success'})
+                            }); 
                         }, true);
                 });
             } else {
@@ -502,17 +504,19 @@
             let newConfig = '';
             me.getSites((sites) => {
                 for (var o in sites) {
-                    needProxy = (!sites[o].docker || !sites[o].docker.type || sites[o].docker.type !== 'webServer') ? needProxy : true;
-                    newConfig += "server {\n";
-                    newConfig += "  listen\t80;\n";
-                    newConfig += "  server_name\t" + sites[o].serverName + ".local" + ";\n";
-                    newConfig += "  location / {\n";
-                    newConfig += "      proxy_cache\toff;\n";
-                    var port = 10000 + (sites[o].unidx * 1000) + sites[o].docker.ports[0];
-                    newConfig += "      proxy_pass http://10.10.10.254:" + port + ";\n";
-                    newConfig += "      proxy_redirect\toff;" + "\n";
-                    newConfig += "  }\n";
-                    newConfig += "}\n";
+                    if ((sites[o]) && (sites[o].domain)) {
+                        needProxy = (!sites[o] || !sites[o].domain) ? needProxy : true;
+                        newConfig += "server {\n";
+                        newConfig += "  listen\t80;\n";
+                        newConfig += "  server_name\t" + sites[o].domain + ";\n";
+                        newConfig += "  location / {\n";
+                        newConfig += "      proxy_cache\toff;\n";
+                        var port = 10000 + (sites[o].unidx * 1000) + sites[o].docker.ports[0];
+                        newConfig += "      proxy_pass http://10.10.10.254:" + port + ";\n";
+                        newConfig += "      proxy_redirect\toff;" + "\n";
+                        newConfig += "  }\n";
+                        newConfig += "}\n";
+                    }
                 }
                 fs.writeFile(data_dir + '/sitesConfig/dataSetting', newConfig, () => {
                     if (needProxy) {
@@ -620,7 +624,7 @@
             const proxyCmd = "cd " + _env.app_root +  "\n sh _start.sh";
             me.getSites((sites) => {
                 for (var o in sites) {
-                    needProxy = (!sites[o].docker || !sites[o].docker.type || sites[o].docker.type !== 'webServer') ? needProxy : true;
+                    needProxy = (!sites[o] || !sites[o].domain) ? needProxy : true;
                 }
                 if (needProxy) {
                     fs.writeFile(data_dir + '/_isProxy', '1', () => {
