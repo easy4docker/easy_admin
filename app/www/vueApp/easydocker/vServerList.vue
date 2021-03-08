@@ -50,11 +50,7 @@
                                                 <div class="col-8 p-0 m-0 text-left">
                                                     <div class="p-1 m-1 mr-2 border rounded alert-info text-info">
                                                         <h5>{{k}} - {{item.name}}</h5>
-
-                                                        Domain : {{item.domainName}}  <a href="JavaScript: void(0)" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i> Edit</a>
-                                                        <span>
-                                                            <input type="text" class="form-control" v-model="item.domainName"  placeholder="Domain name">
-                                                        </span>
+                                                        <v-form-domain v-bind:record="item"></v-form-domain>
                                                     </div>
                                                     <span class="ml-1">
                                                         Type: <span class="text-info">{{(!item.docker) ? '' : item.docker.type}}</span>
@@ -439,7 +435,8 @@ module.exports = {
             'selectBranch'   : '/vueApp/easydocker/selectBranch.vue',
             'dockerAdupter'  : '/vueApp/easydocker/dockerAdupter.vue',
             'iframeObj'      : '/vueApp/easydocker/_iframe.vue',
-            'gridList'      : '/vueApp/easydocker/vGridList.vue'
+            'gridList'      : '/vueApp/easydocker/vGridList.vue',
+            'vFormDomain'   : '/vueApp/easydocker/vFormDomain.vue'
         }, 
         TPL :{}
     })
