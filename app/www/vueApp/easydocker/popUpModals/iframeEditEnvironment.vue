@@ -32,7 +32,7 @@ module.exports = {
         document._iFrameBridge.loadContents = (function(me, item) {
             return function(callback) {
                 me.getEditorContent(item, function(result) {
-                    callback(result.data);
+                    callback(result.content);
                 })
             }
         })(me, record);
@@ -59,16 +59,15 @@ module.exports = {
         },
         getEditorContent(record, callback) {
             var me = this;
-            var rec = {
-                serverName : record.name,
-                serverType : record.serverType
-            };
-            console.log('read env');
-            /*
-            me.root.dataEngine().getVserverValiables(rec, 
-                function(result) {
-                    callback(result);
-            });*/
+            me.root.dataEngine().appPost({
+                cmd :'getEditorContent',
+                data : {
+                    serverName : record.serverName
+                }
+            }, function(result) {
+                callback(result);
+            }, true);
+            
         }
     }
 }

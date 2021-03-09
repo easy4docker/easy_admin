@@ -144,7 +144,7 @@
                 }, 500)
             });
         }
-           
+
         me.postLoadList = (callback) => { // use this
             me.getSites((sites_list) => {
                 var list = [];
@@ -503,6 +503,13 @@
                 });
             })
         }
+        me.getEditorContent = (cbk) => {
+            const serverName =  req.body.data.serverName;
+            pkg.readJson(me.siteDataPath(serverName) + '/adminSetting.json', (data) => {
+                cbk({status : 'success', content : JSON.stringify(data)})
+            });
+        }
+        
         me.dockerConfig = (serverName, callback) => {
             me.getSites(
                 (list) => {

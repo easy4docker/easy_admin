@@ -60,7 +60,8 @@
                 'deleteVServer', 'addServer', 'setupServer',
                 'localGridAccessSetup', 'syncAppCode', 'getGridMatrix',
                 'addGrid', 'getGrids', 'removeGrid', 'gridHub',
-                'rebootServer', 'updateDomain'
+                'rebootServer', 'updateDomain',
+                'getEditorContent'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -131,7 +132,10 @@
             const data = req.body.data;
             cbk({status: 'success', gridServer : data.gridServer, token : pkg.md5(data.password)});
         }
-
+        me.getEditorContent = (cbk) => {
+            Servers.getEditorContent(cbk);
+        }
+        
         me.removeGrid = me.addGrid = me.getGrids = me.getGridMatrix = (cbk) => {
             var MGirid = pkg.require(env.root+ '/modules/moduleGrid.js');
             var grid = new MGirid(env, pkg, req, res);
@@ -216,7 +220,6 @@
         }
 
         me.getLocalEnv = (cbk) => {
-
             fs.readFile(data_dir+ '/_ip', 'utf-8', (err, data) => {
                 cbk({status: 'success', result : {IP: data}});
             });
