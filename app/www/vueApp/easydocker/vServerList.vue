@@ -76,6 +76,9 @@
                                                     </a><br/>
                                                     <a class="m-1" href="JavaScript:void(0)" v-on:click="switchBranch(k, item)">
                                                         <i class="fa fa-github" aria-hidden="true"></i> Switch branch
+                                                    </a><br/>                                                    
+                                                    <a class="m-1" href="JavaScript:void(0)" v-on:click="popupEditor(item)">
+                                                        <i class="fa fa-file-code-o mr-2" aria-hidden="true"></i>Edit Site Variabls
                                                     </a>
                                                 </div>
                                                 <div class="col-2 p-0 m-0 text-left">
@@ -325,6 +328,40 @@ module.exports = {
         outerPorts(item) {
             var me = this;
             return me.arrayPorts(item).join(',');
+        },
+        popupEditor(record) {
+            var me = this;
+            me.root.popUp(me).show({
+                insideModule: 'iframeObj',
+                insideModuleUrl: '/vueApp/easydocker/popUpModals/iframeObj.vue',
+                data : {
+                    url : '/html/tools/aceEditor.ect?mode=json',
+                    item : record
+                },
+                noDefaultCancel : true
+            }); 
+
+            document._iFrameBridge.close = (function(me) {
+                return function(v) {
+                    me.root.popUp(me).close();
+                }
+            })(me);
+
+            document._iFrameBridge.save = (function(me, item) {
+                return function(v) {
+                   me.saveEditorContent(item, v, function(result) {
+                       me.root.popUp(me).close();
+                   })
+                }
+            })(me, record);
+
+            document._iFrameBridge.loadContents = (function(me, item) {
+                return function(callback) {
+                   me.getEditorContent(item, function(result) {
+                       callback(result.data);
+                   })
+                }
+            })(me, record);
         }
     },
     components: VUEApp.loadComponents({
