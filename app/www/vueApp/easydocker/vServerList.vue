@@ -345,7 +345,7 @@ module.exports = {
     components: VUEApp.loadComponents({
         LOAD    : {
             'selectBranch'   : '/vueApp/easydocker/selectBranch.vue',
-            'dockerAdupter'  : '/vueApp/easydocker/dockerAdupter.vue',
+           /* 'dockerAdupter'  : '/vueApp/easydocker/dockerAdupter.vue',*/
             'gridList'      : '/vueApp/easydocker/vGridList.vue',
             'vFormDomain'   : '/vueApp/easydocker/vFormDomain.vue'
         }, 
