@@ -329,35 +329,6 @@ module.exports = {
             var me = this;
             return me.arrayPorts(item).join(',');
         },
-        saveEditorContent(record, v, callback) {
-            var me = this;
-            var rec = {
-                serverName : record.name,
-                serverType : record.serverType,
-                contents   : v
-            };
-            console.log(v);
-            console.log('read write env');
-            /*
-            me.root.dataEngine().saveVserverValiables(rec, 
-                function(result) {
-                    callback(result);
-            });
-            */
-        },
-        getEditorContent(record, callback) {
-            var me = this;
-            var rec = {
-                serverName : record.name,
-                serverType : record.serverType
-            };
-            console.log('read env');
-            /*
-            me.root.dataEngine().getVserverValiables(rec, 
-                function(result) {
-                    callback(result);
-            });*/
-        },
         popupEditor(record) {
             var me = this;
             me.root.popUp(me).show({
@@ -365,32 +336,10 @@ module.exports = {
                 insideModuleUrl: '/vueApp/easydocker/popUpModals/iframeEditEnvironment.vue',
                 data : {
                     url : '/html/tools/aceEditor.ect?mode=json',
-                    item : record
+                    record : record
                 },
                 noDefaultCancel : true
-            }); 
-            
-            document._iFrameBridge.closeBK = (function(me) {
-                return function(v) {
-                    me.root.popUp(me).close();
-                }
-            })(me);
-
-            document._iFrameBridge.save = (function(me, item) {
-                return function(v) {
-                   me.saveEditorContent(item, v, function(result) {
-                       me.root.popUp(me).close();
-                   })
-                }
-            })(me, record);
-
-            document._iFrameBridge.loadContents = (function(me, item) {
-                return function(callback) {
-                   me.getEditorContent(item, function(result) {
-                       callback(result.data);
-                   })
-                }
-            })(me, record);
+            });
         }
     },
     components: VUEApp.loadComponents({
