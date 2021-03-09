@@ -43,19 +43,16 @@ module.exports = {
     methods :{
         saveEditorContent(record, v, callback) {
             var me = this;
-            var rec = {
-                serverName : record.name,
-                serverType : record.serverType,
-                contents   : v
-            };
             console.log(v);
-            console.log('read write env');
-            /*
-            me.root.dataEngine().saveVserverValiables(rec, 
-                function(result) {
-                    callback(result);
-            });
-            */
+            me.root.dataEngine().appPost({
+                cmd :'saveEditorContent',
+                data : {
+                    serverName : record.serverName,
+                    content : v
+                }
+            }, function(result) {
+                callback(result);
+            }, true);
         },
         getEditorContent(record, callback) {
             var me = this;

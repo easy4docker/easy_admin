@@ -509,7 +509,15 @@
                 cbk({status : 'success', content : JSON.stringify(data)})
             });
         }
-        
+        me.saveEditorContent = (cbk) => {
+            const serverName =  req.body.data.serverName;
+            const content =  req.body.data.content;
+            const fn = me.siteDataPath(serverName) + '/adminSetting.json';
+            fs.writeFile(fn, content, (data) => {
+                cbk({status : 'success'})
+            });
+        }
+             
         me.dockerConfig = (serverName, callback) => {
             me.getSites(
                 (list) => {

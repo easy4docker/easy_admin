@@ -61,7 +61,7 @@
                 'localGridAccessSetup', 'syncAppCode', 'getGridMatrix',
                 'addGrid', 'getGrids', 'removeGrid', 'gridHub',
                 'rebootServer', 'updateDomain',
-                'getEditorContent'
+                'getEditorContent', 'saveEditorContent'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -135,7 +135,10 @@
         me.getEditorContent = (cbk) => {
             Servers.getEditorContent(cbk);
         }
-        
+        me.saveEditorContent = (cbk) => {
+            Servers.saveEditorContent(cbk);
+        }
+
         me.removeGrid = me.addGrid = me.getGrids = me.getGridMatrix = (cbk) => {
             var MGirid = pkg.require(env.root+ '/modules/moduleGrid.js');
             var grid = new MGirid(env, pkg, req, res);
