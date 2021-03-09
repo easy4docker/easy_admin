@@ -23,6 +23,7 @@ module.exports = {
     },
     mounted() {
         var me = this;
+        document._iFrameBridge = (document._iFrameBridge) ? document._iFrameBridge : {};
     },
    methods :{
         show(param) {
@@ -40,7 +41,7 @@ module.exports = {
             return me.cfg.insideModule;
         },
         close() {
-            var me = this;
+            var me = this
             me.cfg = {};
             me.caller = null;
             $('#confirm_modal').modal('hide');

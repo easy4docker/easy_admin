@@ -329,6 +329,29 @@ module.exports = {
             var me = this;
             return me.arrayPorts(item).join(',');
         },
+        saveEditorContent(record, v, callback) {
+            var me = this;
+            var rec = {
+                serverName : record.name,
+                serverType : record.serverType,
+                contents   : v
+            };
+            me.root.dataEngine().saveVserverValiables(rec, 
+                function(result) {
+                    callback(result);
+            });
+        },
+        getEditorContent(record, callback) {
+            var me = this;
+            var rec = {
+                serverName : record.name,
+                serverType : record.serverType
+            };
+            me.root.dataEngine().getVserverValiables(rec, 
+                function(result) {
+                    callback(result);
+            });
+        },
         popupEditor(record) {
             var me = this;
             me.root.popUp(me).show({
@@ -340,7 +363,8 @@ module.exports = {
                 },
                 noDefaultCancel : true
             }); 
-
+            
+            console.log(1111);
             document._iFrameBridge.close = (function(me) {
                 return function(v) {
                     me.root.popUp(me).close();

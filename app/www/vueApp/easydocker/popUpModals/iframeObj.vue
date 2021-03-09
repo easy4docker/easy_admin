@@ -13,6 +13,7 @@ module.exports = {
         }
     },
     mounted() {
+        
     },
     destroyed() {
        document._vueBridge = function(v) {}
