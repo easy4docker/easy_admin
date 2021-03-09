@@ -16,6 +16,7 @@ module.exports = {
     mounted() {
         const me = this;
         const record = me.parent.cfg.data.record;
+        const target = me.parent.cfg.data.target;
         document._iFrameBridge.close = (function(me) {
             return function(v) {
                 me.root.popUp(me).close();
@@ -23,7 +24,7 @@ module.exports = {
         })(me);
         document._iFrameBridge.save = (function(me, item) {
             return function(v) {
-                me.saveEditorContent(item, v, function(result) {
+                me.saveEditorContent(target, item, v, function(result) {
                     me.root.popUp(me).close();
                 })
             }
@@ -31,7 +32,7 @@ module.exports = {
 
         document._iFrameBridge.loadContents = (function(me, item) {
             return function(callback) {
-                me.getEditorContent(item, function(result) {
+                me.getEditorContent(target, item, function(result) {
                     callback(result.content);
                 })
             }
@@ -41,29 +42,56 @@ module.exports = {
        document._vueBridge = function(v) {}
     },
     methods :{
-        saveEditorContent(record, v, callback) {
+        saveEditorContent(target, record, v, callback) {
             var me = this;
-            me.root.dataEngine().appPost({
-                cmd :'saveEditorContent',
-                data : {
-                    serverName : record.serverName,
-                    content : v
-                }
-            }, function(result) {
-                callback(result);
-            }, true);
+            if (target === 'local') {
+                me.root.dataEngine().appPost({
+                    cmd :'saveEditorContent',
+                    data : {
+                        serverName : record.serverName,
+                        content : v
+                    }
+                }, function(result) {
+                    callback(result);
+                }, true);
+            }  else {
+                me.root.dataEngine().gridHub({
+                    cmd : 'saveEditorContent',
+                    target : target,
+                    data : {
+                        serverName : record.serverName,
+                        content : v
+                    }
+                },
+                function(result) {
+                    callback(result);
+                }, true);
+            }
+
         },
-        getEditorContent(record, callback) {
+        getEditorContent(target, record, callback) {
             var me = this;
-            me.root.dataEngine().appPost({
-                cmd :'getEditorContent',
-                data : {
-                    serverName : record.serverName
-                }
-            }, function(result) {
-                callback(result);
-            }, true);
-            
+            if (target === 'local') {
+                me.root.dataEngine().appPost({
+                    cmd :'getEditorContent',
+                    data : {
+                        serverName : record.serverName
+                    }
+                }, function(result) {
+                    callback(result);
+                }, true);
+            } else {
+                me.root.dataEngine().gridHub({
+                    cmd : 'getEditorContent',
+                    target : target,
+                    data : {
+                        serverName : record.serverName
+                    }
+                },
+                function(result) {
+                    callback(result);
+                }, true);
+            }
         }
     }
 }

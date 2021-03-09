@@ -77,7 +77,7 @@
                                                     <a class="m-1" href="JavaScript:void(0)" v-on:click="switchBranch(k, item)">
                                                         <i class="fa fa-github" aria-hidden="true"></i> Switch branch
                                                     </a><br/>                                                    
-                                                    <a class="m-1" href="JavaScript:void(0)" v-on:click="popupEditor(item)">
+                                                    <a class="m-1" href="JavaScript:void(0)" v-on:click="popupEditor(k, item)">
                                                         <i class="fa fa-file-code-o mr-2" aria-hidden="true"></i>Edit Site Variabls
                                                     </a>
                                                 </div>
@@ -329,14 +329,15 @@ module.exports = {
             var me = this;
             return me.arrayPorts(item).join(',');
         },
-        popupEditor(record) {
+        popupEditor(host, record) {
             var me = this;
             me.root.popUp(me).show({
                 insideModule: 'iframeObj',
                 insideModuleUrl: '/vueApp/easydocker/popUpModals/iframeEditEnvironment.vue',
                 data : {
                     url : '/html/tools/aceEditor.ect?mode=json',
-                    record : record
+                    record : record,
+                    target : host
                 },
                 noDefaultCancel : true
             }); 
