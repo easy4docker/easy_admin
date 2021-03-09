@@ -43,7 +43,6 @@ module.exports = {
     methods :{
         saveEditorContent(record, v, callback) {
             var me = this;
-            console.log(v);
             me.root.dataEngine().appPost({
                 cmd :'saveEditorContent',
                 data : {
