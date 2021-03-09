@@ -55,7 +55,7 @@
                                                         Type: <span class="text-info">{{(!item.docker) ? '' : item.docker.type}}</span>
                                                         Port : <span class="text-info"> {{outerPorts(item)}}</span>
                                                         Unidx : <span class="text-info"> {{item.unidx}}</span>
-                                                        <a :href="vServerLink(outerPorts(item))" target="_blank">
+                                                        <a :href="vServerLink(item, outerPorts(item))" target="_blank">
                                                             <i class="fa fa-globe fa ml-3" aria-hidden="true"></i> Web Link
                                                         </a>
                                                     </span><br/>
@@ -146,8 +146,8 @@ module.exports = {
         }
     },
     methods : {
-        vServerLink(port) {
-            return '//' + location.hostname + ':' + port;
+        vServerLink(rec, port) {
+            return '//' + ((rec.domain) ? rec.domain : (location.hostname + ':' + port));
         },
         switchGridHost(v) {
             const me = this;
