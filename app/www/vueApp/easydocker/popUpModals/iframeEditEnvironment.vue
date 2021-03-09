@@ -9,17 +9,24 @@ module.exports = {
     props: [],
     data: function() {
         return {
-            parent : this.$parent,
+            root :  this.$parent.root,
+            parent : this.$parent
         }
     },
     mounted() {
-        
+        const me = this;
+        document._iFrameBridge.close = (function(me) {
+            return function(v) {
+                me.root.popUp(me).close();
+            }
+        })(me);
+
     },
     destroyed() {
        document._vueBridge = function(v) {}
     },
     methods :{
-        
+
     }
 }
 </script>

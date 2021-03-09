@@ -336,10 +336,14 @@ module.exports = {
                 serverType : record.serverType,
                 contents   : v
             };
+            console.log(v);
+            console.log('read write env');
+            /*
             me.root.dataEngine().saveVserverValiables(rec, 
                 function(result) {
                     callback(result);
             });
+            */
         },
         getEditorContent(record, callback) {
             var me = this;
@@ -347,16 +351,18 @@ module.exports = {
                 serverName : record.name,
                 serverType : record.serverType
             };
+            console.log('read env');
+            /*
             me.root.dataEngine().getVserverValiables(rec, 
                 function(result) {
                     callback(result);
-            });
+            });*/
         },
         popupEditor(record) {
             var me = this;
             me.root.popUp(me).show({
                 insideModule: 'iframeObj',
-                insideModuleUrl: '/vueApp/easydocker/popUpModals/iframeObj.vue',
+                insideModuleUrl: '/vueApp/easydocker/popUpModals/iframeEditEnvironment.vue',
                 data : {
                     url : '/html/tools/aceEditor.ect?mode=json',
                     item : record
@@ -364,8 +370,7 @@ module.exports = {
                 noDefaultCancel : true
             }); 
             
-            console.log(1111);
-            document._iFrameBridge.close = (function(me) {
+            document._iFrameBridge.closeBK = (function(me) {
                 return function(v) {
                     me.root.popUp(me).close();
                 }
