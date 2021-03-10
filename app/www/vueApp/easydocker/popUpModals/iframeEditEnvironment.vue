@@ -23,16 +23,16 @@ module.exports = {
             }
         })(me);
         document._iFrameBridge.save = (function(me, item) {
-            return function(v) {
-                me.saveEditorContent(target, item, v, function(result) {
-                    me.root.popUp(me).close();
+            return function(fileName, v) {
+                me.saveEditorContent(target, item, v, fileName, function(result) {
+                  //  me.root.popUp(me).close();
                 })
             }
         })(me, record);
 
         document._iFrameBridge.loadContents = (function(me, item) {
-            return function(callback) {
-                me.getEditorContent(target, item, function(result) {
+            return function(fileName, callback) {
+                me.getEditorContent(target, item, fileName, function(result) {
                     callback(result.content);
                 })
             }
@@ -51,14 +51,15 @@ module.exports = {
        document._vueBridge = function(v) {}
     },
     methods :{
-        saveEditorContent(target, record, v, callback) {
+        saveEditorContent(target, record, v, fileName, callback) {
             var me = this;
             if (target === 'local') {
                 me.root.dataEngine().appPost({
                     cmd :'saveEditorContent',
                     data : {
                         serverName : record.serverName,
-                        content : v
+                        content : v,
+                        fileName : fileName
                     }
                 }, function(result) {
                     callback(result);
@@ -69,7 +70,8 @@ module.exports = {
                     target : target,
                     data : {
                         serverName : record.serverName,
-                        content : v
+                        content : v,
+                        fileName : fileName
                     }
                 },
                 function(result) {
@@ -78,13 +80,14 @@ module.exports = {
             }
 
         },
-        getEditorContent(target, record, callback) {
+        getEditorContent(target, record, fileName, callback) {
             var me = this;
             if (target === 'local') {
                 me.root.dataEngine().appPost({
                     cmd :'getEditorContent',
                     data : {
-                        serverName : record.serverName
+                        serverName : record.serverName,
+                        fileName : fileName
                     }
                 }, function(result) {
                     callback(result);
@@ -94,7 +97,8 @@ module.exports = {
                     cmd : 'getEditorContent',
                     target : target,
                     data : {
-                        serverName : record.serverName
+                        serverName : record.serverName,
+                        fileName : fileName
                     }
                 },
                 function(result) {

@@ -513,11 +513,17 @@
         }
 
         me.getEditorContent = (cbk) => {
-            me.prepareEditorPath((dirn) => {
-                pkg.readJson(dirn + '/adminSetting.json', (data) => {
-                    cbk({status : 'success', content : JSON.stringify(data)})
+            const fileName = req.body.data.fileName;
+            if (fileName) {
+                me.prepareEditorPath((dirn) => {
+                    fs.readFile(dirn + '/' + fileName, 'utf-8', (err, data) => {
+                        cbk({status : 'success', content : data})
+                    });
                 });
-            });
+            } else {
+                cbk({status : 'failure', message : 'Missing fileName'});
+            }
+
         }
 
         me.getEditorFiles = (cbk) => {
@@ -529,13 +535,18 @@
         }
 
         me.saveEditorContent = (cbk) => {
-            me.prepareEditorPath((dirn) => {
-                const fn = dirn + '/adminSetting.json';
-                const content =  req.body.data.content
-                fs.writeFile(fn, content, (data) => {
-                    cbk({status : 'success'})
+            const fileName = req.body.data.fileName;
+            if (fileName) {
+                me.prepareEditorPath((dirn) => {
+                    const fn = dirn  + '/' + fileName;
+                    const content =  req.body.data.content
+                    fs.writeFile(fn, content, (data) => {
+                        cbk({status : 'success'})
+                    });
                 });
-            });
+            } else {
+                cbk({status : 'failure', message : 'Missing fileName'});
+            }
         }
              
         me.dockerConfig = (serverName, callback) => {

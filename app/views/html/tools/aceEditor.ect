@@ -42,12 +42,10 @@
         width : 100%;
         min-height:  30rem;
         padding: 30px;
-        /*
-        position: absolute;
-        top: 3.2em;
-        right: 0;
-        bottom: 4em;
-        left: 0;*/
+    }
+    #content-section {
+        width : 100%;
+        min-height:  30rem;
     }
 </style>
 <script src="/js/jquery-3.5.0.min.js"></script>
@@ -55,16 +53,16 @@
 <body>
     <div class="container-fluid editor-frame">
         <div class="row">
-            <div class="col-4 p-2"><b>ACE <%=modeName%> Editor</b></div>
+            <div class="col-4 p-2"><b>ACE Code Editor</b> <span id="editedFile"></span></div>
             <div class="col-4 text-left" id="message-section"></div>
             <div class="col-4 text-right">
                 <span id = "menu-section"></span>
                 <button class="btn btn-secondary btn-sm m-1 mr-0 text-right" onClick="closeMe();">Cancel</button>
             </div>
         </div>
-        <div class="row" style="border:1px double #333">
-            <div class="col-2 pt-2 text-center">File List<hr/>
-                <span id="file_list"></span>
+        <div id="content-section" class="row" style="border:1px double #333">
+            <div class="col-2 pt-2 text-left">File List:
+                <div id="file_list" class="text-left"></div>
             </div>
             <div id="editor" class="col-10"></div>
         </div>
@@ -74,7 +72,17 @@
 <script src="/js/ace/src-min/ace.js" crossorigin="anonymous"></script>
 <script>
     var editor = ace.edit("editor");
-    editor.getSession().setMode("<%=modeCode%>");
+    var currentFile = '';
+    const MODELS = {
+        json    :  {code : 'ace/mode/json', name : 'JSON'},
+        js      :  {code : 'ace/mode/javascript', name : 'JavaScript'},
+        xml     :  {code : 'ace/mode/xml', name : 'XML'},
+        html    :  {code : 'ace/mode/html', name : 'HTML'},
+        css     :  {code : 'ace/mode/css', name : 'CSS'},
+        py      :  {code : 'ace/mode/python.js', name : 'python'},
+        txt     :  {code : 'ace/mode/xquery', name : 'Text'}
+    }
+
     editor.setTheme("ace/theme/twilight");
 
     function closeMe() {
@@ -84,7 +92,7 @@
     function save(editor) {
         let valid = (Object.keys(editor.getSession().getAnnotations()).length === 0) ? true : false;
         if (valid) {
-            parent.document._iFrameBridge.save(editor.getValue())
+            parent.document._iFrameBridge.save(currentFile, editor.getValue())
         }
     }
     function getList() {
@@ -92,7 +100,7 @@
             if (!result.list) return true;
             let str = '';
             for (var o in result.list) {
-                str += result.list[o] + '<br>';
+                str += '<a href="JavaScript: void(0)" onClick="loadContent(\'' + result.list[o] + '\')">' + result.list[o] + '</a><br>';
             }
             $('#file_list').html(str);
         })
@@ -104,7 +112,9 @@
            document.getElementById('message-section').innerHTML = '';
         } else {
             document.getElementById('menu-section').innerHTML = '<button class="btn btn-primary btn-sm m-1" disabled>Save</button>';
-            document.getElementById('message-section').innerHTML = '<span class="text-danger m-1"><%=errorMessage%></span>';
+            let mp = currentFile.match(/\.([a-z]+)$/);
+            let model_obj= ((mp[1]) && (MODELS[mp[1]])) ? MODELS[mp[1]] : MODELS['txt'];
+            document.getElementById('message-section').innerHTML = '<span class="text-danger m-1">Incorrect ' + model_obj.name + ' format!</span>';
         }
     }
 
@@ -115,8 +125,22 @@
         validationMessage(editor);
     })
 
-    parent.document._iFrameBridge.loadContents(function(data) {
+    function loadContent(fileName) {
         getList();
-        editor.session.setValue(data);
-    });
+        if (fileName) {
+            $('#editor').show();
+            $('#editedFile').html('(' + fileName + ')');
+            currentFile = fileName;
+            let mp = currentFile.match(/\.([a-z]+)$/);
+            let model_obj= ((mp[1]) && (MODELS[mp[1]])) ? MODELS[mp[1]] : MODELS['txt'];
+            parent.document._iFrameBridge.loadContents(currentFile, function(data) {
+                editor.getSession().setMode(model_obj.code);
+                editor.session.setValue(data);
+            });
+            
+        } else {
+            $('#editor').hide();
+        }
+    };
+    loadContent('');
 </script>
