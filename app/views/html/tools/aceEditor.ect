@@ -50,6 +50,7 @@
         left: 0;*/
     }
 </style>
+<script src="/js/jquery-3.5.0.min.js"></script>
 </head>
 <body>
     <div class="container-fluid editor-frame">
@@ -61,8 +62,11 @@
                 <button class="btn btn-secondary btn-sm m-1 mr-0 text-right" onClick="closeMe();">Cancel</button>
             </div>
         </div>
-        <div class="row">
-            <div id="editor" class="col-12"></div>
+        <div class="row" style="border:1px double #333">
+            <div class="col-2 pt-2 text-center">File List<hr/>
+                <span id="file_list"></span>
+            </div>
+            <div id="editor" class="col-10"></div>
         </div>
     </div>
 </body>
@@ -83,6 +87,17 @@
             parent.document._iFrameBridge.save(editor.getValue())
         }
     }
+    function getList() {
+        parent.document._iFrameBridge.loadList(function(result) {
+            if (!result.list) return true;
+            let str = '';
+            for (var o in result.list) {
+                str += result.list[o] + '<br>';
+            }
+            $('#file_list').html(str);
+        })
+    }
+
     function validationMessage(editor) {
         if (Object.keys(editor.getSession().getAnnotations()).length === 0) {
            document.getElementById('menu-section').innerHTML = '<button class="btn btn-warning btn-sm m-1" onClick="save(editor);">Save</button>';
@@ -101,6 +116,7 @@
     })
 
     parent.document._iFrameBridge.loadContents(function(data) {
+        getList();
         editor.session.setValue(data);
     });
 </script>

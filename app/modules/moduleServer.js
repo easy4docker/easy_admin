@@ -503,18 +503,38 @@
                 });
             })
         }
-        me.getEditorContent = (cbk) => {
+
+        me.prepareEditorPath = (cbk) => {
             const serverName =  req.body.data.serverName;
-            pkg.readJson(me.siteDataPath(serverName) + '/adminSetting.json', (data) => {
-                cbk({status : 'success', content : JSON.stringify(data)})
+            const dirn = me.siteDataPath(serverName) + '/siteConfig'
+            exec('mkdir -p ' + dirn, {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
+                cbk(dirn);
             });
         }
+
+        me.getEditorContent = (cbk) => {
+            me.prepareEditorPath((dirn) => {
+                pkg.readJson(dirn + '/adminSetting.json', (data) => {
+                    cbk({status : 'success', content : JSON.stringify(data)})
+                });
+            });
+        }
+
+        me.getEditorFiles = (cbk) => {
+            me.prepareEditorPath((dirn) => {
+                fs.readdir(dirn, (err, data) => {
+                    cbk({status : 'success', list: data})
+                });
+            });
+        }
+
         me.saveEditorContent = (cbk) => {
-            const serverName =  req.body.data.serverName;
-            const content =  req.body.data.content;
-            const fn = me.siteDataPath(serverName) + '/adminSetting.json';
-            fs.writeFile(fn, content, (data) => {
-                cbk({status : 'success'})
+            me.prepareEditorPath((dirn) => {
+                const fn = dirn + '/adminSetting.json';
+                const content =  req.body.data.content
+                fs.writeFile(fn, content, (data) => {
+                    cbk({status : 'success'})
+                });
             });
         }
              

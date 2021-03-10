@@ -61,7 +61,7 @@
                 'localGridAccessSetup', 'syncAppCode', 'getGridMatrix',
                 'addGrid', 'getGrids', 'removeGrid', 'gridHub',
                 'rebootServer', 'updateDomain',
-                'getEditorContent', 'saveEditorContent'
+                'getEditorContent', 'getEditorFiles', 'saveEditorContent'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -132,11 +132,8 @@
             const data = req.body.data;
             cbk({status: 'success', gridServer : data.gridServer, token : pkg.md5(data.password)});
         }
-        me.getEditorContent = (cbk) => {
-            Servers.getEditorContent(cbk);
-        }
-        me.saveEditorContent = (cbk) => {
-            Servers.saveEditorContent(cbk);
+        me.getEditorContent = me.getEditorFiles = me.saveEditorContent = (cbk) => {
+            Servers[req.body.cmd](cbk);
         }
 
         me.removeGrid = me.addGrid = me.getGrids = me.getGridMatrix = (cbk) => {

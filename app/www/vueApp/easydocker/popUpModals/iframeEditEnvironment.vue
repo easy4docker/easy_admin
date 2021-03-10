@@ -37,6 +37,15 @@ module.exports = {
                 })
             }
         })(me, record);
+
+        document._iFrameBridge.loadList = (function(me, item) {
+            return function(callback) {
+                me.getEditorFiles(target, item, function(result) {
+                    callback(result);
+                })
+            }
+        })(me, record);
+  
     },
     destroyed() {
        document._vueBridge = function(v) {}
@@ -83,6 +92,30 @@ module.exports = {
             } else {
                 me.root.dataEngine().gridHub({
                     cmd : 'getEditorContent',
+                    target : target,
+                    data : {
+                        serverName : record.serverName
+                    }
+                },
+                function(result) {
+                    callback(result);
+                }, true);
+            }
+        },
+        getEditorFiles(target, record, callback) {
+            var me = this;
+            if (target === 'local') {
+                me.root.dataEngine().appPost({
+                    cmd :'getEditorFiles',
+                    data : {
+                        serverName : record.serverName
+                    }
+                }, function(result) {
+                    callback(result);
+                }, true);
+            } else {
+                me.root.dataEngine().gridHub({
+                    cmd : 'getEditorFiles',
                     target : target,
                     data : {
                         serverName : record.serverName
