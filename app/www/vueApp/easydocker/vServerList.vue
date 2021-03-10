@@ -335,7 +335,7 @@ module.exports = {
                 insideModule: 'iframeObj',
                 insideModuleUrl: '/vueApp/easydocker/popUpModals/iframeEditEnvironment.vue',
                 data : {
-                    url : '/html/tools/aceEditor.ect?mode=json',
+                    url : '/html/tools/aceEditor.ect',
                     record : record,
                     target : host
                 },
