@@ -1,33 +1,3 @@
-<%
-    if @mode is 'json' 
-        modeName="JSON"
-        modeCode="ace/mode/json"
-        errorMessage="Incorrect JSON format!"
-    else if @mode is 'javascript' 
-        modeName="JavaScript"
-        modeCode="ace/mode/javascript"
-        errorMessage="Incorrect javascript format!"
-    else if @mode is 'xml' 
-        modeName="XML"
-        modeCode="ace/mode/xml"
-        errorMessage="Incorrect XML format!"
-    else if @mode is 'html' 
-        modeName="HTML"
-        modeCode="ace/mode/html"
-        errorMessage="Incorrect HTML format!"
-    else if @mode is 'css' 
-        modeName="CSS"
-        modeCode="ace/mode/css"
-        errorMessage="Incorrect css format!"
-    else if @mode is 'python' 
-        modeName="python"
-        modeCode="ace/mode/python.js"
-        errorMessage="Incorrect python format!"
-    else
-        modeName="Text"
-        modeCode="ace/mode/xquery"
-        errorMessage="spelling checks happens"
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
