@@ -327,7 +327,8 @@ module.exports = {
         },
         outerPorts(item) {
             var me = this;
-            return me.arrayPorts(item).join(',');
+            return me.arrayPorts(item)[0];
+            // .join(',');
         },
         popupEditor(host, record) {
             var me = this;
