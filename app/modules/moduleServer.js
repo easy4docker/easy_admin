@@ -180,7 +180,7 @@
                         created     : new Date().getTime()
                     };
                     fs.stat(me.siteCodePath(serverName) + '/dockerSetting/adupter',  (err, stat)  => {
-                        data = docker.adupter = (!err) ? true : false;
+                        data.docker.adupter = (!err) ? true : false;
                         list[serverName] = data;
                         me.saveSites(list, (list) => {
                             callback({status:'success', list : list});
@@ -259,11 +259,16 @@
                     me.getSites((sitesCfg) => {
                         if (sitesCfg[serverName]) {
                             sitesCfg[serverName].branch = branch;
-                        }
-                        me.saveSites(sitesCfg, 
-                            ()=> {
-                                callback({status : 'success'})
+                            fs.stat(me.siteCodePath(serverName) + '/dockerSetting/adupter',  (err, stat)  => {
+                                sitesCfg[serverName].docker.adupter = (!err) ? true : false;
+                                me.saveSites(sitesCfg, () => {
+                                    callback({status : 'success'})
+                                });
                             });
+                        } else {
+                            callback({status : 'success'})
+                        }
+                        return true;
                     });
             });
         }
