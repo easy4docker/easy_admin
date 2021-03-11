@@ -178,10 +178,13 @@
                         branch      : data['branch'],
                         unidx       : me.getNewUnIdx(list),
                         created     : new Date().getTime()
-                    }
-                    list[serverName] = data;
-                    me.saveSites(list, (list) => {
-                        callback({status:'success', list : list});
+                    };
+                    fs.stat(me.siteCodePath(serverName) + '/dockerSetting/adupter',  (err, stat)  => {
+                        data = docker.adupter = (!err) ? true : false;
+                        list[serverName] = data;
+                        me.saveSites(list, (list) => {
+                            callback({status:'success', list : list});
+                        });
                     });
             });
         }
@@ -402,7 +405,6 @@
             };
             
             _f['addSiteCronFolder'] = function(cbk) {
-                
                 let cmd = 'mkdir -p ' + me.siteDataPath(data.serverName) + '/commCron/';
                 exec(cmd, {maxBuffer: 224 * 2048},
                     function(error, stdout, stderr) {
