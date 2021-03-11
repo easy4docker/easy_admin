@@ -68,7 +68,7 @@
                                                     <span class="ml-1">
                                                         <select-branch v-bind:record="item" v-bind:branch="item.branch" v-bind:host="k"></select-branch>
                                                     </span>
-                                                    <!--docker-adupter v-bind:item="item"></docker-adupter-->
+                                                    <docker-adupter v-bind:item="item"></docker-adupter>
                                                 </div>
                                                 <div class="col-2 p-0 m-0 text-left">
                                                     <a class="m-1" href="JavaScript:void(0)" v-on:click="pullCode(k, item)">
@@ -347,7 +347,7 @@ module.exports = {
     components: VUEApp.loadComponents({
         LOAD    : {
             'selectBranch'   : '/vueApp/easydocker/selectBranch.vue',
-           /* 'dockerAdupter'  : '/vueApp/easydocker/dockerAdupter.vue',*/
+            'dockerAdupter'  : '/vueApp/easydocker/dockerAdupter.vue',
             'gridList'      : '/vueApp/easydocker/vGridList.vue',
             'vFormDomain'   : '/vueApp/easydocker/vFormDomain.vue'
         }, 

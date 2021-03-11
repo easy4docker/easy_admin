@@ -1,5 +1,5 @@
 <template>
-    <div>  
+    <div class="text-left ml-1">
       <component v-bind:is="dockerPlugin()" v-bind:plugin_path="pluginPath" v-bind:item="item"></component>
     </div>
 </template>
@@ -15,7 +15,9 @@ module.exports = {
         }
     },
     mounted () {
+        
         var me = this;
+        console.log('/_dockerAdupter/' + me.item.serverType + '/' + me.item.name);
         var cfg = {};
         cfg['dockerPlugO' + me.item.name] = me.pluginPath + '/ui/main.vue';
         VUEApp.dynamicLoadComponent(cfg, me);
