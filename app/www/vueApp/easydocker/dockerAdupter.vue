@@ -11,13 +11,13 @@ module.exports = {
         var me = this;
         return {
             root :  this.$parent.root,
-            pluginPath : '/_dockerAdupter/' + me.item.serverType + '/' + me.item.name
+            pluginPath : '/_dockerAdupter/sites/' + me.item.name
         }
     },
     mounted () {
         
         var me = this;
-        console.log('/_dockerAdupter/' + me.item.serverType + '/' + me.item.name);
+        console.log('/_dockerAdupter/sites/' + me.item.name);
         var cfg = {};
         cfg['dockerPlugO' + me.item.name] = me.pluginPath + '/ui/main.vue';
         VUEApp.dynamicLoadComponent(cfg, me);
