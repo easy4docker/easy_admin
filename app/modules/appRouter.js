@@ -15,6 +15,13 @@
 		me.get = () => {
 			let p = req.params[0],
 				mp = p.match(/\/([^\/]+)(\/|$)/);
+				
+			if (mp && mp[1] === '_dockerAdupter') {
+				var MAdupter= pkg.require(env.root+ '/modules/moduleAdupter.js');
+				let maupter =  new MAdupter(env, pkg, req, res);
+				maupter.call();
+				return true;
+			}
 
 			if (mp && mp[1] === '_setupGridServer') {
 				fs.readFile(env.dataFolder  + '/_ip', 'utf-8', (err, ipData) => {
