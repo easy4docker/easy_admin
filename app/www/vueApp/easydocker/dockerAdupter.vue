@@ -17,8 +17,7 @@ module.exports = {
     mounted () {
         var me = this;
         var cfg = {};
-        if (me.item.docker.adupter) {
-            console.log(me.item);
+        if (me.item && me.item.docker && me.item.docker.adupter) {
             cfg['dockerPlugO' + me.item.name] = me.pluginPath + '/ui/main.vue';
             VUEApp.dynamicLoadComponent(cfg, me);
             me.$mount();
