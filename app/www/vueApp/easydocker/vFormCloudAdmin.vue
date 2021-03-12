@@ -21,8 +21,23 @@ module.exports = {
     },
     mounted() {
         var me = this;
+        setTimeout(function() {
+            me.getVToken();
+        }, 50);
     },
     methods : {
+        getVToken() {
+            var me = this;
+            me.root.dataEngine()[(me.host === 'local') ? 'appPost' : 'gridHub']({
+                    cmd :'getSiteToken',
+                    serverName : me.record.name,
+                    target : me.host,
+                    dataType: 'JSON'
+                },function(result) {
+                    me.token = result.token);
+                    me.$parent.triggerSpinner = false;
+                }, false);
+        },
         arrayPorts(item) {
             var me = this;
             var arr = [];

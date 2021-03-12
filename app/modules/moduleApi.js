@@ -61,7 +61,8 @@
                 'localGridAccessSetup', 'syncAppCode', 'getGridMatrix',
                 'addGrid', 'getGrids', 'removeGrid', 'gridHub',
                 'rebootServer', 'updateDomain',
-                'getEditorContent', 'getEditorFiles', 'saveEditorContent'
+                'getEditorContent', 'getEditorFiles', 'saveEditorContent',
+                'getSiteToken'
             ];
             if (METHODS.indexOf(req.body.cmd) === -1) {
                me.comm.sendErrorJson('missing cmd!');
@@ -95,6 +96,15 @@
             Servers.rebootServer(cbk);
         }
 
+       me.getSiteToken = (cbk) => {
+            Servers['getInitToken'](req.body.serverName,
+                (data) => {
+                    me.refreshTokenSend(data, () => {
+                        cbk({status:'success', token:data});
+                    });
+                });
+       }
+       
        me.stopVServer = me.pullCode = me.startVServer = (cbk) => {
             Servers[req.body.cmd](req.body.serverName,
                 (data) => {
