@@ -35,34 +35,30 @@
                 try {
                     me.dockerEnv.rootKey = pkg.require(key_dir + '/' + mp[2] + '/key.json');
                 } catch (e) {}
-                me.pluginFn = data_dir + '/' + mp[1] + '/' + mp[2] + '/code/dockerSetting/adupter/' + mp[3] + '/' + mp[4];
+                const pluginEnv = {
+                    root : data_dir + '/' + mp[1] + '/' + mp[2]
+                }
+               const pluginFn = data_dir + '/' + mp[1] + '/' + mp[2] + '/code/dockerSetting/adupter/' + mp[3] + '/' + mp[4];
+                
                 me.dockerEnv.siteConfig = me.getSiteConfig(mp[2]);
-                me.request(mp[3], (!req.body || !Object.keys(req.body).length || mp[3] === 'ui') ? null : req.body);
-            }
-        },
-    
-        this.request = (type, requestData) => {
-            if (type === 'ui') {
-                fs.stat(me.pluginFn, function(err, stat) {
-                    if(err == null) {
-                        fs.readFile(me.pluginFn, (err, data)=> {
-                            me.sendHeader('js');
-                            res.send(data);
-                        });
-                    } else {
-                        let fn = me.pluginFn.split('/').pop().split('#')[0].split('?')[0];
-                        res.send(fn + ' does not exist!');
-                    }
-                });
-            } else {
-                try {
-                    var MgetApi= pkg.require(me.pluginFn);
-                    var mgetapi = new MgetApi();
-                    mgetapi.call({dockerEnv : me.dockerEnv, requestData: requestData}, (data) => {
+                if (mp[3] === 'ui') {
+                    fs.stat(pluginFn, function(err, stat) {
+                        if(err == null) {
+                            fs.readFile(pluginFn, (err, data)=> {
+                                me.sendHeader('js');
+                                res.send(data);
+                            });
+                        } else {
+                            let fn = pluginFn.split('/').pop().split('#')[0].split('?')[0];
+                            res.send(fn + ' does not exist!');
+                        }
+                    });
+                } else {
+                    var dockerPLUG= pkg.require(pluginFn);
+                    var plugObj = new dockerPLUG(pluginEnv);
+                    plugObj.call(req.body, (data) => {
                         res.send(data);
-                    });               
-                } catch (e) {
-                    res.send(e.message);
+                    });     
                 }
             }
         },

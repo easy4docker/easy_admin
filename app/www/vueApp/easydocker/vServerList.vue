@@ -55,9 +55,10 @@
                                                         Type: <span class="text-info">{{(!item.docker) ? '' : item.docker.type}}</span>
                                                         Port : <span class="text-info"> {{outerPorts(item)}}</span>
                                                         Unidx : <span class="text-info"> {{item.unidx}}</span>
-                                                        <a :href="vServerLink(item, outerPorts(item))" target="_blank">
+                                                        <a :href="vServerLink(item, outerPorts(item))" v-if="item.docker.type === 'webServer'" target="_blank">
                                                             <i class="fa fa-globe fa ml-3" aria-hidden="true"></i> Web Link
                                                         </a>
+                                                        <cloud-admin v-if="item.docker.type === 'database'" v-bind:record="item" v-bind:host="k"></cloud-admin>
                                                     </span><br/>
                                                     <span class="ml-1">
                                                         gitHub : <span class="text-info"> {{item.gitHub}}</span>
@@ -346,10 +347,12 @@ module.exports = {
     },
     components: VUEApp.loadComponents({
         LOAD    : {
-            'selectBranch'   : '/vueApp/easydocker/selectBranch.vue',
-            'dockerAdupter'  : '/vueApp/easydocker/dockerAdupter.vue',
+            'selectBranch'  : '/vueApp/easydocker/selectBranch.vue',
+            'dockerAdupter' : '/vueApp/easydocker/dockerAdupter.vue',
             'gridList'      : '/vueApp/easydocker/vGridList.vue',
-            'vFormDomain'   : '/vueApp/easydocker/vFormDomain.vue'
+            'vFormDomain'   : '/vueApp/easydocker/vFormDomain.vue',
+            'cloudAdmin'    : '/vueApp/easydocker/vFormCloudAdmin.vue'
+            
         }, 
         TPL :{}
     })
