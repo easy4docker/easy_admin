@@ -34,7 +34,7 @@ module.exports = {
                     target : me.host,
                     dataType: 'JSON'
                 },function(result) {
-                    me.token = result.token);
+                    me.token = result.token;
                     me.$parent.triggerSpinner = false;
                 }, false);
         },
