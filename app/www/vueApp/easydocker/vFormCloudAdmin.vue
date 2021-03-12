@@ -1,6 +1,6 @@
 <template>
     <span class="text-left">
-        <a href="JavaScript:void(0)" onClick="$('#admin_form').submit()"><i class="fa fa-cogs fa ml-3" aria-hidden="true"></i> Open cloud UI</a>
+        <a href="JavaScript:void(0)" onClick="$('#admin_form').submit()"><i class="fa fa-cogs fa ml-3" aria-hidden="true"></i> Open Cloud UI</a>
         <form id="admin_form" :action="vServerLink(record)" method="post" target="_blank" style="display:none">
             <input name="token" type="hidden" :value="token"/>
         </form>
