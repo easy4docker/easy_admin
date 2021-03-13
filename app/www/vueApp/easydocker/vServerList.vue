@@ -213,7 +213,6 @@ module.exports = {
             for (k in me.root.gridSvrs) {
                 _f[k] = (function(k) {
                     return function(cbk) {
-                        
                         me.getGridHub(k, cbk);
                     }})(k)
             }
@@ -221,9 +220,7 @@ module.exports = {
             cp.parallel(_f, function(result){
                 me.list = {local : cp.data.local};
                 for (k in me.root.gridSvrs) {
-                    console.log(cp.data[k]);
-
-                    me.list[k] = (!cp.data[k] || cp.data[k].status !== 'success') ? [] : cp.data[k];
+                    me.list[k] = (!cp.data[k]) ? [] : cp.data[k];
                 }
             }, 6000);
             
