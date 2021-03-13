@@ -223,7 +223,7 @@ module.exports = {
                 for (k in me.root.gridSvrs) {
                     console.log(cp.data[k]);
 
-                    me.list[k] = (!cp.data[k] || !cp.data[k].status !== 'success') ? [] : cp.data[k];
+                    me.list[k] = (!cp.data[k] || cp.data[k].status !== 'success') ? [] : cp.data[k];
                 }
             }, 6000);
             
