@@ -56,6 +56,7 @@
 				api.call('get', false);
 				return true
 			}
+			// ---- router related code
 			if (mp && mp[1] === 'app') {
 				var fn = env.root + '/www/index.html';
 				res.sendFile(fn);
