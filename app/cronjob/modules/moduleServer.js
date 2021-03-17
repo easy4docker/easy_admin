@@ -302,7 +302,7 @@ const { eventNames } = require('process');
                                             } catch (e) {}
                                         
                                             me.removeMark(() => {
-                                                console.log('mark removed! C==' + cmd);
+                                                console.log('mark removed!');
                                             }); 
                                     });
                                     
