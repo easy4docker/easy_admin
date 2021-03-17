@@ -15,6 +15,7 @@ const { eventNames } = require('process');
                 if (err && err.code === 'ENOENT') {
                     me.siteCommCronFn = env.dataFolder + '/sites/' + server + '/data/commCron/' + file;
                     fs.writeFile(me.siteCommCronMark, me.siteCommCronFn, () => {
+                        console.log('try siteCommCronMark =>' + me.siteCommCronFn);
                         me.readJson(me.siteCommCronFn, (data) => {
                             if (typeof me[data.code] === 'function') {
                                 console.log(data.code);
