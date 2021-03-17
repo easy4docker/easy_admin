@@ -256,41 +256,58 @@ const { eventNames } = require('process');
                 if (err && err.code === 'ENOENT') {
                     let dirn = folderObj.dir + '/' + folderObj.folder + '/';
                     me.readJson(dirn + 'input/_dockerSetting.json',  (setting) => {
-                        let host = (setting.onDemandCallbackHost === 'localhost') ? 'localhost' : (setting.onDemandCallbackHost); 
-                        let cmd = 'cd ' + dirn;
-
+                        let host = (setting.onDemandCallbackHost === 'localhost') ? 'localhost' : (setting.onDemandCallbackHost);
                         fs.writeFile(me.siteCommCronMark, folderObj.folder, () => {
                             me.serverStatus((sts) => {
-                                
-                                fs.readdir(dirn, (err, list) => {
-                                    const outFolder = 'gridReturn_' + new Date().getTime();
-                                    cmd += ' && curl -F "objPath=' + folderObj.dir + '/' + outFolder + '/input" ';
-                                    cmd += ' -F "objPath=' + folderObj.dir + '/' + outFolder + '/output" ';
-                                    cmd += ' -F "gridToken=' + sts.gridToken + '" ';
-                                    const filterList = ['ondemand_finished.data'];
-                                    for (let i = 0; i < list.length; i++) {
-                                        if (filterList.indexOf(list[i]) === -1) {
-                                            cmd += ' -F file=@' + list[i];
+                                const targetFolder = 'gridReturn_' + new Date().getTime();
+                                const filterList = [];
+                                const cp = new CP();
+                                const _f = {};
+
+                                _f['input'] = (cbk) => {
+                                    let cmd = 'cd ' + dirn + 'input';
+                                        fs.readdir(dirn + 'input', (err, list) => {
+                                            cmd += ' && curl -F "objPath=' + folderObj.dir + '/' + targetFolder + '/input" ';
+                                            cmd += ' -F "gridToken=' + sts.gridToken + '" ';
+                                            for (let i = 0; i < list.length; i++) {
+                                                if (filterList.indexOf(list[i]) === -1) {
+                                                    cmd += ' -F file=@' + list[i];
+                                                }
+                                            }
+                                            cmd += ' ' + host + '/upload';
+                                            cbk(cmd)
+                                        });
+                                }
+                                _f['output'] = (cbk) => {
+                                    let cmd = 'cd ' + dirn + 'output';
+                                    fs.readdir(dirn + 'output', (err, list) => {
+                                        cmd += ' && curl -F "objPath=' + folderObj.dir + '/' + targetFolder + '/output" ';
+                                        cmd += ' -F "gridToken=' + sts.gridToken + '" ';
+                                        for (let i = 0; i < list.length; i++) {
+                                            if (filterList.indexOf(list[i]) === -1) {
+                                                cmd += ' -F file=@' + list[i];
+                                            }
                                         }
-                                    }
-                                    cmd += ' ' + host + '/upload';
-                                    cmd += ' && rm -fr ' + dirn + "\n"
+                                        cmd += ' ' + host + '/upload';
+                                        cbk(cmd)
+                                    });
+                                }
+                                cp.serial(_f, (resultData)=> {
+                                    let cmd = cp.data.input + ' && ' + cp.data.output +  ' && rm -fr ' + dirn + "\n";
                                     exec(cmd, {maxBuffer: 224 * 2048},
                                         function(error, stdout, stderr) {
                                             var jdata = {};
                                             try {
                                             jdata = JSON.parse(stdout);
                                             } catch (e) {}
-                                           
+                                        
                                             me.removeMark(() => {
-                                                console.log('mark removed!');
+                                                console.log('mark removed! C==' + cmd);
                                             }); 
                                     });
                                     
-                                })
-
-                            })
-
+                                },30000);
+                            });
                         });
                     })
                 } else {
