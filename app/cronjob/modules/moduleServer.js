@@ -15,7 +15,6 @@ const { eventNames } = require('process');
                 if (err && err.code === 'ENOENT') {
                     me.siteCommCronFn = env.dataFolder + '/sites/' + server + '/data/commCron/' + file;
                     fs.writeFile(me.siteCommCronMark, me.siteCommCronFn, () => {
-                        console.log('try siteCommCronMark =>' + me.siteCommCronFn);
                         me.readJson(me.siteCommCronFn, (data) => {
                             if (typeof me[data.code] === 'function') {
                                 console.log(data.code);
@@ -225,8 +224,9 @@ const { eventNames } = require('process');
                         }
                     }
                 }
-                console.log(alist);
+                
                 if (alist.length) {
+                    console.log(alist);
                     const siteCommCronFn = env.dataFolder + '/sites/' + alist[0].serverName + '/data/commCron/';
                     fs.stat(siteCommCronFn, function(err, stat) {
                         if (err && err.code === 'ENOENT') {
@@ -255,7 +255,7 @@ const { eventNames } = require('process');
             fs.stat(me.siteCommCronMark, function(err, stat) {
                 if (err && err.code === 'ENOENT') {
                     let dirn = folderObj.dir + '/' + folderObj.folder + '/';
-                    me.readJson(dirn + '_dockerSetting.json',  (setting) => {
+                    me.readJson(dirn + 'input/_dockerSetting.json',  (setting) => {
                         let host = (setting.onDemandCallbackHost === 'localhost') ? 'localhost' : (setting.onDemandCallbackHost); 
                         let cmd = 'cd ' + dirn;
 
