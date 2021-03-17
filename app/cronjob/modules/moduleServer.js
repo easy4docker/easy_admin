@@ -263,8 +263,9 @@ const { eventNames } = require('process');
                             me.serverStatus((sts) => {
                                 
                                 fs.readdir(dirn, (err, list) => {
-                                    cmd += ' && curl -F "objPath=' + folderObj.dir + '/gridReturn_' + new Date().getTime() + '/input" ';
-                                    cmd += ' -F "objPath=' + folderObj.dir + '/gridReturn_' + new Date().getTime() + '/output" ';
+                                    const outFolder = 'gridReturn_' + new Date().getTime();
+                                    cmd += ' && curl -F "objPath=' + folderObj.dir + '/' + outFolder + '/input" ';
+                                    cmd += ' -F "objPath=' + folderObj.dir + '/' + outFolder + '/output" ';
                                     cmd += ' -F "gridToken=' + sts.gridToken + '" ';
                                     const filterList = ['ondemand_finished.data'];
                                     for (let i = 0; i < list.length; i++) {
