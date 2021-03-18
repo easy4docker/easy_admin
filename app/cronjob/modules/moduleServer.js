@@ -169,7 +169,7 @@ const { eventNames } = require('process');
                     const ip = ipData.replace(/(\n|\r)/ig, '')
                     const host = (!err && ip !== 'localhost') ? (ipData + ':10000') : 'localhost';
                     const paramData = param;
-                    
+
                     paramData.superPower = {
                         host : host,   
                         server:server

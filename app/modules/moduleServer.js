@@ -639,7 +639,7 @@
         me.saveInputData = (serverName, callback) => {
             exec('mkdir -p ' + me.siteDataPath(serverName) + '/commCronData', {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
                 const fn = me.siteDataPath(serverName) + '/commCronData/inputData.data';
-                fs.writeFile(fn, (!req.body.data) ? '' : JSON.stringify(req.body.data.inputData), function (err) {
+                fs.writeFile(fn, (!req.body.data) ? '' : JSON.stringify(req.body.data), function (err) {
                     callback({status:'success'});
                 });
             });
