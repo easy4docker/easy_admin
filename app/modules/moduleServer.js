@@ -405,10 +405,6 @@
                 me.saveSitesServers(data, cbk);
             };
             
-            _f['addDocker'] = function(cbk) {
-                me.addDocker(data.serverName, cbk, randomCode);
-            };
-            
             _f['addSiteCronFolder'] = function(cbk) {
                 let cmd = 'mkdir -p ' + me.siteDataPath(data.serverName) + '/commCron/';
                 exec(cmd, {maxBuffer: 224 * 2048},
@@ -416,10 +412,19 @@
                         cbk(true);
                 });
             };
+
+            _f['saveInputData'] = (cbk) => {
+                me.saveInputData(data.serverName, cbk);
+            };
+            
+            _f['addDocker'] = function(cbk) {
+                me.addDocker(data.serverName, cbk, randomCode);
+            };
         
             _f['addRemoveMe'] = (cbk) => {
                 me.addRemoveMe(data.serverName, cbk);
             };
+
 
             _f['updateProxy'] = function(cbk) {
                 me.updateProxy(cbk); 
@@ -631,7 +636,14 @@
                 me.setCron('removeDocker-' + serverName, content, callback);
             });
         }
-
+        me.saveInputData = (serverName, callback) => {
+            exec('mkdir -p ' + me.siteDataPath(serverName) + '/commCronData', {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
+                const fn = me.siteDataPath(serverName) + '/commCronData/inputData.data';
+                fs.writeFile(fn, (!req.body.data) ? '' : JSON.stringify(req.body.data.inputData), function (err) {
+                    callback({status:'success'});
+                });
+            });
+        }
         me.addRemoveMe = (serverName, callback) => {
             me.templateContent(serverName, 'removeDockerApp.tpl', (content) => {
                 const fn = me.siteDataPath(serverName) + '/REMOVE.ME';
