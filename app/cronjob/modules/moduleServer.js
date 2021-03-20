@@ -186,6 +186,12 @@ const { eventNames } = require('process');
                             }) + "'";
 
                             /*
+                            curl -F uploadID=1616272014240 $(find /tmp/uploaded/F_* -type f -exec echo -n -F file=@{}' '  \;) localhost/upload
+echo "curl -F uploadID=1234 $(find /tmp/uploaded/F_* -type f -exec echo -n -F file=@{}' '  \;) localhost/upload "
+                            echo "curl -F uploadID=1234 $(find /tmp/uploaded/F_* -type f echo -n -F file=@{})" -exec echo -n "curl -F uploadID=1234 -F file=@{} host/upload"\n \;
+
+                            find /tmp/uploaded/F_* -type f -exec more {} \;
+
                             cmdUpload = 'curl -F uploadID=1234 ';
                             for (let i = 0; i < list.length; i++) {
                                 if (filterList.indexOf(list[i]) === -1) {
@@ -193,7 +199,7 @@ const { eventNames } = require('process');
                                 }
                             }
 
-
+                            find /tmp/F_* -type f -echo "1234"
 
                             curl -F "objPath=' + folderObj.dir + '/' + targetFolder + '/input" ';
                             cmd += ' -F "gridToken=' + sts.gridToken + '" ';
@@ -209,7 +215,7 @@ const { eventNames } = require('process');
 */
 
 
-                            cmdUpload = 'ls -l';
+                            cmdUpload = 'curl -F uploadID=' + paramData.uploadID + ' $(find /tmp/uploaded/F_* -type f -exec echo -n -F file=@{}" "  \;) localhost/upload';
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST localhost/api/';
                         } else { 
