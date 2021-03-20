@@ -175,7 +175,7 @@ const { eventNames } = require('process');
                         server:server
                     };
                     me.serverStatus((sts)=> {
-                        let postData, cmd;
+                        let postData, cmd, cmdUpload;
                         let recommend = (!sts.resources || !sts.resources.recommend) ? [] : sts.resources.recommend;
 
                         if (sts.localIp === 'local' || !recommend.length) {
@@ -184,6 +184,8 @@ const { eventNames } = require('process');
                                 data : paramData,
                                 authToken: sts.authToken
                             }) + "'";
+                            cmdUpload = 'ls -l';
+
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST localhost/api/';
                         } else { 
@@ -194,19 +196,21 @@ const { eventNames } = require('process');
                                 data : paramData,
                                 gridToken: item.authToken
                             }) + "'";
+                            cmdUpload = 'ls -l';
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST ' + item.server+ ':10000/_grid/';
                         }
                             // '  -H "Content-Type: application/json" -X POST http://165.22.37.16:10000/_grid/';
-                        exec(cmd, {maxBuffer: 224 * 2048},
-                            function(error, stdout, stderr) {
+                        exec(cmdUpload, {maxBuffer: 224 * 2048}, (error0, stdout0, stderr0) => {
+                            exec(cmd, {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
                                 var jdata = {};
                                 try {
                                 jdata = JSON.parse(stdout);
                                 } catch (e) {}
                                 me.removeMark(() => {
                                     console.log(jdata);
-                                }); 
+                                });
+                            });
                         });
                     });  
             });
