@@ -184,8 +184,32 @@ const { eventNames } = require('process');
                                 data : paramData,
                                 authToken: sts.authToken
                             }) + "'";
-                            cmdUpload = 'ls -l';
 
+                            /*
+                            cmdUpload = 'curl -F uploadID=1234 ';
+                            for (let i = 0; i < list.length; i++) {
+                                if (filterList.indexOf(list[i]) === -1) {
+                                    cmd += ' -F file=@' + list[i];
+                                }
+                            }
+
+
+
+                            curl -F "objPath=' + folderObj.dir + '/' + targetFolder + '/input" ';
+                            cmd += ' -F "gridToken=' + sts.gridToken + '" ';
+                            for (let i = 0; i < list.length; i++) {
+                                if (filterList.indexOf(list[i]) === -1) {
+                                    cmd += ' -F file=@' + list[i];
+                                }
+                            }
+                            cmd += ' ' + host + '/upload';
+                            cbk(cmd)
+
+
+*/
+
+
+                            cmdUpload = 'ls -l';
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST localhost/api/';
                         } else { 
