@@ -213,9 +213,9 @@ echo "curl -F uploadID=1234 $(find /tmp/uploaded/F_* -type f -exec echo -n -F fi
 
 
 */
-
-
-                            cmdUpload = 'curl -F uploadID=' + paramData.uploadID + ' $(find /tmp/uploaded/F_* -type f -exec echo -n -F file=@{}" "  \;) localhost/upload';
+//  + paramData.uploadID + 
+                            cmdUpload = 'echo "curl -F uploadID=AAA $(find /tmp/uploaded/F_* -type f -exec echo -n -F file=@{}" "  \;) localhost/upload " > /tmp/eed.data';
+                            cmdUpload = 'ls -l';
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST localhost/api/';
                         } else { 

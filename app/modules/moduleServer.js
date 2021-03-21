@@ -591,6 +591,7 @@
                         dockerCodePath      : me.dockerCodePath(serverName),
                         dockerSettingPath   : me.dockerCodePath(serverName) + '/dockerSetting',
                         dockerDataPath      : me.dockerDataPath(serverName),
+                        dockerUploadPath    : me.dockerDataPath(serverName) + '/upload',
                         dockerEnvPath       : me.dockerEnvPath(serverName),
                         dockerFile          : me.dockerCodePath(serverName) + '/dockerSetting/dockerFile',
                         siteImage           : me.getImageName(serverName),
