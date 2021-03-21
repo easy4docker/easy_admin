@@ -184,42 +184,9 @@ const { eventNames } = require('process');
                                 data : paramData,
                                 authToken: sts.authToken
                             }) + "'";
-
-                            /*
-                            curl -F uploadID=1616272014240 $(find /tmp/uploaded/F_* -type f -exec echo -n -F file=@{}' '  \;) localhost/upload
-echo "curl -F uploadID=1234 $(find /tmp/uploaded/F_* -type f -exec echo -n -F file=@{}' '  \;) localhost/upload "
-                            echo "curl -F uploadID=1234 $(find /tmp/uploaded/F_* -type f echo -n -F file=@{})" -exec echo -n "curl -F uploadID=1234 -F file=@{} host/upload"\n \;
-
-                            find /tmp/uploaded/F_* -type f -exec more {} \;
-
-                            cmdUpload = 'curl -F uploadID=1234 ';
-                            for (let i = 0; i < list.length; i++) {
-                                if (filterList.indexOf(list[i]) === -1) {
-                                    cmd += ' -F file=@' + list[i];
-                                }
-                            }
-
-                            find /tmp/F_* -type f -echo "1234"
-
-                            curl -F "objPath=' + folderObj.dir + '/' + targetFolder + '/input" ';
-                            cmd += ' -F "gridToken=' + sts.gridToken + '" ';
-                            for (let i = 0; i < list.length; i++) {
-                                if (filterList.indexOf(list[i]) === -1) {
-                                    cmd += ' -F file=@' + list[i];
-                                }
-                            }
-                            cmd += ' ' + host + '/upload';
-                            cbk(cmd)
-
-
-*/
-//  + paramData.uploadID + 
-                   //         cmdUpload = 'echo "curl -F uploadID=AAA $(find /tmp/uploaded/F_* -type f -exec echo -n -F file=@{}" "  \;) localhost/upload " > /tmp/eed.data';
-                            cmdUpload = 'ls -l';
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST localhost/api/';
                         } else { 
-                            
                             let item = recommend[Math.floor(Math.random() * recommend.length)];
                             postData = "'" + JSON.stringify({
                                 cmd:'setupServer',
@@ -230,16 +197,13 @@ echo "curl -F uploadID=1234 $(find /tmp/uploaded/F_* -type f -exec echo -n -F fi
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST ' + item.server+ ':10000/_grid/';
                         }
-                            // '  -H "Content-Type: application/json" -X POST http://165.22.37.16:10000/_grid/';
-                        exec(cmdUpload, {maxBuffer: 224 * 2048}, (error0, stdout0, stderr0) => {
-                            exec(cmd, {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
-                                var jdata = {};
-                                try {
-                                jdata = JSON.parse(stdout);
-                                } catch (e) {}
-                                me.removeMark(() => {
-                                    console.log(jdata);
-                                });
+                        exec(cmd, {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
+                            var jdata = {};
+                            try {
+                            jdata = JSON.parse(stdout);
+                            } catch (e) {}
+                            me.removeMark(() => {
+                                console.log(jdata);
                             });
                         });
                     });  
