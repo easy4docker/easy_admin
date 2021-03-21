@@ -416,11 +416,11 @@
             _f['saveInputData'] = (cbk) => {
                 me.saveInputData(data.serverName, cbk);
             };
-            
+     
             _f['addDocker'] = function(cbk) {
                 me.addDocker(data.serverName, cbk, randomCode);
             };
-        
+       
             _f['addRemoveMe'] = (cbk) => {
                 me.addRemoveMe(data.serverName, cbk);
             };
@@ -637,9 +637,11 @@
             });
         }
         me.saveInputData = (serverName, callback) => {
+            
             exec('mkdir -p ' + me.siteDataPath(serverName) + '/commCronData', {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
+                callback({status:'success'});
                 const fn = me.siteDataPath(serverName) + '/commCronData/inputData.data';
-                fs.writeFile(fn, (!req.body.data) ? '' : JSON.stringify(req.body.data.inputData), function (err) {
+                fs.writeFile(fn, (!req.body.data || !req.body.data.inputData) ? '' : JSON.stringify(req.body.data.inputData), function (err) {
                     callback({status:'success'});
                 });
             });
