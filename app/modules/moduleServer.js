@@ -377,7 +377,7 @@
             };
 
             _f['serverName'] = function(cbk) {
-                data.serverName = data.repo;
+                data.serverName = data.repo + ((data.requestId) ? ('_' + data.requestId) : '');
                 me.adjustData(data, (adjustedData) => {
                     data = adjustedData;
                     cbk(data.serverName)

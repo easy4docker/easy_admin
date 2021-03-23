@@ -129,7 +129,8 @@
                     const data = result;
                     delete data.status;
                     data.gitHub = req.body.data.gitHub;
-                    Servers.addVServer(result, (result1) => {
+                    data.requestId = (!req.body.data || !req.body.data.requestId) ? '' : req.body.data.requestId;
+                    Servers.addVServer(data, (result1) => {
                         cbk(result1);
                     });
                 } else {
