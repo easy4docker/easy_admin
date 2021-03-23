@@ -46,7 +46,8 @@
         me.siteShareFolder = (serverName) => {
             let serverCode = serverName.replace(/\_([0-9]+)$/, '');
             let folderName = (!req.body.data || !req.body.data.superPower) ?  serverName: 
-                req.body.data.superPower.server + '/' + serverCode + '_' + new Date().getTime();
+                req.body.data.superPower.server + '/' + serverName;
+            //    req.body.data.superPower.server + '/' + serverCode + '_' + new Date().getTime();
                
             return {
                 host   : (!req.body.data || !req.body.data.superPower) ? 'localhost' : req.body.data.superPower.host,
@@ -412,15 +413,16 @@
                         cbk(true);
                 });
             };
-            /*
+            
             _f['saveInputData'] = (cbk) => {
                 me.saveInputData(data.serverName, cbk);
             };
-     */
+     
             _f['addDocker'] = function(cbk) {
                 me.addDocker(data.serverName, cbk, randomCode);
             };
-       
+
+
             _f['addRemoveMe'] = (cbk) => {
                 me.addRemoveMe(data.serverName, cbk);
             };
@@ -640,9 +642,9 @@
             });
         }
         me.saveInputData = (serverName, callback) => { 
-            callback({status:'success'}); 
-            return true;
-            // BIG ISSUE need redo
+          // callback({status:'success'}); 
+          
+          //  // BIG ISSUE need redo
             exec('mkdir -p ' + me.siteDataPath(serverName) + '/commCronData', {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
                 callback({status:'success'});
                 const fn = me.siteDataPath(serverName) + '/commCronData/inputData.data';
