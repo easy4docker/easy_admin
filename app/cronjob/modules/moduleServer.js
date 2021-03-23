@@ -9,15 +9,36 @@ const { eventNames } = require('process');
 
         me.siteCommCronMark = env.dataFolder + '/siteCommCronMark.txt';
         me.siteCommCronFn = '';
+       
 
-        me.onDemand = (server, file, cbk) => {
+        me.onDemand = (onDemandCode, cbk) => {
+            console.log('');
+            console.log('Running ... ' + onDemandCode);
+            const onDemandObj = onDemandCode.split('/data/onDemand/');
+            me.readJson(env.dataFolder + '/sites/' + onDemandCode, (onDemandData) => {
+                if (typeof me[onDemandData.code] === 'function' && onDemandObj.length === 2) {
+                    const param = onDemandData.param;
+                    param.requestId = onDemandData.requestId;
+                    console.log(param);
+                    me[onDemandData.code](onDemandObj[0], param, () => {
+                        fs.unlink(env.dataFolder + '/sites/' + onDemandCode, cbk);
+                    });
+                } else {
+                    console.log('wrong ondemand code =>' + onDemandData.code);
+                }
+                
+            });
+        }
+
+        me.onDemandA = (server, file, cbk) => {
             fs.stat(me.siteCommCronMark, function(err, stat) {
                 if (err && err.code === 'ENOENT') {
                     me.siteCommCronFn = env.dataFolder + '/sites/' + server + '/data/commCron/' + file;
+                    console.log('===>>>-------' + me.siteCommCronFn);
                     fs.writeFile(me.siteCommCronMark, me.siteCommCronFn, () => {
                         me.readJson(me.siteCommCronFn, (data) => {
                             if (typeof me[data.code] === 'function') {
-                                console.log(data.code);
+                                console.log('function =>>: ' + data.code);
                                 me[data.code](server, data.param, cbk);
                             } else {
                                 me.removeMark(() => {
@@ -31,12 +52,13 @@ const { eventNames } = require('process');
                     let delta = new Date().getTime() - ((!stat || !stat.mtime) ? 0 : new Date(stat.mtime).getTime());
                     // remove me.siteCommCronMark if longer than 59s
                     if (delta > 59000) {
+                        /*
                         fs.unlink(me.siteCommCronMark, () => {
                             console.log('removed ... ' +  file);
-                        });
+                        });*/
                         
                     } else {
-                        console.log('continuing ... ' +  file);
+                        console.log('skipped and continuing ... ' +  file);
                     }
                 }
             });
@@ -193,7 +215,6 @@ const { eventNames } = require('process');
                                 data : paramData,
                                 gridToken: item.authToken
                             }) + "'";
-                            cmdUpload = 'ls -l';
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST ' + item.server+ ':10000/_grid/';
                         }
@@ -202,12 +223,11 @@ const { eventNames } = require('process');
                             try {
                             jdata = JSON.parse(stdout);
                             } catch (e) {}
-                            me.removeMark(() => {
-                                console.log(jdata);
-                            });
+                            callback();
                         });
                     });  
             });
+            
         }
 
         me.auditOndemand = () => {
@@ -250,6 +270,7 @@ const { eventNames } = require('process');
         }
         
         me.uploadFolder = (folderObj)=> {
+            
             fs.stat(me.siteCommCronMark, function(err, stat) {
                 if (err && err.code === 'ENOENT') {
                     let dirn = folderObj.dir + '/' + folderObj.folder + '/';

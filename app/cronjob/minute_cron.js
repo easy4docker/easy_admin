@@ -18,38 +18,80 @@ env.localConfig = JSON.stringify(localConfig);
 delete require.cache[__dirname + '/modules/moduleServer.js'];
 const MServer = require(__dirname + '/modules/moduleServer.js');
 
-fs.readdir(env.dataFolder + '/sites', (err, list) => {
-  const _f = {};
-  const cp = new CP();
-  const flist =  [];
 
-  for (var i =0; i < list.length; i++) {    
-    _f['s_' + i] = ((i) => {
-      return (cbk) => {
-        let dirn = env.dataFolder + '/sites/' + list[i] + '/data/commCron/';
-        fs.readdir(dirn, (err1, files) => {
-          if (!err1) {
-            for (let o in files)  flist.push({server:list[i], file:files[o]});
-          }
-          cbk(true);
+var ondemandMark = env.dataFolder + '/ondemandMark.txt';
+
+fs.readFile(ondemandMark, 'utf-8', function(err, onDemandCode) {
+  if (!err && (onDemandCode)) {
+    fs.stat(env.dataFolder + '/sites/' + onDemandCode, (err, stat) => {
+      if (err && err.code === 'ENOENT') {
+        fs.unlink(ondemandMark, () =>{
+          console.log('')
+          console.log('remove ' + onDemandCode);
         });
       }
-    })(i);
+    })
+    process.stdout.write(".");
+  } else {
+    getOneOnDemand((onDemandCode)=> {
+      if (onDemandCode) {
+        fs.writeFile(ondemandMark, onDemandCode, () => {
+          const mserver = new MServer(env);
+          mserver.onDemand(onDemandCode, (data) => {
+            console.log('onDemandPushed!');
+          });
+        })
+      }
+    })
   }
-  cp.serial(_f, (data) => {
-    if (flist.length) {
-      const mserver = new MServer(env);
-      mserver.onDemand(flist[0].server, flist[0].file, (data) => {
-        console.log('Done !');
-      });
-    } else {
-      doUpload();
-    }
-  }, 3000);
 });
-var doUpload = () => {
-  
 
+var getOneOnDemand = (callback) => {
+  fs.readdir(env.dataFolder + '/sites', (err, list) => {
+    const _f = {};
+    const cp = new CP();
+    const flist =  [];
+    let onDemandCode = '';
+    for (var i =0; i < list.length; i++) {   
+      _f['s_' + i] = ((i) => {
+        return (cbk) => {
+          if  (onDemandCode) {
+            cbk(true);
+          } else {
+            let dirn = env.dataFolder + '/sites/' + list[i] + '/data/onDemand/';
+            fs.readdir(dirn, (err1, files) => {
+              if (!err1 && files.length) {
+                for (let j in files) {
+                  if (!/^\./.test(files[j])) {
+                    onDemandCode = list[i] + '/data/onDemand/' + files[j];
+                    break;
+                  }
+                }
+              }
+              cbk(true);
+            });
+          }
+        }
+      })(i);
+    }
+    cp.serial(_f, (data) => {
+      callback((onDemandCode) ? onDemandCode : '');
+      /*
+      if (flist.length) {
+        const mserver = new MServer(env);
+        mserver.onDemand(flist[0].server, flist[0].file, (data) => {
+          console.log('Done !');
+        });
+      } else {
+        doUpload();
+      }
+      */
+    }, 3000);
+  });
+}
+
+
+var doUpload = () => {
   fs.readdir(env.shareFolder, (err, list) => {
     const _f = {};
     const cp = new CP();

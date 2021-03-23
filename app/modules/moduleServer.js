@@ -412,11 +412,11 @@
                         cbk(true);
                 });
             };
-
+            /*
             _f['saveInputData'] = (cbk) => {
                 me.saveInputData(data.serverName, cbk);
             };
-     
+     */
             _f['addDocker'] = function(cbk) {
                 me.addDocker(data.serverName, cbk, randomCode);
             };
@@ -424,7 +424,6 @@
             _f['addRemoveMe'] = (cbk) => {
                 me.addRemoveMe(data.serverName, cbk);
             };
-
 
             _f['updateProxy'] = function(cbk) {
                 me.updateProxy(cbk); 
@@ -435,6 +434,8 @@
             };
 
             CP.serial(_f, (result) => {
+                result.dt = req.body;
+                result.BB = "BaoBao";
                callback(result);
             }, 60000);
         }
@@ -473,6 +474,8 @@
             };
 
             CP.serial(_f, (data) => {
+                data.dt = req.body;
+                data.BB = "BeiBei";
                 callback(data);
                 // me.postLoadList(callback);
             }, 30000);
@@ -636,8 +639,10 @@
                 me.setCron('removeDocker-' + serverName, content, callback);
             });
         }
-        me.saveInputData = (serverName, callback) => {
-            
+        me.saveInputData = (serverName, callback) => { 
+            callback({status:'success'}); 
+            return true;
+            // BIG ISSUE need redo
             exec('mkdir -p ' + me.siteDataPath(serverName) + '/commCronData', {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
                 callback({status:'success'});
                 const fn = me.siteDataPath(serverName) + '/commCronData/inputData.data';
