@@ -15,7 +15,7 @@ const { cpuUsage } = require('process');
             _env = require(data_dir + '/_env.json');
         } catch (e) {}
 
-        me.runUpload = () => {
+        me.runGridUpdate = () => {
             fs.readFile(env.dataFolder  + '/_ip', 'utf-8',
                 function(err, ipData) {
                     const ip = ipData.replace(/(\n|\r)/ig, '')
@@ -57,6 +57,27 @@ const { cpuUsage } = require('process');
                         });
                     });
             });
+
+        }
+        me.fileUpload = () => {
+            const uploadID = (req.body.uploadID) ? req.body.uploadID : new Date().getTime();
+            let files = (!req.files) ? [] : req.files, 
+                flist = [],
+                targetDir = env.dataFolder + '/fileUpload/D_' + uploadID,
+                cmd = 'mkdir -p ' + targetDir + ' && find ' + env.dataFolder + '/fileUpload/* -mmin +3 -delete ';
+
+            for (var i = 0; i < files.length; i++) {
+                const fname = targetDir + '/' +  (files[i].originalname.replace('F_' + uploadID + '_', ''));
+                flist.push(fname);
+                cmd += ((cmd) ? ' && ' : '') + 'mv ' + files[i].path + ' ' + fname;
+            }
+            if (cmd) {
+                exec(cmd, {maxBuffer: 224 * 2048}, (err, stdout, stderr) => {
+                    res.send({status: 'success', uploadID: uploadID, files : flist});
+                })
+            } else {
+                res.send({status: 'failure', message : 'nothing uploaded!'});
+            }
 
         }
     }

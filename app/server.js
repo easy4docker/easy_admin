@@ -68,7 +68,11 @@ app.post('/upload',
   (req, res, next) => {
     var APPUPLOAD = pkg.require(__dirname + '/modules/moduleUpload.js');
     var mupload = new APPUPLOAD(env, pkg, req, res);
-    mupload.runUpload();
+    if (!req.body.cmd && !req.body.cmd !== 'fileUpload') {
+        mupload.runGridUpdate();
+    } else {
+        mupload.fileUpload();
+    }
   }
 )
 
