@@ -130,6 +130,7 @@
                     delete data.status;
                     data.gitHub = req.body.data.gitHub;
                     data.requestId = (!req.body.data || !req.body.data.requestId) ? '' : req.body.data.requestId;
+                    data.uploadId = (!req.body.data || !req.body.data.uploadId) ? '' : req.body.data.uploadId;
                     Servers.addVServer(data, (result1) => {
                         cbk(result1);
                     });

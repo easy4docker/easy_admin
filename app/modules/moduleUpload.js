@@ -63,11 +63,10 @@ const { cpuUsage } = require('process');
             const uploadID = (req.body.uploadID) ? req.body.uploadID : new Date().getTime();
             let files = (!req.files) ? [] : req.files, 
                 flist = [],
-                defaultTargetBase =  env.dataFolder + '/fileUpload',
-                targetDir = defaultTargetBase+ '/D_' + uploadID,
-                movetoDir = (req.body.movetoDir) ? req.body.movetoDir : targetDir,
-                cmd = 'mkdir -p ' + defaultTargetBase + ' && mkdir -p ' + movetoDir + ' && find ' + env.dataFolder + '/fileUpload/* -mmin +3 -delete ';
-
+                targetDir = 'fileUpload/D_' + uploadID,
+                movetoDir = env.sitesSharedFolder + '/' + ((req.body.movetoDir) ? req.body.movetoDir : targetDir) + '/input',
+                cmd = 'mkdir -p ' + movetoDir + '';
+       
             for (var i = 0; i < files.length; i++) {
                 const fname = movetoDir + '/' +  (files[i].originalname.replace('F_' + uploadID + '_', ''));
                 flist.push(fname);
@@ -75,7 +74,7 @@ const { cpuUsage } = require('process');
             }
             if (cmd) {
                 exec(cmd, {maxBuffer: 224 * 2048}, (err, stdout, stderr) => {
-                    res.send({status: 'success', uploadID: uploadID, files : flist});
+                    res.send({status: 'success', uploadID: uploadID, movetoDir:movetoDir, files : flist});
                 })
             } else {
                 res.send({status: 'failure', message : 'nothing uploaded!'});

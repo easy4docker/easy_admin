@@ -19,7 +19,8 @@ const { eventNames } = require('process');
                 if (typeof me[onDemandData.code] === 'function' && onDemandObj.length === 2) {
                     const param = onDemandData.param;
                     param.requestId = onDemandData.requestId;
-                    console.log(param);
+                    param.uploadId = onDemandData.uploadId;
+                    console.log(onDemandData);
                     me[onDemandData.code](onDemandObj[0], param, () => {
                         fs.unlink(env.dataFolder + '/sites/' + onDemandCode, cbk);
                     });
@@ -206,6 +207,15 @@ const { eventNames } = require('process');
                                 data : paramData,
                                 authToken: sts.authToken
                             }) + "'";
+                            const regex = /([^/]+)\/([^/]+)\.git$/;
+                            const uri_a = paramData.gitHub.match(regex);
+                            const repo = ((!uri_a) ? false : (uri_a[1] + '_' + uri_a[2]));
+                            cmdFile = 'curl $(find ' + env.dataFolder + '/fileUpload/D_' + paramData.uploadId + ' -type f -exec echo " " -F file=@"{}" \\;) ';
+                            cmdFile += ' -F "uploadID=' + paramData.uploadId + '" ';
+                            cmdFile += ' -F "movetoDir=' +  server + '/' + repo + '_' + paramData.requestId + '" ';
+                            cmdFile += ' localhost/upload'
+
+                            console.log(cmdFile);
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST localhost/api/';
                         } else { 
@@ -218,12 +228,14 @@ const { eventNames } = require('process');
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST ' + item.server+ ':10000/_grid/';
                         }
-                        exec(cmd, {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
-                            var jdata = {};
-                            try {
-                            jdata = JSON.parse(stdout);
-                            } catch (e) {}
-                            callback();
+                        exec(cmdFile, {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
+                            exec(cmd, {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
+                                var jdata = {};
+                                try {
+                                jdata = JSON.parse(stdout);
+                                } catch (e) {}
+                                callback();
+                            })
                         });
                     });  
             });
