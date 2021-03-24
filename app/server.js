@@ -16,7 +16,7 @@ var env = {
     root : __dirname,
     dataFolder : '/var/_localAppData',
     appFolder : '/var/_localApp',
-    sitesSharedFolder :'/var/_localApp/sitesShareFolder'
+    sitesSharedFolder :'/var/_localAppData/sitesShareFolder'
 }
 
 // var accessLogStream = fs.createWriteStream(path.join(env.dataFolder, 'access.log'), {flags: 'a'})

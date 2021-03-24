@@ -10,10 +10,10 @@ const env = {
 
   var localConfig = {};
   try {
-    localConfig = require(env.data_dir + '/_env.json');
+    localConfig = require(env.dataFolder + '/_env.json');
   } catch (e) {}
 
-env.localConfig = JSON.stringify(localConfig);
+env.localConfig = localConfig;
 
 delete require.cache[__dirname + '/modules/moduleServer.js'];
 const MServer = require(__dirname + '/modules/moduleServer.js');
