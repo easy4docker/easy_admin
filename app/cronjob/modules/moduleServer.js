@@ -218,8 +218,6 @@ const { eventNames } = require('process');
                             cmdFile += ' -F "movetoDir=' +  server + '/' + repo + '_' + paramData.requestId + '" ';
                             cmdFile += ' localhost/upload'
 
-                            console.log(cmdFile);
-                            // console.log(env.localConfig);
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST localhost/api/';
                         } else { 
