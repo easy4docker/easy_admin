@@ -198,8 +198,19 @@ const { eventNames } = require('process');
                         server:server
                     };
                     me.serverStatus((sts)=> {
-                        let postData, cmd, cmdUpload;
+                        let postData, cmd, cmdFile;
                         let recommend = (!sts.resources || !sts.resources.recommend) ? [] : sts.resources.recommend;
+
+                        const regex = /([^/]+)\/([^/]+)\.git$/;
+                        const uri_a = paramData.gitHub.match(regex);
+                        const repo = ((!uri_a) ? false : (uri_a[1] + '_' + uri_a[2]));
+
+                        const uploadFolder = env.dataFolder + '/sites/' + server + '/data/fileUpload/D_' + paramData.uploadId;
+   
+                        cmdFile = 'curl $(find ' + uploadFolder + ' -type f -exec echo " " -F file=@"{}" \\;) ';
+                        cmdFile += ' -F "cmd=fileUpload"  -F "uploadID=' + paramData.uploadId + '" ';
+                        cmdFile += ' -F "movetoDir=' +  server + '/' + repo + '_' + paramData.requestId + '" ';
+                        
 
                         if (sts.localIp === 'local' || !recommend.length) {
                             postData = "'" + JSON.stringify({
@@ -207,17 +218,8 @@ const { eventNames } = require('process');
                                 data : paramData,
                                 authToken: sts.authToken
                             }) + "'";
-                            const regex = /([^/]+)\/([^/]+)\.git$/;
-                            const uri_a = paramData.gitHub.match(regex);
-                            const repo = ((!uri_a) ? false : (uri_a[1] + '_' + uri_a[2]));
 
-                            const uploadFolder = env.dataFolder + '/sites/' + server + '/data/fileUpload/D_' + paramData.uploadId;
-   
-                            cmdFile = 'curl $(find ' + uploadFolder + ' -type f -exec echo " " -F file=@"{}" \\;) ';
-                            cmdFile += ' -F "cmd=fileUpload"  -F "uploadID=' + paramData.uploadId + '" ';
-                            cmdFile += ' -F "movetoDir=' +  server + '/' + repo + '_' + paramData.requestId + '" ';
                             cmdFile += ' localhost/upload'
-
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST localhost/api/';
                         } else { 
@@ -227,6 +229,8 @@ const { eventNames } = require('process');
                                 data : paramData,
                                 gridToken: item.authToken
                             }) + "'";
+
+                            cmdFile += ' ' + item.server+ ':10000/_grid/'
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST ' + item.server+ ':10000/_grid/';
                         }
