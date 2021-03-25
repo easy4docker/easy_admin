@@ -39,16 +39,12 @@ const { eventNames } = require('process');
                     const v = (!item) ? [] : item.replace(env.shareFolder + '/', '').split('/');
                     const cmd1 = 'rm  ' + item;
                     exec(cmd1, {maxBuffer: 224 * 2048}, (error1, stdout1, stderr1) => {
-                        console.log({
+                        const folderObj = {
                             dir: env.shareFolder + '/' + v[0], folder : v[1]
-                        });
+                        };
                         me.removeMe((!v.length > 1) ? '' : v[v.length-2], ()=> {
-                            me.uploadResult({
-                                dir: env.shareFolder + '/' + v[0], folder : v[1]
-                            }, callback);
+                            me.uploadResult(olderObj, callback);
                         });
-
-                        
                     });
                 } else {
                    // console.log('no item');
@@ -323,10 +319,8 @@ const { eventNames } = require('process');
             });
         }
 
-        me.getGridToken = (cbk) => {
-            me.serverStatus((sts) => {
-
-            })
+        me.getGridTokenBK = (cbk) => {
+            me.serverStatus((sts) => {})
         }
         
         me.uploadResult = (folderObj, callback)=> {
@@ -379,11 +373,6 @@ const { eventNames } = require('process');
                                             try {
                                             jdata = JSON.parse(stdout);
                                             } catch (e) {}
-                                            /*
-                                            me.removeMark(() => {
-                                                console.log('mark removed!');
-                                            }); 
-                                            */
                                             callback();
                                     });
                                     
