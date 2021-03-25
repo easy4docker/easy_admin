@@ -145,7 +145,6 @@ const { eventNames } = require('process');
             _f['authToken'] = (cbk)=> {
                 var fn = env.keyFolder + '/authToken.json';
                 me.readJson(fn, (JSONData) => {
-                    console.log(JSONData)
                     let token = '';
                     for (var o in JSONData) {
                         if (/^SU\_/.test(o)) {
@@ -218,10 +217,10 @@ const { eventNames } = require('process');
                         try {
                         jdata = JSON.parse(stdout);
                         } catch (e) {}
-                        me.removeMark(() => {
+                       // me.removeMark(() => {
                             console.log(jdata);
                             callback();
-                        });
+                       // });
                 });
             });
         }
@@ -283,10 +282,6 @@ const { eventNames } = require('process');
                         }
                         exec(cmdFile, {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
                             exec(cmd, {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
-                                var jdata = {};
-                                try {
-                                jdata = JSON.parse(stdout);
-                                } catch (e) {}
                                 callback();
                             })
                         });
