@@ -20,7 +20,7 @@ const { eventNames } = require('process');
                     const param = onDemandData.param;
                     param.requestId = onDemandData.requestId;
                     param.uploadId = onDemandData.uploadId;
-                    console.log(onDemandData);
+   
                     me[onDemandData.code](onDemandObj[0], param, () => {
                         fs.unlink(env.dataFolder + '/sites/' + onDemandCode, cbk);
                     });
@@ -293,7 +293,6 @@ const { eventNames } = require('process');
                 }
                 
                 if (alist.length) {
-                    console.log(alist);
                     const siteCommCronFn = env.dataFolder + '/sites/' + alist[0].serverName + '/data/commCron/';
                     fs.stat(siteCommCronFn, function(err, stat) {
                         if (err && err.code === 'ENOENT') {
@@ -368,8 +367,6 @@ const { eventNames } = require('process');
                             });
                         });
                     })
-                } else {
-                    // console.log('skipped .me.');
                 }
             });
 
