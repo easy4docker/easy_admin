@@ -414,10 +414,6 @@
                 });
             };
             
-            _f['saveInputData'] = (cbk) => {
-                me.saveInputData(data.serverName, cbk);
-            };
-     
             _f['addDocker'] = function(cbk) {
                 me.addDocker(data.serverName, cbk, randomCode);
             };
@@ -637,18 +633,7 @@
                 me.setCron('removeDocker-' + serverName, content, callback);
             });
         }
-        me.saveInputData = (serverName, callback) => { 
-          // callback({status:'success'}); 
-          
-          //  // BIG ISSUE need redo
-            exec('mkdir -p ' + me.siteDataPath(serverName) + '/commCronData', {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
-                callback({status:'success'});
-                const fn = me.siteDataPath(serverName) + '/commCronData/inputData.data';
-                fs.writeFile(fn, (!req.body.data || !req.body.data.inputData) ? '' : JSON.stringify(req.body.data.inputData), function (err) {
-                    callback({status:'success'});
-                });
-            });
-        }
+
         me.addRemoveMe = (serverName, callback) => {
             me.templateContent(serverName, 'removeDockerApp.tpl', (content) => {
                 const fn = me.siteDataPath(serverName) + '/REMOVE.ME';
