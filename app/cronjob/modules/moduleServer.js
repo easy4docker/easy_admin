@@ -51,86 +51,9 @@ const { eventNames } = require('process');
                         
                     });
                 } else {
-                    console.log('no item');
+                   // console.log('no item');
                 }
             });
-            return true;
-            fs.readdir(env.shareFolder, (err, list) => {
-                const _f = {};
-                const cp = new CP();
-                const flist =  [];
-            
-                for (var i =0; i < list.length; i++) {
-                    let dirn = env.shareFolder+ '/' + list[i];
-                    _f['s_' + i] = ((i) => {
-                    return (cbk) => {
-                        fs.readdir(dirn, (err1, list1) => {
-                        if (!err1) {
-                            const cp1 = new CP();
-                            const _f1 = {};
-                            for (let j =0; j < list1.length; j++) {
-                            let dirn1 = dirn+ '/' + list1[j];
-                            
-                            _f1['s_' + j] = ((j) => {
-                                return (cbk1) => {
-                                fs.readdir(dirn1, (err2, list2) => {
-                                    console.log('---->');
-                                    console.log(list2);
-                                    if (!err2) {
-                                        if (list2.indexOf('ondemand_finished.data') !== -1) {
-                                            flist.push({dir:dirn, folder:list1[j]})
-                                        }
-                                    }
-                                    cbk1(true);
-                                })
-                                }
-                            })(j);
-                            }
-                            cp1.serial(_f1, (data) => {
-                            cbk(true);
-                            }, 3000);
-                        } else {
-                            cbk(true);
-                        }
-                        });
-                    }
-                    })(i)
-                }
-                cp.serial(_f, (data) => {
-                   // console.log(data);
-                    if (flist.length) {
-                        console.log(flist);
-                    // const mserver = new MServer(env);
-                    /*
-                    mserver.uploadFolder(flist[0]);
-                    } else {
-                    // const mserver = new MServer(env);
-                    mserver.auditOndemand();
-                    */
-                    }
-                }, 3000);
-                });
-
-            fs.readdir(env.shareFolder + '/', (err, list) => {
-                const _f = {};
-                const cp = new CP();
-                
-                console.log(list);
-                /*
-                if (typeof me[onDemandData.code] === 'function' && onDemandObj.length === 2) {
-                    const param = onDemandData.param;
-                    param.requestId = onDemandData.requestId;
-                    param.uploadId = onDemandData.uploadId;
-                    console.log(onDemandData);
-                    me[onDemandData.code](onDemandObj[0], param, () => {
-                        fs.unlink(env.dataFolder + '/sites/' + onDemandCode, cbk);
-                    });
-                } else {
-                    console.log('wrong ondemand code =>' + onDemandData.code);
-                }
-                */
-            });
-           
         }
 
         me.onDemandA = (server, file, cbk) => {
