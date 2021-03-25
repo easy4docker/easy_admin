@@ -31,6 +31,108 @@ const { eventNames } = require('process');
             });
         }
 
+        me.completedOnDemand = (callback) => {
+            const cmd = 'find  '+ env.shareFolder + ' -type f -name ondemand_finished.data';
+            exec(cmd, {maxBuffer: 224 * 2048}, (error, stdout, stderr) => {
+                if (stdout) {
+                    const item = stdout.split(/\s+/).filter((v)=>{ return (!!v)})[0];
+                    const v = (!item) ? [] : item.replace(env.shareFolder + '/', '').split('/');
+                    const cmd1 = 'rm  ' + item;
+                    exec(cmd1, {maxBuffer: 224 * 2048}, (error1, stdout1, stderr1) => {
+                        console.log({
+                            dir: env.shareFolder + '/' + v[0], folder : v[1]
+                        });
+                        me.removeMe((!v.length > 1) ? '' : v[v.length-2], ()=> {
+                            me.uploadResult({
+                                dir: env.shareFolder + '/' + v[0], folder : v[1]
+                            }, callback);
+                        });
+
+                        
+                    });
+                } else {
+                    console.log('no item');
+                }
+            });
+            return true;
+            fs.readdir(env.shareFolder, (err, list) => {
+                const _f = {};
+                const cp = new CP();
+                const flist =  [];
+            
+                for (var i =0; i < list.length; i++) {
+                    let dirn = env.shareFolder+ '/' + list[i];
+                    _f['s_' + i] = ((i) => {
+                    return (cbk) => {
+                        fs.readdir(dirn, (err1, list1) => {
+                        if (!err1) {
+                            const cp1 = new CP();
+                            const _f1 = {};
+                            for (let j =0; j < list1.length; j++) {
+                            let dirn1 = dirn+ '/' + list1[j];
+                            
+                            _f1['s_' + j] = ((j) => {
+                                return (cbk1) => {
+                                fs.readdir(dirn1, (err2, list2) => {
+                                    console.log('---->');
+                                    console.log(list2);
+                                    if (!err2) {
+                                        if (list2.indexOf('ondemand_finished.data') !== -1) {
+                                            flist.push({dir:dirn, folder:list1[j]})
+                                        }
+                                    }
+                                    cbk1(true);
+                                })
+                                }
+                            })(j);
+                            }
+                            cp1.serial(_f1, (data) => {
+                            cbk(true);
+                            }, 3000);
+                        } else {
+                            cbk(true);
+                        }
+                        });
+                    }
+                    })(i)
+                }
+                cp.serial(_f, (data) => {
+                   // console.log(data);
+                    if (flist.length) {
+                        console.log(flist);
+                    // const mserver = new MServer(env);
+                    /*
+                    mserver.uploadFolder(flist[0]);
+                    } else {
+                    // const mserver = new MServer(env);
+                    mserver.auditOndemand();
+                    */
+                    }
+                }, 3000);
+                });
+
+            fs.readdir(env.shareFolder + '/', (err, list) => {
+                const _f = {};
+                const cp = new CP();
+                
+                console.log(list);
+                /*
+                if (typeof me[onDemandData.code] === 'function' && onDemandObj.length === 2) {
+                    const param = onDemandData.param;
+                    param.requestId = onDemandData.requestId;
+                    param.uploadId = onDemandData.uploadId;
+                    console.log(onDemandData);
+                    me[onDemandData.code](onDemandObj[0], param, () => {
+                        fs.unlink(env.dataFolder + '/sites/' + onDemandCode, cbk);
+                    });
+                } else {
+                    console.log('wrong ondemand code =>' + onDemandData.code);
+                }
+                */
+            });
+           
+        }
+
         me.onDemandA = (server, file, cbk) => {
             fs.stat(me.siteCommCronMark, function(err, stat) {
                 if (err && err.code === 'ENOENT') {
@@ -119,15 +221,24 @@ const { eventNames } = require('process');
 
             _f['authToken'] = (cbk)=> {
                 var fn = env.keyFolder + '/authToken.json';
-                me.readJson(fn, (data) => {
+                me.readJson(fn, (JSONData) => {
+                    console.log(JSONData)
                     let token = '';
-                    try {
-                        token = Object.keys(data)[0];
-                    } catch (e) {}
-                    cbk(token)
+                    for (var o in JSONData) {
+                        if (/^SU\_/.test(o)) {
+                            token = o;
+                            break;
+                        }
+                    } 
+                    token = (token) ? token : ('SU_' + me.makeid(32));
+                    JSONData[token] = new Date().getTime();
+                    fs.writeFile(fn, JSON.stringify(JSONData), () => {
+                        cbk(token)
+                    })
                 });
-                
             }
+            
+
             _f['resources'] = (cbk) => {
                 const gridMatrix = cp.data.gridMatrix;
                 const ip = cp.data.ip;
@@ -157,13 +268,25 @@ const { eventNames } = require('process');
                 });
             }, 3000);   
         }
-        me.removeMe = (server, param, callback) => {
+
+        me.makeid = (length) => {
+            var result           = '';
+            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+               result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+
+        me.removeMe = (server, callback) => {
             me.serverStatus((sts)=> {
                 const postData = "'" + JSON.stringify({
                     cmd:'deleteVServer',
                     data : {serverName : server},
                     authToken: sts.authToken
                 }) + "'";
+
                 var cmd = 'curl -d ' + postData +
                     '  -H "Content-Type: application/json" -X POST localhost/api/';
                 exec(cmd, {maxBuffer: 224 * 2048},
@@ -174,6 +297,7 @@ const { eventNames } = require('process');
                         } catch (e) {}
                         me.removeMark(() => {
                             console.log(jdata);
+                            callback();
                         });
                 });
             });
@@ -287,7 +411,7 @@ const { eventNames } = require('process');
             })
         }
         
-        me.uploadFolder = (folderObj)=> {
+        me.uploadResult = (folderObj, callback)=> {
             
             fs.stat(me.siteCommCronMark, function(err, stat) {
                 if (err && err.code === 'ENOENT') {
@@ -337,10 +461,12 @@ const { eventNames } = require('process');
                                             try {
                                             jdata = JSON.parse(stdout);
                                             } catch (e) {}
-                                        
+                                            /*
                                             me.removeMark(() => {
                                                 console.log('mark removed!');
                                             }); 
+                                            */
+                                            callback();
                                     });
                                     
                                 },30000);

@@ -17,7 +17,7 @@ env.localConfig = localConfig;
 
 delete require.cache[__dirname + '/modules/moduleServer.js'];
 const MServer = require(__dirname + '/modules/moduleServer.js');
-
+const mserver = new MServer(env);
 
 var ondemandMark = env.dataFolder + '/ondemandMark.txt';
 
@@ -33,20 +33,25 @@ fs.readFile(ondemandMark, 'utf-8', function(err, onDemandCode) {
     })
     process.stdout.write(".");
   } else {
-    getOneOnDemand((onDemandCode)=> {
+    pickOneOnDemand((onDemandCode)=> {
       if (onDemandCode) {
         fs.writeFile(ondemandMark, onDemandCode, () => {
-          const mserver = new MServer(env);
           mserver.onDemand(onDemandCode, (data) => {
             console.log('onDemandPushed!');
           });
         })
+      } else {
+        mserver.completedOnDemand((data) => {
+          console.log('completeOnDemand!');
+        });
       }
     })
   }
 });
-
-var getOneOnDemand = (callback) => {
+var pickComletedOnDemand = (callback) => {
+    callback();
+}
+var pickOneOnDemand = (callback) => {
   fs.readdir(env.dataFolder + '/sites', (err, list) => {
     const _f = {};
     const cp = new CP();
@@ -76,6 +81,7 @@ var getOneOnDemand = (callback) => {
     }
     cp.serial(_f, (data) => {
       callback((onDemandCode) ? onDemandCode : '');
+      // console.log('niu');
       /*
       if (flist.length) {
         const mserver = new MServer(env);
@@ -91,7 +97,7 @@ var getOneOnDemand = (callback) => {
   });
 }
 
-
+/*
 var doUpload = () => {
   fs.readdir(env.shareFolder, (err, list) => {
     const _f = {};
@@ -112,6 +118,7 @@ var doUpload = () => {
                 _f1['s_' + j] = ((j) => {
                   return (cbk1) => {
                     fs.readdir(dirn1, (err2, list2) => {
+
                       if (!err2) {
                         if (list2.indexOf('ondemand_finished.data') !== -1) {
                           flist.push({dir:dirn, folder:list1[j]})
@@ -134,12 +141,13 @@ var doUpload = () => {
     }
     cp.serial(_f, (data) => {
       if (flist.length) {
-        const mserver = new MServer(env);
+        // const mserver = new MServer(env);
         mserver.uploadFolder(flist[0]);
       } else {
-        const mserver = new MServer(env);
+        // const mserver = new MServer(env);
         mserver.auditOndemand();
       }
     }, 3000);
   });
 }
+*/

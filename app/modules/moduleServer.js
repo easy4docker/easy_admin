@@ -466,7 +466,7 @@
                         cbk(true);
                 });
             };
-        
+            
             _f['updateProxy'] = function(cbk) {
                 me.updateProxy(cbk); 
             };
