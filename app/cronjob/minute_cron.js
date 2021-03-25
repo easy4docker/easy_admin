@@ -81,18 +81,6 @@ var pickOneOnDemand = (callback) => {
     }
     cp.serial(_f, (data) => {
       callback((onDemandCode) ? onDemandCode : '');
-      // console.log('niu');
-      /*
-      if (flist.length) {
-        const mserver = new MServer(env);
-        mserver.onDemand(flist[0].server, flist[0].file, (data) => {
-          console.log('Done !');
-        });
-      } else {
-        doUpload();
-      }
-      */
-      
     }, 3000);
   });
 }

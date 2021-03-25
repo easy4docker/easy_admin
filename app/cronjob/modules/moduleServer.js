@@ -43,7 +43,7 @@ const { eventNames } = require('process');
                             dir: env.shareFolder + '/' + v[0], folder : v[1]
                         };
                         me.removeMe((!v.length > 1) ? '' : v[v.length-2], ()=> {
-                            me.uploadResult(olderObj, callback);
+                            me.uploadResult(folderObj, callback);
                         });
                     });
                 }
@@ -207,12 +207,7 @@ const { eventNames } = require('process');
                     '  -H "Content-Type: application/json" -X POST localhost/api/';
                 exec(cmd, {maxBuffer: 224 * 2048},
                     function(error, stdout, stderr) {
-                        var jdata = {};
-                        try {
-                        jdata = JSON.parse(stdout);
-                        } catch (e) {}
                        me.removeMark(() => {
-                        //    console.log(jdata);
                             callback();
                        });
                 });
