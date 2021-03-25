@@ -46,8 +46,6 @@ const { eventNames } = require('process');
                             me.uploadResult(olderObj, callback);
                         });
                     });
-                } else {
-                   // console.log('no item');
                 }
             });
         }
@@ -214,7 +212,7 @@ const { eventNames } = require('process');
                         jdata = JSON.parse(stdout);
                         } catch (e) {}
                        me.removeMark(() => {
-                            console.log(jdata);
+                        //    console.log(jdata);
                             callback();
                        });
                 });
@@ -319,12 +317,7 @@ const { eventNames } = require('process');
             });
         }
 
-        me.getGridTokenBK = (cbk) => {
-            me.serverStatus((sts) => {})
-        }
-        
         me.uploadResult = (folderObj, callback)=> {
-            
             fs.stat(me.siteCommCronMark, function(err, stat) {
                 if (err && err.code === 'ENOENT') {
                     let dirn = folderObj.dir + '/' + folderObj.folder + '/';
