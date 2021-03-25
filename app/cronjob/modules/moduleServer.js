@@ -217,10 +217,10 @@ const { eventNames } = require('process');
                         try {
                         jdata = JSON.parse(stdout);
                         } catch (e) {}
-                       // me.removeMark(() => {
+                       me.removeMark(() => {
                             console.log(jdata);
                             callback();
-                       // });
+                       });
                 });
             });
         }
@@ -338,7 +338,7 @@ const { eventNames } = require('process');
                         let host = (setting.onDemandCallbackHost === 'localhost') ? 'localhost' : (setting.onDemandCallbackHost);
                         fs.writeFile(me.siteCommCronMark, folderObj.folder, () => {
                             me.serverStatus((sts) => {
-                                const targetFolder = 'gridReturn_' + new Date().getTime();
+                                const targetFolder = 'result_' + folderObj.folder;
                                 const filterList = [];
                                 const cp = new CP();
                                 const _f = {};

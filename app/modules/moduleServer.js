@@ -436,8 +436,6 @@
             };
 
             CP.serial(_f, (result) => {
-                result.dt = req.body;
-                result.BB = "BaoBao";
                callback(result);
             }, 60000);
         }
@@ -476,8 +474,6 @@
             };
 
             CP.serial(_f, (data) => {
-                data.dt = req.body;
-                data.BB = "BeiBei";
                 callback(data);
                 // me.postLoadList(callback);
             }, 30000);
