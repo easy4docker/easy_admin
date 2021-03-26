@@ -72,7 +72,6 @@ const { cpuUsage } = require('process');
                 flist.push(fname);
                 cmd += ((cmd) ? ' && ' : '') + 'mv ' + files[i].path + ' ' + fname;
             }
-            cmd += ' && echo "' + movetoDir  + '" > /tmp/test.txt';
             if (cmd) {
                 exec(cmd, {maxBuffer: 224 * 2048}, (err, stdout, stderr) => {
                     res.send({status: 'success', uploadID: uploadID, movetoDir:movetoDir, files : flist});
