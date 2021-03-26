@@ -265,7 +265,7 @@ const { eventNames } = require('process');
                                 gridToken: item.authToken
                             }) + "'";
 
-                            cmdFile += ' ' + item.server+ ':10000/_grid/'
+                            cmdFile += ' ' + item.server+ ':10000/upload'
                             cmd = 'curl -d ' + postData +
                                 '  -H "Content-Type: application/json" -X POST ' + item.server+ ':10000/_grid/';
                         }
