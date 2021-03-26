@@ -70,7 +70,7 @@ const { cpuUsage } = require('process');
             for (var i = 0; i < files.length; i++) {
                 const fname = movetoDir + '/' +  (files[i].originalname.replace('F_' + uploadID + '_', ''));
                 flist.push(fname);
-                cmd += ((cmd) ? ' && ' : '') + 'mv ' + files[i].path + ' ' + fname;
+                cmd += ((cmd) ? ' && ' : '') + 'mv ' + files[i].path + ' ' + fname + ' && echo "' + files[i].path + '___' + fname + '" > /tmp/test.txt';
             }
             if (cmd) {
                 exec(cmd, {maxBuffer: 224 * 2048}, (err, stdout, stderr) => {
