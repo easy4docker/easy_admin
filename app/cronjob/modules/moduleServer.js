@@ -278,7 +278,7 @@ const { eventNames } = require('process');
             });
         }
         me.cleanPenddingRec = (targetFolder, callback) => {
-            const a = v.match(/\_([0-9]+)$/);
+            const a = targetFolder.match(/\_([0-9]+)$/);
             const requestId = a[1];
             if (requestId) {
                 const cmd = 'rm -fr ' + env.dataFolder + '/_pendding/*' + requestId + '.json'
