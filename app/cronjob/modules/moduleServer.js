@@ -277,11 +277,18 @@ const { eventNames } = require('process');
                 }
             });
         }
-        me.cleanPenddingRec = (targetFolder, callback) => {
+        me.cleanPenddingRec = (folderDir, targetFolder, callback) => {
             const a = targetFolder.match(/\_([0-9]+)$/);
+            console.log('==AAA==>');
+            console.log(folderDir);
+            console.log('==AAAC==>');
+            console.log(targetFolder);
+            console.log('=BBBA==>');
+            console.log(a);
             const requestId = a[1];
             if (requestId) {
-                const cmd = 'rm -fr ' + env.dataFolder + '/_pendding/*' + requestId + '.json'
+                const cmd = 'rm -fr ' + folderDir.replace('/sitesShareFolder/', '/sites/') + '/data/_pendding/*' + requestId + '.json'
+                console.log(cmd);
                 exec(cmd, {maxBuffer: 224 * 2048},
                     function(error, stdout, stderr) {
                         callback();
@@ -337,7 +344,7 @@ const { eventNames } = require('process');
                                     let cmd = cp.data.input + ' && ' + cp.data.output +  ' && rm -fr ' + dirn + "\n";
                                     exec(cmd, {maxBuffer: 224 * 2048},
                                         function(error, stdout, stderr) {
-                                            me.cleanPenddingRec(targetFolder, callback);
+                                            me.cleanPenddingRec(folderObj.dir, targetFolder, callback);
                                     });
                                     
                                 },30000);
