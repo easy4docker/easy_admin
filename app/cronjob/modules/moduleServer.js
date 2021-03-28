@@ -277,8 +277,18 @@ const { eventNames } = require('process');
                 }
             });
         }
-        me.cleanPenddingRec = (callback) => {
-            callback();
+        me.cleanPenddingRec = (targetFolder, callback) => {
+            const a = v.match(/\_([0-9]+)$/);
+            const requestId = a[1];
+            if (requestId) {
+                const cmd = 'rm -fr ' + env.dataFolder + '/_pendding/*' + requestId + '.json'
+                exec(cmd, {maxBuffer: 224 * 2048},
+                    function(error, stdout, stderr) {
+                        callback();
+                });
+            } else {
+                callback();
+            }
         }
         me.uploadResult = (folderObj, callback)=> {
             fs.stat(me.siteCommCronMark, function(err, stat) {
@@ -327,7 +337,7 @@ const { eventNames } = require('process');
                                     let cmd = cp.data.input + ' && ' + cp.data.output +  ' && rm -fr ' + dirn + "\n";
                                     exec(cmd, {maxBuffer: 224 * 2048},
                                         function(error, stdout, stderr) {
-                                            me.cleanPenddingRec(callback);
+                                            me.cleanPenddingRec(targetFolder, callback);
                                     });
                                     
                                 },30000);
