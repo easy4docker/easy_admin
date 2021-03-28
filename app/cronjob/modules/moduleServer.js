@@ -277,11 +277,14 @@ const { eventNames } = require('process');
                 }
             });
         }
-
+        me.cleanPenddingRec = (callback) => {
+            callback();
+        }
         me.uploadResult = (folderObj, callback)=> {
             fs.stat(me.siteCommCronMark, function(err, stat) {
                 if (err && err.code === 'ENOENT') {
                     let dirn = folderObj.dir + '/' + folderObj.folder + '/';
+
                     me.readJson(dirn + 'input/_dockerSetting.json',  (setting) => {
                        let host = (setting.onDemandCallbackHost === 'localhost') ? 'localhost' : (setting.onDemandCallbackHost);
                        // let host = (setting.onDemandCallbackHost === 'localhost') ? 'localhost' : (setting.onDemandCallbackHost + ':10000');
@@ -324,11 +327,7 @@ const { eventNames } = require('process');
                                     let cmd = cp.data.input + ' && ' + cp.data.output +  ' && rm -fr ' + dirn + "\n";
                                     exec(cmd, {maxBuffer: 224 * 2048},
                                         function(error, stdout, stderr) {
-                                            var jdata = {};
-                                            try {
-                                            jdata = JSON.parse(stdout);
-                                            } catch (e) {}
-                                            callback();
+                                            me.cleanPenddingRec(callback);
                                     });
                                     
                                 },30000);
