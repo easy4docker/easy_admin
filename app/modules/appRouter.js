@@ -56,6 +56,7 @@
 				api.call('get', false);
 				return true
 			}
+
 			// ---- router related code
 			if (mp && mp[1] === 'app') {
 				var fn = env.root + '/www/index.html';
@@ -124,6 +125,13 @@
 						let api =  new MApi(env, pkg, req, res);
 						api.call('post', false);
 						break;
+					
+					case 'onDemand':
+						var Mondemand= pkg.require(env.root+ '/modules/moduleOnDemand.js');
+						let mondemand =  new Mondemand(env, pkg, req, res);
+						mondemand.call(req.body, false);
+						break;
+
 					default:
 						res.send({status:'failure', message : '404 wrong path ' + p + '!'});
 				}		
