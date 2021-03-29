@@ -84,6 +84,8 @@
 			cp.serial(
 				_f,
 				function(data) {
+					codeStr += "/* ====== PATH code ====== */ \n";
+					codeStr += " _TPL.host = '" + req.headers.host + "'; \n";
 					codeStr += "/* ====== TPL code ====== */ \n"
 					for (var k in cfg.TPL) {
 						codeStr += "/* --> " + cfg.TPL[k] + " */ \n\n";
@@ -140,6 +142,8 @@
 			cp.serial(
 				_f,
 				function(data) {
+					codeStr += "/* ====== PATH code ====== */ \n";
+					codeStr += " \n";
 					codeStr += "/* ====== TPL code ====== */ \n"
 					for (var k in cfg.TPL) {
 						codeStr += "/* --> " + cfg.TPL[k] + " */ \n\n";
