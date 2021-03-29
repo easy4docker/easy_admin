@@ -1,0 +1,26 @@
+{
+    "TPL" : [
+        "/vueApp/onDemand/appHeader.vue",
+        "/vueApp/onDemand/appBody.vue",
+        "/vueApp/onDemand/dataEngine.vue",
+        "/vueApp/onDemand/popUpModals/_frame.vue",
+        "/vueApp/onDemand/appRoot.vue",
+        "/vueApp/onDemand/auth.vue",
+        "/vueApp/onDemand/spinner.vue",
+        "/vueApp/onDemand/body/documents.vue",
+        "/vueApp/onDemand/body/ondemandResults.vue",
+        "/vueApp/onDemand/body/requestService.vue"
+    ],
+    "JS" : [
+        "/js/coffee-script.js",
+        "/js/jquery-3.5.0.min.js",
+        "/js/popper.1.12.9.min.js",
+        "/js/bootstrap.4.4.1.min.js",
+        "/js/json2/json2.min.js",
+        "/js/crowdProcess/crowdProcess.min.js",
+        "/vueApp/jsLib/vueIntegration.js",
+        "/vueApp/jsLib/vue-router.min.js",
+        "/vueApp/jsLib/vueApp.js",
+        "/vueApp/onDemand/main.js"
+    ]
+}
