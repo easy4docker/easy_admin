@@ -129,7 +129,9 @@
 					case 'onDemand':
 						var Mondemand= pkg.require(env.root+ '/modules/moduleOnDemand.js');
 						let mondemand =  new Mondemand(env, pkg, req, res);
-						mondemand.call(req.body, false);
+						mondemand.call(req.body, (result) => {
+							res.send(result);
+						});
 						break;
 
 					default:
