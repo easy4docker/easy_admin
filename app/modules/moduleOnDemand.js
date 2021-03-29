@@ -4,7 +4,10 @@
 				fs = require('fs'),
 				exec = require('child_process').exec;
 
+		const  sitesCfgFn = env.dataFolder + '/_servers_cfg.json';
+
 		me.call = (postData, callback) => {
+
 			switch(postData.cmd) {
 				case 'removeResult' :
 				case "getPenddingRequests" :
@@ -53,12 +56,14 @@
 		
 		me.getPaddingDir = (d, callback) => {
 			fs.readdir(d, (err, list) => {
-				list = list.filter((rec) => { return (rec[0] === '.') ? false: true});
+				list = (err) ? [] : list.filter((rec) => { return (rec[0] === '.') ? false: true});
 				const _f = {};
 
 				for (let o in list) {
+		
 					_f['p_' + o] = ((o) => {
 						return (cbk) => {
+
 							pkg.readJson(d + '/' + list[o], (jdt) => {
 								const gitHub = (!jdt || !jdt.param || !jdt.param.gitHub) ? '' : jdt.param.gitHub;
 								const regex = /([^/]+)\/([^/]+)\.git$/;
@@ -81,9 +86,7 @@
 				cp.serial(_f, (d) => {
 					const rlist = [];
 					for (let o in list) {
-						
-							rlist.push(cp.data['p_' + o]);
-					
+						rlist.push(cp.data['p_' + o]);
 					}
 					callback(rlist);
 				}, 3000);
@@ -92,7 +95,7 @@
 
 		me.getResultDir = (d, callback) => {
 			fs.readdir(d, (err, list) => {
-				list = list.filter((rec) => { return (rec[0] === '.') ? false: true});
+				list = (err) ? [] : list.filter((rec) => { return (rec[0] === '.') ? false: true});
 				const _f = {};
 				const resultIds = [];
 				for (let o in list) {
@@ -123,25 +126,52 @@
 				}, 3000);
 			});
 		}
-
-		me.getPenddingRequests = (postData, callback) => {
-			const _f= {};
-			_f['pendding'] = (cbk) => {
-				me.getPaddingDir(env.dataFolder + '/_pendding', cbk);
-			}
-			_f['results'] = (cbk) => {
-				me.getResultDir(env.sharedFolder, cbk);
-			}
-			const cp = new pkg.crowdProcess();
-			cp.serial(_f, (dt) => {
-				callback({status:'success', 
-					requests: {
-						pendding : cp.data.pendding.filter((v) => {  return (/^onDemand\_/.test(v.name)) ? true : false; }),
-						offRoad  : cp.data.pendding.filter((v) => {  return (/^offRoad\_/.test(v.name)) ? true : false; }),
-						results  : cp.data.results
+		me.fromHostProcess = (fromHost, callback) => {
+			const a = fromHost.split(':');
+			const host = a[0], port = parseInt(a[1]);
+			let serverName = '';
+			pkg.readJson(sitesCfgFn, (cfg) => {
+				for (let o in cfg) {
+					if (!cfg[o] || !cfg[o].docker || !cfg[o].unidx || !cfg[o].docker.ports) {
+						continue;
+					} else {
+						let vport = 10000 + cfg[o].docker.ports[0] + 1000 * cfg[o].unidx;
+						if (port == vport || host === cfg[o].docker.domain) {
+							serverName = o;
+							break;
+						};
 					}
-				});
-			}, 30000)
+				}
+				if (serverName) {
+					callback(serverName);
+				} else {
+					callback({status: 'failure', message : 'unauthorized request'});
+				}
+                
+            });
+		}
+		me.getPenddingRequests = (postData, callback) => {
+			me.fromHostProcess(postData.fromHost, (serverName) => {
+				const penddingFolder = env.dataFolder + '/sites/' + serverName + '/data/_pendding';
+				const sharedFolder = env.dataFolder + '/sitesShareFolder/' + serverName;
+				const _f= {};
+				_f['pendding'] = (cbk) => {
+					me.getPaddingDir(penddingFolder, cbk);
+				}
+				_f['results'] = (cbk) => {
+					me.getResultDir(sharedFolder, cbk);
+				}
+				const cp = new pkg.crowdProcess();
+				cp.serial(_f, (dt) => {
+					callback({status:'success', 
+						requests: {
+							pendding : cp.data.pendding.filter((v) => {  return (/^onDemand\_/.test(v.name)) ? true : false; }),
+							offRoad  : cp.data.pendding.filter((v) => {  return (/^offRoad\_/.test(v.name)) ? true : false; }),
+							results  : cp.data.results
+						}
+					});
+				}, 30000)
+			})
 		}
 
 		me.removeResult = (postData, callback) => {

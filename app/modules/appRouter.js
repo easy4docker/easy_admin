@@ -127,13 +127,17 @@
 						break;
 					
 					case 'onDemand':
-						var Mondemand= pkg.require(env.root+ '/modules/moduleOnDemand.js');
-						let mondemand =  new Mondemand(env, pkg, req, res);
-						mondemand.call(req.body, (result) => {
-							res.send(result);
-						});
+						try {
+							var Mondemand= pkg.require(env.root+ '/modules/moduleOnDemand.js');
+							let mondemand =  new Mondemand(env, pkg);
+							mondemand.call(req.body, (result) => {
+								res.send(result);
+							});
+						} catch (e) {
+							res.send(e.message);
+						}
 						break;
-
+					
 					default:
 						res.send({status:'failure', message : '404 wrong path ' + p + '!'});
 				}		
