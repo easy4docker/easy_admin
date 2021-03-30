@@ -9,6 +9,7 @@
         "/vueApp/onDemand/spinner.vue",
         "/vueApp/onDemand/body/documents.vue",
         "/vueApp/onDemand/body/ondemandResults.vue",
+        "/vueApp/onDemand/body/ondemandResult.vue",
         "/vueApp/onDemand/body/requestService.vue"
     ],
     "JS" : [

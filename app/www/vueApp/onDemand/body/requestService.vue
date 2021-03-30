@@ -22,7 +22,7 @@
                             <div class="border border-secondary rounded m-1 p-1 text-left">
                                 <b class="mb-1 ml-1">Results:</b>
                                 <div v-if="!!requests && requests.results.length" v-for="o in requests.results" class="m-1 p-1 border alert-secondary">
-                                    <div>{{lTruncate(o.name, 1, 22)}}</div><div class="text-right pr-1 text-secondary">{{o.resultId}}  {{o.tm}}</div>
+                                    <div><a href="JavaScript: void(0)" v-on:click="displayResult(o)">{{lTruncate(o.name, 1, 22)}}</a></div><div class="text-right pr-1 text-secondary">{{o.resultId}}  {{o.tm}}</div>
                                 </div>
                             </div>
                         </div>
@@ -31,7 +31,10 @@
                         <h5 class="m-3">Your request has been sent successfully!</h5>
                         <spam class="m-3"><button class="btn btn-warning" v-on:click="initForm()">Confirm</button></span>
                     </div>
-                    <div class="card alert-light col-9 p-2 m-0 text-left" v-if="module !== 'success'">
+                    <div class="card alert-light col-9 p-3 m-0 text-center" v-if="module === 'displayResult'">
+                        <ondemand-result v-if="module === 'displayResult'" v-bind:cresult="currentResult"></ondemand-result>
+                    </div>
+                    <div class="card alert-light col-9 p-2 m-0 text-left" v-if="module === ''">
                         <h3>Request OnDemand Form</h3>
                         <div class="form-group">
                             <label>Repository git URI</label>
@@ -116,6 +119,7 @@ module.exports = {
                 serviceType : 'onDemand',
                 selectedFile: null
             },
+            currentResult:'',
             loadingStatus : false,
             Images :{
                 selectedFile : null
@@ -137,6 +141,11 @@ module.exports = {
 
     },
     methods :{
+        displayResult(o) {
+            const me = this;
+            me.currentResult = o.name + '_' + o.resultId;
+            me.module = 'displayResult';
+        },
 		lTruncate(str, start, length) {
             const dt = str.length - length;
             return str.slice(0, start) + '...' + str.slice((dt > 0)? dt : 0, str.length)
@@ -215,7 +224,15 @@ module.exports = {
                 me.requests = (!result.requests) ? [] : result.requests;
             }, true);
         }
-    }
+    },
+    components: VUEApp.loadComponents({
+        LOAD    : {
+            
+        }, 
+        TPL :{
+            'ondemandResult' : '/vueApp/onDemand/body/ondemandResult.vue'
+        }
+    })
 }
 </script>
  

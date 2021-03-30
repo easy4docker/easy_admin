@@ -175,9 +175,12 @@
 		}
 
 		me.removeResult = (postData, callback) => {
-			const comStr = 'rm -fr ' + env.sharedFolder + '/' + postData.data.result;
-			exec(comStr,  {maxBuffer: 224 * 2048}, function(err, stdout, stderr) {
-				callback((!err) ? {status:'success'} : {status:'failure', message:err.mrssage});
+			me.fromHostProcess(postData.fromHost, (serverName) => {
+				const sharedFolder = env.dataFolder + '/sitesShareFolder/' + serverName;
+				const comStr = 'rm -fr ' + sharedFolder;
+				exec(comStr,  {maxBuffer: 224 * 2048}, function(err, stdout, stderr) {
+					callback((!err) ? {status:'success'} : {status:'failure', message:err.mrssage});
+				});
 			});
 		}
 		me.onDemandRequest= (postData, callback) => {
