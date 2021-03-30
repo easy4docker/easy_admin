@@ -51,7 +51,6 @@ module.exports = {
     },
     mounted() {
         const me = this;
-        // me.getOndemandResults();
         me.getResultFiles(me.cresult);
     },
     watch : {
@@ -61,25 +60,13 @@ module.exports = {
         }
     },
     methods :{
-        getOndemandResults() {
-            const me = this;
-            me.root.dataEngine().appPost({
-                cmd : 'getOnDemandResults',
-                data : {}
-            }, (result)=> {
-                me.results = result.result;
-                console.log(result);
-            }, true);
-        },
         removeResult (o) {
-           // alert(o);
-           // return true;
             const me = this;
             me.root.dataEngine().appPost({
                 cmd : 'removeResult',
                 data : { result : o }
             }, (result)=> {
-            //    me.getOndemandResults();
+                me.$parent.getPenddingRequests();
                 me.cresult = '';
             }, true);
         },
@@ -92,11 +79,6 @@ module.exports = {
                 me.resultFiles = result.files;
                 console.log(result);
             }, true);
-        },
-        selectResult(o) {
-            const me = this;
-            me.cresult = o;
-            me.getResultFiles(o);
         },
         getFileContent(ondemand, ftype, file) {
             const me = this;
