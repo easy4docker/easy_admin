@@ -54,10 +54,14 @@ module.exports = {
         },
         ajaxPostData(postData, callback, isSpinner) {
             const me = this;
+            const data = postData;
+            data.fromHost = location.host;
             $.ajax({
                 type: 'POST',
-                url: '/api/',
-                data: postData,
+                url: '//localhost:10000/onDemand/',
+                data: data,
+              //  url: '/api/',
+              //  data: postData,
                 success: function(result) {
                     if (isSpinner) me.$parent.triggerSpinner = false;   
                     callback(result);

@@ -210,7 +210,7 @@
 			}
 		}
 
-		me.getOnDemandResults = (postData, callback) => {
+		me.getOnDemandResultsBK = (postData, callback) => {
 			if (!postData) {
 				callback({status:'failure', message : 'Missing postData'});
 			} else {
@@ -221,38 +221,45 @@
 			}
 		}
 		me.getFileContent = (postData, callback) => {
-			const dt = postData.data;
-			const fn = env.sharedFolder + '/' + dt.ondemand + '/' + dt.ftype + '/' + dt.file;
-			fs.readFile(fn, 'utf-8', (err, content) => {
-				callback({status:'success', content : content});
+			me.fromHostProcess(postData.fromHost, (serverName) => {
+				const sharedFolder = env.dataFolder + '/sitesShareFolder/' + serverName;
+				const dt = postData.data;
+				const fn = sharedFolder + '/' + dt.ondemand + '/' + dt.ftype + '/' + dt.file;
+				fs.readFile(fn, 'utf-8', (err, content) => {
+					callback({status:'success', content : content});
+				});
 			});
 		}
 
 		me.getResultFiles = (postData, callback) => {
-			if (!postData || !postData.data || !postData.data.result) {
-				callback({status:'failure', message : 'Missing postData.data.result'});
-				return true;
-			}
-			const _f = {};
-			_f['input'] = (cbk) => {
-				fs.readdir(env.sharedFolder + '/' + postData.data.result +  '/input', (err, list) => {
-					cbk((err) ? [] : list.filter(
-						(rec) => { return (rec[0] === '.') ? false: true}));
-				});
-			}
-			_f['output'] = (cbk) => {
-				fs.readdir(env.sharedFolder + '/' + postData.data.result + '/output', (err, list) => {
-					cbk((err) ? [] : list.filter(
-						(rec) => { return (rec[0] === '.') ? false: true}));
-				});
-			}
-			const cp = new pkg.crowdProcess();
-			cp.serial(_f, (result) => {
-				callback({status:'success', files :{
-					input  : cp.data.input,
-					output : cp.data.output
-				}});
-			}, 3000)
+			me.fromHostProcess(postData.fromHost, (serverName) => {
+				const sharedFolder = env.dataFolder + '/sitesShareFolder/' + serverName;
+
+				if (!postData || !postData.data || !postData.data.result) {
+					callback({status:'failure', message : 'Missing postData.data.result'});
+					return true;
+				}
+				const _f = {};
+				_f['input'] = (cbk) => {
+					fs.readdir(sharedFolder + '/' + postData.data.result +  '/input', (err, list) => {
+						cbk((err) ? [] : list.filter(
+							(rec) => { return (rec[0] === '.') ? false: true}));
+					});
+				}
+				_f['output'] = (cbk) => {
+					fs.readdir(sharedFolder + '/' + postData.data.result + '/output', (err, list) => {
+						cbk((err) ? [] : list.filter(
+							(rec) => { return (rec[0] === '.') ? false: true}));
+					});
+				}
+				const cp = new pkg.crowdProcess();
+				cp.serial(_f, (result) => {
+					callback({status:'success', files :{
+						input  : cp.data.input,
+						output : cp.data.output
+					}});
+				}, 3000)
+			});
 		}
 	};
 	if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
