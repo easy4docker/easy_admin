@@ -1,11 +1,16 @@
 <template>
-    <div class="body-card m-1">
+    <div class="body-card m-0">
         <div class="card-body m-0 p-1">
             <div class="container-fluid m-0">
                 <div class="row">
                     <div class="col-3 p-1 m-0 ">
                         <div class="card ondemand-requestions-section mt-0 mr-1 p-2">
-                            <div class="pl-2 m-0 text-left text-info"><h5>Penddings</h5></div>
+                            <div class="card p-0 m-0 text-center text-info">
+                                <button class="btn btn-sm btn-secondary">Add New Request</button>
+                            </div>
+                            <div class="pl-2 mt-2 text-left text-info">
+                                <h5>Penddings</h5>
+                            </div>
                             <div class="border border-secondary rounded m-1 p-1 text-left">
                                 <b class="mb-1 ml-1">On Demand:</b><i class="fa fa-refresh fa-spin pull-right text-success mr-2" style="font-size:24px"></i>
                                 <div v-if="requests.pendding" v-for="o in requests.pendding" class="m-1 p-1 border alert-secondary">
@@ -18,7 +23,7 @@
                                     <div>{{lTruncate(o.repo, 4, 20)}}</div><div class="text-right pr-1 text-secondary">{{o.resultId}}  {{o.tm}}</div>
                                 </div>
                             </div>
-                            <div class="pl-2 m-0 text-left text-info"><h5>Results</h5></div>
+                            <div class="pl-2 mt-2 text-left text-info"><h5>Results</h5></div>
                             <div class="border border-secondary rounded m-1 p-1 text-left">
                                 <b class="mb-1 ml-1">Results:</b>
                                 <div v-if="!!requests && requests.results.length" v-for="o in requests.results" class="m-1 p-1 border alert-secondary">
@@ -138,7 +143,7 @@ module.exports = {
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
         me.getPenddingRequests();
-        setInterval(me.getPenddingRequests, 10000);
+       // setInterval(me.getPenddingRequests, 10000);
     },
     watch : {
 

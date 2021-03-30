@@ -1,18 +1,9 @@
 <template>
-    <div class="container-fluid m-0 mt-2 mb-3" >
+    <div class="container-fluid m-0" >
         <div class="row">
-            <div class="col-1 p-0"></div>
-            <div class="col-10 p-0 card text-center shadow border rounded">
-                <app-header></app-header>
+            <div class="col-12 p-0 m-0 text-center shadow">
+                <request-service ref="requestOndemand"></request-service>
             </div>
-            <div class="col-1 p-0"></div>
-        </div>
-        <div class="row">
-            <div class="col-1 p-0"></div>
-            <div class="col-10 p-0 card text-center shadow border rounded">
-                <request-service ref="requestOndemand" :serviceType="module"></request-service>
-            </div>
-            <div class="col-1 p-0"></div>
         </div>
         <data-engine ref="dataEngine"></data-engine>
         <pop-up-modal ref="popUpModal"></pop-up-modal>
@@ -26,8 +17,7 @@ module.exports = {
     data: function() {
         return {
             root : this,
-            triggerSpinner : false,
-            module : ''
+            triggerSpinner : false
         }
     },    
     watch : {
@@ -39,8 +29,6 @@ module.exports = {
     mounted () {
         var me = this;
         me.module = (!/^\/app\//.test(location.pathname)) ? '' : (location.pathname.replace(/\/app\//, ''));
-        setTimeout(function() {
-        },200);
     },
     methods :{
         dataEngine(caller) {
