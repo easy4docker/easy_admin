@@ -61,7 +61,6 @@ module.exports = {
             'popUpModal': '/vueApp/onDemand/popUpModals/_frame.vue',
             'appBody'   : '/vueApp/onDemand/appBody.vue',
             'bodyDocuments'   : '/vueApp/onDemand/body/documents.vue',
-            'ondemandResults' : '/vueApp/onDemand/body/ondemandResults.vue',
             'requestService'  : '/vueApp/onDemand/body/requestService.vue'
         }
     })

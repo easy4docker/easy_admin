@@ -31,10 +31,13 @@
                         <h5 class="m-3">Your request has been sent successfully!</h5>
                         <spam class="m-3"><button class="btn btn-warning" v-on:click="initForm()">Confirm</button></span>
                     </div>
-                    <div class="card alert-light col-9 p-3 m-0 text-center" v-if="module === 'displayResult'">
+                    <div class="card alert-light col-9 p-0 m-0 text-center" v-if="module === 'displayResult'">
                         <ondemand-result v-if="module === 'displayResult'" v-bind:cresult="currentResult"></ondemand-result>
                     </div>
-                    <div class="card alert-light col-9 p-2 m-0 text-left" v-if="module === ''">
+                    <div class="col-9 p-1 m-0 text-center" v-if="module === ''">
+                        <body-documents v-if="module === ''"></body-documents>
+                    </div>
+                    <div class="card alert-light col-9 p-2 m-0 text-left" v-if="module === 'addRequest'">
                         <h3>Request OnDemand Form</h3>
                         <div class="form-group">
                             <label>Repository git URI</label>
@@ -230,7 +233,8 @@ module.exports = {
             
         }, 
         TPL :{
-            'ondemandResult' : '/vueApp/onDemand/body/ondemandResult.vue'
+            'ondemandResult' : '/vueApp/onDemand/body/ondemandResult.vue',
+            'bodyDocuments'   : '/vueApp/onDemand/body/documents.vue'
         }
     })
 }
