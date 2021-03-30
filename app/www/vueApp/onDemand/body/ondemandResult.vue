@@ -4,7 +4,7 @@
             <div class="container-fluid m-0">
                 <div class="row">
                     <div class="card alert-light col-12 p-2 m-0 text-left">
-                        <h3 class="text-dark p-2">{{cresult}}<button class="btn btn-danger pull-right" v-on:click="removeResult(currentResult)">Delete this result</button></h3>
+                        <h4 class="text-dark p-2">{{cresult}}<button class="btn btn-danger pull-right" v-on:click="removeResult(currentResult)">Delete this result</button></h4>
                         <div class="p-1 text-dark"><b>Input Data</b></div>
                          
                         <div class="input-data-section alert-warning rounded border border-warning p-1 overflow-auto">
