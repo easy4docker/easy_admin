@@ -42,11 +42,9 @@ module.exports = {
             
         }, 
         TPL :{
-            'appHeader' : '/vueApp/onDemand/appHeader.vue',
             'dataEngine' : '/vueApp/onDemand/dataEngine.vue',
             'spinner'   : '/vueApp/onDemand/spinner.vue',
             'popUpModal': '/vueApp/onDemand/popUpModals/_frame.vue',
-            'appBody'   : '/vueApp/onDemand/appBody.vue',
             'bodyDocuments'   : '/vueApp/onDemand/body/documents.vue',
             'requestService'  : '/vueApp/onDemand/body/requestService.vue'
         }

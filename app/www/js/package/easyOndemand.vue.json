@@ -1,14 +1,10 @@
 {
     "TPL" : [
-        "/vueApp/onDemand/appHeader.vue",
-        "/vueApp/onDemand/appBody.vue",
         "/vueApp/onDemand/dataEngine.vue",
         "/vueApp/onDemand/popUpModals/_frame.vue",
         "/vueApp/onDemand/appRoot.vue",
-        "/vueApp/onDemand/auth.vue",
         "/vueApp/onDemand/spinner.vue",
         "/vueApp/onDemand/body/documents.vue",
-        "/vueApp/onDemand/body/ondemandResults.vue",
         "/vueApp/onDemand/body/ondemandResult.vue",
         "/vueApp/onDemand/body/requestService.vue"
     ],
