@@ -66,6 +66,7 @@ module.exports = {
                 cmd : 'removeResult',
                 data : { result : o }
             }, (result)=> {
+                me.root.module = 'documents';
                 me.$parent.getPenddingRequests();
                 me.cresult = '';
             }, true);
@@ -77,7 +78,6 @@ module.exports = {
                 data : { result : o }
             }, (result)=> {
                 me.resultFiles = result.files;
-                console.log(result);
             }, true);
         },
         getFileContent(ondemand, ftype, file) {
@@ -88,8 +88,6 @@ module.exports = {
             }, (result)=> {
                 me.contents[ondemand + '-' + ftype + '-' + file] = result.content;
                 me.$forceUpdate();
-                console.log(result);
-                console.log(me.contents);
             }, true);
         }
 
