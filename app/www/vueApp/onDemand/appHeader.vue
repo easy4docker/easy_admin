@@ -7,7 +7,7 @@
                     <div class="col-1 p-0 m-0 text-left">
                     </div>
                     <div class="col-11 p-2 text-left">
-                        <h1 class="header-title m-3 text-light">Easy OnDemand Demo 
+                        <h1 class="header-title m-3 text-light">Easy OnDemand Solution 
                             <span class="version">(Version &alpha;)</span></h1>
                     </div>
                 </div>
