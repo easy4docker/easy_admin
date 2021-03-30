@@ -49,6 +49,19 @@
                         </div>
                     </div>
 
+
+                    <div class="card p-3 mt-3 mr-2 text-left">
+                        <b>How to integrate onDemand admin into your website?</b>
+                        <div class="p-2">
+                            include next codes into your HTML header<br/>
+                            <div v-html="'<br>'"> </div>
+                             p { color: red; } >>> {{escapeHtml('<br/')}} ==
+                            <link rel="stylesheet" href="//{your domain or server}:10000/spa-package/easyOndemand/easyOndemand.css">
+                            <script src="//{your domain or server}:10000/spa-package/easyOndemand.vue"></script>
+                            {{<br/>}}
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -81,6 +94,12 @@ module.exports = {
 
     },
     methods :{
+        escapeHtml(str) {
+            return '&lt;link rel="stylesheet" href="//{your domain or server}:10000/spa-package/easyOndemand/easyOndemand.css">';
+        },
+        htmlEncode(value){
+	        return $('<div/>').text(value).html();
+        }
     }
 }
 </script>

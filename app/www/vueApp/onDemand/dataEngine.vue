@@ -56,9 +56,10 @@ module.exports = {
             const me = this;
             const data = postData;
             data.fromHost = location.host;
+            alert(data.fromHost);
             $.ajax({
                 type: 'POST',
-                url: '//localhost:10000/onDemand/',
+                url: '//' + location.hostname + ':10000/onDemand/',
                 data: data,
               //  url: '/api/',
               //  data: postData,
