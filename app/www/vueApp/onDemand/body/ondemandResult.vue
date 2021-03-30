@@ -72,8 +72,8 @@ module.exports = {
             }, true);
         },
         removeResult (o) {
-            alert(o);
-            return true;
+           // alert(o);
+           // return true;
             const me = this;
             me.root.dataEngine().appPost({
                 cmd : 'removeResult',
