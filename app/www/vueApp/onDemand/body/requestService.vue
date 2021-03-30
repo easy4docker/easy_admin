@@ -6,7 +6,8 @@
                     <div class="col-3 p-1 m-0 ">
                         <div class="card ondemand-requestions-section mt-0 mr-1 p-2">
                             <div class="card p-0 m-0 text-center text-info">
-                                <button class="btn btn-sm btn-secondary">Add New Request</button>
+                                <button class="btn btn-sm btn-secondary" v-if="module !== 'newRequest'" v-on:click="switchModule('newRequest')">Add New Request</button>
+                                <button class="btn btn-sm btn-secondary" v-if="module === 'newRequest'" v-on:click="switchModule('documents')">Documents</button>
                             </div>
                             <div class="pl-2 mt-2 text-left text-info">
                                 <h5>Penddings</h5>
@@ -39,10 +40,10 @@
                     <div class="card alert-light col-9 p-0 m-0 text-center" v-if="module === 'displayResult'">
                         <ondemand-result v-if="module === 'displayResult'" v-bind:cresult="currentResult"></ondemand-result>
                     </div>
-                    <div class="col-9 p-1 m-0 text-center" v-if="module === ''">
-                        <body-documents v-if="module === ''"></body-documents>
+                    <div class="col-9 p-1 m-0 text-center" v-if="module === '' || module === 'documents'">
+                        <body-documents></body-documents>
                     </div>
-                    <div class="card alert-light col-9 p-2 m-0 text-left" v-if="module === 'addRequest'">
+                    <div class="card alert-light col-9 p-2 m-0 text-left" v-if="module === 'newRequest'">
                         <h3>Request OnDemand Form</h3>
                         <div class="form-group">
                             <label>Repository git URI</label>
@@ -114,11 +115,12 @@ data() {
 
 <script>
 module.exports = {
+    props: ['module'],
     data: function() {
         return {
             root :  this.$parent.root,
             serviceTypes : ['onDemand', 'offRoad'],
-            module : '',
+           
             form : {
                 gitHub      : '',
                 userName    : '',
@@ -149,6 +151,9 @@ module.exports = {
 
     },
     methods :{
+        switchModule(v) {
+            this.$parent.module = v;
+        },
         displayResult(o) {
             const me = this;
             me.currentResult = o.name + '_' + o.resultId;
