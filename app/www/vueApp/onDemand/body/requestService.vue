@@ -229,7 +229,6 @@ module.exports = {
         },
         getPenddingRequests() {
             const me = this;
-            console.log(new Date())
             me.root.dataEngine().appPost({
                 cmd : 'getPenddingRequests',
                 data : {}

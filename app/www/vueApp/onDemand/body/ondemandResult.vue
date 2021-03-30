@@ -79,7 +79,7 @@ module.exports = {
                 cmd : 'removeResult',
                 data : { result : o }
             }, (result)=> {
-                me.getOndemandResults();
+            //    me.getOndemandResults();
                 me.cresult = '';
             }, true);
         },

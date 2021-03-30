@@ -176,11 +176,15 @@
 
 		me.removeResult = (postData, callback) => {
 			me.fromHostProcess(postData.fromHost, (serverName) => {
-				const sharedFolder = env.dataFolder + '/sitesShareFolder/' + serverName;
-				const comStr = 'rm -fr ' + sharedFolder;
-				exec(comStr,  {maxBuffer: 224 * 2048}, function(err, stdout, stderr) {
-					callback((!err) ? {status:'success'} : {status:'failure', message:err.mrssage});
-				});
+				if (!postData || !postData.data || !postData.data.result) {
+					callback({status:'failure', message: 'wrong post data'});
+				} else {
+					const sharedFolder = env.dataFolder + '/sitesShareFolder/' + serverName;
+					const comStr = 'rm -fr ' + sharedFolder + '/' + postData.data.result;
+					exec(comStr,  {maxBuffer: 224 * 2048}, function(err, stdout, stderr) {
+						callback((!err) ? {status:'success'} : {status:'failure', message:err.mrssage});
+					});
+				}
 			});
 		}
 		me.onDemandRequest= (postData, callback) => {
