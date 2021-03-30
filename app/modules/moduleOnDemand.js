@@ -184,30 +184,33 @@
 			});
 		}
 		me.onDemandRequest= (postData, callback) => {
-			const requestId = new Date().getTime(); 
-			const data = {
-				code		:'addOndemand',
-				param 		: postData.data,
-				requestId	: requestId,
-				uploadId	: postData.uploadId
-			}
-			if (postData.uploadId) {
-				data.uploadId = postData.uploadId;
-			}
-			if (!postData.data || ['onDemand', 'offRoad'].indexOf(postData.data.serviceType) === -1) {
-				callback({status:'failure', message: 'wrong service type!'});
-			} else {
-				let cmd = 'mkdir -p ' + env.dataFolder + '/_pendding && ';
-				cmd += 'mkdir -p ' + env.dataFolder + '/' + postData.data.serviceType;
-				exec(cmd,  {maxBuffer: 224 * 2048}, (err, stdout, stderr) => {
-					fs.writeFile(env.dataFolder + '/_pendding/' + postData.data.serviceType + '_' + requestId + '.json', JSON.stringify(data), (err, result) => {
-						fs.writeFile(env.dataFolder + '/' + postData.data.serviceType + '/request_' + requestId + '.json', 
-							JSON.stringify(data), (err, result) => {
-							callback({status:'success'});
-						})
+			me.fromHostProcess(postData.fromHost, (serverName) => {
+				const dataFolder = env.dataFolder + '/sites/' + serverName + '/data/';
+				const requestId = new Date().getTime(); 
+				const data = {
+					code		:'addOndemand',
+					param 		: postData.data,
+					requestId	: requestId,
+					uploadId	: postData.uploadId
+				}
+				if (postData.uploadId) {
+					data.uploadId = postData.uploadId;
+				}
+				if (!postData.data || ['onDemand', 'offRoad'].indexOf(postData.data.serviceType) === -1) {
+					callback({status:'failure', message: 'wrong service type!'});
+				} else {
+					let cmd = 'mkdir -p ' + dataFolder  + '/_pendding && ';
+					cmd += 'mkdir -p ' + dataFolder + '/' + postData.data.serviceType;
+					exec(cmd,  {maxBuffer: 224 * 2048}, (err, stdout, stderr) => {
+						fs.writeFile(dataFolder  + '/_pendding/' + postData.data.serviceType + '_' + requestId + '.json', JSON.stringify(data), (err, result) => {
+							fs.writeFile(dataFolder  + '/' + postData.data.serviceType + '/request_' + requestId + '.json', 
+								JSON.stringify(data), (err, result) => {
+								callback({status:'success'});
+							})
+						});
 					});
-				});
-			}
+				}
+			});
 		}
 
 		me.getOnDemandResultsBK = (postData, callback) => {
