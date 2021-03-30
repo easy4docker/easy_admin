@@ -56,7 +56,6 @@ module.exports = {
             const me = this;
             const data = postData;
             data.fromHost = location.host;
-            alert(data.fromHost);
             $.ajax({
                 type: 'POST',
                 url: '//' + location.hostname + ':10000/onDemand/',
@@ -86,7 +85,8 @@ module.exports = {
             postFormData = {};
             $.ajax({
                 type: 'POST',
-                url: '/upload/',
+                url: '//' + location.hostname + ':10000/upload/',
+             //   url: '/upload/',
                 cache: false,
                 processData: false,
                 method: 'POST',
