@@ -10,9 +10,7 @@
         <div class="row">
             <div class="col-1 p-0"></div>
             <div class="col-10 p-0 card text-center shadow border rounded">
-                <ondemand-results ref="ondemandResults" v-if="module === 'ondemandResults'"></ondemand-results>
-                <request-service ref="requestOndemand" :serviceType="module" v-if="module === 'onDemand' || module === 'offRoad'"></request-service>
-                <body-documents ref="bodyDocuments" v-if="!module || module === 'documents'"></body-documents>
+                <request-service ref="requestOndemand" :serviceType="module"></request-service>
             </div>
             <div class="col-1 p-0"></div>
         </div>

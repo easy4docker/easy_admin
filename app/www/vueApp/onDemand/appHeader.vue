@@ -1,27 +1,24 @@
 <template>
     <div class="head-card card m-1">
         <div class="card-body m-0 p-1 alert-info header-bg ">
-            
+            <div class="pull-right pl-1 text-dark developer-mark">Developer : John Xu</div>
             <div class="container-fluid m-0 head-menu-1">
                 <div class="row">
                     <div class="col-1 p-0 m-0 text-left">
                     </div>
-                    <div class="col-10 p-2 text-left">
+                    <div class="col-11 p-2 text-left">
                         <h1 class="header-title m-3 text-light">Easy OnDemand Demo 
                             <span class="version">(Version &alpha;)</span></h1>
                     </div>
-                    <div class="col-1 pr-1 m-0 text-right text-warning">
-                    
-                    </div>
                 </div>
             </div>
-            <div class="pull-right pl-1 text-dark developer-mark">Developer : John Xu</div>
-            <div class="container-fluid mt-1 head-menu-2 text-left text-light">
+            
+            <!--div class="container-fluid mt-1 head-menu-2 text-left text-light">
                 <a href="JavaScript:void(0)" v-if="root.module !== 'onDemand'"  v-on:click="module('onDemand')" class="m-3">On Demand Service</a>
                 <b class="m-3" v-if="root.module === 'onDemand'">On Demand Service</b> |
                 <a href="JavaScript:void(0)" v-if="root.module !== 'documents'"  v-on:click="module('documents')" class="m-3">Documents</a>
                 <b class="m-3" v-if="root.module === 'documents'">Documents</b>
-            </div>
+            </div-->
             
         </div>
     </div> 
@@ -56,7 +53,7 @@ module.exports = {
 }
 
 .head-card {
-    min-height: 8rem;
+    min-height: 7rem;
 }
 .head-menu-1 {
     height: 6rem;
