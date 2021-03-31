@@ -44,7 +44,11 @@ module.exports = {
             if (isSpinner) me.$parent.triggerSpinner = true;
             if (Object.keys(postFormData).length) {
                 me.ajaxPostForm(postFormData, function(resultPostForm) {
+                    console.log('===resultPostForm===>');
+                    console.log(resultPostForm);
                     postData.uploadId = resultPostForm.uploadId;
+                    console.log('===postData===>');
+                    console.log(postData);
                     me.ajaxPostData(postData, callback, isSpinner)
                 }, false);
             } else {
@@ -82,6 +86,7 @@ module.exports = {
             }
             var blob = new Blob([postFormData.inputData], { type: 'plain/text' });
             formData.append('file', blob, 'input.Data');
+            formData.append('cmd', 'fileUpload');
             postFormData = {};
             $.ajax({
                 type: 'POST',

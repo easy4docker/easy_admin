@@ -207,8 +207,9 @@ const { eventNames } = require('process');
                         const uri_a = paramData.gitHub.match(regex);
                         const repo = ((!uri_a) ? false : (uri_a[1] + '_' + uri_a[2]));
 
-                        const uploadFolder = env.dataFolder + '/sites/' + server + '/data/fileUpload/D_' + paramData.uploadId;
-   
+                        // const uploadFolder = env.dataFolder + '/sites/' + server + '/data/fileUpload/D_' + paramData.uploadId;
+                        const uploadFolder = env.dataFolder + '/sitesShareFolder/fileUpload/D_' + paramData.uploadId;
+
                         cmdFile = 'curl $(find ' + uploadFolder + ' -type f -exec echo " " -F file=@"{}" \\;) ';
                         cmdFile += ' -F "cmd=fileUpload"  -F "uploadID=' + paramData.uploadId + '" ';
                         cmdFile += ' -F "movetoDir=' +  server + '/' + repo + '_' + paramData.requestId + '" ';
