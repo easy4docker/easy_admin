@@ -19,7 +19,7 @@
                                 </div>
                             </div>
                             <div class="border border-secondary rounded m-1 p-1 text-left">
-                                <b class="mb-1 ml-1">Off Road:</b><i class="fa fa-refresh fa-spin pull-right text-success mr-2" style="font-size:24px"></i>
+                                <b class="mb-1 ml-1">Off Road:</b>
                                 <div v-if="requests.offRoad" v-for="o in requests.offRoad" class="m-1 p-1 border alert-secondary">
                                     <div>{{lTruncate(o.repo, 4, 20)}}</div><div class="text-right pr-1 text-secondary">{{o.resultId}}  {{o.tm}}</div>
                                 </div>
